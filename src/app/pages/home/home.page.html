@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>GraphQL TODO APP</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openNewItemPage()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-title>
+      Tasks:
+    </ion-title>
+    <ion-item *ngFor="let item of items" (click)="goToItem(item)">
+      <ion-label>
+        {{ item.title }}
+      </ion-label>
+      <ion-label>
+        {{ item.description }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
