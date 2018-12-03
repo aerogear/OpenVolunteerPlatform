@@ -1,52 +1,40 @@
 import { Injectable } from '@angular/core';
+import { GET_TASKS } from './graphql.queries';
+import { Apollo } from 'apollo-angular';
+
+
+interface Task {
+  id: string;
+  title: string;
+  description: string;
+}
+
+interface AllTasks {
+  allTasks: Task[];
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
 
-  items: Array<any> = [
-    {
-      'id': "1",
-      'title': "Example 1",
-      'description': 'description 1'
-    },
-    {
-      'id': "2",
-      'title': "Example 2",
-      'description': 'description 2'
-    },
-    {
-      'id': "3",
-      'title': "Example 3",
-      'description': 'description 3'
-    },
-    {
-      'id': "4",
-      'title': "Example 4",
-      'description': 'description 4'
-    }
-  ]
-
-  constructor() { }
-
-  createItem(title, description) {
-    let randomId = Math.random().toString(36).substr(2, 5);
-    this.items.push({
-      'id': randomId,
-      'title': title,
-      'description': description
-    });
-  }
+  constructor(private apollo: Apollo) { }
 
   getItems() {
-    return this.items;
+    return this.apollo.query<AllTasks>({ query: GET_TASKS });
+  }
+
+  createItem(title, description) {
+    const randomId = Math.random().toString(36).substr(2, 5);
+    // this.items.push({
+    //   'id': randomId,
+    //   'title': title,
+    //   'description': description
+    // });
   }
 
   updateItem(newValues) {
-    let itemIndex = this.items.findIndex(item => item.id == newValues.id);
-    this.items[itemIndex] = newValues;
+    // let itemIndex = this.items.findIndex(item => item.id == newValues.id);
+    // this.items[itemIndex] = newValues;
   }
-
-
 }
