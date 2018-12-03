@@ -1,22 +1,49 @@
-## Ionic 4 Starter App
+## Ionic 4 Apollo GraphQL Starter
 
-### About this repo
-This repo is the code of an Ionic 4 starter app that we created as part of a *Getting started with Ionic 4 tutorial*. In the following tutorial your will learn the differences between Ionic 3 and Ionic 4 and all the new concepts about Ionic 4:
+## Running example
 
-- [Spanish tutorial](https://medium.com/learn-ionic-framework/ionic-4-vs-ionic-3-todo-lo-que-necesitas-saber-sobre-ionic-4-5235927c6dd9)
+Requirements:
 
-- [English tutorial](https://ionicthemes.com/tutorials/about/ionic-4-vs-ionic-3)
+- Docker
+- Node.js 6.x or above
 
-Find more Ionic tutorials and starter apps in https://ionicthemes.com
+### Running the client
 
-### Install this Ionic 4 starter app
+1.  Install this Ionic 4 starter app
 ```
 npm install
 ```
 
-### Browse Ionic 4 app
+2. Browse Ionic 4 app
 ```
 ionic serve
 ```
+
+### Running the server
+
+Running server requires docker in order to run database
+
+cd ./server
+docker-compose up -d
+npm install
+npm run start
+ 
 ### Demo
+
 https://www.youtube.com/watch?v=COTmXyXg5rU
+
+
+### GraphQL tutorial
+
+This repo is using GraphQL for communication between server and client.
+To learn basics about GraphQL please follow tutorial:
+
+https://www.javascripttuts.com/implementing-graphql-using-apollo-in-an-ionic-application-introduction/
+
+### Ionic tutorial
+
+This repo contains the code of an Ionic 4 starter app that we created as part of a *Getting started with Ionic 4 tutorial*. In the following tutorial your will learn the differences between Ionic 3 and Ionic 4 and all the new concepts about Ionic 4:
+
+- [English tutorial](https://ionicthemes.com/tutorials/about/ionic-4-vs-ionic-3)
+
+Find more Ionic tutorials and starter apps in https://ionicthemes.com
