@@ -25,9 +25,16 @@
     "@ionic-native/status-bar": "5.0.0-beta.15",
     "@ionic/angular": "4.0.0-beta.11",
     "@ionic/lab": "^1.0.0",
+    "apollo-angular": "^1.5.0",
     "core-js": "^2.5.3",
     "rxjs": "6.2.2",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "apollo-angular-link-http": "^1.3.1",
+    "apollo-link": "^1.2.0",
+    "apollo-client": "^2.4.0",
+    "apollo-cache-inmemory": "^1.3.2",
+    "graphql-tag": "^2.10.0",
+    "graphql": "^0.13.2"
   },
   "devDependencies": {
     "@angular/cli": "~6.1.1",
