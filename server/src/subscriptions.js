@@ -1,11 +1,11 @@
 const { PubSub }  = require('apollo-server');
 
-const USER_CREATED = 'UserCreated';
+const TASK_CREATED = 'UserCreated';
 
 module.exports = {
 
     EVENTS: {
-        USER: { CREATED: USER_CREATED }
+        TASK: { CREATED: TASK_CREATED }
     },
     pubSub: new PubSub()
 }

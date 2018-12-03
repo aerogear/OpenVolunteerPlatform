@@ -5,13 +5,14 @@ async function connect (options) {
     client: 'pg',
     connection: options
   })
-  const usersExists = await db.schema.hasTable('users')
+  const usersExists = await db.schema.hasTable('tasks')
   if (!usersExists) {
-    await db.schema.createTable('users', function (table) {
-      table.increments('id')
-      table.string('name')
+    await db.schema.createTable('tasks', function (table) {
+      table.string('title')
+      table.string('description')
+      // Required for conflict resolution
       table.integer('version')
-      table.string('dateOfBirth')
+      table.increments('id')
     })
   }
   return db

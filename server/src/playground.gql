@@ -1,44 +1,44 @@
-fragment UserFields on User { 
+fragment TaskFields on Task { 
     id
-    name
-    dateOfBirth
     version
+    title
+    description
 }
 
 
-mutation createUser {
-  createUser(name: "Alice" dateOfBirth: "test") {
-     ...UserFields
+mutation createTask {
+  createTask(title: "Task1" description: "test") {
+     ...TaskFields
   }
 }
 
-mutation updateUser {
-  updateUser(id: "1", name: "Alice", version: 1) {
-    ...UserFields
+mutation updateTask {
+  updateTask(id: "1", title: "Task2", version: 1) {
+    ...TaskFields
   }
 }
 
-mutation deleteUser {
-  deleteUser(id: "1") {
+mutation deleteTask {
+  deleteTask(id: "1") {
     id
   }
 }
 
-query getUser {
-  getUser(id: "1") {
-    ...UserFields
+query getTask {
+  getTask(id: "1") {
+    ...TaskFields
   }
 }
 
-query allUsers {
-  allUsers{
-    ...UserFields
+query allTasks {
+  allTasks{
+    ...TaskFields
   }
 }
 
-subscription userSubscription{
-  userCreated{
-    ...UserFields
+subscription TaskSubscription{
+  taskCreated{
+    ...TaskFields
   }
 }
 
