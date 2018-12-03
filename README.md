@@ -16,9 +16,13 @@ npm install
 
 2. Browse Ionic 4 app
 ```
-ionic serve
+npm run start
 ```
 
+3. Run on Emulator
+```
+npm run ionic:android
+```
 ### Running the server
 
 Running server requires docker in order to run database
