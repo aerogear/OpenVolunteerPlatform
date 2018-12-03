@@ -30,6 +30,8 @@ npm run start
  
 ### Demo
 
+![](./resources/screenshot.png)
+
 https://www.youtube.com/watch?v=COTmXyXg5rU
 
 
