@@ -1,0 +1,44 @@
+fragment UserFields on User { 
+    id
+    name
+    dateOfBirth
+    version
+}
+
+
+mutation createUser {
+  createUser(name: "Alice" dateOfBirth: "test") {
+     ...UserFields
+  }
+}
+
+mutation updateUser {
+  updateUser(id: "1", name: "Alice", version: 1) {
+    ...UserFields
+  }
+}
+
+mutation deleteUser {
+  deleteUser(id: "1") {
+    id
+  }
+}
+
+query getUser {
+  getUser(id: "1") {
+    ...UserFields
+  }
+}
+
+query allUsers {
+  allUsers{
+    ...UserFields
+  }
+}
+
+subscription userSubscription{
+  userCreated{
+    ...UserFields
+  }
+}
+
