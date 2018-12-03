@@ -23,11 +23,13 @@ ionic serve
 
 Running server requires docker in order to run database
 
+```
 cd ./server
 docker-compose up -d
 npm install
 npm run start
- 
+```
+
 ### Demo
 
 ![](./resources/screenshot.png)
