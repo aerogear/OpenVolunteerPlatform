@@ -19,9 +19,7 @@ mutation updateTask {
 }
 
 mutation deleteTask {
-  deleteTask(id: "1") {
-    id
-  }
+  deleteTask(id: "1")
 }
 
 query getTask {

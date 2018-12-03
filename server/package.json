@@ -4,11 +4,9 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "Apache 2.0",
   "dependencies": {
     "apollo-server": "^2.1.0",
     "apollo-server-express": "^2.1.0",
@@ -18,7 +16,7 @@
     "graphql-resolvers": "^0.2.2",
     "graphql-tools": "^4.0.2",
     "knex": "^0.15.2",
-    "nodemon": "^1.18.4",
+    "nodemon": "1.18.7",
     "pg": "^7.5.0"
   }
 }

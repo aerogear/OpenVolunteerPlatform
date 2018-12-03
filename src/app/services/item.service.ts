@@ -30,7 +30,7 @@ export class ItemService {
 
   constructor() { }
 
-  createItem(title, description){
+  createItem(title, description) {
     let randomId = Math.random().toString(36).substr(2, 5);
     this.items.push({
       'id': randomId,
@@ -39,11 +39,11 @@ export class ItemService {
     });
   }
 
-  getItems(){
+  getItems() {
     return this.items;
   }
 
-  updateItem(newValues){
+  updateItem(newValues) {
     let itemIndex = this.items.findIndex(item => item.id == newValues.id);
     this.items[itemIndex] = newValues;
   }
