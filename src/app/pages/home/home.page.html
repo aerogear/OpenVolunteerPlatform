@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>GraphQL TODO APP</ion-title>
+    <ion-title>Ionic GraphQL Task app</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNewItemPage()">
         <ion-icon slot="icon-only" name="add"></ion-icon>
@@ -14,7 +14,7 @@
     Loading...
   </div>
   <div *ngIf="error">
-    Error :(
+    Error when fetching data: {{error}}
   </div>
   <div *ngIf="items">
     <ion-list>
