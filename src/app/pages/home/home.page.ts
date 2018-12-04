@@ -43,7 +43,7 @@ export class HomePage implements OnInit {
       this.errors = result.errors;
       if (result.data) {
         this.items = this.items.filter((data: any) => {
-          return !data.id === result.data.deleteTask;
+          return !(data.id === result.data.deleteTask);
         });
       }
     });
