@@ -24,12 +24,7 @@ export const GET_TASKS = gql`
 
 export const DELETE_TASK = gql`
 mutation deleteTask($id: ID!){
-  deleteTask(id: $id){
-    id
-    title
-    description
-    version
-  }
+  deleteTask(id: $id)
 }
 `;
 

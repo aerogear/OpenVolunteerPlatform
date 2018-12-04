@@ -29,19 +29,19 @@ export class UpdateItemPage implements OnInit {
           description: new FormControl(this.item.description, Validators.required),
         });
       }
-    )
+    );
   }
 
-  goBack(){
+  goBack() {
     this.router.navigate(['/home']);
   }
 
-  updateItem(value){
-    let newValues = {
+  updateItem(value) {
+    const newValues = {
       id: this.item.id,
       title: value.title,
       description: value.description
-    }
+    };
     this.itemService.updateItem(newValues);
     this.goBack();
   }

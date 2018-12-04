@@ -37,18 +37,20 @@ export class HomePage implements OnInit {
   }
 
   deleteItem(item) {
-    console.log('Delete item');
-    // TODO
+    this.itemService.deleteItem(item).subscribe(result => {
+      console.log('Result from query', result);
+      this.loading = result.loading;
+      this.errors = result.errors;
+      if (result.data) {
+        this.items = this.items.filter((data: any) => {
+          return !data.id === result.data.deleteTask;
+        });
+      }
+    });
   }
-
   subscribe() {
     console.log('Subscribe');
     // TODO
   }
-
-  loadMore(item) {
-    console.log('Load more items');
-    // TODO
-  }
-
 }
+
