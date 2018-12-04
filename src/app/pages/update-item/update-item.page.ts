@@ -39,6 +39,7 @@ export class UpdateItemPage implements OnInit {
   updateItem(value) {
     const newValues = {
       id: this.item.id,
+      version: Number(this.item.version), // For some reason it's a string
       title: value.title,
       description: value.description
     };
