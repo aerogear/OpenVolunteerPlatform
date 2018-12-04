@@ -42,7 +42,9 @@ export class UpdateItemPage implements OnInit {
       title: value.title,
       description: value.description
     };
-    this.itemService.updateItem(newValues);
+    this.itemService.updateItem(newValues).subscribe(result => {
+      console.log('Result from mutation', result);
+    });
     this.goBack();
   }
 

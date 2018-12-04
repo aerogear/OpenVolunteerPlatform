@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { ItemService } from '../../services/item.service';
 
 @Component({
@@ -17,7 +17,14 @@ export class HomePage implements OnInit {
   constructor(
     private router: Router,
     public itemService: ItemService
-  ) { }
+  ) {
+    this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd && e.url === '/home') {
+        this.ngOnInit();
+      }
+    });
+  }
 
   ngOnInit() {
     this.itemService.getItems().subscribe(result => {
@@ -38,7 +45,7 @@ export class HomePage implements OnInit {
 
   deleteItem(item) {
     this.itemService.deleteItem(item).subscribe(result => {
-      console.log('Result from query', result);
+      console.log('Result from mutation', result);
       this.loading = result.loading;
       this.errors = result.errors;
       if (result.data) {
