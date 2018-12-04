@@ -12,7 +12,7 @@ export class HomePage implements OnInit {
 
   items: Array<any>;
   loading = true;
-  error: any;
+  errors: any;
 
   constructor(
     private router: Router,
@@ -23,7 +23,7 @@ export class HomePage implements OnInit {
     this.itemService.getItems().subscribe(result => {
       this.items = result.data && result.data.allTasks;
       this.loading = result.loading;
-      this.error = result.errors;
+      this.errors = result.errors;
     });
   }
 
@@ -33,6 +33,10 @@ export class HomePage implements OnInit {
 
   goToItem(item) {
     this.router.navigate(['/update-item', item]);
+  }
+
+  deleteItem(item) {
+    // TODO
   }
 
 }

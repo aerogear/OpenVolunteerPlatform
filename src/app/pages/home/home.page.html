@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Ionic GraphQL Task app</ion-title>
+    <ion-title>Ionic GraphQL Tasks</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNewItemPage()">
         <ion-icon slot="icon-only" name="add"></ion-icon>
@@ -9,26 +9,35 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="outer-content">
   <div *ngIf="loading">
     Loading...
   </div>
-  <div *ngIf="error">
+  <div *ngIf="errors">
     Error when fetching data: {{error}}
   </div>
   <div *ngIf="items">
     <ion-list>
-      <ion-title>
-        Tasks:
-      </ion-title>
-      <ion-item *ngFor="let item of items" (click)="goToItem(item)">
-        <ion-label>
-          {{ item.title }}
-        </ion-label>
-        <ion-label>
-          {{ item.description }}
-        </ion-label>
-      </ion-item>
+      <ion-list-header color="dark">
+        Tasks
+      </ion-list-header>
+      <ion-item-group *ngFor="let item of items">
+        <ion-item>
+          <ion-label>
+            <h2>{{ item.title }} <ion-badge color="primary"> V{{ item.version }}</ion-badge></h2>
+            <ion-note item-start>{{ item.description }}</ion-note>
+          </ion-label>
+          <ion-toggle color="secondary"></ion-toggle>
+          <ion-label>
+            <ion-button shape="round" color="primary" fill="outline" (click)="goToItem(item)">
+              <ion-icon name="arrow-forward"></ion-icon> Update
+            </ion-button>
+            <ion-button shape="round" color="primary" fill="outline" (click)="deleteItem(item)">
+              <ion-icon name="trash"></ion-icon> Delete
+            </ion-button>
+          </ion-label>
+        </ion-item>
+      </ion-item-group>
     </ion-list>
   </div>
 </ion-content>
