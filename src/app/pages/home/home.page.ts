@@ -36,6 +36,17 @@ export class HomePage implements OnInit {
   }
 
   deleteItem(item) {
+    console.log('Delete item');
+    // TODO
+  }
+
+  subscribe() {
+    console.log('Subscribe');
+    // TODO
+  }
+
+  loadMore(item) {
+    console.log('Load more items');
     // TODO
   }
 
