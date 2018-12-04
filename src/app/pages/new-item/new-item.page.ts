@@ -26,11 +26,11 @@ export class NewItemPage implements OnInit {
     });
   }
 
-  goBack(){
+  goBack() {
     this.router.navigate(['/home']);
   }
 
-  createItem(value){
+  createItem(value) {
     this.itemService.createItem(value.title, value.description);
     this.new_item_form.reset();
     this.goBack();

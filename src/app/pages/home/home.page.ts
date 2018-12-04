@@ -21,6 +21,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.itemService.getItems().subscribe(result => {
+      console.log('Result from query', result);
       this.items = result.data && result.data.allTasks;
       this.loading = result.loading;
       this.errors = result.errors;

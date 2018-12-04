@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GET_TASKS } from './graphql.queries';
+import { GET_TASKS , UPDATE_TASK } from './graphql.queries';
 import { Apollo } from 'apollo-angular';
 
 
@@ -34,7 +34,6 @@ export class ItemService {
   }
 
   updateItem(newValues) {
-    // let itemIndex = this.items.findIndex(item => item.id == newValues.id);
-    // this.items[itemIndex] = newValues;
+    return this.apollo.mutate<Task>({ mutation: UPDATE_TASK, variables: newValues });
   }
 }
