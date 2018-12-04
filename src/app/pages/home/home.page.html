@@ -24,19 +24,21 @@
       <ion-item-group *ngFor="let item of items">
         <ion-item>
           <ion-label>
-            <h2>{{ item.title }} <ion-badge color="primary"> V{{ item.version }}</ion-badge></h2>
+            <h2>{{ item.title }}
+              <ion-badge color="primary"> V{{ item.version }}</ion-badge>
+            </h2>
             <ion-note item-start>{{ item.description }}</ion-note>
           </ion-label>
-          <ion-toggle color="secondary"></ion-toggle>
-          <ion-label>
-            <ion-button shape="round" color="primary" fill="outline" (click)="goToItem(item)">
-              <ion-icon name="arrow-forward"></ion-icon> Update
-            </ion-button>
-            <ion-button shape="round" color="primary" fill="outline" (click)="deleteItem(item)">
-              <ion-icon name="trash"></ion-icon> Delete
-            </ion-button>
-          </ion-label>
+          <ion-toggle item-end style="margin-left:5px;" color="secondary"></ion-toggle>
+          <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="goToItem(item)">
+            <ion-icon name="arrow-forward"></ion-icon> Update
+          </ion-button>
+          <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="deleteItem(item)">
+            <ion-icon name="trash"></ion-icon> Delete
+          </ion-button>
         </ion-item>
+        <ion-item-divider>
+        </ion-item-divider>
       </ion-item-group>
     </ion-list>
   </div>
