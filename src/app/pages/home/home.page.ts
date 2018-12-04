@@ -48,11 +48,9 @@ export class HomePage implements OnInit {
       console.log('Result from mutation', result);
       this.loading = result.loading;
       this.errors = result.errors;
-      if (result.data) {
-        this.items = this.items.filter((data: any) => {
-          return !(data.id === result.data.deleteTask);
-        });
-      }
+      this.items = this.items.filter((data: any) => {
+        return !(data.id === item.id);
+      });
     });
   }
   subscribe() {
