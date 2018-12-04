@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { ItemService } from '../../services/item.service';
+import { ItemService, Task } from '../../services/item.service';
 
 @Component({
   selector: 'app-page-home',
@@ -10,7 +10,7 @@ import { ItemService } from '../../services/item.service';
 
 export class HomePage implements OnInit {
 
-  items: Array<any>;
+  items: Array<Task>;
   loading = true;
   errors: any;
 

@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { GET_TASKS, UPDATE_TASK, DELETE_TASK, ADD_TASK } from './graphql.queries';
 import { Apollo } from 'apollo-angular';
 
-
-interface Task {
+export interface Task {
   id: string;
+  version: number;
   title: string;
   description: string;
 }
