@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ItemService } from '../../services/item.service';
+import { ItemService, Task } from '../../services/item.service';
 
 @Component({
   selector: 'update-item',
@@ -10,7 +10,7 @@ import { ItemService } from '../../services/item.service';
 })
 export class UpdateItemPage implements OnInit {
 
-  item: any;
+  item: Task;
   edit_item_form: FormGroup;
 
   constructor(
@@ -23,26 +23,29 @@ export class UpdateItemPage implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(
       param => {
-        this.item = param;
+        this.item = param as Task;
         this.edit_item_form = this.formBuilder.group({
           title: new FormControl(this.item.title, Validators.required),
           description: new FormControl(this.item.description, Validators.required),
         });
       }
-    )
+    );
   }
 
-  goBack(){
+  goBack() {
     this.router.navigate(['/home']);
   }
 
-  updateItem(value){
-    let newValues = {
+  updateItem(value) {
+    const newValues = {
       id: this.item.id,
+      version: Number(this.item.version), // For some reason it's a string
       title: value.title,
       description: value.description
-    }
-    this.itemService.updateItem(newValues);
+    };
+    this.itemService.updateItem(newValues).subscribe(result => {
+      console.log('Result from mutation', result);
+    });
     this.goBack();
   }
 

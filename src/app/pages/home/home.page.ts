@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ItemService } from '../../services/item.service';
+import { Router, NavigationEnd } from '@angular/router';
+import { ItemService, Task } from '../../services/item.service';
 
 @Component({
   selector: 'app-page-home',
@@ -10,17 +10,25 @@ import { ItemService } from '../../services/item.service';
 
 export class HomePage implements OnInit {
 
-  items: Array<any>;
+  items: Array<Task>;
   loading = true;
   errors: any;
 
   constructor(
     private router: Router,
     public itemService: ItemService
-  ) { }
+  ) {
+    this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd && e.url === '/home') {
+        this.ngOnInit();
+      }
+    });
+  }
 
   ngOnInit() {
     this.itemService.getItems().subscribe(result => {
+      console.log('Result from query', result);
       this.items = result.data && result.data.allTasks;
       this.loading = result.loading;
       this.errors = result.errors;
@@ -36,18 +44,18 @@ export class HomePage implements OnInit {
   }
 
   deleteItem(item) {
-    console.log('Delete item');
-    // TODO
+    this.itemService.deleteItem(item).subscribe(result => {
+      console.log('Result from mutation', result);
+      this.loading = result.loading;
+      this.errors = result.errors;
+      this.items = this.items.filter((data: any) => {
+        return !(data.id === item.id);
+      });
+    });
   }
-
   subscribe() {
     console.log('Subscribe');
     // TODO
   }
-
-  loadMore(item) {
-    console.log('Load more items');
-    // TODO
-  }
-
 }
+

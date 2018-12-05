@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { GET_TASKS } from './graphql.queries';
+import { GET_TASKS, UPDATE_TASK, DELETE_TASK, ADD_TASK } from './graphql.queries';
 import { Apollo } from 'apollo-angular';
 
-
-interface Task {
+export interface Task {
   id: string;
+  version: number;
   title: string;
   description: string;
 }
@@ -25,16 +25,18 @@ export class ItemService {
   }
 
   createItem(title, description) {
-    const randomId = Math.random().toString(36).substr(2, 5);
-    // this.items.push({
-    //   'id': randomId,
-    //   'title': title,
-    //   'description': description
-    // });
+    const item = {
+      'title': title,
+      'description': description,
+    };
+    return this.apollo.mutate<Task>({ mutation: ADD_TASK, variables: item });
   }
 
   updateItem(newValues) {
-    // let itemIndex = this.items.findIndex(item => item.id == newValues.id);
-    // this.items[itemIndex] = newValues;
+    return this.apollo.mutate<Task>({ mutation: UPDATE_TASK, variables: newValues });
+  }
+
+  deleteItem(item) {
+    return this.apollo.mutate<Task>({ mutation: DELETE_TASK, variables: { id: item.id } });
   }
 }
