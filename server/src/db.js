@@ -5,8 +5,8 @@ async function connect (options) {
     client: 'pg',
     connection: options
   })
-  const usersExists = await db.schema.hasTable('tasks')
-  if (!usersExists) {
+  const tasksExists = await db.schema.hasTable('tasks')
+  if (!tasksExists) {
     await db.schema.createTable('tasks', function (table) {
       table.string('title')
       table.string('description')

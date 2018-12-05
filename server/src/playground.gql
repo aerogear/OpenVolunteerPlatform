@@ -34,9 +34,18 @@ query allTasks {
   }
 }
 
-subscription TaskSubscription{
+subscription TaskCreated{
   taskCreated{
     ...TaskFields
   }
 }
 
+subscription TaskModified {
+  taskModified {
+    ...TaskFields
+  }
+}
+
+subscription TaskDeleted {
+  taskDeleted 
+}
