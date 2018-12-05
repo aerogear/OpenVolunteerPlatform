@@ -34,7 +34,7 @@ query allTasks {
   }
 }
 
-subscription TaskCreated{
+subscription TaskCreated {
   taskCreated{
     ...TaskFields
   }
