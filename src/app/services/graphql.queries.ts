@@ -63,6 +63,6 @@ export const TASK_MODIFIED_SUBSCRIPTION = gql`
 
 export const TASK_DELETED_SUBSCRIPTION = gql`
   subscription taskDeleted {
-    taskDeleted;
+    taskDeleted
   }
 `;
