@@ -1,11 +1,16 @@
-const { PubSub }  = require('apollo-server');
+const { PubSub } = require('apollo-server');
 
-const TASK_CREATED = 'UserCreated';
+
+// TODO write helper for building this classical event object
+const eventsArray = {
+    TASK: {
+        CREATED: 'TaskCreated',
+        DELETED: 'TaskDeleted',
+        MODIFIED: 'TaskModified'
+    }
+};
 
 module.exports = {
-
-    EVENTS: {
-        TASK: { CREATED: TASK_CREATED }
-    },
+    EVENTS: eventsArray,
     pubSub: new PubSub()
 }

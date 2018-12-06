@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { ItemService, Task } from '../../services/item.service';
+import { ItemService } from '../../services/item.service';
+import { Task } from '../../services/types';
 
 @Component({
   selector: 'app-page-home',
@@ -17,14 +18,7 @@ export class HomePage implements OnInit {
   constructor(
     private router: Router,
     public itemService: ItemService
-  ) {
-    this.router.events.subscribe((e: any) => {
-      // If it is a NavigationEnd event re-initalise the component
-      if (e instanceof NavigationEnd && e.url === '/home') {
-        this.ngOnInit();
-      }
-    });
-  }
+  ) { }
 
   ngOnInit() {
     this.itemService.getItems().subscribe(result => {
@@ -32,6 +26,33 @@ export class HomePage implements OnInit {
       this.items = result.data && result.data.allTasks;
       this.loading = result.loading;
       this.errors = result.errors;
+    }, error => {
+      console.log('error from query', error);
+      this.errors = error;
+    });
+    this.itemService.subscribeToNew(result => {
+      if (result.data && result.data.taskCreated) {
+        this.items.push(result.data.taskCreated);
+      }
+    })
+    this.itemService.subscribeToUpdate(update => {
+      if (update.data && update.data.taskModified) {
+        const updatedItem = update.data.taskModified;
+        const index = this.items.findIndex(item => {
+          return item.id === updatedItem.id;
+        })
+        if (index != -1) {
+          this.items[index] = updatedItem
+        }
+      }
+    })
+    this.itemService.subscribeToDelete(deletedObj => {
+      if (deletedObj.data && deletedObj.data.taskDeleted) {
+        const deletedIndex = deletedObj.data.taskDeleted;
+        if (deletedIndex >= 0) {
+          this.items.splice(deletedIndex);
+        }
+      }
     });
   }
 
@@ -45,17 +66,8 @@ export class HomePage implements OnInit {
 
   deleteItem(item) {
     this.itemService.deleteItem(item).subscribe(result => {
-      console.log('Result from mutation', result);
-      this.loading = result.loading;
-      this.errors = result.errors;
-      this.items = this.items.filter((data: any) => {
-        return !(data.id === item.id);
-      });
+      console.log('Result from delete mutation', result);
     });
-  }
-  subscribe() {
-    console.log('Subscribe');
-    // TODO
   }
 }
 

@@ -13,8 +13,12 @@ Requirements:
 ```
 npm install
 ```
+3. Install Ionic
+```
+npm ionic
+```
 
-2. Browse Ionic 4 app
+3. Browse Ionic 4 app
 ```
 npm run start
 ```

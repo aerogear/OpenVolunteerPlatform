@@ -39,7 +39,7 @@ mutation updateTask($description: String, $id: ID!, $title: String, $version: In
 }
 `;
 
-export const TASK_SUBSCRIPTION = gql`
+export const TASK_CREATED_SUBSCRIPTION = gql`
   subscription taskCreated {
     taskCreated {
       id
@@ -47,5 +47,22 @@ export const TASK_SUBSCRIPTION = gql`
       description
       version
     }
+  }
+`;
+
+export const TASK_MODIFIED_SUBSCRIPTION = gql`
+  subscription taskModified {
+    taskModified {
+      id
+      title
+      description
+      version
+    }
+  }
+`;
+
+export const TASK_DELETED_SUBSCRIPTION = gql`
+  subscription taskDeleted {
+    taskDeleted
   }
 `;
