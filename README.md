@@ -1,4 +1,16 @@
-## Ionic 4 Apollo GraphQL Starter
+## Ionic 4 Apollo GraphQL Example
+
+Sample application that integrates Ionic and Apollo GraphQL sever.
+
+Implementation include:
+
+- Ionic4 Angular frontent backed by Cordova/Capacitor for mobile deployment
+- Apollo GraphQL Node.js server implementing sample `Tasks` API
+
+## Aproach
+
+Server side implements classical CRUD model on `Task` objects. 
+Updates are being delivered using GraphQL subscriptions.
 
 ## Running example
 
