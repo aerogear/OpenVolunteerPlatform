@@ -42,9 +42,6 @@ npm run start
 
 ![](./resources/screenshot.png)
 
-https://www.youtube.com/watch?v=COTmXyXg5rU
-
-
 ### GraphQL tutorial
 
 This repo is using GraphQL for communication between server and client.
