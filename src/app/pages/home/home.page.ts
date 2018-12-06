@@ -66,12 +66,7 @@ export class HomePage implements OnInit {
 
   deleteItem(item) {
     this.itemService.deleteItem(item).subscribe(result => {
-      console.log('Result from mutation', result);
-      this.loading = result.loading;
-      this.errors = result.errors;
-      this.items = this.items.filter((data: any) => {
-        return !(data.id === item.id);
-      });
+      console.log('Result from delete mutation', result);
     });
   }
 }
