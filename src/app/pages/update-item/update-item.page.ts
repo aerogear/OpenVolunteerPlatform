@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ItemService, Task } from '../../services/item.service';
+import { ItemService } from '../../services/item.service';
+import { Task } from '../../services/types';
 
 @Component({
   selector: 'update-item',

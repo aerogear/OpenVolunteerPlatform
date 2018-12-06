@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
   constructor(
     private router: Router,
     public itemService: ItemService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.itemService.getItems().subscribe(result => {
@@ -26,6 +26,33 @@ export class HomePage implements OnInit {
       this.items = result.data && result.data.allTasks;
       this.loading = result.loading;
       this.errors = result.errors;
+    }, error => {
+      console.log('error from query', error);
+      this.errors = error;
+    });
+    this.itemService.subscribeToNew(result => {
+      if (result.data && result.data.taskCreated) {
+        this.items.push(result.data.taskCreated);
+      }
+    })
+    this.itemService.subscribeToUpdate(update => {
+      if (update.data && update.data.taskModified) {
+        const updatedItem = update.data.taskModified;
+        const index = this.items.findIndex(item => {
+          return item.id === updatedItem.id;
+        })
+        if (index != -1) {
+          this.items[index] = updatedItem
+        }
+      }
+    })
+    this.itemService.subscribeToDelete(deletedObj => {
+      if (deletedObj.data && deletedObj.data.taskDeleted) {
+        const deletedIndex = deletedObj.data.taskDeleted;
+        if (deletedIndex >= 0) {
+          this.items.splice(deletedIndex);
+        }
+      }
     });
   }
 
@@ -46,10 +73,6 @@ export class HomePage implements OnInit {
         return !(data.id === item.id);
       });
     });
-  }
-  subscribe() {
-    console.log('Subscribe');
-    // TODO
   }
 }
 
