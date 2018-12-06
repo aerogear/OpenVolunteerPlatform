@@ -49,8 +49,10 @@ export class HomePage implements OnInit {
     this.itemService.subscribeToDelete(deletedObj => {
       if (deletedObj.data && deletedObj.data.taskDeleted) {
         const deletedIndex = deletedObj.data.taskDeleted;
-        if (deletedIndex >= 0) {
-          this.items.splice(deletedIndex);
+        if (deletedIndex) {
+          this.items = this.items.filter(item => {
+            return !(item.id === deletedIndex);
+          });
         }
       }
     });
