@@ -1,15 +1,28 @@
 import { Injectable } from '@angular/core';
-import { GET_TASKS, UPDATE_TASK, DELETE_TASK, ADD_TASK, TASK_CREATED_SUBSCRIPTION, TASK_DELETED_SUBSCRIPTION, TASK_MODIFIED_SUBSCRIPTION } from './graphql.queries';
-import { Apollo } from 'apollo-angular';
+import {
+  ADD_TASK,
+  DELETE_TASK,
+  GET_TASKS,
+  TASK_CREATED_SUBSCRIPTION,
+  TASK_DELETED_SUBSCRIPTION,
+  TASK_MODIFIED_SUBSCRIPTION,
+  UPDATE_TASK
+} from './graphql.queries';
 import { AllTasks, Task } from './types';
-import { PartialObserver } from 'rxjs';
+import ApolloClient from 'apollo-client/ApolloClient';
+import { AeroGear } from './aerogear';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
 
-  constructor(private apollo: Apollo) { }
+  // @ts-ignore
+  private readonly apollo: ApolloClient;
+
+  constructor(private aeroGear: AeroGear) {
+    this.apollo = aeroGear.apolloClient;
+  }
 
   getItems() {
     return this.apollo.query<AllTasks>({ query: GET_TASKS });

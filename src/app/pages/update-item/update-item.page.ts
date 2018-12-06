@@ -44,7 +44,7 @@ export class UpdateItemPage implements OnInit {
       title: value.title,
       description: value.description
     };
-    this.itemService.updateItem(newValues).subscribe(result => {
+    this.itemService.updateItem(newValues).then(result => {
       console.log('Result from mutation', result);
     });
     this.goBack();

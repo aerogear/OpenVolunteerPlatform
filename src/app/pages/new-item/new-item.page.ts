@@ -31,7 +31,7 @@ export class NewItemPage implements OnInit {
   }
 
   createItem(value) {
-    this.itemService.createItem(value.title, value.description).subscribe(result => {
+    this.itemService.createItem(value.title, value.description).then(result => {
       console.log('Result from mutation', result);
     });
     this.new_item_form.reset();
