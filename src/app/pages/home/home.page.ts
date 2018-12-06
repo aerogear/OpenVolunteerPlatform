@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { ItemService, Task } from '../../services/item.service';
+import { ItemService } from '../../services/item.service';
+import { Task } from '../../services/types';
 
 @Component({
   selector: 'app-page-home',
@@ -17,14 +18,7 @@ export class HomePage implements OnInit {
   constructor(
     private router: Router,
     public itemService: ItemService
-  ) {
-    this.router.events.subscribe((e: any) => {
-      // If it is a NavigationEnd event re-initalise the component
-      if (e instanceof NavigationEnd && e.url === '/home') {
-        this.ngOnInit();
-      }
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.itemService.getItems().subscribe(result => {
