@@ -19,36 +19,48 @@ Requirements:
 - Docker
 - Node.js 6.x or above
 
-### Running the client
-
-1.  Install this Ionic 4 starter app
-```
-npm install
-```
-3. Install Ionic
-```
-npm install -g ionic
-```
-
-3. Browse Ionic 4 app
-```
-npm run start
-```
-
-3. Run on Emulator
-```
-npm run ionic:android
-```
 ### Running the server
 
-Running server requires docker in order to run database
+1. Start the postgres docker image
 
-```
-cd ./server
-docker-compose up -d
-npm install
-npm run start
-```
+   ```shell
+   cd ./server
+   docker-compose up -d
+   ```
+
+1. Start the server
+
+   ```shell
+   npm install
+   npm run start
+   ```
+
+### Running the client
+
+
+1. Install Ionic
+
+   ```shell
+   npm install -g ionic
+   ```
+
+1. Install this Ionic 4 starter app
+
+   ```shell
+   npm install
+   ```
+
+1. Browse Ionic 4 app
+   
+   ```shell
+   npm run start
+   ```
+
+1. Run on Emulator
+
+   ```shell
+   npm run ionic:android
+   ```
 
 ### Demo
 
