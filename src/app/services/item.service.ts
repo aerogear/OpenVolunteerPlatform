@@ -10,14 +10,14 @@ import {
 } from './graphql.queries';
 import { AllTasks, Task } from './types';
 import { AeroGear } from './aerogear';
+import { VoyagerClient } from '@aerogear/datasync-js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
 
-  // @ts-ignore
-  private readonly apollo: ApolloClient;
+  private readonly apollo: VoyagerClient;
 
   constructor(private aeroGear: AeroGear) {
     this.apollo = aeroGear.apolloClient;

@@ -12,7 +12,6 @@ export class AeroGear {
   constructor() {
   }
 
-  // @ts-ignore
   get apolloClient(): VoyagerClient {
     return this._apolloClient;
   }
