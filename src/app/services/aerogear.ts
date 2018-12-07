@@ -1,6 +1,5 @@
 import { createClient, strategies } from '@aerogear/datasync-js';
 import { Injectable } from '@angular/core';
-import ApolloClient from 'apollo-client/ApolloClient';
 
 @Injectable({
   providedIn: 'root'

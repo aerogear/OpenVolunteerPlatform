@@ -9,7 +9,6 @@ import {
   UPDATE_TASK
 } from './graphql.queries';
 import { AllTasks, Task } from './types';
-import ApolloClient from 'apollo-client/ApolloClient';
 import { AeroGear } from './aerogear';
 
 @Injectable({
