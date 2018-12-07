@@ -1,4 +1,4 @@
-import { createClient, strategies } from '@aerogear/datasync-js';
+import { createClient, strategies, VoyagerClient } from '@aerogear/datasync-js';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -7,14 +7,13 @@ import { Injectable } from '@angular/core';
 
 export class AeroGear {
 
-  // @ts-ignore
-  private _apolloClient: ApolloClient;
+  private _apolloClient: VoyagerClient;
 
   constructor() {
   }
 
   // @ts-ignore
-  get apolloClient(): ApolloClient {
+  get apolloClient(): VoyagerClient {
     return this._apolloClient;
   }
 
