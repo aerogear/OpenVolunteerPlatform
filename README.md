@@ -27,7 +27,7 @@ npm install
 ```
 3. Install Ionic
 ```
-npm ionic
+npm install -g ionic
 ```
 
 3. Browse Ionic 4 app
