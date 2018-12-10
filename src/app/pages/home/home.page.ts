@@ -34,18 +34,18 @@ export class HomePage implements OnInit {
       if (result.data && result.data.taskCreated) {
         this.items.push(result.data.taskCreated);
       }
-    })
+    });
     this.itemService.subscribeToUpdate(update => {
       if (update.data && update.data.taskModified) {
         const updatedItem = update.data.taskModified;
         const index = this.items.findIndex(item => {
           return item.id === updatedItem.id;
-        })
-        if (index != -1) {
-          this.items[index] = updatedItem
+        });
+        if (index !== -1) {
+          this.items[index] = updatedItem;
         }
       }
-    })
+    });
     this.itemService.subscribeToDelete(deletedObj => {
       if (deletedObj.data && deletedObj.data.taskDeleted) {
         const deletedIndex = deletedObj.data.taskDeleted;
