@@ -51,6 +51,7 @@ const resolvers = {
 
   Mutation: {
     createTask: async (obj, args, context, info) => {
+      console.log("Create", args)
       const result = await context.db('tasks').insert({ ...args, version: 1 }).returning('*').then((rows) => rows[0])
       // TODO context helper for publishing subscriptions in SDK?
       pubSub.publish(EVENTS.TASK.CREATED, {
@@ -59,6 +60,7 @@ const resolvers = {
       return result
     },
     updateTask: async (obj, args, context, info) => {
+      console.log("Update", args)
       const task = await context.db('tasks').select()
         .where('id', args.id).then((rows) => rows[0])
       if (!task) {
@@ -72,6 +74,7 @@ const resolvers = {
       return update;
     },
     deleteTask: async (obj, args, context, info) => {
+      console.log("Delete", args)
       const result = await context.db('tasks').delete()
         .where('id', args.id).returning('*').then((rows) => {
           if (rows[0]) {
