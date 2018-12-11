@@ -68,6 +68,7 @@ export class HomePage implements OnInit {
         this.online = networkInfo.online;
       }
     });
+    this.queue = 0;
   }
 
   openNewItemPage() {

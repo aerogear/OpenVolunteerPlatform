@@ -47,14 +47,11 @@
 </ion-content>
 
 <ion-footer>
-  <div>
-    Offline queue:
-    <ion-badge item-end color="dark">{{queue}}</ion-badge>
-  </div>
-  <div *ngIf="online">
-    <ion-badge item-end color="secondary">Online</ion-badge>
-  </div>
-  <div *ngIf="!online">
-    <ion-badge item-end color="dark">Offline</ion-badge>
+  <div style="margin: 10px;">
+    <div>Number of items added when offline: {{queue}}</div>
+    <div>Network status: 
+        <span *ngIf="online" item-end color="secondary">Online</span>
+        <span *ngIf="!online" item-end color="dark">Offline</span>
+    </div>
   </div>
 </ion-footer>
