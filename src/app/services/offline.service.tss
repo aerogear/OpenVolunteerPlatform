@@ -1,0 +1,14 @@
+// import {  } from '@aerogear/datasync-js';
+// import { Injectable } from '@angular/core';
+
+// @Injectable({
+//     providedIn: 'root'
+// })
+// /**
+//  * Helper service to show state of offline queue
+//  */
+// export class OfflineQueueService {
+//     constructor() {
+
+//     }
+// }

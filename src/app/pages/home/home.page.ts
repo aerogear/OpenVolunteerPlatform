@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ItemService } from '../../services/item.service';
 import { Task } from '../../services/types';
+import { NetworkService } from '../../services/network.service';
 
 @Component({
   selector: 'app-page-home',
@@ -12,12 +13,15 @@ import { Task } from '../../services/types';
 export class HomePage implements OnInit {
 
   items: Array<Task>;
+  online: boolean;
+  queue: number;
   loading = true;
   errors: any;
 
   constructor(
     private router: Router,
-    public itemService: ItemService
+    public itemService: ItemService,
+    public networkService: NetworkService
   ) { }
 
   ngOnInit() {
@@ -54,6 +58,14 @@ export class HomePage implements OnInit {
             return !(item.id === deletedIndex);
           });
         }
+      }
+    });
+
+    this.online = this.networkService.networkInterface.isOffline();
+    this.networkService.networkInterface.onStatusChangeListener({
+      onStatusChange: (networkInfo) => {
+        console.log(`Network state changed. Online: ${networkInfo.online}`);
+        this.online = networkInfo.online;
       }
     });
   }

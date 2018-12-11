@@ -14,6 +14,8 @@
     Loading...
   </div>
   <div *ngIf="errors">
+    Cannot load initial data to cache.
+    Please connect to internet in order to load data
     Error when fetching data: {{errors}}
   </div>
   <div *ngIf="items">
@@ -43,3 +45,16 @@
     </ion-list>
   </div>
 </ion-content>
+
+<ion-footer>
+  <div>
+    Offline queue:
+    <ion-badge item-end color="dark">{{queue}}</ion-badge>
+  </div>
+  <div *ngIf="online">
+    <ion-badge item-end color="secondary">Online</ion-badge>
+  </div>
+  <div *ngIf="!online">
+    <ion-badge item-end color="dark">Offline</ion-badge>
+  </div>
+</ion-footer>
