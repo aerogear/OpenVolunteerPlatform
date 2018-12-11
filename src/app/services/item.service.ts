@@ -9,7 +9,7 @@ import {
   UPDATE_TASK
 } from './graphql.queries';
 import { AllTasks, Task } from './types';
-import { AeroGear } from './aerogear';
+import { VoyagerService } from './voyager.service';
 import { VoyagerClient } from '@aerogear/datasync-js';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class ItemService {
 
   private readonly apollo: VoyagerClient;
 
-  constructor(private aeroGear: AeroGear) {
+  constructor(private aeroGear: VoyagerService) {
     this.apollo = aeroGear.apolloClient;
   }
 

@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { AeroGear } from './services/aerogear';
+import { VoyagerService } from './services/voyager.service';
 
-function apolloClientFactory(aeroGear: AeroGear) {
+function apolloClientFactory(aeroGear: VoyagerService) {
   return () => aeroGear.createApolloClient();
 }
 
@@ -10,7 +10,7 @@ function apolloClientFactory(aeroGear: AeroGear) {
     {
       provide: APP_INITIALIZER,
       useFactory: apolloClientFactory,
-      deps: [AeroGear],
+      deps: [VoyagerService],
       multi: true
     }
   ]

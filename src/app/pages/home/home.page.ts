@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { ItemService } from '../../services/item.service';
 import { Task } from '../../services/types';
 import { NetworkService } from '../../services/network.service';
+import { VoyagerService } from '../../services/voyager.service';
 
 @Component({
   selector: 'app-page-home',
@@ -21,7 +22,8 @@ export class HomePage implements OnInit {
   constructor(
     private router: Router,
     public itemService: ItemService,
-    public networkService: NetworkService
+    public networkService: NetworkService,
+    public aerogear: VoyagerService
   ) { }
 
   ngOnInit() {
@@ -68,6 +70,15 @@ export class HomePage implements OnInit {
         this.online = networkInfo.online;
       }
     });
+    const self = this;
+    this.aerogear.queueListener = {
+      onOperationEnqueued(operation) {
+        self.queue = self.queue + 1;
+      },
+      queueCleared() {
+        self.queue = 0;
+      }
+    };
     this.queue = 0;
   }
 
