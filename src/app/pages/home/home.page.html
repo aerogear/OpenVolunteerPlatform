@@ -29,7 +29,12 @@
             <h2>{{ item.title }}
               <ion-badge color="primary"> V{{ item.version }}</ion-badge>
             </h2>
-            <ion-note item-start>{{ item.description }}</ion-note>
+            <ion-note item-start>
+              <span *ngIf="item.optimisticResponse" item-end color="secondary">
+                <b>PENDING: </b>
+              </span>
+              {{ item.description }}
+            </ion-note>
           </ion-label>
           <ion-toggle item-end style="margin-left:5px;" color="secondary"></ion-toggle>
           <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="goToItem(item)">
