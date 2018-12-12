@@ -39,8 +39,8 @@ export class VoyagerService {
         }
       }
     };
-    const uri = 'http://ee26f0f7.ngrok.io/graphql';
-    const wsUri = 'ws://ee26f0f7.ngrok.io/graphql';
+    const uri = 'http://localhost:4000/graphql';
+    const wsUri = 'ws://localhost:4000/graphql';
     this._apolloClient = await createClient({
       httpUrl: uri,
       wsUrl: wsUri,
