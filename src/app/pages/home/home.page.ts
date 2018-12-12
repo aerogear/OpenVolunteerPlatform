@@ -26,16 +26,14 @@ export class HomePage implements OnInit {
     public aerogear: VoyagerService
   ) { }
 
-  async ngOnInit() {
-    this.itemService.getItems().then(result => {
-      console.log('Result from query', result);
-      this.items = result.data && result.data.allTasks;
-      this.loading = result.loading;
-      this.errors = result.errors;
-    }, error => {
-      console.log('error from query', error);
-      this.errors = error;
-    });
+  ionViewWillEnter() {
+    this.loadData();
+   }
+
+
+  ngOnInit() {
+    this.loadData();
+  
     this.itemService.subscribeToNew(result => {
       if (result.data && result.data.taskCreated) {
         this.items.push(result.data.taskCreated);
@@ -83,6 +81,18 @@ export class HomePage implements OnInit {
       }
     };
     this.queue = 0;
+  }
+
+  private loadData() {
+    this.itemService.getItems().then(result => {
+      console.log('Result from query', result);
+      this.items = result.data && result.data.allTasks;
+      this.loading = result.loading;
+      this.errors = result.errors;
+    }, error => {
+      console.log('error from query', error);
+      this.errors = error;
+    });
   }
 
   openNewItemPage() {
