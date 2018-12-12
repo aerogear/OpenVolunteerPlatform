@@ -10,7 +10,7 @@ import {
 } from './graphql.queries';
 import { AllTasks, Task } from './types';
 import { VoyagerService } from './voyager.service';
-import { VoyagerClient } from '@aerogear/datasync-js';
+import { VoyagerClient, createOptimisticResponse } from '@aerogear/datasync-js';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,10 @@ export class ItemService {
       'title': title,
       'description': description,
     };
-    return this.apollo.mutate<Task>({ mutation: ADD_TASK, variables: item });
+    return this.apollo.mutate<Task>({
+      mutation: ADD_TASK, variables: item,
+      optimisticResponse: createOptimisticResponse('createTask', 'Task', item)
+    });
   }
 
   updateItem(newValues) {
