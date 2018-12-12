@@ -26,7 +26,7 @@ export class HomePage implements OnInit {
     public aerogear: VoyagerService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.itemService.getItems().then(result => {
       console.log('Result from query', result);
       this.items = result.data && result.data.allTasks;
@@ -63,16 +63,19 @@ export class HomePage implements OnInit {
       }
     });
 
-    this.online = !this.networkService.networkInterface.isOffline();
+    this.online = ! await this.networkService.networkInterface.isOffline();
     this.networkService.networkInterface.onStatusChangeListener({
       onStatusChange: (networkInfo) => {
         console.log(`Network state changed. Online: ${networkInfo.online}`);
         this.online = networkInfo.online;
       }
     });
+    console.log(`Online: ${this.online}`);
+    console.log(`NetworkStatus Provider: ${this.networkService.networkInterface.constructor.name}`);
+
     const self = this;
     this.aerogear.queueListener = {
-      onOperationEnqueued(operation) {
+      onOperationEnqueued() {
         self.queue = self.queue + 1;
       },
       queueCleared() {
