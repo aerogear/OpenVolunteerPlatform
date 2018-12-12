@@ -63,7 +63,7 @@ export class HomePage implements OnInit {
       }
     });
 
-    this.online = this.networkService.networkInterface.isOffline();
+    this.online = !this.networkService.networkInterface.isOffline();
     this.networkService.networkInterface.onStatusChangeListener({
       onStatusChange: (networkInfo) => {
         console.log(`Network state changed. Online: ${networkInfo.online}`);
