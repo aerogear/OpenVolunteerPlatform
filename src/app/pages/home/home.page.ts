@@ -26,14 +26,13 @@ export class HomePage implements OnInit {
     public aerogear: VoyagerService
   ) { }
 
+
   ionViewWillEnter() {
     this.loadData();
    }
 
 
   ngOnInit() {
-    this.loadData();
-  
     this.itemService.subscribeToNew(result => {
       if (result.data && result.data.taskCreated) {
         this.items.push(result.data.taskCreated);
