@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Ionic GraphQL Tasks</ion-title>
+    <ion-title>GraphQL Voyager Tasks</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNewItemPage()">
         <ion-icon slot="icon-only" name="add"></ion-icon>
@@ -31,7 +31,7 @@
             </h2>
             <ion-note item-start>
               <span *ngIf="item.optimisticResponse" item-end color="secondary">
-                <b>PENDING: </b>
+                <b>PENDING:</b>
               </span>
               {{ item.description }}
             </ion-note>

@@ -26,7 +26,7 @@ export class ItemService {
   getItems() {
     return this.apollo.query<AllTasks>({
       query: GET_TASKS,
-      fetchPolicy: 'cache-and-network',
+      fetchPolicy: 'network-only',
       errorPolicy: 'all'
     });
   }
@@ -48,6 +48,7 @@ export class ItemService {
     return this.apollo.mutate<Task>({
       mutation: UPDATE_TASK,
       variables: newValues,
+      optimisticResponse: createOptimisticResponse('updateTask', 'Task', newValues),
       update: this.updateCacheOnEdit
     });
   }
@@ -57,6 +58,7 @@ export class ItemService {
       mutation: DELETE_TASK,
       variables: { id: item.id },
       update: this.updateCacheOnDelete
+      optimisticResponse: createOptimisticResponse('deleteTask', 'Task', item.id),
     });
   }
 
@@ -75,14 +77,14 @@ export class ItemService {
   // Cache processors
 
   updateCacheOnDelete(cache, { data: { deleteTask } }) {
-    const { data } = cache.readQuery({ query: GET_TASKS });
-    const newData = data.filter((item) => {
-      return deleteTask.id !== item.id;
+    const { allTasks } = cache.readQuery({ query: GET_TASKS });
+    const newData = allTasks.filter((item) => {
+      return deleteTask !== item.id;
     });
     cache.writeQuery({
       query: GET_TASKS,
       data: {
-        'allTasks({})': newData
+        'allTasks': newData
       }
     });
   }
@@ -92,7 +94,7 @@ export class ItemService {
     cache.writeQuery({
       query: GET_TASKS,
       data: {
-        'allTasks({})': allTasks.concat([createTask])
+        'allTasks': allTasks.concat([createTask])
       }
     });
   }
