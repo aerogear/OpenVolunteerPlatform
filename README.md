@@ -14,7 +14,8 @@ Updates are being delivered using GraphQL subscriptions.
 
 ### GraphQL Client
 
-https://github.com/aerogear/aerogear-js-sdk/
+Application using [Voyager client](https://github.com/aerogear/aerogear-js-sdk/tree/master/packages/sync) to provide additional
+offline capabilities on top of the Apollo GraphQL 
 
 
 ## Running example
