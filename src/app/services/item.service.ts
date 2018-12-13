@@ -34,16 +34,26 @@ export class ItemService {
     };
     return this.apollo.mutate<Task>({
       mutation: ADD_TASK, variables: item,
-      optimisticResponse: createOptimisticResponse('createTask', 'Task', item)
+      optimisticResponse: createOptimisticResponse('createTask', 'Task', item),
+      update: this.updateCacheOnAdd
     });
   }
 
   updateItem(newValues) {
-    return this.apollo.mutate<Task>({ mutation: UPDATE_TASK, variables: newValues });
+    return this.apollo.mutate<Task>({
+      mutation: UPDATE_TASK,
+      variables: newValues,
+      update: this.updateCacheOnEdit
+    });
   }
 
   deleteItem(item) {
-    return this.apollo.mutate<Task>({ mutation: DELETE_TASK, variables: { id: item.id } });
+    return this.apollo.mutate<Task>({
+      mutation: DELETE_TASK,
+      variables: { id: item.id },
+      refetchQueries: GET_TASKS,
+      update: this.updateCacheOnDelete
+    });
   }
 
   subscribeToUpdate(observer?: (value: any) => void) {
@@ -56,5 +66,32 @@ export class ItemService {
 
   subscribeToNew(observer?: (value: any) => void) {
     return this.apollo.subscribe<any>({ query: TASK_CREATED_SUBSCRIPTION }).subscribe(observer);
+  }
+
+  // Cache processors
+
+  updateCacheOnDelete(cache, { data: { deleteTask } }) {
+    const { data } = cache.readQuery({ query: GET_TASKS });
+    const newData = data.filter((item) => {
+      return deleteTask.id !== item.id;
+    });
+    cache.writeQuery({
+      query: GET_TASKS,
+      data: {
+        allTasks: newData
+      }
+    });
+  }
+
+  updateCacheOnAdd(cache, { data: { createTask } }) {
+    const { allTasks } = cache.readQuery({ query: GET_TASKS });
+    cache.writeQuery({
+      query: GET_TASKS,
+      data: { allTasks: allTasks.concat([createTask]) }
+    });
+  }
+
+  updateCacheOnEdit() {
+    // No work - edits will persist the same id of the item
   }
 }
