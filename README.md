@@ -1,16 +1,21 @@
-## Ionic 4 Apollo GraphQL Example
+## AeroGear Apollo Voyager Example app
 
-Sample application that integrates Ionic and Apollo GraphQL sever.
+Example application for showcasing 
 
 Implementation include:
 
-- Ionic4 Angular frontent backed by Cordova/Capacitor for mobile deployment
-- Apollo GraphQL Node.js server implementing sample `Tasks` API
+- Ionic4 Angular frontend backed by Cordova/Capacitor for mobile deployment
+- Apollo GraphQL Node.JS server implementing sample `Tasks` API
 
-## Aproach
+## Implementation
 
 Server side implements classical CRUD model on `Task` objects. 
 Updates are being delivered using GraphQL subscriptions.
+
+### GraphQL Client
+
+https://github.com/aerogear/aerogear-js-sdk/
+
 
 ## Running example
 
@@ -65,18 +70,3 @@ Requirements:
 ### Demo
 
 ![](./resources/screenshot.png)
-
-### GraphQL tutorial
-
-This repo is using GraphQL for communication between server and client.
-To learn basics about GraphQL please follow tutorial:
-
-https://www.javascripttuts.com/implementing-graphql-using-apollo-in-an-ionic-application-introduction/
-
-### Ionic tutorial
-
-This repo contains the code of an Ionic 4 starter app that we created as part of a *Getting started with Ionic 4 tutorial*. In the following tutorial your will learn the differences between Ionic 3 and Ionic 4 and all the new concepts about Ionic 4:
-
-[Tutorial](https://ionicthemes.com/tutorials/about/ionic-4-vs-ionic-3)
-
-Find more Ionic tutorials and starter apps in https://ionicthemes.com
