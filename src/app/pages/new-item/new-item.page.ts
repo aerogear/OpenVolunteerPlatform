@@ -30,10 +30,13 @@ export class NewItemPage implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  async createItem(value) {
-    await this.itemService.createItem(value.title, value.description).then(result => {
-      console.log('Result from mutation', result);
+  createItem(value) {
+    this.itemService.createItem(value.title, value.description).then(result => {
+      console.log('Got result from server for mutation', result);
+    }).catch((error) => {
+      console.error(error);
     });
+
     this.new_item_form.reset();
     this.goBack();
   }

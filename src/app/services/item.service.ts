@@ -24,10 +24,12 @@ export class ItemService {
   }
 
   getItems() {
-    return this.apollo.query<AllTasks>({
+    // Try watch query
+    return this.apollo.watchQuery<AllTasks>({
       query: GET_TASKS,
+      // TODO document this as suggested approach
       fetchPolicy: 'cache-first',
-      errorPolicy: 'all'
+      errorPolicy: 'none'
     });
   }
 
@@ -44,21 +46,27 @@ export class ItemService {
     });
   }
 
-  updateItem(newValues) {
+  updateItem(item) {
+    // TODO support update
+    const response = createOptimisticResponse('updateTask', 'Task', item);
+    response.updateTask.id = item.id;
     return this.apollo.mutate<Task>({
       mutation: UPDATE_TASK,
-      variables: newValues,
-      optimisticResponse: createOptimisticResponse('updateTask', 'Task', newValues),
-      update: this.updateCacheOnEdit
+      variables: item,
+      update: this.updateCacheOnEdit,
+      optimisticResponse: response,
     });
   }
 
   deleteItem(item) {
+    // TODO support update
+    const response = createOptimisticResponse('deleteTask', 'Task', item);
+    response.deleteTask.id = item.id;
     return this.apollo.mutate<Task>({
       mutation: DELETE_TASK,
       variables: { id: item.id },
       update: this.updateCacheOnDelete,
-      optimisticResponse: createOptimisticResponse('deleteTask', 'Task', item)
+      optimisticResponse: response
     });
   }
 
@@ -78,19 +86,18 @@ export class ItemService {
 
   updateCacheOnDelete(cache, { data: { deleteTask } }) {
     if (deleteTask.optimisticResponse) {
-      // When offline do not remove object instantly and show it as pending
-      return;
+      deleteTask = deleteTask.id;
+      const { allTasks } = cache.readQuery({ query: GET_TASKS });
+      const newData = allTasks.filter((item) => {
+        return deleteTask !== item.id;
+      });
+      cache.writeQuery({
+        query: GET_TASKS,
+        data: {
+          'allTasks': newData
+        }
+      });
     }
-    const { allTasks } = cache.readQuery({ query: GET_TASKS });
-    const newData = allTasks.filter((item) => {
-      return deleteTask !== item.id;
-    });
-    cache.writeQuery({
-      query: GET_TASKS,
-      data: {
-        'allTasks': newData
-      }
-    });
   }
 
   updateCacheOnAdd(cache, { data: { createTask } }) {
@@ -103,7 +110,19 @@ export class ItemService {
     });
   }
 
-  updateCacheOnEdit() {
-    // No work - edits will persist the same id of the item
+  updateCacheOnEdit(cache, { data: { updateTask } }) {
+    const { allTasks } = cache.readQuery({ query: GET_TASKS });
+    if (allTasks) {
+      const index = allTasks.findIndex((task) => {
+        return updateTask.id === task.id;
+      });
+      allTasks[index] = updateTask;
+    }
+    cache.writeQuery({
+      query: GET_TASKS,
+      data: {
+        'allTasks': allTasks
+      }
+    });
   }
 }
