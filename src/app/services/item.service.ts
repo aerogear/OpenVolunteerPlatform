@@ -26,7 +26,7 @@ export class ItemService {
   getItems() {
     return this.apollo.query<AllTasks>({
       query: GET_TASKS,
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'cache-first',
       errorPolicy: 'all'
     });
   }
@@ -57,8 +57,8 @@ export class ItemService {
     return this.apollo.mutate<Task>({
       mutation: DELETE_TASK,
       variables: { id: item.id },
-      update: this.updateCacheOnDelete
-      optimisticResponse: createOptimisticResponse('deleteTask', 'Task', item.id),
+      update: this.updateCacheOnDelete,
+      optimisticResponse: createOptimisticResponse('deleteTask', 'Task', item)
     });
   }
 
@@ -77,6 +77,10 @@ export class ItemService {
   // Cache processors
 
   updateCacheOnDelete(cache, { data: { deleteTask } }) {
+    if (deleteTask.optimisticResponse) {
+      // When offline do not remove object instantly and show it as pending
+      return;
+    }
     const { allTasks } = cache.readQuery({ query: GET_TASKS });
     const newData = allTasks.filter((item) => {
       return deleteTask !== item.id;
