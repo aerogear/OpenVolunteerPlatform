@@ -20,9 +20,6 @@
   </div>
   <div *ngIf="items">
     <ion-list>
-      <ion-list-header color="dark">
-        Tasks
-      </ion-list-header>
       <ion-item-group *ngFor="let item of items">
         <ion-item>
           <ion-label>
@@ -31,7 +28,7 @@
             </h2>
             <ion-note item-start>
               <span *ngIf="item.optimisticResponse" item-end color="secondary">
-                <b>PENDING:</b>
+                <b style="color:#1b187c">PENDING</b>
               </span>
               {{ item.description }}
             </ion-note>
@@ -53,10 +50,12 @@
 
 <ion-footer>
   <div style="margin: 10px;">
-    <div>Number of items added when offline: {{queue}}</div>
-    <div>Network status:
-      <span *ngIf="online" item-end color="secondary">Online</span>
-      <span *ngIf="!online" item-end color="dark">Offline</span>
-    </div>
+    <ion-label>Number of items added when offline:
+      <ion-badge color="secondary">{{queue}}</ion-badge>
+    </ion-label>
+    <ion-label>Network status:
+        <ion-badge color="secondary" *ngIf="online">Online</ion-badge>
+        <ion-badge color="primary" *ngIf="!online">Offline</ion-badge>
+    </ion-label>
   </div>
 </ion-footer>
