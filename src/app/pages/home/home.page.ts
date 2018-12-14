@@ -31,8 +31,7 @@ export class HomePage implements OnInit {
     this.loadData();
    }
 
-
-  ngOnInit() {
+  async ngOnInit() {
     this.itemService.subscribeToNew(result => {
       if (result.data && result.data.taskCreated) {
         this.items.push(result.data.taskCreated);
