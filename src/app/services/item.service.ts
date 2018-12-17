@@ -87,17 +87,17 @@ export class ItemService {
   updateCacheOnDelete(cache, { data: { deleteTask } }) {
     if (deleteTask.optimisticResponse) {
       deleteTask = deleteTask.id;
-      const { allTasks } = cache.readQuery({ query: GET_TASKS });
-      const newData = allTasks.filter((item) => {
-        return deleteTask !== item.id;
-      });
-      cache.writeQuery({
-        query: GET_TASKS,
-        data: {
-          'allTasks': newData
-        }
-      });
     }
+    const { allTasks } = cache.readQuery({ query: GET_TASKS });
+    const newData = allTasks.filter((item) => {
+      return deleteTask !== item.id;
+    });
+    cache.writeQuery({
+      query: GET_TASKS,
+      data: {
+        'allTasks': newData
+      }
+    });
   }
 
   updateCacheOnAdd(cache, { data: { createTask } }) {
