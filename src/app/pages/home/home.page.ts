@@ -27,7 +27,7 @@ export class HomePage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.loadData();
+    await this.loadData();
 
     // TODO support updates for subscriptions
 
@@ -80,7 +80,10 @@ export class HomePage implements OnInit {
     this.queue = 0;
   }
 
-  private loadData() {
+  private async loadData() {
+    // Refresh cache first
+    await this.itemService.refreshItems();
+    // Subscribe to local cache changes
     this.itemService.getItems().subscribe(result => {
       console.log('Result from query', result);
       this.items = result.data && result.data.allTasks;
