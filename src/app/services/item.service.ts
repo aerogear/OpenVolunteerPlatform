@@ -23,11 +23,22 @@ export class ItemService {
     this.apollo = aeroGear.apolloClient;
   }
 
+  /**
+   * Force cache refresh to get recent data
+   */
+  refreshItems() {
+    // Force cache refresh by performing network
+    this.apollo.query<AllTasks>({
+      query: GET_TASKS,
+      fetchPolicy: 'network-only',
+      errorPolicy: 'none'
+    });
+  }
+
+  // Watch local cache for updates
   getItems() {
-    // Try watch query
     return this.apollo.watchQuery<AllTasks>({
       query: GET_TASKS,
-      // TODO document this as suggested approach
       fetchPolicy: 'cache-first',
       errorPolicy: 'none'
     });
@@ -41,32 +52,29 @@ export class ItemService {
     return this.apollo.mutate<Task>({
       mutation: ADD_TASK,
       variables: item,
-      optimisticResponse: createOptimisticResponse('createTask', 'Task', item),
+      optimisticResponse:
+        createOptimisticResponse('createTask', 'Task', item),
       update: this.updateCacheOnAdd
     });
   }
 
   updateItem(item) {
-    // TODO support update
-    const response = createOptimisticResponse('updateTask', 'Task', item);
-    response.updateTask.id = item.id;
     return this.apollo.mutate<Task>({
       mutation: UPDATE_TASK,
       variables: item,
       update: this.updateCacheOnEdit,
-      optimisticResponse: response,
+      optimisticResponse:
+        createOptimisticResponse('updateTask', 'Task', item, false)
     });
   }
 
   deleteItem(item) {
-    // TODO support update
-    const response = createOptimisticResponse('deleteTask', 'Task', item);
-    response.deleteTask.id = item.id;
     return this.apollo.mutate<Task>({
       mutation: DELETE_TASK,
       variables: { id: item.id },
       update: this.updateCacheOnDelete,
-      optimisticResponse: response
+      optimisticResponse:
+        createOptimisticResponse('deleteTask', 'Task', { id: item.id }, false)
     });
   }
 
@@ -82,24 +90,7 @@ export class ItemService {
     return this.apollo.subscribe<any>({ query: TASK_CREATED_SUBSCRIPTION }).subscribe(observer);
   }
 
-  // Cache processors
-
-  updateCacheOnDelete(cache, { data: { deleteTask } }) {
-    if (deleteTask.optimisticResponse) {
-      deleteTask = deleteTask.id;
-    }
-    const { allTasks } = cache.readQuery({ query: GET_TASKS });
-    const newData = allTasks.filter((item) => {
-      return deleteTask !== item.id;
-    });
-    cache.writeQuery({
-      query: GET_TASKS,
-      data: {
-        'allTasks': newData
-      }
-    });
-  }
-
+  // Local cache updates for CRUD operations
   updateCacheOnAdd(cache, { data: { createTask } }) {
     const { allTasks } = cache.readQuery({ query: GET_TASKS });
     cache.writeQuery({
@@ -122,6 +113,27 @@ export class ItemService {
       query: GET_TASKS,
       data: {
         'allTasks': allTasks
+      }
+    });
+  }
+
+  updateCacheOnDelete(cache, { data: { deleteTask } }) {
+    let deletedId;
+    if (deleteTask.optimisticResponse) {
+      // Map optimistic response field
+      deletedId = deleteTask.id;
+    } else {
+      deletedId = deleteTask;
+    }
+
+    const { allTasks } = cache.readQuery({ query: GET_TASKS });
+    const newData = allTasks.filter((item) => {
+      return deletedId !== item.id;
+    });
+    cache.writeQuery({
+      query: GET_TASKS,
+      data: {
+        'allTasks': newData
       }
     });
   }
