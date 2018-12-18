@@ -27,38 +27,25 @@ export class HomePage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    // Root element of the data app
+    // When view is initialized:
+    // We try to do network request first to get fresh data
+    // Then we subscribe to any updates that happen in local cache
+    // Local cache can be updated by mutations that happen on the app
+    // Or by subscriptions that deliver changes happening on other clients.
+    // For non realtime use cases subscriptions can be replaced with long pooling
+    // or refresh/fetchMore buttons.
     await this.loadData();
+    await this.setupQueueStatusBar();
+    this.itemService.subscribeToNew();
+    this.itemService.subscribeToUpdate();
+    this.itemService.subscribeToDelete();
 
-    // TODO support updates for subscriptions
+  }
 
-    // this.itemService.subscribeToNew(result => {
-    //   if (result.data && result.data.taskCreated) {
-    //     this.items.push(result.data.taskCreated);
-    //   }
-    // });
-    // this.itemService.subscribeToUpdate(update => {
-    //   if (update.data && update.data.taskModified) {
-    //     const updatedItem = update.data.taskModified;
-    //     const index = this.items.findIndex(item => {
-    //       return item.id === updatedItem.id;
-    //     });
-    //     if (index !== -1) {
-    //       this.items[index] = updatedItem;
-    //     }
-    //   }
-    // });
-    // this.itemService.subscribeToDelete(deletedObj => {
-    //   if (deletedObj.data && deletedObj.data.taskDeleted) {
-    //     const deletedIndex = deletedObj.data.taskDeleted;
-    //     if (deletedIndex) {
-    //       this.items = this.items.filter(item => {
-    //         return !(item.id === deletedIndex);
-    //       });
-    //     }
-    //   }
-    // });
-
-    this.online = ! await this.networkService.networkInterface.isOffline();
+  // Setup status bar that shows online status
+  private async setupQueueStatusBar() {
+    this.online = !await this.networkService.networkInterface.isOffline();
     this.networkService.networkInterface.onStatusChangeListener({
       onStatusChange: (networkInfo) => {
         console.log(`Network state changed. Online: ${networkInfo.online}`);
@@ -67,7 +54,6 @@ export class HomePage implements OnInit {
     });
     console.log(`Online: ${this.online}`);
     console.log(`NetworkStatus Provider: ${this.networkService.networkInterface.constructor.name}`);
-
     const self = this;
     this.aerogear.queueListener = {
       onOperationEnqueued() {
