@@ -2,7 +2,7 @@ const express = require('express')
 const fs = require('fs')
 const path = require('path')
 
-const { ApolloServer } = require('apollo-server-express')
+const { ApolloVoyagerServer } = require('@aerogear/apollo-voyager-server')
 
 const connect = require('./db')
 const schema = require('./schema')
@@ -18,7 +18,7 @@ const dbOptions = {
 
 const PORT = 4000
 
-async function start () {
+async function start() {
   const app = express()
 
   // connect to db
@@ -27,7 +27,7 @@ async function start () {
     type: 'knex'
   }
 
-  const apolloServer = new ApolloServer({
+  const apolloServer = ApolloVoyagerServer({
     schema,
     context: async ({ req }) => {
       // pass request + db ref into context for each resolver
