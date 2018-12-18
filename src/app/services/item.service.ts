@@ -78,16 +78,22 @@ export class ItemService {
     });
   }
 
-  subscribeToUpdate(observer?: (value: any) => void) {
-    return this.apollo.subscribe<any>({ query: TASK_MODIFIED_SUBSCRIPTION }).subscribe(observer);
+  subscribeToUpdate() {
+    return this.apollo.subscribe<any>({
+      query: TASK_MODIFIED_SUBSCRIPTION
+    });
   }
 
-  subscribeToDelete(observer?: (value: any) => void) {
-    return this.apollo.subscribe({ query: TASK_DELETED_SUBSCRIPTION }).subscribe(observer);
+  subscribeToDelete() {
+    return this.apollo.subscribe({
+      query: TASK_DELETED_SUBSCRIPTION
+    });
   }
 
-  subscribeToNew(observer?: (value: any) => void) {
-    return this.apollo.subscribe<any>({ query: TASK_CREATED_SUBSCRIPTION }).subscribe(observer);
+  subscribeToNew() {
+    return this.apollo.subscribe<any>({
+      query: TASK_CREATED_SUBSCRIPTION
+    });
   }
 
   // Local cache updates for CRUD operations
