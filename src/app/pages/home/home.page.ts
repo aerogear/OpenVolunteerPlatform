@@ -32,15 +32,8 @@ export class HomePage implements OnInit {
     // We try to do network request first to get fresh data
     // Then we subscribe to any updates that happen in local cache
     // Local cache can be updated by mutations that happen on the app
-    // Or by subscriptions that deliver changes happening on other clients.
-    // For non realtime use cases subscriptions can be replaced with long pooling
-    // or refresh/fetchMore buttons.
     await this.loadData();
     await this.setupQueueStatusBar();
-    this.itemService.subscribeToNew();
-    this.itemService.subscribeToUpdate();
-    this.itemService.subscribeToDelete();
-
   }
 
   // Setup status bar that shows online status

@@ -81,32 +81,18 @@ export class ItemService {
   subscribeToUpdate() {
     return this.apollo.subscribe<any>({
       query: TASK_MODIFIED_SUBSCRIPTION
-    }).subscribe(update => {
-
     });
   }
 
   subscribeToDelete() {
     return this.apollo.subscribe({
       query: TASK_DELETED_SUBSCRIPTION
-    }).subscribe(deletedObj => {
-      if (deletedObj.data && deletedObj.data.taskDeleted) {
-      }
     });
   }
 
   subscribeToNew() {
     return this.apollo.subscribe<any>({
       query: TASK_CREATED_SUBSCRIPTION
-    }).subscribe(result => {
-      if (result.data && result.data.taskCreated) {
-        this.updateCacheOnAdd(this.apollo.cache,
-          {
-            data: {
-              createTask: result.data.taskCreated
-            }
-          });
-      }
     });
   }
 
