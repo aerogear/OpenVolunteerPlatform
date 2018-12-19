@@ -1,6 +1,6 @@
 ## AeroGear Apollo Voyager Example app
 
-Example application for showcasing 
+Example application using Apollo GraphQL, Ionic and Cordova libraries
 
 Implementation include:
 
