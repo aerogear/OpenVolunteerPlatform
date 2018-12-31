@@ -2,32 +2,31 @@
 
 Example application using Apollo GraphQL, Ionic and Cordova libraries
 
+## Implementation
+
 Implementation include:
 
 - Ionic4 Angular frontend backed by Cordova/Capacitor for mobile deployment
 - Apollo GraphQL Node.JS server implementing sample `Tasks` API
 
-## Implementation
-
-Server side implements classical CRUD model on `Task` objects. 
-Updates are being delivered using GraphQL subscriptions.
-
 ### GraphQL Client
 
-Application using [Voyager client](https://github.com/aerogear/aerogear-js-sdk/tree/master/packages/sync) to provide additional
-offline capabilities on top of the Apollo GraphQL 
+Application using [Apollo Voyager Client](https://github.com/aerogear/aerogear-js-sdk/tree/master/packages/sync) to provide additional offline capabilities on top of the Apollo GraphQL 
 
+### GraphQL Server
+
+Application using [Apollo Voyager Server](https://github.com/aerogear/apollo-voyager-server) to provide GraphQL capabilities along with security, monitoring and tools to simplify GraphQL API development.
 
 ## Running example
 
 Requirements:
 
 - Docker
-- Node.js 6.x or above
+- Node.js 6.x or above to run server
 
 ### Running the server
 
-1. Start the postgres docker image
+1. Start the PostgreSQL docker image
 
    ```shell
    cd ./server
@@ -62,7 +61,7 @@ Requirements:
    npm run start
    ```
 
-1. Run on Emulator
+1. Alternatively - Run as mobile application on Android platform.
 
    ```shell
    npm run ionic:android
