@@ -1,6 +1,7 @@
 const { gql } = require('apollo-server')
 const { makeExecutableSchema } = require('graphql-tools')
 const { pubSub, EVENTS } = require('./subscriptions')
+const { handleConflictOnClient, conflictHandler } = require("@aerogear/apollo-voyager-conflicts");
 
 const typeDefs = gql`
 type Task {
@@ -9,6 +10,7 @@ type Task {
   title: String!
   description: String!
 }
+
 
 type Query {
   allTasks(first: Int, after: String): [Task],
@@ -56,15 +58,22 @@ const resolvers = {
       });
       return result
     },
-    updateTask: async (obj, args, context, info) => {
-      console.log("Update", args)
+    updateTask: async (obj, clientData, context, info) => {
+      console.log("Update", clientData)
       const task = await context.db('tasks').select()
-        .where('id', args.id).then((rows) => rows[0])
+        .where('id', clientData.id).then((rows) => rows[0])
       if (!task) {
-        throw new Error(`Invalid ID for task object: ${args.id}`);
+        throw new Error(`Invalid ID for task object: ${clientData.id}`);
       }
-      const update = await context.db('tasks').update(args)
-        .where({ 'id': args.id }).returning('*').then((rows) => rows[0])
+
+      if (conflictHandler.hasConflict(task, clientData)) {
+        return handleConflictOnClient(task, clientData)
+      }
+      conflictHandler.nextState(clientData)
+
+      const update = await context.db('tasks').update(clientData)
+        .where({ 'id': clientData.id }).returning('*').then((rows) => rows[0])
+
       pubSub.publish(EVENTS.TASK.MODIFIED, {
         taskModified: update
       });
