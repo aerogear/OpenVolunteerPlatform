@@ -67,6 +67,9 @@ Requirements:
    npm run ionic:android
    ```
 
+> NOTE: To connect to the server running on local machine on Android emulator 
+please change [Client URL](https://github.com/aerogear/apollo-voyager-ionic-example/blob/master/src/app/services/voyager.service.ts#L42) from `localhost` to `10.0.2.2` 
+
 ### Demo
 
 ![](./resources/screenshot.png)
