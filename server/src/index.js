@@ -43,8 +43,8 @@ async function start() {
       },
       tabs: [
         {
-          endpoint: `http://localhost:${PORT}/graphql`,
-          variables: JSON.stringify({}),
+          endpoint: `/graphql`,
+          variables: {},
           query: fs.readFileSync(path.resolve(__dirname, './playground.gql'), 'utf8')
         }
       ]

@@ -1,5 +1,12 @@
-import { createClient, VoyagerClient, OfflineQueueListener } from '@aerogear/datasync-js';
+import { createClient, VoyagerClient, OfflineQueueListener, ConflictListener } from '@aerogear/datasync-js';
 import { Injectable } from '@angular/core';
+
+class ConflictLogger implements ConflictListener {
+  conflictOccurred(operationName: string, resolvedData: any, server: any, client: any): void {
+    alert(`Conflict for ${operationName}`);
+    console.log(arguments);
+  }
+}
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +51,9 @@ export class VoyagerService {
     this._apolloClient = await createClient({
       httpUrl: uri,
       wsUrl: wsUri,
-      offlineQueueListener: numberOfOperationsProvider
+      offlineQueueListener: numberOfOperationsProvider,
+      conflictListener: new ConflictLogger()
     });
   }
-
 }
+
