@@ -20,13 +20,13 @@ export class OpenShiftService {
   }
 
   hasSyncConfig() {
-    return config.services.filter((service) =>
-      service.name === 'sync').length > 0;
+    return !!(config.services.find((service) =>
+      service.name === 'sync'));
   }
 
   hasAuthConfig() {
-    return config.services.filter((service) =>
-      service.name === 'auth').length > 0;
+    return !!(config.services.find((service) =>
+      service.name === 'auth'));
   }
 }
 
