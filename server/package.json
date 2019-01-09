@@ -8,8 +8,8 @@
   },
   "license": "Apache 2.0",
   "dependencies": {
-    "@aerogear/apollo-voyager-conflicts": "0.1.0-alpha",
-    "@aerogear/apollo-voyager-server": "^0.1.2",
+    "@aerogear/apollo-voyager-conflicts": "0.2.7-rc1",
+    "@aerogear/apollo-voyager-server": "^0.2.7-rc1",
     "apollo-server": "^2.1.0",
     "apollo-server-express": "^2.1.0",
     "deepmerge": "^2.2.1",

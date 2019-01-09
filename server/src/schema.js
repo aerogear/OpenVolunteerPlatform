@@ -67,7 +67,8 @@ const resolvers = {
       }
 
       if (conflictHandler.hasConflict(task, clientData)) {
-        return handleConflictOnClient(task, clientData)
+        const { payload } = conflictHandler.resolveOnClient(task, clientData)
+        return payload
       }
       conflictHandler.nextState(clientData)
 
