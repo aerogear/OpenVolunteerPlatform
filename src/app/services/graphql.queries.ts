@@ -13,7 +13,7 @@ mutation createTask($description: String!, $title: String!){
 
 export const GET_TASKS = gql`
   query allTasks($first: Int) {
-    allTasks(first: $first){
+    allTasks(first: $first) {
       id
       title
       description
@@ -32,8 +32,6 @@ export const UPDATE_TASK = gql`
 mutation updateTask($description: String, $id: ID!, $title: String, $version: Int!) {
   updateTask(description: $description, id: $id, title: $title, version: $version) {
     description
-    id
-    title
     version
   }
 }

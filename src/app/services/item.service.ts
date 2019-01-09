@@ -19,7 +19,7 @@ export class ItemService {
 
   private readonly apollo: VoyagerClient;
 
-  constructor(private aeroGear: VoyagerService) {
+  constructor(aeroGear: VoyagerService) {
     this.apollo = aeroGear.apolloClient;
   }
 
