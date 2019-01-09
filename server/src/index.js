@@ -9,11 +9,11 @@ const schema = require('./schema')
 const http = require('http');
 
 const dbOptions = {
-  database: process.env.POSTGRES_DATABASE || 'users',
-  user: process.env.POSTGRES_USERNAME || 'postgresql',
-  password: process.env.POSTGRES_PASSWORD || 'postgres',
-  host: process.env.POSTGRES_HOST || '127.0.0.1',
-  port: process.env.POSTGRES_PORT || '5432'
+  database: process.env.DB_NAME || 'users',
+  user: process.env.DB_USERNAME || 'postgresql',
+  password: process.env.DB_PASSWORD || 'postgres',
+  host: process.env.DB_HOSTNAME || '127.0.0.1',
+  port: process.env.DB_PORT || '5432'
 }
 
 const PORT = 4000
