@@ -73,3 +73,8 @@ please change [Client URL](https://github.com/aerogear/apollo-voyager-ionic-exam
 ### Demo
 
 ![](./resources/screenshot.png)
+
+### OpenShift Integration
+
+To integrate with OpenShift mobile config please paste your configuration into
+[mobile-services.js](./src/mobile-services.js) file
