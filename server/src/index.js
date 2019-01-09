@@ -21,6 +21,10 @@ const PORT = 4000
 async function start() {
   const app = express()
 
+  app.get("/health", (req, res) => {
+    return res.json({});
+  });
+
   // connect to db
   const dataSource = {
     client: await connect(dbOptions),
