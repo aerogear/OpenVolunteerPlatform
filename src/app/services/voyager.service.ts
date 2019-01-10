@@ -87,7 +87,6 @@ class AuthHeaderProvider implements HeaderProvider {
       };
     }
   }
-
 }
 
 
