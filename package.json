@@ -16,7 +16,7 @@
   "private": true,
   "dependencies": {
     "@aerogear/app": "2.0.0",
-    "@aerogear/datasync-js": "0.2.0-alpha4",
+    "@aerogear/datasync-js": "0.2.0",
     "@angular/common": "~6.1.1",
     "@angular/core": "~6.1.1",
     "@angular/forms": "~6.1.1",
@@ -42,7 +42,8 @@
     "core-js": "^2.5.3",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.10.0",
-    "rxjs": "6.2.2",
+    "ionic-angular": "^3.9.2",
+    "rxjs-compat": "^6.3.3",
     "subscriptions-transport-ws": "^0.9.15",
     "zone.js": "^0.8.26"
   },

@@ -1,11 +1,22 @@
 import { createClient, VoyagerClient, DataSyncConfig, OfflineQueueListener, ConflictListener } from '@aerogear/datasync-js';
 import { Injectable } from '@angular/core';
 import { OpenShiftService } from './openshift.service';
+import { AlertController } from '@ionic/angular';
 
+/**
+ * Class used to log data conflicts in server
+ */
 class ConflictLogger implements ConflictListener {
-  conflictOccurred(operationName: string, resolvedData: any, server: any, client: any): void {
-    alert(`Conflict for ${operationName}`);
-    console.log(arguments);
+  constructor(public alertCtrl: AlertController) { }
+  async conflictOccurred(operationName: string, resolvedData: any, server: any, client: any) {
+    const dialog = await this.alertCtrl.create({
+      message: `Conflict on ${operationName}.</br>
+      Version from server: ${server.version}.</br>`,
+      header: `🤷 Data conflict occurred`,
+      buttons: ['OK']
+    });
+    dialog.present();
+    console.log(`data: ${JSON.stringify(resolvedData)}, server: ${JSON.stringify(server)} client: ${JSON.stringify(client)} `);
   }
 }
 
@@ -20,7 +31,7 @@ export class VoyagerService {
   private _apolloClient: VoyagerClient;
   private listener: OfflineQueueListener;
 
-  constructor(private openShift: OpenShiftService) {
+  constructor(private openShift: OpenShiftService, public alertCtrl: AlertController) {
   }
 
   set queueListener(listener: OfflineQueueListener) {
@@ -49,9 +60,10 @@ export class VoyagerService {
     };
     const options: DataSyncConfig = {
       offlineQueueListener: numberOfOperationsProvider,
-      conflictListener: new ConflictLogger()
+      conflictListener: new ConflictLogger(this.alertCtrl)
     };
     if (!this.openShift.hasSyncConfig()) {
+      // Use default localhost urls when OpenShift config is missing
       options.httpUrl = 'http://localhost:4000/graphql';
       options.wsUrl = 'ws://localhost:4000/graphql';
     }

@@ -31,6 +31,8 @@ mutation deleteTask($id: ID!){
 export const UPDATE_TASK = gql`
 mutation updateTask($description: String, $id: ID!, $title: String, $version: Int!) {
   updateTask(description: $description, id: $id, title: $title, version: $version) {
+    id
+    title
     description
     version
   }
