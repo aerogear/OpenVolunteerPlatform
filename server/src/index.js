@@ -26,7 +26,7 @@ async function start() {
   const httpServer = http.createServer(app)
 
   app.use(cors())
-  metrics.applyMetricsMiddlewares(app)
+  metrics.applyMetricsMiddlewares(app, { path: '/metrics' })
   
   if (keycloakService) {
     keycloakService.applyAuthMiddleware(app)
