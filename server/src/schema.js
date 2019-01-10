@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server')
 const { makeExecutableSchema } = require('graphql-tools')
 const { pubSub, EVENTS } = require('./subscriptions')
-const { handleConflictOnClient, conflictHandler } = require("@aerogear/apollo-voyager-conflicts");
+const { handleConflictOnClient, conflictHandler } = require("@aerogear/apollo-voyager-conflicts")
 
 const typeDefs = gql`
 type Task {
@@ -111,6 +111,6 @@ const resolvers = {
   },
 }
 
-const schema = makeExecutableSchema({ typeDefs, resolvers })
+module.exports = { typeDefs, resolvers }
 
-module.exports = schema
+
