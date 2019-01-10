@@ -2,6 +2,7 @@ import { createClient, VoyagerClient, DataSyncConfig, OfflineQueueListener, Conf
 import { Injectable } from '@angular/core';
 import { OpenShiftService } from './openshift.service';
 import { AlertController } from '@ionic/angular';
+import { AuthService } from './auth.service';
 
 /**
  * Class used to log data conflicts in server
@@ -31,7 +32,7 @@ export class VoyagerService {
   private _apolloClient: VoyagerClient;
   private listener: OfflineQueueListener;
 
-  constructor(private openShift: OpenShiftService, public alertCtrl: AlertController) {
+  constructor(private openShift: OpenShiftService, public alertCtrl: AlertController, public auth: AuthService) {
   }
 
   set queueListener(listener: OfflineQueueListener) {
@@ -68,6 +69,7 @@ export class VoyagerService {
       options.wsUrl = 'ws://localhost:4000/graphql';
     }
     this._apolloClient = await createClient(options);
+    this.auth.init
   }
 }
 

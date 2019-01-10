@@ -16,6 +16,7 @@
   "private": true,
   "dependencies": {
     "@aerogear/app": "2.0.0",
+    "@aerogear/auth": "^2.0.0",
     "@aerogear/datasync-js": "0.2.0",
     "@angular/common": "~6.1.1",
     "@angular/core": "~6.1.1",
