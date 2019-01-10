@@ -26,7 +26,7 @@ async function start() {
   const app = express()
   const httpServer = http.createServer(app)
 
-  metrics.applyMetricsMiddlewares
+  metrics.applyMetricsMiddlewares(app)
   
   if (keycloakService) {
     keycloakService.applyAuthMiddleware(app)
