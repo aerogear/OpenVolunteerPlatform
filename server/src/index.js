@@ -1,7 +1,6 @@
 const express = require('express')
-const path = require('path')
 const http = require('http')
-const fs = require('fs')
+const cors = require('cors')
 
 const { ApolloVoyagerServer } = require('@aerogear/apollo-voyager-server')
 const { KeycloakSecurityService } = require('@aerogear/apollo-voyager-keycloak')
@@ -26,6 +25,7 @@ async function start() {
   const app = express()
   const httpServer = http.createServer(app)
 
+  app.use(cors())
   metrics.applyMetricsMiddlewares(app)
   
   if (keycloakService) {
