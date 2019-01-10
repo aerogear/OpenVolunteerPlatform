@@ -42,8 +42,6 @@
     "core-js": "^2.5.3",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.10.0",
-    "ionic-angular": "^3.9.2",
-    "rxjs-compat": "^6.3.3",
     "subscriptions-transport-ws": "^0.9.15",
     "zone.js": "^0.8.26"
   },
