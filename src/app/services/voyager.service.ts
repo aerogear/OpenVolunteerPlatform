@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { OpenShiftService } from './openshift.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from './auth.service';
+import { HeaderProvider } from '@aerogear/datasync-js/types/config/HeaderProvider';
 
 /**
  * Class used to log data conflicts in server
@@ -61,7 +62,8 @@ export class VoyagerService {
     };
     const options: DataSyncConfig = {
       offlineQueueListener: numberOfOperationsProvider,
-      conflictListener: new ConflictLogger(this.alertCtrl)
+      conflictListener: new ConflictLogger(this.alertCtrl),
+      headerProvider: new AuthHeaderProvider(this.auth)
     };
     if (!this.openShift.hasSyncConfig()) {
       // Use default localhost urls when OpenShift config is missing
@@ -69,7 +71,23 @@ export class VoyagerService {
       options.wsUrl = 'ws://localhost:4000/graphql';
     }
     this._apolloClient = await createClient(options);
-    this.auth.init
   }
 }
+
+class AuthHeaderProvider implements HeaderProvider {
+
+  constructor(private auth: AuthService) {
+  }
+  getHeaders(): { [index: string]: string; } {
+    if (this.auth.authService) {
+      // TODO async
+      this.auth.authService.extract().updateToken(30);
+      return {
+        'Authorization': 'Bearer ' + this.auth.authService.extract().token
+      };
+    }
+  }
+
+}
+
 
