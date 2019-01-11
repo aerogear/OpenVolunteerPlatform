@@ -30,11 +30,7 @@ export class HomePage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    await this.auth.init().then(() => {
-      return this.auth.authService.extract().loadUserProfile().success((profile) => {
-        this.user = profile.username;
-      });
-    });
+    await this.initAuth();
     // Root element of the data app
     // When view is initialized:
     // We try to do network request first to get fresh data
@@ -42,6 +38,19 @@ export class HomePage implements OnInit {
     // Local cache can be updated by mutations that happen on the app
     await this.loadData();
     await this.setupQueueStatusBar();
+  }
+
+  private initAuth() {
+    return this.auth.init().then(() => {
+      return this.auth.authService.extract().loadUserProfile().success((profile) => {
+        this.user = profile.username;
+      });
+    }).catch((error) => {
+      if (error) {
+        // tslint:disable-next-line:no-console
+        console.info('Error when initializing auth', error);
+      }
+    });
   }
 
   // Setup status bar that shows online status

@@ -63,30 +63,21 @@ export class VoyagerService {
     const options: DataSyncConfig = {
       offlineQueueListener: numberOfOperationsProvider,
       conflictListener: new ConflictLogger(this.alertCtrl),
-      headerProvider: new AuthHeaderProvider(this.auth)
     };
     if (!this.openShift.hasSyncConfig()) {
       // Use default localhost urls when OpenShift config is missing
       options.httpUrl = 'http://localhost:4000/graphql';
       options.wsUrl = 'ws://localhost:4000/graphql';
     }
-    this._apolloClient = await createClient(options);
-  }
-}
-
-class AuthHeaderProvider implements HeaderProvider {
-
-  constructor(private auth: AuthService) {
-  }
-  getHeaders(): { [index: string]: string; } {
-    if (this.auth.authService) {
-      // TODO async
-      this.auth.authService.extract().updateToken(30);
-      return {
-        'Authorization': 'Bearer ' + this.auth.authService.extract().token
+    if (!this.openShift.hasAuthConfig() && this.auth.authService) {
+      // FIXME - this should be part of the SDK
+      options.headerProvider = () => {
+        const tokenUpdate = this.auth.authService.extract().updateToken(10) as any;
+        return tokenUpdate.then(() => {
+          return { 'Authorization': 'Bearer ' + this.auth.authService.extract().token };
+        });
       };
+      this._apolloClient = await createClient(options);
     }
   }
 }
-
-
