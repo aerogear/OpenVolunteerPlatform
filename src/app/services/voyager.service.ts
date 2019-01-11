@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { OpenShiftService } from './openshift.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from './auth.service';
-import { HeaderProvider } from '@aerogear/datasync-js/types/config/HeaderProvider';
 
 /**
  * Class used to log data conflicts in server
@@ -70,12 +69,7 @@ export class VoyagerService {
       options.wsUrl = 'ws://localhost:4000/graphql';
     }
     if (this.auth.authService) {
-      options.headerProvider = () => {
-        const tokenUpdate = this.auth.authService.extract().updateToken(10) as any;
-        return tokenUpdate.then(() => {
-          return { 'Authorization': 'Bearer ' + this.auth.authService.extract().token };
-        });
-      };
+      options.headerProvider = this.auth.headerProvider();
     }
     this._apolloClient = await createClient(options);
   }

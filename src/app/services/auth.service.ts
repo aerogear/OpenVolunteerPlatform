@@ -32,5 +32,18 @@ export class AuthService {
     getAuth() {
         return this.authService;
     }
+
+    headerProvider() {
+        const headerProvider = () => {
+            const tokenUpdate = this.authService.extract().updateToken(10) as any;
+            return tokenUpdate.then(() => {
+                return { 'Authorization': 'Bearer ' + this.authService.extract().token };
+            }).catch((error) => {
+                // tslint:disable-next-line:no-console
+                console.info('Cannot update keycloak token');
+            });
+        };
+        return headerProvider;
+    }
 }
 
