@@ -1,67 +1,72 @@
 const express = require('express')
-const fs = require('fs')
-const path = require('path')
+const http = require('http')
+const cors = require('cors')
 
 const { ApolloVoyagerServer } = require('@aerogear/apollo-voyager-server')
+const { KeycloakSecurityService } = require('@aerogear/apollo-voyager-keycloak')
+const metrics = require('@aerogear/apollo-voyager-metrics')
+const auditLogger = require('@aerogear/apollo-voyager-audit')
 
+const config = require('./config/config')
 const connect = require('./db')
-const schema = require('./schema')
-const http = require('http');
+const { typeDefs, resolvers } = require('./schema')
 
-const dbOptions = {
-  database: process.env.DB_NAME || 'users',
-  user: process.env.DB_USERNAME || 'postgresql',
-  password: process.env.DB_PASSWORD || 'postgres',
-  host: process.env.DB_HOSTNAME || '127.0.0.1',
-  port: process.env.DB_PORT || '5432'
+let keycloakService = null
+
+// if a keycloak config is present we create
+// a keycloak service which will be passed into
+// ApolloVoyagerServer
+if (config.keycloakConfig) {
+  keycloakService = new KeycloakSecurityService(config.keycloakConfig)
 }
 
-const PORT = 4000
-
 async function start() {
+  
   const app = express()
+  const httpServer = http.createServer(app)
 
-  app.get("/health", (req, res) => {
-    return res.json({});
-  });
+  app.use(cors())
+  metrics.applyMetricsMiddlewares(app, { path: '/metrics' })
+  
+  if (keycloakService) {
+    keycloakService.applyAuthMiddleware(app)
+  }
+
+  app.get('/health', (req, res) => res.sendStatus(200))
 
   // connect to db
   const dataSource = {
-    client: await connect(dbOptions),
+    client: await connect(config.db),
     type: 'knex'
   }
 
-  const apolloServer = ApolloVoyagerServer({
-    schema,
+  const apolloConfig = {
+    typeDefs,
+    resolvers,
+    playground: config.playgroundConfig,
     context: async ({ req }) => {
       // pass request + db ref into context for each resolver
       return {
         req: req,
         db: dataSource.client,
       }
-    },
-    playground: {
-      settings: {
-        'editor.theme': 'light',
-        'editor.cursorShape': 'block'
-      },
-      tabs: [
-        {
-          endpoint: `/graphql`,
-          variables: {},
-          query: fs.readFileSync(path.resolve(__dirname, './playground.gql'), 'utf8')
-        }
-      ]
     }
-  })
-  const httpServer = http.createServer(app);
-  apolloServer.installSubscriptionHandlers(httpServer)
+  }
+
+  const voyagerConfig = {
+    securityService: keycloakService,
+    metrics,
+    auditLogger
+  }
+
+  const apolloServer = ApolloVoyagerServer(apolloConfig, voyagerConfig)
+
   apolloServer.applyMiddleware({ app })
+  apolloServer.installSubscriptionHandlers(httpServer)
 
-
-  httpServer.listen({ port: PORT }, () => {
-    console.log(`🚀  Server ready at http://localhost:${PORT}/graphql`);
-  });
+  httpServer.listen({ port: config.port }, () => {
+    console.log(`🚀  Server ready at http://localhost:${config.port}/graphql`)
+  })
 }
 
 start()
