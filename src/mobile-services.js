@@ -1,8 +1,7 @@
 var config = {
   "version": 1,
-  "clusterName": "",
-  "namespace": "myproject",
-  "clientId": "app-js",
+  "namespace": "admin-exam-mobi-f8e7",
+  "clientId": "todoapp",
   "services": [
     {
       "id": "417d12f1-1586-11e9-afb5-02cf927517aa",
@@ -17,14 +16,8 @@ var config = {
         "resource": "todoapp-public",
         "ssl-required": "external"
       }
-    },
-    {
-      "id": "fd08817f-142f-11e9-afb5-02cf927517aa",
-      "name": "sync-app-todoapp",
-      "type": "sync-app-disable",
-      "url": "https://sync-app-admin-exam-mobi-f8e7.apps.mobile-7c21.openshiftworkshop.com/graphql",
-      "config": {}
     }
+  
   ]
 }
 

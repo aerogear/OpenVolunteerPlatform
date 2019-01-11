@@ -40,7 +40,7 @@ export class AuthService {
                 return { 'Authorization': 'Bearer ' + this.authService.extract().token };
             }).catch((error) => {
                 // tslint:disable-next-line:no-console
-                console.info('Cannot update keycloak token');
+                console.info('Cannot update keycloak token', error);
             });
         };
         return headerProvider;
