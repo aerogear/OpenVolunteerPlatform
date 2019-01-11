@@ -40,6 +40,12 @@ Requirements:
    npm run start
    ```
 
+NOTE: If Keycloak integration is enabled for the server, and the Keycloak server is running using self-signed certificate, please make sure set this environment variable before running the server:
+
+   ```shell
+   export NODE_TLS_REJECT_UNAUTHORIZED=0
+   ```
+
 ### Running the client
 
 

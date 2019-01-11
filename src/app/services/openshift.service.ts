@@ -21,12 +21,12 @@ export class OpenShiftService {
 
   hasSyncConfig() {
     return !!(config.services.find((service) =>
-      service.name === 'sync'));
+      service.type === 'sync-app'));
   }
 
   hasAuthConfig() {
     return !!(config.services.find((service) =>
-      service.name === 'auth'));
+      service.type === 'keycloak'));
   }
 }
 

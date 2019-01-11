@@ -4,6 +4,7 @@ import { ItemService } from '../../services/item.service';
 import { Task } from '../../services/types';
 import { NetworkService } from '../../services/network.service';
 import { VoyagerService } from '../../services/voyager.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-page-home',
@@ -18,15 +19,18 @@ export class HomePage implements OnInit {
   queue: number;
   loading = true;
   errors: any;
+  user: any = 'Login';
 
   constructor(
     private router: Router,
     public itemService: ItemService,
     public networkService: NetworkService,
-    public aerogear: VoyagerService
+    public aerogear: VoyagerService,
+    public auth: AuthService
   ) { }
 
   async ngOnInit() {
+    await this.initAuth();
     // Root element of the data app
     // When view is initialized:
     // We try to do network request first to get fresh data
@@ -34,6 +38,19 @@ export class HomePage implements OnInit {
     // Local cache can be updated by mutations that happen on the app
     await this.loadData();
     await this.setupQueueStatusBar();
+  }
+
+  private initAuth() {
+    return this.auth.init().then(() => {
+      return this.auth.authService.extract().loadUserProfile().success((profile) => {
+        this.user = profile.username;
+      });
+    }).catch((error) => {
+      if (error) {
+        // tslint:disable-next-line:no-console
+        console.info('Error when initializing auth', error);
+      }
+    });
   }
 
   // Setup status bar that shows online status
@@ -80,6 +97,16 @@ export class HomePage implements OnInit {
 
   goToItem(item) {
     this.router.navigate(['/update-item', item]);
+  }
+
+  login() {
+    if (this.auth.authService) {
+      if (this.auth.authService.isAuthenticated()) {
+        this.auth.authService.logout();
+      } else {
+        this.auth.authService.login();
+      }
+    }
   }
 
   deleteItem(item) {

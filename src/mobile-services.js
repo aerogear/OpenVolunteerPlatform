@@ -1,8 +1,7 @@
 var config = {
   "version": 1,
-  "clusterName": "",
-  "namespace": "myproject",
-  "clientId": "app-js",
+  "namespace": "admin-exam-mobi-f8e7",
+  "clientId": "todoapp",
   "services": [
   ]
 }
