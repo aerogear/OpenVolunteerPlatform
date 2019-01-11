@@ -69,7 +69,7 @@ export class VoyagerService {
       options.httpUrl = 'http://localhost:4000/graphql';
       options.wsUrl = 'ws://localhost:4000/graphql';
     }
-    if (!this.openShift.hasAuthConfig() && this.auth.authService) {
+    if (this.openShift.hasAuthConfig() && this.auth.authService) {
       // FIXME - this should be part of the SDK
       options.headerProvider = () => {
         const tokenUpdate = this.auth.authService.extract().updateToken(10) as any;
@@ -77,7 +77,7 @@ export class VoyagerService {
           return { 'Authorization': 'Bearer ' + this.auth.authService.extract().token };
         });
       };
-      this._apolloClient = await createClient(options);
     }
+    this._apolloClient = await createClient(options);
   }
 }

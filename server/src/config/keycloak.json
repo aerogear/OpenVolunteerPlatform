@@ -1,0 +1,8 @@
+{
+    "resource": "todoapp-bearer",
+    "ssl-required": "external",
+    "confidential-port": 0,
+    "auth-server-url": "https://keycloak-admin-exam-mobi-f8e7.apps.mobile-7c21.openshiftworkshop.com/auth",
+    "bearer-only": true,
+    "realm": "admin-exam-mobi-f8e7"
+}
