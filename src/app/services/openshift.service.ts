@@ -26,7 +26,7 @@ export class OpenShiftService {
 
   hasAuthConfig() {
     return !!(config.services.find((service) =>
-      service.name === 'keycloak'));
+      service.type === 'keycloak'));
   }
 }
 

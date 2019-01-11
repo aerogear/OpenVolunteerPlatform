@@ -69,8 +69,7 @@ export class VoyagerService {
       options.httpUrl = 'http://localhost:4000/graphql';
       options.wsUrl = 'ws://localhost:4000/graphql';
     }
-    if (this.openShift.hasAuthConfig() && this.auth.authService) {
-      // FIXME - this should be part of the SDK
+    if (this.auth.authService) {
       options.headerProvider = () => {
         const tokenUpdate = this.auth.authService.extract().updateToken(10) as any;
         return tokenUpdate.then(() => {

@@ -15,13 +15,14 @@ import { KeycloakInitOptions } from 'keycloak-js';
 export class AuthService {
     public authService: Auth | undefined;
 
-
     constructor(private openShift: OpenShiftService) {
+        if (this.openShift.hasAuthConfig()) {
+            this.authService = new Auth();
+        }
     }
 
     init() {
         if (this.openShift.hasAuthConfig()) {
-            this.authService = new Auth();
             const initOptions: KeycloakInitOptions = { onLoad: 'login-required' };
             return this.authService.init(initOptions);
         }
