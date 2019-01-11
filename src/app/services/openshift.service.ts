@@ -21,7 +21,7 @@ export class OpenShiftService {
 
   hasSyncConfig() {
     return !!(config.services.find((service) =>
-      service.name === 'sync-app'));
+      service.type === 'sync-app'));
   }
 
   hasAuthConfig() {
