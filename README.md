@@ -48,13 +48,6 @@ NOTE: If Keycloak integration is enabled for the server, and the Keycloak server
 
 ### Running the client
 
-
-1. Install Ionic
-
-   ```shell
-   npm install -g ionic
-   ```
-
 1. Install this Ionic 4 starter app
 
    ```shell
