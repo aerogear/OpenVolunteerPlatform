@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "push": "docker build . -t aerogear/voyager-server-example-task && docker push aerogear/voyager-server-example-task"
   },
   "license": "Apache 2.0",
   "dependencies": {
