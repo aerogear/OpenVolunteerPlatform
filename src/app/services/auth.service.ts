@@ -44,7 +44,7 @@ export class AuthService {
                 }).error((error) => {
                     // tslint:disable-next-line:no-console
                     console.info('Cannot update keycloak token', error);
-                    reject(error)
+                    reject(error);
                 });
             });
         };
