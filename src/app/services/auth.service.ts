@@ -4,6 +4,7 @@ import { Auth } from '@aerogear/auth';
 import { Injectable } from '@angular/core';
 import { OpenShiftService } from './openshift.service';
 import { KeycloakInitOptions } from 'keycloak-js';
+import { HeaderProvider } from '@aerogear/datasync-js';
 
 
 @Injectable({
@@ -34,13 +35,17 @@ export class AuthService {
     }
 
     headerProvider() {
-        const headerProvider = () => {
+        const headerProvider: HeaderProvider = () => {
             const tokenUpdate = this.authService.extract().updateToken(10) as any;
-            return tokenUpdate.then(() => {
-                return { 'Authorization': 'Bearer ' + this.authService.extract().token };
-            }).catch((error) => {
-                // tslint:disable-next-line:no-console
-                console.info('Cannot update keycloak token', error);
+            // Keycloak doesn't use a proper promise. Instead it uses success and error.
+            return new Promise((resolve, reject) => {
+                tokenUpdate.success(() => {
+                    resolve({ 'Authorization': 'Bearer ' + this.authService.extract().token });
+                }).error((error) => {
+                    // tslint:disable-next-line:no-console
+                    console.info('Cannot update keycloak token', error);
+                    reject(error)
+                });
             });
         };
         return headerProvider;
