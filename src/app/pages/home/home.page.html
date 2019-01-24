@@ -44,8 +44,6 @@
             <ion-icon name="trash"></ion-icon> Delete
           </ion-button>
         </ion-item>
-        <ion-item-divider>
-        </ion-item-divider>
       </ion-item-group>
     </ion-list>
   </div>
@@ -56,6 +54,7 @@
     <ion-label>Number of items added when offline:
       <ion-badge color="secondary">{{queue}}</ion-badge>
     </ion-label>
+    <p></p>
     <ion-label>Network status:
         <ion-badge color="secondary" *ngIf="online">Online</ion-badge>
         <ion-badge color="primary" *ngIf="!online">Offline</ion-badge>
