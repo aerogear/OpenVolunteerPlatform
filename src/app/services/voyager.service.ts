@@ -69,7 +69,7 @@ export class VoyagerService {
       options.wsUrl = 'ws://localhost:4000/graphql';
     }
     if (this.auth.authService) {
-      options.headerProvider = this.auth.headerProvider();
+      options.headerProvider = this.auth.getAuth().getHeaderProvider();
     }
     this._apolloClient = await createClient(options);
   }
