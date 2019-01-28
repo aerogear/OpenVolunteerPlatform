@@ -65,6 +65,7 @@ export class VoyagerService {
     };
     if (!this.openShift.hasSyncConfig()) {
       // Use default localhost urls when OpenShift config is missing
+      console.log('config missing, using localhost');
       options.httpUrl = 'http://localhost:4000/graphql';
       options.wsUrl = 'ws://localhost:4000/graphql';
     }

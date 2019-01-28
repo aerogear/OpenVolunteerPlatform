@@ -3,12 +3,10 @@ import {
   ADD_TASK,
   DELETE_TASK,
   GET_TASKS,
-  TASK_CREATED_SUBSCRIPTION,
-  TASK_DELETED_SUBSCRIPTION,
-  TASK_MODIFIED_SUBSCRIPTION,
+  TASK_MUTATED_SUBSCRIPTION,
   UPDATE_TASK
 } from './graphql.queries';
-import { AllTasks, Task } from './types';
+import { AllTasks, Task, MutationType } from './types';
 import { VoyagerService } from './voyager.service';
 import { VoyagerClient, createOptimisticResponse } from '@aerogear/datasync-js';
 
@@ -37,11 +35,39 @@ export class ItemService {
 
   // Watch local cache for updates
   getItems() {
-    return this.apollo.watchQuery<AllTasks>({
+    const getTasks = this.apollo.watchQuery<AllTasks>({
       query: GET_TASKS,
       fetchPolicy: 'cache-first',
       errorPolicy: 'none'
     });
+    getTasks.subscribeToMore({
+      document: TASK_MUTATED_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data.tasks.task) {
+          return prev;
+        }
+        if (subscriptionData.data.tasks.mutation === MutationType.CREATED) {
+          const newTask = subscriptionData.data.tasks.task;
+          // don't double add the message
+          if (!prev.allTasks.find((task) => task.id === newTask.id)) {
+            return Object.assign({}, prev, {
+              allTasks: [...prev.allTasks, newTask]
+            });
+          } else {
+            return prev;
+          }
+        }
+        if (subscriptionData.data.tasks.mutation === MutationType.DELETED) {
+          const { id } = subscriptionData.data.tasks.task;
+          const filteredTasks = prev.allTasks.filter(item => {
+            return Number(item.id) !== Number(id);
+          });
+          prev.allTasks = filteredTasks;
+          return prev;
+        }
+      }
+    });
+    return getTasks;
   }
 
   createItem(title, description) {
@@ -78,31 +104,16 @@ export class ItemService {
     });
   }
 
-  subscribeToUpdate() {
-    return this.apollo.subscribe<any>({
-      query: TASK_MODIFIED_SUBSCRIPTION
-    });
-  }
-
-  subscribeToDelete() {
-    return this.apollo.subscribe({
-      query: TASK_DELETED_SUBSCRIPTION
-    });
-  }
-
-  subscribeToNew() {
-    return this.apollo.subscribe<any>({
-      query: TASK_CREATED_SUBSCRIPTION
-    });
-  }
-
   // Local cache updates for CRUD operations
   updateCacheOnAdd(cache, { data: { createTask } }) {
     const { allTasks } = cache.readQuery({ query: GET_TASKS });
+    if (!allTasks.find((task) => task.id === createTask.id)) {
+      allTasks.push(createTask);
+    }
     cache.writeQuery({
       query: GET_TASKS,
       data: {
-        'allTasks': allTasks.concat([createTask])
+        'allTasks': allTasks
       }
     });
   }

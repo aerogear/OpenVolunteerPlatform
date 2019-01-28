@@ -1,9 +1,8 @@
 const { gql } = require('apollo-server')
-const { makeExecutableSchema } = require('graphql-tools')
-const { pubSub, EVENTS } = require('./subscriptions')
-const { handleConflictOnClient, conflictHandler } = require("@aerogear/voyager-conflicts")
+const { pubSub } = require('./subscriptions')
+const { conflictHandler } = require("@aerogear/voyager-conflicts")
 
-const typeDefs = gql`
+const typeDefs = gql `
 type Task {
   id: ID!
   version: Int
@@ -24,10 +23,19 @@ type Mutation {
 }
 
 type Subscription {
-  taskCreated: Task,
-  taskModified: Task,
-  taskDeleted: ID
+  tasks: TaskSubscription!
 }
+
+type TaskSubscription {
+  mutation: MutationType!
+  task: Task!
+}
+enum MutationType {
+  CREATED
+  MUTATED
+  DELETED
+}
+
 `
 
 const resolvers = {
@@ -51,11 +59,11 @@ const resolvers = {
   Mutation: {
     createTask: async (obj, args, context, info) => {
       console.log("Create", args)
-      const result = await context.db('tasks').insert({ ...args, version: 1 }).returning('*').then((rows) => rows[0])
+      const result = await context.db('tasks').insert({ ...args,
+        version: 1
+      }).returning('*').then((rows) => rows[0])
       // TODO context helper for publishing subscriptions in SDK?
-      pubSub.publish(EVENTS.TASK.CREATED, {
-        taskCreated: result,
-      });
+      publish('CREATED', result)
       return result
     },
     updateTask: async (obj, clientData, context, info) => {
@@ -73,11 +81,11 @@ const resolvers = {
       conflictHandler.nextState(clientData)
 
       const update = await context.db('tasks').update(clientData)
-        .where({ 'id': clientData.id }).returning('*').then((rows) => rows[0])
+        .where({
+          'id': clientData.id
+        }).returning('*').then((rows) => rows[0])
 
-      pubSub.publish(EVENTS.TASK.MODIFIED, {
-        taskModified: update
-      });
+      publish('MUTATED', update)
       return update;
     },
     deleteTask: async (obj, args, context, info) => {
@@ -86,9 +94,7 @@ const resolvers = {
         .where('id', args.id).returning('*').then((rows) => {
           if (rows[0]) {
             const deletedId = rows[0].id
-            pubSub.publish(EVENTS.TASK.DELETED, {
-              taskDeleted: deletedId
-            });
+            publish('DELETED', result)
             return deletedId;
           } else {
             throw new Error(`Cannot delete object ${args.id}`);
@@ -99,18 +105,22 @@ const resolvers = {
   },
   // TODO add helper/package to support generating subscription resolvers
   Subscription: {
-    taskCreated: {
-      subscribe: () => pubSub.asyncIterator(EVENTS.TASK.CREATED)
-    },
-    taskDeleted: {
-      subscribe: () => pubSub.asyncIterator(EVENTS.TASK.DELETED)
-    },
-    taskModified: {
-      subscribe: () => pubSub.asyncIterator(EVENTS.TASK.MODIFIED)
-    },
+    tasks: {
+      subscribe: () => pubSub.asyncIterator('tasks')
+    }
   },
 }
 
-module.exports = { typeDefs, resolvers }
+function publish (mutationType, data) {
+  pubSub.publish('tasks', {
+        tasks: {
+          mutation: mutationType,
+          task: data
+        }
+      });
+}
 
-
+module.exports = {
+  typeDefs,
+  resolvers
+}
