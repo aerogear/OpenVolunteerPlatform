@@ -23,8 +23,11 @@ jobs:
           name: run lint
           command: npm run lint
       - run:
-          name: run compile
-          command: npm run compile
+          name: run ionic install
+          command: npm install ionic
+      - run:
+          name: run build
+          command: npm run build
       - store_artifacts:
           path: test-results.xml
           prefix: tests
