@@ -94,7 +94,7 @@ const resolvers = {
         .where('id', args.id).returning('*').then((rows) => {
           if (rows[0]) {
             const deletedId = rows[0].id
-            publish('DELETED', result)
+            publish('DELETED', rows[0])
             return deletedId;
           } else {
             throw new Error(`Cannot delete object ${args.id}`);
