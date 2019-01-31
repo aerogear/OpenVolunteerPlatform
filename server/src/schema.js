@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server')
 const { makeExecutableSchema } = require('graphql-tools')
 const { pubSub, EVENTS } = require('./subscriptions')
-const { handleConflictOnClient, conflictHandler } = require("@aerogear/apollo-voyager-conflicts")
+const { handleConflictOnClient, conflictHandler } = require("@aerogear/voyager-conflicts")
 
 const typeDefs = gql`
 type Task {
@@ -97,7 +97,7 @@ const resolvers = {
       return result
     }
   },
-  // TODO add helper/package to support generating subscription resolvers 
+  // TODO add helper/package to support generating subscription resolvers
   Subscription: {
     taskCreated: {
       subscribe: () => pubSub.asyncIterator(EVENTS.TASK.CREATED)
