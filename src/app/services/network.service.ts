@@ -1,4 +1,4 @@
-import { CordovaNetworkStatus, WebNetworkStatus, NetworkStatus } from '@aerogear/datasync-js';
+import { CordovaNetworkStatus, WebNetworkStatus, NetworkStatus } from '@aerogear/voyager-client';
 import { Injectable } from '@angular/core';
 
 @Injectable({

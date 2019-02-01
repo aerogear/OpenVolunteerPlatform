@@ -1,4 +1,4 @@
-import { init } from '@aerogear/app';
+import { init, AeroGearApp } from '@aerogear/app';
 import { Injectable } from '@angular/core';
 
 const config = require('../../mobile-services.js');
@@ -10,13 +10,14 @@ const config = require('../../mobile-services.js');
  * Service that initializes OpenShift specific SDK's
  */
 export class OpenShiftService {
+  app: AeroGearApp;
 
   constructor() {
-    init(config);
+    this.app = init(config);
   }
 
   getConfig() {
-    return config;
+    return this.app.config;
   }
 
   hasSyncConfig() {

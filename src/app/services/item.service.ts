@@ -8,7 +8,7 @@ import {
 } from './graphql.queries';
 import { AllTasks, Task, MutationType } from './types';
 import { VoyagerService } from './voyager.service';
-import { VoyagerClient, createOptimisticResponse } from '@aerogear/datasync-js';
+import { VoyagerClient, createOptimisticResponse } from '@aerogear/voyager-client';
 
 @Injectable({
   providedIn: 'root'

@@ -14,7 +14,7 @@ export class AuthService {
 
     constructor(private openShift: OpenShiftService) {
         if (this.openShift.hasAuthConfig()) {
-            this.authService = new Auth();
+            this.authService = new Auth(this.openShift.getConfig());
         }
     }
 
