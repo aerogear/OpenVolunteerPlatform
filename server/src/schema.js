@@ -27,10 +27,10 @@ type Subscription {
 }
 
 type TaskSubscription {
-  mutation: MutationType!
+  action: actionType!
   task: Task!
 }
-enum MutationType {
+enum actionType {
   CREATED
   MUTATED
   DELETED
@@ -111,10 +111,10 @@ const resolvers = {
   },
 }
 
-function publish (mutationType, data) {
+function publish (actionType, data) {
   pubSub.publish('tasks', {
         tasks: {
-          mutation: mutationType,
+          action: actionType,
           task: data
         }
       });
