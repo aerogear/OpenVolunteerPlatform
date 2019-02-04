@@ -42,7 +42,7 @@ mutation updateTask($description: String, $id: ID!, $title: String, $version: In
 export const TASK_MUTATED_SUBSCRIPTION = gql`
   subscription tasks {
     tasks {
-      mutation
+      action
       task {
         id
         title

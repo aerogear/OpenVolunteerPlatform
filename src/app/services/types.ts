@@ -13,7 +13,7 @@ export interface AllTasks {
 }
 
 interface TaskSubscription {
-  mutation: MutationType;
+  action: MutationType;
   task: Task;
 }
 

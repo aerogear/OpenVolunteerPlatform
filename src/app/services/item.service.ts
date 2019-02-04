@@ -46,7 +46,7 @@ export class ItemService {
         if (!subscriptionData.data.tasks.task) {
           return prev;
         }
-        if (subscriptionData.data.tasks.mutation === MutationType.CREATED) {
+        if (subscriptionData.data.tasks.action === MutationType.CREATED) {
           const newTask = subscriptionData.data.tasks.task;
           // don't double add the message
           if (!prev.allTasks.find((task) => task.id === newTask.id)) {
@@ -57,7 +57,7 @@ export class ItemService {
             return prev;
           }
         }
-        if (subscriptionData.data.tasks.mutation === MutationType.DELETED) {
+        if (subscriptionData.data.tasks.action === MutationType.DELETED) {
           const { id } = subscriptionData.data.tasks.task;
           const filteredTasks = prev.allTasks.filter(item => {
             return Number(item.id) !== Number(id);
