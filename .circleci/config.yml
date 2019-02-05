@@ -48,7 +48,19 @@ jobs:
       - run: CI=true npm run release:prep
       - run: TAG=$CIRCLE_TAG npm run release:validate
       - run: npm run publish
-
+  publish_example_server_container:
+    docker:
+      # image for building docker containers
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      # special workaround to allow running docker in docker https://circleci.com/docs/2.0/building-docker-images/
+      - setup_remote_docker:
+          version: 17.05.0-ce
+          docker_layer_caching: true
+      - run: |
+          cd server          
+          TAG=$CIRCLE_TAG ../scripts/publish_example_server_container.sh
 workflows:
   version: 2
   build_and_release:
@@ -65,3 +77,12 @@ workflows:
               only: /.*/ # allow anything because tag syntax is validated as part of validate-release.sh
             branches:
               ignore: /.*/
+      - publish_example_server_container:
+          requires:
+            - npm_publish
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only:
+                - master
