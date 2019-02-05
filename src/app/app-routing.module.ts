@@ -8,7 +8,6 @@ export function loadHomePageModule() {
   return HomePageModule;
 }
 
-// Disable lazy loading
 import { TaskPageModule } from './pages/task/task.module';
 
 export function loadTaskModule() {
@@ -33,9 +32,9 @@ const routes: Routes = [
   { path: 'tasks', loadChildren: loadTaskModule },
   { path: 'new-item', loadChildren: loadNewItemPageModule },
   { path: 'update-item', loadChildren: loadUpdateItemPageModule },
-  { path: 'docs', loadChildren: './docs/docs.module#DocsPageModule' },
-  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
-  { path: 'security', loadChildren: './security/security.module#SecurityPageModule' },
+  { path: 'docs', loadChildren: './pages/docs/docs.module#DocsPageModule' },
+  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
+  { path: 'security', loadChildren: './pages/security/security.module#SecurityPageModule' },
 ];
 @NgModule({
   imports: [

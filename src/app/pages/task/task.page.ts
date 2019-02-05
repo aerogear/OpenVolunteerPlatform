@@ -42,16 +42,17 @@ export class TaskPage implements OnInit {
   }
 
   private initAuth() {
-    return this.auth.init().then(() => {
-      return this.auth.authService.extract().loadUserProfile().success((profile) => {
-        this.user = profile.username;
-      });
-    }).catch((error) => {
-      if (error) {
-        // tslint:disable-next-line:no-console
-        console.info('Error when initializing auth', error);
-      }
-    });
+    // FIXME temporary disabled
+    // return this.auth.init().then(() => {
+    //   return this.auth.authService.extract().loadUserProfile().success((profile) => {
+    //     this.user = profile.username;
+    //   });
+    // }).catch((error) => {
+    //   if (error) {
+    //     // tslint:disable-next-line:no-console
+    //     console.info('Error when initializing auth', error);
+    //   }
+    // });
   }
 
   // Setup status bar that shows online status

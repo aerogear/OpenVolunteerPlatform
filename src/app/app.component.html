@@ -7,8 +7,10 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
+        <div>
         <ion-img style="width:30%" src="https://cdn.iconscout.com/icon/free/png-256/avatar-372-456324.png"></ion-img>
         <ion-title style="margin:0 auto;">Mycraft Coady</ion-title>
+        </div>
         <ion-list>
             <ion-menu-toggle auto-hide="false">
                 <ion-item [routerDirection]="'root'" routerLink="/">
@@ -19,7 +21,7 @@
                 </ion-item>
               </ion-menu-toggle>
               <ion-menu-toggle auto-hide="false">
-                  <ion-item [routerDirection]="'root'" routerLink="/task">
+                  <ion-item [routerDirection]="'root'" routerLink="/tasks">
                     <ion-icon slot="start" name="build"></ion-icon>
                     <ion-label>
                       Manage Tasks
