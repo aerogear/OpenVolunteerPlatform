@@ -31,6 +31,7 @@ export class HomePage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    await this.setupQueueStatusBar();
     await this.initAuth();
     // Root element of the data app
     // When view is initialized:
@@ -38,7 +39,6 @@ export class HomePage implements OnInit {
     // Then we subscribe to any updates that happen in local cache
     // Local cache can be updated by mutations that happen on the app
     await this.loadData();
-    await this.setupQueueStatusBar();
   }
 
   private initAuth() {
