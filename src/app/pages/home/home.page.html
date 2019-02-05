@@ -1,66 +1,46 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>GraphQL Voyager Tasks</ion-title>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Home
+    </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-toolbar color="primary">
-  <ion-buttons slot="primary">
-    <ion-button (click)="openNewItemPage()">
-      <ion-icon slot="icon-only" name="add"></ion-icon>
-      New task
-    </ion-button>
-    <div *ngIf="auth.authService">
-      <ion-button (click)="login()" >
-        <ion-icon name="person"></ion-icon>
-        {{ user }}
-      </ion-button>
-    </div>
-  </ion-buttons>
-</ion-toolbar>
 
-<ion-content class="outer-content">
-  <div *ngIf="loading">
-    Loading...
-  </div>
-  <div *ngIf="errors">
-    Cannot load initial data to cache.
-    Please connect to internet in order to load data
-    Error when fetching data: {{errors}}
-  </div>
-  <div *ngIf="items">
-    <ion-list>
-      <ion-item-group *ngFor="let item of items">
-        <ion-item>
-          <ion-label>
-            <h2>{{ item.title }}
-              <ion-badge color="primary"> V{{ item.version }}</ion-badge>
-            </h2>
-            <ion-note item-start>
-              {{ item.description }}
-            </ion-note>
-          </ion-label>
-          <!--<ion-toggle item-end style="margin-left:5px;" color="secondary"></ion-toggle>-->
-          <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="goToItem(item)">
-            <ion-icon name="arrow-forward"></ion-icon> Update
-          </ion-button>
-          <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="deleteItem(item)">
-            <ion-icon name="trash"></ion-icon> Delete
-          </ion-button>
-        </ion-item>
-      </ion-item-group>
+<ion-content>
+    <ion-card class="welcome-card">
+      <ion-img style="width:90%; margin:0 auto;" src="https://trello-backgrounds.s3.amazonaws.com/57ecca6d0a0a9b4ea692319c/450x141/8f3dec9c9c0da52ada8a4692def43f70/aerogear_logo_450px.png"></ion-img>
+      <ion-card-header>
+        <!-- <ion-card-subtitle>Get Started with AeroGear Mobile</ion-card-subtitle> -->
+        <ion-card-title>Welcome to AeroGear Mobile Services</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Sample application that demoes various AeroGear Mobile Services
+        </p>
+        <!-- <ion-badge >No services provisioned</ion-badge> -->
+      </ion-card-content>
+    </ion-card>
+    <ion-list lines="none">
+      <ion-list-header>
+        <ion-label >Actions</ion-label>
+      </ion-list-header>
+      <ion-item href="https://ionicframework.com/docs/">
+        <ion-icon slot="start" color="medium" name="book"></ion-icon>
+        <ion-label>View Documentation</ion-label>
+      </ion-item>
+      <ion-item href="https://ionicframework.com/docs/building/scaffolding">
+        <ion-icon slot="start" color="medium" name="build"></ion-icon>
+        <ion-label>Manage Tasks</ion-label>
+      </ion-item>
+      <ion-item href="https://ionicframework.com/docs/layout/structure">
+        <ion-icon slot="start" color="medium" name="person"></ion-icon>
+        <ion-label>User profile</ion-label>
+      </ion-item>
+      <ion-item href="https://ionicframework.com/docs/theming/basics">
+        <ion-icon slot="start" color="medium" name="settings"></ion-icon>
+        <ion-label>Security Settings</ion-label>
+      </ion-item>
     </ion-list>
-  </div>
 </ion-content>
-
-<ion-footer>
-  <div style="margin: 10px;">
-    <ion-label>Number of items added when offline:
-      <ion-badge color="secondary">{{queue}}</ion-badge>
-    </ion-label>
-    <p></p>
-    <ion-label>Network status:
-        <ion-badge color="secondary" *ngIf="online">Online</ion-badge>
-        <ion-badge color="primary" *ngIf="!online">Offline</ion-badge>
-    </ion-label>
-  </div>
-</ion-footer>
