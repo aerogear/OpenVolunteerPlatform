@@ -1,5 +1,5 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { VoyagerService } from './services/voyager.service';
+import { VoyagerService } from './services/sync/voyager.service';
 
 function apolloClientFactory(aeroGear: VoyagerService) {
   return () => aeroGear.createApolloClient();

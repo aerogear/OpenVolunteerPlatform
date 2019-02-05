@@ -8,6 +8,13 @@ export function loadHomePageModule() {
   return HomePageModule;
 }
 
+// Disable lazy loading
+import { TaskPageModule } from './pages/task/task.module';
+
+export function loadTaskModule() {
+  return TaskPageModule;
+}
+
 import { NewItemPageModule } from './pages/new-item/new-item.module';
 
 export function loadNewItemPageModule() {
@@ -23,6 +30,7 @@ export function loadUpdateItemPageModule() {
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: loadHomePageModule },
+  { path: 'tasks', loadChildren: loadTaskModule },
   { path: 'new-item', loadChildren: loadNewItemPageModule },
   { path: 'update-item', loadChildren: loadUpdateItemPageModule },
 ];
@@ -31,7 +39,7 @@ const routes: Routes = [
     HomePageModule,
     NewItemPageModule,
     UpdateItemPageModule,
-    RouterModule.forRoot(routes)],
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

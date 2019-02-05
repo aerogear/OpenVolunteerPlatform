@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>GraphQL Voyager Tasks</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openNewItemPage()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+      <div *ngIf="auth.authService">
+        <ion-button (click)="login()">
+          <ion-icon name="person"></ion-icon>
+          {{ user }}
+        </ion-button>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="outer-content">
+  <div *ngIf="loading">
+    Loading...
+  </div>
+  <div *ngIf="errors">
+    Cannot load initial data to cache.
+    Please connect to internet in order to load data
+    Error when fetching data: {{errors}}
+  </div>
+  <div *ngIf="items">
+    <ion-list>
+      <ion-item-group *ngFor="let item of items">
+        <ion-item>
+          <ion-label>
+            <h2>{{ item.title }}
+              <ion-badge color="primary"> V{{ item.version }}</ion-badge>
+            </h2>
+            <ion-note item-start>
+              {{ item.description }}
+            </ion-note>
+          </ion-label>
+          <!--<ion-toggle item-end style="margin-left:5px;" color="secondary"></ion-toggle>-->
+          <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="goToItem(item)">
+            <ion-icon name="arrow-forward"></ion-icon> Update
+          </ion-button>
+          <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="deleteItem(item)">
+            <ion-icon name="trash"></ion-icon> Delete
+          </ion-button>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div style="margin: 10px;">
+    <ion-label>Number of items added when offline:
+      <ion-badge color="secondary">{{queue}}</ion-badge>
+    </ion-label>
+    <p></p>
+    <ion-label>Network status:
+        <ion-badge color="secondary" *ngIf="online">Online</ion-badge>
+        <ion-badge color="primary" *ngIf="!online">Offline</ion-badge>
+    </ion-label>
+  </div>
+</ion-footer>

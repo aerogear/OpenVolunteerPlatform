@@ -1,8 +1,8 @@
 import { createClient, VoyagerClient, DataSyncConfig, OfflineQueueListener, ConflictListener } from '@aerogear/voyager-client';
 import { Injectable } from '@angular/core';
-import { OpenShiftService } from './openshift.service';
+import { OpenShiftService } from '../openshift.service';
 import { AlertController } from '@ionic/angular';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth.service';
 
 /**
  * Class used to log data conflicts in server
