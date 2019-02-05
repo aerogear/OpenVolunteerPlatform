@@ -33,6 +33,9 @@ const routes: Routes = [
   { path: 'tasks', loadChildren: loadTaskModule },
   { path: 'new-item', loadChildren: loadNewItemPageModule },
   { path: 'update-item', loadChildren: loadUpdateItemPageModule },
+  { path: 'docs', loadChildren: './docs/docs.module#DocsPageModule' },
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'security', loadChildren: './security/security.module#SecurityPageModule' },
 ];
 @NgModule({
   imports: [
