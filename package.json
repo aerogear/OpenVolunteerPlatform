@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ionic:android": "ionic cordova run android",
-    "ionic:ios": "ionic cordova run ios"
+    "ionic:ios": "ionic cordova run ios -- --buildFlag='-UseModernBuildSystem=0'"
   },
   "private": true,
   "dependencies": {
