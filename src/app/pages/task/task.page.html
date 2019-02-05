@@ -1,19 +1,24 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>GraphQL Voyager Tasks</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="openNewItemPage()">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
-      </ion-button>
-      <div *ngIf="auth.authService">
-        <ion-button (click)="login()">
-          <ion-icon name="person"></ion-icon>
-          {{ user }}
-        </ion-button>
-      </div>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Manage Tasks
+      </ion-title>
+      <ion-buttons slot="end">
+          <ion-button (click)="openNewItemPage()">
+            <ion-icon slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+          <!-- TODO <div *ngIf="auth.authService">
+            <ion-button (click)="login()">
+              <ion-icon name="person"></ion-icon>
+              {{ user }}
+            </ion-button>
+          </div> -->
+        </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content class="outer-content">
   <div *ngIf="loading">

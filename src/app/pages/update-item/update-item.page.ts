@@ -34,7 +34,7 @@ export class UpdateItemPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/tasks']);
   }
 
   updateItem(value) {

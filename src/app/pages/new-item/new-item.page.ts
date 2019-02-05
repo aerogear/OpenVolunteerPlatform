@@ -27,7 +27,7 @@ export class NewItemPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/tasks']);
   }
 
   createItem(value) {
