@@ -12,9 +12,11 @@ class Config {
       port: process.env.DB_PORT || '5432'
     }
 
+    this.appUrl = process.env.URL || 'http://localhost:4000'
+
     this.keycloakConfigPath = process.env.KEYCLOAK_CONFIG || path.resolve(__dirname, './keycloak.json')
     this.keycloakConfig = readKeycloakConfig(this.keycloakConfigPath)
-    
+
     this.playgroundConfig = {
       settings: {
         'editor.theme': 'light',

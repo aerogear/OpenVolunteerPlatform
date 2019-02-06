@@ -1,20 +1,15 @@
 const knex = require('knex')
+const createTasksTables = require("./tasks/ddl")
+const createFileTables = require("./files/ddl")
 
-async function connect (options) {
+async function connect(options) {
   const db = knex({
     client: 'pg',
     connection: options
   })
-  const tasksExists = await db.schema.hasTable('tasks')
-  if (!tasksExists) {
-    await db.schema.createTable('tasks', function (table) {
-      table.string('title')
-      table.string('description')
-      // Required for conflict resolution
-      table.integer('version')
-      table.increments('id')
-    })
-  }
+
+  await createTasksTables(db);
+  await createFileTables(db);
   return db
 }
 
