@@ -33,7 +33,9 @@ export class FileService {
     };
     return this.apollo.mutate<FileEntries>({
       mutation: UPLOAD_FILE,
-      variables: item
+      variables: item,
+      fetchPolicy: 'network-only',
+      errorPolicy: 'none'
     });
   }
 }

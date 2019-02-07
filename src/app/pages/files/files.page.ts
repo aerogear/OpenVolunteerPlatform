@@ -9,13 +9,16 @@ import { FileService } from '../../services/file/file.service';
 })
 export class FilesPage implements OnInit {
   private items: Array<FileEntry>;
-
+  private loading = true;
   constructor(public fileService: FileService) { }
 
   ngOnInit() {
     const self = this;
     this.fileService.getItems().then((items) => {
+      self.loading = false;
       self.items = items.data.uploads;
+    }).catch((err) => {
+      console.log('Error when fetching files', err);
     });
   }
 
