@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Documents 
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="items">
+    <ion-list>
+      <ion-item-group *ngFor="let item of items">
+        <ion-item href="{{ item.url }}">
+          <ion-label>
+            <h2>{{ item.filename }}</h2>
+            <h4>{{ item.url }}</h4>
+          </ion-label>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+  </div>
+</ion-content>
