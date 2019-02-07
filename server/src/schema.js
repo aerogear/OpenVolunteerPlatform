@@ -3,6 +3,10 @@ const { pubSub } = require('./subscriptions')
 const { conflictHandler } = require("@aerogear/voyager-conflicts")
 
 const typeDefs = gql `
+
+directive @hasRole(role: [String]) on FIELD | FIELD_DEFINITION
+
+
 type Task {
   id: ID!
   version: Int

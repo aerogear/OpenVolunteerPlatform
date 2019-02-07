@@ -1,15 +1,35 @@
 const express = require('express')
 const http = require('http')
 const cors = require('cors')
+const {
+  SubscriptionServer,
+  ExecutionParams,
+  ConnectionContext
+} = require('subscriptions-transport-ws');
 
-const { VoyagerServer } = require('@aerogear/voyager-server')
-const { KeycloakSecurityService } = require('@aerogear/voyager-keycloak')
+const {
+  VoyagerServer
+} = require('@aerogear/voyager-server')
+const {
+  KeycloakSecurityService
+} = require('@aerogear/voyager-keycloak')
 const metrics = require('@aerogear/voyager-metrics')
 const auditLogger = require('@aerogear/voyager-audit')
-
+const {
+  makeExecutableSchema
+} = require('graphql-tools')
 const config = require('./config/config')
 const connect = require('./db')
-const { typeDefs, resolvers } = require('./schema')
+const {
+  typeDefs,
+  resolvers
+} = require('./schema')
+const {
+  execute,
+  subscribe,
+  GraphQLSchema
+} = require('graphql')
+
 
 let keycloakService = null
 
@@ -26,7 +46,9 @@ async function start() {
   const httpServer = http.createServer(app)
 
   app.use(cors())
-  metrics.applyMetricsMiddlewares(app, { path: '/metrics' })
+  metrics.applyMetricsMiddlewares(app, {
+    path: '/metrics'
+  })
 
   if (keycloakService) {
     keycloakService.applyAuthMiddleware(app)
@@ -44,7 +66,9 @@ async function start() {
     typeDefs,
     resolvers,
     playground: config.playgroundConfig,
-    context: async ({ req }) => {
+    context: async ({
+      req
+    }) => {
       // pass request + db ref into context for each resolver
       return {
         req: req,
@@ -61,11 +85,28 @@ async function start() {
 
   const apolloServer = VoyagerServer(apolloConfig, voyagerConfig)
 
-  apolloServer.applyMiddleware({ app })
-  apolloServer.installSubscriptionHandlers(httpServer)
 
-  httpServer.listen({ port: config.port }, () => {
+  apolloServer.applyMiddleware({
+    app
+  })
+  //apolloServer.installSubscriptionHandlers(httpServer)
+  httpServer.listen({
+    port: config.port
+  }, () => {
     console.log(`🚀  Server ready at http://localhost:${config.port}/graphql`)
+    // applySubscriptions(httpServer, {path: '/graphql'}, apolloServer.schema)
+    new SubscriptionServer({
+      execute,
+      subscribe,
+      onConnect: async connectionParams => {
+        console.log("ON SERVER TOKEN: ", connectionParams)
+        return await keycloakService.validateToken(connectionParams)
+      },
+      schema: apolloServer.schema
+    }, {
+      server: httpServer,
+      path: '/graphql'
+    });
   })
 }
 
