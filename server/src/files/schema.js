@@ -45,7 +45,7 @@ const fileResolvers = {
   Query: {
     uploads: async (obj, args, context) => {
       return context.db.select().from(PREFIX).then((files) => {
-        console.log("Fetching files", files)
+        console.log("Fetching files")
         files.forEach((file) => {
           file.url = `${config.appUrl}${file.url}`
         })
@@ -56,10 +56,10 @@ const fileResolvers = {
   Mutation: {
     async singleUpload(parent, { file }) {
       const { stream, filename, mimetype, encoding } = await file;
-      const filename = await storeFS(stream, fileName)
-      const url = `/${PREFIX}/${filename}`
+      const storedFile = await storeFS(stream, filename)
+      const url = `/${PREFIX}/${storedFile}`
       const result = await context.db(PREFIX).insert({
-        filename, mimetype, encoding, url
+        storedFile, mimetype, encoding, url
       }).returning('*').then((rows) => rows[0])
       return result
     }

@@ -11,6 +11,10 @@
 
 
 <ion-content padding>
+  <ion-input type="file" [(ngModel)]="files" (change)="uploadFile($event)"></ion-input>
+  <!-- <ion-button item-end style="margin-left:5px;" fill="outline" (click)="uploadFile()">
+    <ion-icon name="cloud-upload"></ion-icon>  Upload File
+  </ion-button> -->
   <p *ngIf='loading'>loading...</p>
   <section *ngIf='!loading'>
     <div *ngIf="items">

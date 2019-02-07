@@ -5,7 +5,7 @@ import {
 } from './graphql.queries';
 import { VoyagerService } from '../sync/voyager.service';
 import { VoyagerClient, createOptimisticResponse } from '@aerogear/voyager-client';
-import { FileEntries } from './types';
+import { FileEntries, FileEntry } from './types';
 
 @Injectable({
   providedIn: 'root'
@@ -22,20 +22,16 @@ export class FileService {
   getItems() {
     const getTasks = this.apollo.query<FileEntries>({
       query: UPLOADS,
+      fetchPolicy: 'network-only',
+      errorPolicy: 'none'
     });
     return getTasks;
   }
 
-  createItem(title, description) {
-    const item = {
-      'title': title,
-      'description': description,
-    };
-    return this.apollo.mutate<FileEntries>({
+  createFile(file: FileList) {
+    return this.apollo.mutate<FileEntry>({
       mutation: UPLOAD_FILE,
-      variables: item,
-      fetchPolicy: 'network-only',
-      errorPolicy: 'none'
+      variables: { file }
     });
   }
 }
