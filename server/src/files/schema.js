@@ -2,6 +2,8 @@ const mkdirp = require('mkdirp')
 const shortid = require('shortid')
 const express = require('express')
 const config = require('../config/config')
+const fs = require("fs");
+const pathNode = require("path");
 
 const fileTypeDefs = `
  type File {
@@ -25,7 +27,7 @@ mkdirp.sync(UPLOAD_DIR)
 
 const storeFS = ({ stream, filename }) => {
   const id = shortid.generate()
-  const name = `${id}_${filename}`
+  const name = `${id}.${pathNode.extname(filename)}`
   const path = `${UPLOAD_DIR}/${name}`
   return new Promise((resolve, reject) =>
     stream
@@ -55,8 +57,10 @@ const fileResolvers = {
   },
   Mutation: {
     async singleUpload(parent, { file }) {
-      const { stream, filename, mimetype, encoding } = await file;
-      const storedFile = await storeFS(stream, filename)
+      console.log(await file)
+      const { createReadStream, filename, mimetype, encoding } = await file;
+      const stream = createReadStream();
+      const storedFile = await storeFS({stream, filename})
       const url = `/${PREFIX}/${storedFile}`
       const result = await context.db(PREFIX).insert({
         storedFile, mimetype, encoding, url
