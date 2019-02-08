@@ -27,7 +27,7 @@ mkdirp.sync(UPLOAD_DIR)
 
 const storeFS = ({ stream, filename }) => {
   const id = shortid.generate()
-  const name = `${id}.${pathNode.extname(filename)}`
+  const name = `${id}${pathNode.extname(filename)}`
   const path = `${UPLOAD_DIR}/${name}`
   return new Promise((resolve, reject) =>
     stream
@@ -56,16 +56,16 @@ const fileResolvers = {
     }
   },
   Mutation: {
-    async singleUpload(parent, { file }) {
-      console.log(await file)
+    async singleUpload(parent, { file }, context) {
       const { createReadStream, filename, mimetype, encoding } = await file;
       const stream = createReadStream();
-      const storedFile = await storeFS({stream, filename})
+      const storedFile = await storeFS({ stream, filename })
       const url = `/${PREFIX}/${storedFile}`
-      const result = await context.db(PREFIX).insert({
-        storedFile, mimetype, encoding, url
-      }).returning('*').then((rows) => rows[0])
-      return result
+      return await context.db(PREFIX).insert({
+        filename: storedFile, mimetype, encoding, url
+      }).returning('*').then((rows) => {
+        return rows[0]
+      })
     }
   }
 }
