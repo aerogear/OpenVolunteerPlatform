@@ -4,11 +4,43 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Security Settings 
+      Device Security
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  TODO port security page from showcase
+<ion-content >
+  <ion-card class="welcome-card">
+    <ion-img style="margin:0 auto; width: 80%" src="assets/aerogear.png"></ion-img>
+    <ion-card-header>
+      <ion-card-title>AeroGear Mobile Services Showcase</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Sample application that integrates all AeroGear Mobile Services
+      </p>
+      <ion-card-subtitle>Enabled services:</ion-card-subtitle>
+      <ion-badge color="warning" >No services provisioned</ion-badge>
+    </ion-card-content>
+  </ion-card>
+  <ion-label color=stable text-wrap>
+    <div style="padding-top: 2%">
+      <p text-center>
+        The Device Security service allows you to easily configure and manage device security, and trust checks for your mobile app
+      </p>
+      <ul>
+        <li>
+          Perform a range of device trust checks on the mobile device, such as checking if the device is rooted, and allows you take
+          proactive action based on the results
+        </li>
+        <li>
+          Distribute SSL certificates with a mobile app to create a direct chain of trust (certificate pinning)
+        </li>
+      </ul>
+      <p text-center>
+        For further information, visit
+        <br />
+        <a href="https://www.aerogear.org/">www.aerogear.org</a>
+      </p>
+    </div>
+  </ion-label>
 </ion-content>

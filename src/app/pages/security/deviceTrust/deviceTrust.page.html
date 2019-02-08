@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Device Trust
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <ion-card class="welcome-card">
+    <ion-img style="margin:0 auto; width: 80%" src="assets/aerogear.png"></ion-img>
+    <ion-card-header>
+      <ion-card-title>AeroGear Mobile Services Showcase</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Sample application that integrates all AeroGear Mobile Services
+      </p>
+      <ion-card-subtitle>Enabled services:</ion-card-subtitle>
+      <ion-badge color="warning" >{{trustScore}}No services provisioned</ion-badge>
+    </ion-card-content>
+  </ion-card>
+  <ion-list>
+    <ion-item *ngFor="let detection of detections">
+      <div *ngIf="detection.detected" style="color: green">
+        <ion-icon *ngIf="detection.detected"  md-name="verified_user" color="green" class="trust-icon"></ion-icon>
+        {{detection.label}}
+      </div>
+      <div *ngIf="!detection.detected" style="color: red">
+        <ion-icon *ngIf="!detection.detected" md-name="warning" color="red" class="trust-icon"></ion-icon>
+        {{detection.label}}
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
