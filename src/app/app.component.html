@@ -9,7 +9,12 @@
       <ion-content>
         <div style="width:60%;margin:0 auto;">
           <ion-img src="assets/avatar.png"></ion-img>
-          <ion-title >Mycraft Coady</ion-title>
+          <div *ngIf="auth.authService">
+              <ion-button (click)="login()">
+                <ion-icon name="person"></ion-icon>
+                {{ user }}
+              </ion-button>
+            </div>
         </div>
         <ion-list>
           <ion-menu-toggle auto-hide="false">
