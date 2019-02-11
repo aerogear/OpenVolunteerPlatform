@@ -69,7 +69,7 @@ NOTE: If Keycloak integration is enabled for the server, and the Keycloak server
    npm install -g ionic@4
    ```
 
-1. Install this Ionic 4 starter app
+1. Install dependencies
 
    ```shell
    npm install
