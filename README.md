@@ -23,6 +23,7 @@ Requirements:
 
 - Docker
 - Node.js 6.x or above to run server
+- (optional) access to running OpenShift instance
 
 ### Running the server
 
@@ -44,6 +45,20 @@ NOTE: If Keycloak integration is enabled for the server, and the Keycloak server
 
    ```shell
    export NODE_TLS_REJECT_UNAUTHORIZED=0
+   ```
+
+### (optional) Running the server on OpenShift
+
+1. Target your OpenShift instance with `oc login` command
+1. Deploy the Server with PostgreSQL
+   ```shell
+   oc new-app -f server/openshift-template.yml
+   ```
+1. To get rid of all the resources from the template, run
+   ```shell
+   oc delete all -l app=ionic-showcase-server \
+   && oc delete secret -l app=ionic-showcase-server \
+   && oc delete pvc -l app=ionic-showcase-server
    ```
 
 ### Running the client
