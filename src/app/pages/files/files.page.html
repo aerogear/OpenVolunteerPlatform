@@ -9,25 +9,40 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content padding>
-  <ion-input type="file" [(ngModel)]="files" (change)="uploadFile($event)"></ion-input>
-  <!-- <ion-button item-end style="margin-left:5px;" fill="outline" (click)="uploadFile()">
-    <ion-icon name="cloud-upload"></ion-icon>  Upload File
-  </ion-button> -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Upload Document</ion-card-title>
+      <ion-card-subtitle>Select new document for upload</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-input type="file" [(ngModel)]="files" (change)="uploadFile($event)"></ion-input>
+    </ion-card-content>
+  </ion-card>
+
   <p *ngIf='loading'>loading...</p>
   <section *ngIf='!loading'>
-    <div *ngIf="items">
-      <ion-list>
-        <ion-item-group *ngFor="let item of items">
-          <ion-item href="{{ item.url }}">
-            <ion-label>
-              <h2>{{ item.filename }}</h2>
-              <h4>{{ item.url }}</h4>
-            </ion-label>
-          </ion-item>
-        </ion-item-group>
-      </ion-list>
-    </div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Uploaded Documents</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div *ngIf="items">
+          <ion-list>
+            <ion-item-group *ngFor="let item of items">
+              <ion-item href="{{ item.url }}">
+                <ion-label>
+                  <h2>{{ item.filename }}</h2>
+                  <h4>{{ item.url }}</h4>
+                </ion-label>
+              </ion-item>
+            </ion-item-group>
+          </ion-list>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
   </section>
 </ion-content>

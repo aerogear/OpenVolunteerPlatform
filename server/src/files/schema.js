@@ -48,6 +48,7 @@ const fileResolvers = {
     uploads: async (obj, args, context) => {
       return context.db.select().from(PREFIX).then((files) => {
         console.log("Fetching files")
+        // Dynamically append app url to all files
         files.forEach((file) => {
           file.url = `${config.appUrl}${file.url}`
         })
@@ -62,7 +63,7 @@ const fileResolvers = {
       const storedFile = await storeFS({ stream, filename })
       const url = `/${PREFIX}/${storedFile}`
       return await context.db(PREFIX).insert({
-        filename: storedFile, mimetype, encoding, url
+        filename: filename, mimetype, encoding, url
       }).returning('*').then((rows) => {
         return rows[0]
       })
