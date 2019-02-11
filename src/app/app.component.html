@@ -7,16 +7,13 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <div style="width:60%;margin:0 auto;">
-          <ion-img src="assets/avatar.png"></ion-img>
-          <div *ngIf="auth.authService">
-              <ion-button (click)="login()">
-                <ion-icon name="person"></ion-icon>
-                {{ user }}
-              </ion-button>
-            </div>
-        </div>
         <ion-list>
+          <ion-list-header>
+            <div *ngIf="auth.authService">
+              <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+              <h5>{{ user.email }}</h5>
+            </div>
+          </ion-list-header>
           <ion-menu-toggle auto-hide="false">
             <ion-item routerDirection='root' routerLink="/">
               <ion-icon slot="start" name="home"></ion-icon>
@@ -57,14 +54,16 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection='root' routerLink="/">
-              <ion-icon slot="start" name="log-out"></ion-icon>
-              <ion-label>
-                Logout
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+          <div *ngIf="auth.authService">
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerDirection='root' routerLink="/" (click)="login()">
+                <ion-icon slot="start" name="log-out"></ion-icon>
+                <ion-label>
+                  Logout
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </div>
         </ion-list>
       </ion-content>
     </ion-menu>

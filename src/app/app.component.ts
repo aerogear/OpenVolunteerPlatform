@@ -10,7 +10,7 @@ import { AuthService } from './services/auth.service';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  private user: String;
+  private user = {};
 
   constructor(
     private platform: Platform,
@@ -32,7 +32,7 @@ export class AppComponent {
   private initAuth() {
     return this.auth.init().then(() => {
       return this.auth.authService.extract().loadUserProfile().success((profile) => {
-        this.user = profile.username;
+        this.user = profile;
       });
     }).catch((error) => {
       if (error) {
