@@ -1,0 +1,340 @@
+---
+
+apiVersion: v1
+kind: Template
+labels:
+  template: ionic-showcase-server
+metadata:
+  name: ionic-showcase-server
+objects:
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    labels:
+      app: ionic-showcase-server
+    annotations:
+      template.openshift.io/expose-database_name: "{.data['database-name']}"
+      template.openshift.io/expose-password: "{.data['database-password']}"
+      template.openshift.io/expose-username: "{.data['database-user']}"
+      description: |-
+        OpenShift template for GraphQL Server + PostgresQL DB Service with persistent storage.
+
+        It's meant to be used with Ionic Showcase Application
+        To get more information, visit https://github.com/aerogear/ionic-showcase/tree/master/server
+    name: "${DATABASE_SERVICE_NAME}"
+  stringData:
+    database-name: "${POSTGRESQL_DATABASE}"
+    database-password: "${POSTGRESQL_PASSWORD}"
+    database-user: "${POSTGRESQL_USER}"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: ionic-showcase-server
+    annotations:
+      template.openshift.io/expose-uri: postgres://{.spec.clusterIP}:{.spec.ports[?(.name=="postgresql")].port}
+    name: "${DATABASE_SERVICE_NAME}"
+  spec:
+    ports:
+    - name: postgresql
+      nodePort: 0
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      name: "${DATABASE_SERVICE_NAME}"
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: ionic-showcase-server
+    name: "${DATABASE_SERVICE_NAME}"
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: "${VOLUME_CAPACITY}"
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: ionic-showcase-server
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: 'true'
+    name: "${DATABASE_SERVICE_NAME}"
+  spec:
+    replicas: 1
+    selector:
+      name: "${DATABASE_SERVICE_NAME}"
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          name: "${DATABASE_SERVICE_NAME}"
+      spec:
+        containers:
+        - capabilities: {}
+          env:
+          - name: POSTGRESQL_USER
+            valueFrom:
+              secretKeyRef:
+                key: database-user
+                name: "${DATABASE_SERVICE_NAME}"
+          - name: POSTGRESQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: database-password
+                name: "${DATABASE_SERVICE_NAME}"
+          - name: POSTGRESQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                key: database-name
+                name: "${DATABASE_SERVICE_NAME}"
+          image: " "
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - "/usr/libexec/check-container"
+              - "--live"
+            initialDelaySeconds: 120
+            timeoutSeconds: 10
+          name: postgresql
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - "/usr/libexec/check-container"
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: "${MEMORY_LIMIT}"
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: "/dev/termination-log"
+          volumeMounts:
+          - mountPath: "/var/lib/pgsql/data"
+            name: "${DATABASE_SERVICE_NAME}-data"
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        volumes:
+        - name: "${DATABASE_SERVICE_NAME}-data"
+          persistentVolumeClaim:
+            claimName: "${DATABASE_SERVICE_NAME}"
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - postgresql
+        from:
+          kind: ImageStreamTag
+          name: postgresql:${POSTGRESQL_VERSION}
+          namespace: "${NAMESPACE}"
+        lastTriggeredImage: ''
+      type: ImageChange
+    - type: ConfigChange
+  status: {}
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: ionic-showcase-server
+    name: node
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/imported-from: node:8
+      from:
+        kind: DockerImage
+        name: node:8
+      generation: null
+      importPolicy: {}
+      name: "8"
+      referencePolicy:
+        type: ""
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: ionic-showcase-server
+    name: ionic-showcase-server
+  spec:
+    lookupPolicy:
+      local: false
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: ionic-showcase-server
+    name: ionic-showcase-server
+  spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: ionic-showcase-server:latest
+    postCommit: {}
+    resources: {}
+    source:
+      contextDir: server
+      git:
+        uri: https://github.com/aerogear/ionic-showcase
+      type: Git
+    strategy:
+      dockerStrategy:
+        from:
+          kind: ImageStreamTag
+          name: node:8
+      type: Docker
+    triggers:
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: ionic-showcase-server
+    name: ionic-showcase-server
+  spec:
+    replicas: 1
+    selector:
+      app: ionic-showcase-server
+      deploymentconfig: ionic-showcase-server
+    strategy:
+      resources: {}
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: ionic-showcase-server
+          deploymentconfig: ionic-showcase-server
+      spec:
+        containers:
+        - env:
+            - name: DB_HOSTNAME
+              value: "${DATABASE_SERVICE_NAME}"
+          image: ionic-showcase-server:latest
+          name: ionic-showcase-server
+          ports:
+          - containerPort: 4000
+            protocol: TCP
+          resources: {}
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - ionic-showcase-server
+        from:
+          kind: ImageStreamTag
+          name: ionic-showcase-server:latest
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    latestVersion: 0
+    observedGeneration: 0
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: ionic-showcase-server
+    name: ionic-showcase-server
+  spec:
+    ports:
+    - name: 4000-tcp
+      port: 4000
+      protocol: TCP
+      targetPort: 4000
+    selector:
+      app: ionic-showcase-server
+      deploymentconfig: ionic-showcase-server
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Route
+  metadata:
+    labels:
+      app: ionic-showcase-server
+    name: "${SERVER_SERVICE_NAME}"
+  spec:
+    host: ""
+    to:
+      kind: Service
+      name: "${SERVER_SERVICE_NAME}"
+parameters:
+- description: Maximum amount of memory the container can use.
+  displayName: Memory Limit
+  name: MEMORY_LIMIT
+  value: 512Mi
+- description: The OpenShift Namespace where the ImageStream resides.
+  displayName: Namespace
+  name: NAMESPACE
+  value: openshift
+- description: The name of the OpenShift Service exposed for the database.
+  displayName: Database Service Name
+  name: DATABASE_SERVICE_NAME
+  value: postgresql
+- description: Username for PostgreSQL user that will be used for accessing the database.
+  displayName: PostgreSQL Connection Username
+  name: POSTGRESQL_USER
+  value: postgresql
+- description: Password for the PostgreSQL connection user.
+  displayName: PostgreSQL Connection Password
+  name: POSTGRESQL_PASSWORD
+  value: postgres
+- description: Name of the PostgreSQL database accessed.
+  displayName: PostgreSQL Database Name
+  name: POSTGRESQL_DATABASE
+  value: users
+- description: Volume space available for data, e.g. 512Mi, 2Gi.
+  displayName: Volume Capacity
+  name: VOLUME_CAPACITY
+  value: 1Gi
+- description: Version of PostgreSQL image to be used (10 or latest).
+  displayName: Version of PostgreSQL Image
+  name: POSTGRESQL_VERSION
+  value: '10'
+- description: The name of the OpenShift Service exposed for the Ionic Server.
+  displayName: Ionic Server Service name
+  name: SERVER_SERVICE_NAME
+  value: ionic-showcase-server
