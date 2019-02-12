@@ -1,11 +1,6 @@
 const express = require('express')
 const http = require('http')
 const cors = require('cors')
-const {
-  SubscriptionServer,
-  ExecutionParams,
-  ConnectionContext
-} = require('subscriptions-transport-ws');
 
 const {
   VoyagerServer
@@ -15,22 +10,13 @@ const {
 } = require('@aerogear/voyager-keycloak')
 const metrics = require('@aerogear/voyager-metrics')
 const auditLogger = require('@aerogear/voyager-audit')
-const {
-  makeExecutableSchema
-} = require('graphql-tools')
 const config = require('./config/config')
 const connect = require('./db')
 const {
   typeDefs,
   resolvers
 } = require('./schema')
-const {
-  execute,
-  subscribe,
-  GraphQLSchema
-} = require('graphql')
-
-
+const { subscriptionServer } = require('./subscriptions')
 let keycloakService = null
 
 // if a keycloak config is present we create
@@ -89,24 +75,11 @@ async function start() {
   apolloServer.applyMiddleware({
     app
   })
-  //apolloServer.installSubscriptionHandlers(httpServer)
   httpServer.listen({
     port: config.port
   }, () => {
     console.log(`🚀  Server ready at http://localhost:${config.port}/graphql`)
-    // applySubscriptions(httpServer, {path: '/graphql'}, apolloServer.schema)
-    new SubscriptionServer({
-      execute,
-      subscribe,
-      onConnect: async connectionParams => {
-        console.log("ON SERVER TOKEN: ", connectionParams)
-        return await keycloakService.validateToken(connectionParams)
-      },
-      schema: apolloServer.schema
-    }, {
-      server: httpServer,
-      path: '/graphql'
-    });
+    subscriptionServer(keycloakService, httpServer, apolloServer)
   })
 }
 
