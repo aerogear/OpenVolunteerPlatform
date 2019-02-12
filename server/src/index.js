@@ -1,42 +1,14 @@
 const express = require('express')
 const http = require('http')
 const cors = require('cors')
-const {
-  SubscriptionServer,
-  ExecutionParams,
-  ConnectionContext
-} = require('subscriptions-transport-ws');
-
-const {
-  VoyagerServer
-} = require('@aerogear/voyager-server')
-const {
-  KeycloakSecurityService
-} = require('@aerogear/voyager-keycloak')
+const { VoyagerServer } = require('@aerogear/voyager-server')
+const { KeycloakSecurityService } = require('@aerogear/voyager-keycloak')
 const metrics = require('@aerogear/voyager-metrics')
 const auditLogger = require('@aerogear/voyager-audit')
-const {
-  makeExecutableSchema
-} = require('graphql-tools')
 const config = require('./config/config')
 const connect = require('./db')
-const {
-  typeDefs,
-  resolvers
-} = require('./schema')
-const {
-  execute,
-  subscribe,
-  GraphQLSchema
-} = require('graphql')
 const { subscriptionServer } = require('./subscriptions')
-
-
-
 const { appTypeDefs, appResolvers } = require('./schema')
-const connect = require("./db")
-
-const config = require('./config/config')
 
 let keycloakService = null
 
@@ -66,7 +38,7 @@ async function start() {
   app.get('/health', (req, res) => res.sendStatus(200))
 
   // connect to db
-   const client = await connect(config.db);
+  const client = await connect(config.db);
 
   const apolloConfig = {
     typeDefs: appTypeDefs,
@@ -108,7 +80,7 @@ async function start() {
     port: config.port
   }, () => {
     console.log(`🚀  Server ready at http://localhost:${config.port}/graphql`)
-   subscriptionServer(keycloakService, httpServer, apolloServer)
+    subscriptionServer(keycloakService, httpServer, apolloServer)
   })
 }
 
