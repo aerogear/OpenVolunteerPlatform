@@ -15,8 +15,8 @@
   "private": true,
   "dependencies": {
     "@aerogear/app": "2.1.0-rc3",
-    "@aerogear/auth": "2.1.0-rc3",
-    "@aerogear/voyager-client": "2.1.0-dev.7",
+    "@aerogear/auth": "2.1.0-dev.3",
+    "@aerogear/voyager-client": "2.1.0-dev.8",
     "@angular/common": "^7.2.2",
     "@angular/core": "^7.2.2",
     "@angular/forms": "^7.2.2",
