@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceCheckResult, DeviceCheckType, SecurityService } from '@aerogear/security';
+import { Dialogs } from '@ionic-native/dialogs/ngx';
 
+declare var navigator: any;
 @Component({
     selector: 'app-security',
     templateUrl: './security.page.html',
@@ -16,7 +18,7 @@ export class SecurityPage implements OnInit {
     public color: string;
     public securityService: SecurityService;
 
-    constructor() {
+    constructor(private dialogs: Dialogs) {
         this.securityService = new SecurityService();
     }
 
@@ -55,7 +57,7 @@ export class SecurityPage implements OnInit {
     public detectEmulator(): Promise<any> {
         return this.securityService.check(DeviceCheckType.isEmulator)
             .then((isEmulated: DeviceCheckResult) => {
-                const emulatedMsg = isEmulated.passed ? "Emulator Access Detected" : "No Emulator Access Detected";
+                const emulatedMsg = isEmulated.passed ? 'Emulator Access Detected' : 'No Emulator Access Detected';
                 this.addDetection(emulatedMsg, !isEmulated.passed);
             }).catch((err: Error) => console.error(err));
     }
@@ -64,7 +66,7 @@ export class SecurityPage implements OnInit {
     public detectRoot(): Promise<any> {
         return this.securityService.check(DeviceCheckType.rootEnabled)
             .then((isRooted: DeviceCheckResult) => {
-                const rootedMsg = isRooted.passed ? "Root Access Detected" : "No Root Access Detected";
+                const rootedMsg = isRooted.passed ? 'Root Access Detected' : 'No Root Access Detected';
                 this.addDetection(rootedMsg, !isRooted.passed);
             }).catch((err: Error) => console.error(err));
     }
@@ -73,7 +75,7 @@ export class SecurityPage implements OnInit {
     public detectDebug(): Promise<any> {
         return this.securityService.check(DeviceCheckType.debugModeEnabled)
             .then((isDebugger: DeviceCheckResult) => {
-                const debuggerMsg = isDebugger.passed ? "Debugger Detected" : "No Debugger Detected";
+                const debuggerMsg = isDebugger.passed ? 'Debugger Detected' : 'No Debugger Detected';
                 this.addDetection(debuggerMsg, !isDebugger.passed);
             }).catch((err: Error) => console.error(err));
     }
@@ -82,7 +84,7 @@ export class SecurityPage implements OnInit {
     public detectDeviceLock(): Promise<any> {
         return this.securityService.check(DeviceCheckType.screenLockEnabled)
             .then((deviceLockEnabled: DeviceCheckResult) => {
-                const deviceLockMsg = deviceLockEnabled.passed ? "Device Lock Enabled " : "No Device Lock Enabled";
+                const deviceLockMsg = deviceLockEnabled.passed ? 'Device Lock Enabled' : 'No Device Lock Enabled';
                 this.addDetection(deviceLockMsg, deviceLockEnabled.passed);
             });
     }
@@ -93,16 +95,16 @@ export class SecurityPage implements OnInit {
 
     public checkDialog(trustScore: number): void {
         if (trustScore < 70) {
-            // this.dialog.confirm(
-            //     `Your current trust score ${trustScore}% is below the specified target of 70%,` +
-            //     ` do you want to continue or exit the app?`,
-            //     "Warning",
-            //     ["Exit", "Continue"],
-            // ).then((result) => {
-            //     if (result === 1) {
-            //         navigator.app.exitApp();
-            //     }
-            // });
+            this.dialogs.confirm(
+                `Your current trust score ${trustScore}% is below the specified target of 70%,` +
+                ` do you want to continue or exit the app?`,
+                'Warning',
+                ['Exit', 'Continue'],
+            ).then((result) => {
+                if (result === 1) {
+                    navigator.app.exitApp();
+                }
+            });
         }
     }
 
