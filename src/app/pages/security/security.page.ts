@@ -27,7 +27,7 @@ export class SecurityPage implements OnInit {
     }
 
     public isAvailable() {
-        return this.platform.is('ios') || this.platform.is('android');
+        return this.platform.is('cordova');
     }
 
     public performChecks(): Promise<any> {
@@ -113,7 +113,7 @@ export class SecurityPage implements OnInit {
         }
     }
 
-    public ionViewWillEnter(): void {
+    private runChecks(): void {
         this.detections = [];
         this.trustScore = 0;
         this.totalTests = 0;
@@ -123,5 +123,11 @@ export class SecurityPage implements OnInit {
             this.checkDialog(this.trustScore);
         });
         this.performChecksAndPublishMetrics();
+    }
+
+    public ionViewWillEnter(): void {
+        if (this.isAvailable()) {
+            this.runChecks();
+        }
     }
 }
