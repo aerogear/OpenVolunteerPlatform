@@ -10,7 +10,11 @@ function subscriptionServer (keycloakService, httpServer, apolloServer) {
       execute,
       subscribe,
       onConnect: async connectionParams => {
-        return await keycloakService.validateToken(connectionParams)
+        if(keycloakService) {
+          return await keycloakService.validateToken(connectionParams)
+        } else {
+          return true;
+        }
       },
       schema: apolloServer.schema
     }, {
