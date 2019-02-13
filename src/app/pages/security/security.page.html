@@ -10,10 +10,14 @@
 </ion-header>
 
 <ion-content >
-  <ion-list>
+  <ion-list *ngIf="isAvailable()">
     <ion-item *ngFor="let detection of detections">
       <ion-icon [color]="detection.detected ? 'success' : 'danger'" [name]="detection.detected ? 'checkmark' : 'warning'" ></ion-icon>
       <ion-label [color]="detection.detected ? 'success' : 'danger'"   color="danger">{{detection.label}}</ion-label>
     </ion-item>
   </ion-list>
+  <ion-item *ngIf="!isAvailable()">
+    <ion-icon color="warning" name="warning"></ion-icon>
+    Device checks are available only on iOS or Android devices.
+  </ion-item>
 </ion-content>

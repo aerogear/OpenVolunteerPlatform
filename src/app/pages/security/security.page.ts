@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceCheckResult, DeviceCheckType, SecurityService } from '@aerogear/security';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
+import { Platform } from '@ionic/angular';
 
 declare var navigator: any;
 @Component({
@@ -18,11 +19,15 @@ export class SecurityPage implements OnInit {
     public color: string;
     public securityService: SecurityService;
 
-    constructor(private dialogs: Dialogs) {
+    constructor(public platform: Platform, private dialogs: Dialogs) {
         this.securityService = new SecurityService();
     }
 
     ngOnInit() {
+    }
+
+    public isAvailable() {
+        return this.platform.is('ios') || this.platform.is('android');
     }
 
     public performChecks(): Promise<any> {
