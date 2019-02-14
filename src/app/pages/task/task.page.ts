@@ -5,6 +5,7 @@ import { ItemService } from '../../services/sync/item.service';
 import { Task } from '../../services/sync/types';
 import { NetworkService } from '../../services/network.service';
 import { VoyagerService } from '../../services/sync/voyager.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-page-task',
@@ -17,15 +18,17 @@ export class TaskPage implements OnInit {
   items: Array<Task>;
   online: boolean;
   queue: number;
-  loading = true;
   errors: any;
 
   constructor(
     private router: Router,
     public itemService: ItemService,
     public networkService: NetworkService,
-    public aerogear: VoyagerService
-  ) { }
+    public aerogear: VoyagerService,
+    public toastController: ToastController
+  ) {
+    this.items = [];
+  }
 
   async ngOnInit() {
     // Root element of the data app
@@ -62,18 +65,21 @@ export class TaskPage implements OnInit {
 
   private async loadData() {
     // Refresh cache first
-    await this.itemService.refreshItems();
+    await this.itemService.refreshItems().catch(() => {
+      this.presentToast('Cannot refresh items from server');
+    });
     // Subscribe to local cache changes
     this.itemService.getItems().subscribe(result => {
-      if (result) {
+      if (result && !result.errors) {
         console.log('Result from query', result);
         this.items = result.data && result.data.allTasks;
-        this.loading = result.loading;
-        this.errors = result.errors;
+      } else {
+        console.log('error from query', result);
+        this.presentToast('Cannot load data from cache');
       }
     }, error => {
       console.log('error from query', error);
-      this.errors = error;
+      this.presentToast('Problem with listening to cache changes.');
     });
   }
 
@@ -88,7 +94,16 @@ export class TaskPage implements OnInit {
   deleteItem(item) {
     this.itemService.deleteItem(item).then(result => {
       console.log('Result from delete mutation', result);
+      this.presentToast('Item deleted');
     });
+  }
+
+  async presentToast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
   }
 }
 

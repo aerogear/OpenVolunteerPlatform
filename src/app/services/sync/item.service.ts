@@ -26,7 +26,7 @@ export class ItemService {
    */
   refreshItems() {
     // Force cache refresh by performing network
-    this.apollo.query<AllTasks>({
+    return this.apollo.query<AllTasks>({
       query: GET_TASKS,
       fetchPolicy: 'network-only',
       errorPolicy: 'none'

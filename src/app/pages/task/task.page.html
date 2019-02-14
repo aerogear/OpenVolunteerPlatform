@@ -15,14 +15,6 @@
   </ion-header>
 
 <ion-content class="outer-content">
-  <div *ngIf="loading">
-    Loading...
-  </div>
-  <div *ngIf="errors">
-    Cannot load initial data to cache.
-    Please connect to internet in order to load data
-    Error when fetching data: {{errors}}
-  </div>
   <div *ngIf="items">
     <ion-list>
       <ion-item-group *ngFor="let item of items">
