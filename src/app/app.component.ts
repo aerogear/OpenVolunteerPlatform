@@ -29,8 +29,8 @@ export class AppComponent {
   }
 
   private initAuth() {
-    this.auth.init().then(() => {
-      this.auth.authService.extract().loadUserProfile().success((profile) => {
+    return this.auth.init().then(() => {
+      return this.auth.authService.extract().loadUserProfile().success((profile) => {
         this.user = profile;
       });
     }).catch((error) => {
