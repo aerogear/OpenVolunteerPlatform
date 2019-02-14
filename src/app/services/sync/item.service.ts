@@ -106,9 +106,13 @@ export class ItemService {
 
   // Local cache updates for CRUD operations
   updateCacheOnAdd(cache, { data: { createTask } }) {
-    const { allTasks } = cache.readQuery({ query: GET_TASKS });
-    if (!allTasks.find((task) => task.id === createTask.id)) {
-      allTasks.push(createTask);
+    let { allTasks } = cache.readQuery({ query: GET_TASKS });
+    if (allTasks) {
+      if (!allTasks.find((task) => task.id === createTask.id)) {
+        allTasks.push(createTask);
+      }
+    } else {
+      allTasks = [createTask];
     }
     cache.writeQuery({
       query: GET_TASKS,
