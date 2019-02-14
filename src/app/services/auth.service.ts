@@ -23,12 +23,11 @@ export class AuthService {
             const initOptions: KeycloakInitOptions = { onLoad: 'login-required' };
             return this.authService.init(initOptions);
         }
-        return Promise.reject();
+        return Promise.resolve();
     }
 
     getAuth() {
         return this.authService;
     }
-
 }
 
