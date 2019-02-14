@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FileEntry } from '../../services/file/types';
 import { FileService } from '../../services/file/file.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-files',
@@ -9,10 +10,9 @@ import { FileService } from '../../services/file/file.service';
 })
 export class FilesPage implements OnInit {
   private items: Array<FileEntry>;
-  private loading = true;
   private files: FileList;
 
-  constructor(public fileService: FileService) { }
+  constructor(public fileService: FileService, public alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.refreshData();
@@ -20,9 +20,13 @@ export class FilesPage implements OnInit {
 
   refreshData() {
     this.fileService.getItems().then((items) => {
-      this.loading = false;
       this.items = items.data.uploads;
     }).catch((err) => {
+      this.alertCtrl.create({
+        message: `Cannot fetch files.`,
+        header: `Fetching files`,
+        buttons: ['OK']
+      });
       console.log('Error when fetching files', err);
     });
   }
@@ -32,6 +36,11 @@ export class FilesPage implements OnInit {
     this.fileService.createFile(target.files[0]).then(() => {
       this.refreshData();
     }).catch((err) => {
+      this.alertCtrl.create({
+        message: `Cannot save file.`,
+        header: `Saving file`,
+        buttons: ['OK']
+      });
       console.log('Problem with uploading file ', err);
     });
   }
