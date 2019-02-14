@@ -10,41 +10,64 @@
 </ion-header>
 
 <ion-content>
-    <ion-card class="welcome-card">
-      <ion-img style="margin:0 auto; width: 80%" src="assets/aerogear.png"></ion-img>
-      <ion-card-header>
-        <ion-card-title>AeroGear Mobile Services Showcase</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>Sample application that integrates all AeroGear Mobile Services
-        </p>
-        <ion-card-subtitle>Enabled services:</ion-card-subtitle>
-        <ion-badge color="warning" >No services provisioned</ion-badge>
-      </ion-card-content>
-    </ion-card>
-    <ion-list lines="none">
-      <ion-list-header>
-        <ion-label >Menu</ion-label>
-      </ion-list-header>
-      <ion-item routerDirection='root' routerLink="docs">
-        <ion-icon slot="start" color="medium" name="book"></ion-icon>
-        <ion-label>View Documentation</ion-label>
-      </ion-item>
-      <ion-item routerDirection='root' routerLink="tasks">
-        <ion-icon slot="start" color="medium" name="build"></ion-icon>
-        <ion-label>Manage Tasks</ion-label>
-      </ion-item>
-      <ion-item routerDirection='root' routerLink="profile">
-        <ion-icon slot="start" color="medium" name="person"></ion-icon>
-        <ion-label>User profile</ion-label>
-      </ion-item>
-      <ion-item routerDirection='root' routerLink="files">
-        <ion-icon slot="start" color="medium" name="document"></ion-icon>
-        <ion-label>Documents</ion-label>
-      </ion-item>
-      <ion-item routerDirection='root' routerLink="security">
-        <ion-icon slot="start" color="medium" name="settings"></ion-icon>
-        <ion-label>Device Security</ion-label>
-      </ion-item>
-    </ion-list>
+  <ion-card class="welcome-card">
+    <ion-img class="logo" height="100px" width="90%" src="assets/aerogear.png"></ion-img>
+    <ion-card-header>
+      <ion-card-title>AeroGear Mobile Services Showcase Application</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-label color=stable text-wrap>
+        <div text-center style="padding-top: 2%">
+          <p>
+            This app demonstrates how to use the AeroGear DataSync and other Mobile Services
+            tasks such Data Exchange, Identity Management, Device Security, Metrics Capture, Push Notifications and
+            more.
+          </p>
+          <p>
+            <br>
+            For further information, visit
+            <br>
+            <a href="#">www.aerogear.org</a>
+          </p>
+        </div>
+      </ion-label>
+    </ion-card-content>
+  </ion-card>
+  <ion-list lines="none">
+    <ion-list-header>
+      <ion-label>Menu</ion-label>
+    </ion-list-header>
+    <ion-item routerDirection='root' routerLink="docs">
+      <ion-icon slot="start" color="medium" name="book"></ion-icon>
+      <ion-label>
+        View Documentation
+        <p>Contains in app documentation for implemented services.</p>
+      </ion-label>
+    </ion-item>
+    <ion-item routerDirection='root' routerLink="tasks">
+      <ion-icon slot="start" color="medium" name="build"></ion-icon>
+      <ion-label>
+        Manage Tasks
+        <p>Task manager implemented using Voyager Sync</p>
+      </ion-label>
+    </ion-item>
+    <ion-item routerDirection='root' routerLink="profile">
+      <ion-icon slot="start" color="medium" name="person"></ion-icon>
+      <ion-label>User profile
+        <p>Profile page implemented using IDM service</p>
+      </ion-label>
+    </ion-item>
+    <ion-item routerDirection='root' routerLink="files">
+      <ion-icon slot="start" color="medium" name="document"></ion-icon>
+      <ion-label>Files
+        <p>File manager using Voyager Sync</p>
+      </ion-label>
+    </ion-item>
+    <ion-item routerDirection='root' routerLink="security">
+      <ion-icon slot="start" color="medium" name="settings"></ion-icon>
+      <ion-label>Device Security
+        <p>Set of device security checks (supported only on mobile platforms)</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
