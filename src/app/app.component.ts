@@ -10,7 +10,7 @@ import { AuthService } from './services/auth.service';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  private user = {};
+  private user;
 
   constructor(
     private platform: Platform,
@@ -18,38 +18,26 @@ export class AppComponent {
     private statusBar: StatusBar,
     public auth: AuthService
   ) {
-    this.initializeApp();
   }
 
-  initializeApp() {
-    this.initAuth();
-    this.platform.ready().then(() => {
+  public async ionViewDidLoad() {
+    await this.initAuth();
+    await this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
 
   private initAuth() {
-    return this.auth.init().then(() => {
-      return this.auth.authService.extract().loadUserProfile().success((profile) => {
+    this.auth.init().then(() => {
+      this.auth.authService.extract().loadUserProfile().success((profile) => {
         this.user = profile;
       });
     }).catch((error) => {
       if (error) {
         // tslint:disable-next-line:no-console
-        console.info('Error when initializing auth', error);
+        console.info('Error when initializing auth', JSON.stringify(error));
       }
     });
   }
-
-  login() {
-    if (this.auth.authService) {
-      if (this.auth.authService.isAuthenticated()) {
-        this.auth.authService.logout();
-      } else {
-        this.auth.authService.login();
-      }
-    }
-  }
-
 }
