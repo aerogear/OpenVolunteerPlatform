@@ -5,7 +5,6 @@ import { ItemService } from '../../services/sync/item.service';
 import { Task } from '../../services/sync/types';
 import { NetworkService } from '../../services/network.service';
 import { VoyagerService } from '../../services/sync/voyager.service';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-page-task',
@@ -66,10 +65,12 @@ export class TaskPage implements OnInit {
     await this.itemService.refreshItems();
     // Subscribe to local cache changes
     this.itemService.getItems().subscribe(result => {
-      console.log('Result from query', result);
-      this.items = result.data && result.data.allTasks;
-      this.loading = result.loading;
-      this.errors = result.errors;
+      if (result) {
+        console.log('Result from query', result);
+        this.items = result.data && result.data.allTasks;
+        this.loading = result.loading;
+        this.errors = result.errors;
+      }
     }, error => {
       console.log('error from query', error);
       this.errors = error;
