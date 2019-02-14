@@ -23,9 +23,11 @@ export class FilesPage implements OnInit {
       this.items = items.data.uploads;
     }).catch((err) => {
       this.alertCtrl.create({
-        message: `Cannot fetch files.`,
+        message: `Cannot fetch files. Please make sure you are online.`,
         header: `Fetching files`,
         buttons: ['OK']
+      }).then((alert) => {
+        alert.present();
       });
       console.log('Error when fetching files', err);
     });
@@ -35,11 +37,14 @@ export class FilesPage implements OnInit {
     console.log(target.files[0]);
     this.fileService.createFile(target.files[0]).then(() => {
       this.refreshData();
+      this.files = undefined;
     }).catch((err) => {
       this.alertCtrl.create({
-        message: `Cannot save file.`,
+        message: `Cannot save file. Please make sure you are online.`,
         header: `Saving file`,
         buttons: ['OK']
+      }).then((alert) => {
+        alert.present();
       });
       console.log('Problem with uploading file ', err);
     });
