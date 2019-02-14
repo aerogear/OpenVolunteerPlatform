@@ -11,7 +11,7 @@ export const UPLOAD_FILE = gql`
 
 export const UPLOADS = gql`
   query uploads{
-    uploads{
+    uploads @onlineOnly {
       filename
       mimetype
       url
