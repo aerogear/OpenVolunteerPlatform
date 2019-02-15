@@ -1,7 +1,7 @@
 import { Auth } from '@aerogear/auth';
 import { Injectable } from '@angular/core';
 import { OpenShiftService } from './openshift.service';
-import { KeycloakInitOptions } from 'keycloak-js';
+import { KeycloakInitOptions, KeycloakInstance } from 'keycloak-js';
 
 @Injectable({
     providedIn: 'root'
@@ -10,24 +10,45 @@ import { KeycloakInitOptions } from 'keycloak-js';
  * Service provides Apollo Voyager client
  */
 export class AuthService {
-    public authService: Auth | undefined;
+    public auth: Auth | undefined;
 
     constructor(private openShift: OpenShiftService) {
         if (this.openShift.hasAuthConfig()) {
-            this.authService = new Auth(this.openShift.getConfig());
-        }
-    }
-
-    init() {
-        if (this.openShift.hasAuthConfig()) {
+            const auth = new Auth(this.openShift.getConfig());
             const initOptions: KeycloakInitOptions = { onLoad: 'login-required' };
-            return this.authService.init(initOptions);
+            auth.init(initOptions);
+            this.auth = auth;
         }
-        return Promise.reject();
     }
 
     getAuth() {
-        return this.authService;
+        return this.auth;
+    }
+
+    isEnabled() {
+        return !!this.auth;
+    }
+
+    getProfile() {
+        return new Promise((resolve, reject) => {
+            if (this.isEnabled()) {
+                this.auth.extract().loadUserProfile().success((profile) => {
+                    resolve(profile);
+                }).error(reject);
+            } else {
+                reject('Not enabled');
+            }
+        });
+    }
+
+    loginOrLogout(): any {
+        if (this.isEnabled()) {
+            if (this.auth.isAuthenticated()) {
+                this.auth.logout();
+            } else {
+                this.auth.login();
+            }
+        }
     }
 }
 
