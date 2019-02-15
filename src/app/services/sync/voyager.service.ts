@@ -1,5 +1,7 @@
-import { createClient, VoyagerClient, DataSyncConfig,
-         OfflineQueueListener, ConflictListener, AuthContextProvider } from '@aerogear/voyager-client';
+import {
+  createClient, VoyagerClient, DataSyncConfig,
+  OfflineQueueListener, ConflictListener, AuthContextProvider
+} from '@aerogear/voyager-client';
 import { Injectable } from '@angular/core';
 import { OpenShiftService } from '../openshift.service';
 import { AlertController } from '@ionic/angular';
@@ -69,10 +71,10 @@ export class VoyagerService {
       // Use default localhost urls when OpenShift config is missing
       options.httpUrl = 'http://localhost:4000/graphql';
       options.wsUrl = 'ws://localhost:4000/graphql';
+    } else {
+      options.openShiftConfig = this.openShift.getConfig();
     }
-    if (this.auth.authService) {
-      options.authContextProvider = this.auth.getAuth().getAuthContextProvider();
-    }
+    options.authContextProvider = this.auth.getAuthContextProvider();
     this._apolloClient = await createClient(options);
   }
 }

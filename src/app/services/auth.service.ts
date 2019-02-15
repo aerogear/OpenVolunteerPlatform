@@ -1,7 +1,8 @@
 import { Auth } from '@aerogear/auth';
 import { Injectable } from '@angular/core';
 import { OpenShiftService } from './openshift.service';
-import { KeycloakInitOptions, KeycloakInstance } from 'keycloak-js';
+import { KeycloakInitOptions } from 'keycloak-js';
+import { AuthContextProvider } from '@aerogear/voyager-client';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +32,7 @@ export class AuthService {
 
     getProfile() {
         return new Promise((resolve, reject) => {
-            if (this.isEnabled()) {
+            if (this.isEnabled() && this.auth.isAuthenticated()) {
                 this.auth.extract().loadUserProfile().success((profile) => {
                     resolve(profile);
                 }).error(reject);
@@ -49,6 +50,12 @@ export class AuthService {
                 this.auth.login();
             }
         }
+    }
+    getAuthContextProvider(): AuthContextProvider | undefined {
+        if (this.isEnabled) {
+            return this.auth.getAuthContextProvider();
+        }
+        return undefined;
     }
 }
 
