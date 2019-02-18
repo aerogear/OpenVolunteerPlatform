@@ -18,11 +18,15 @@ export class AuthService {
         if (this.isEnabled()) {
             this.auth = new Auth(this.openShift.getConfig());
             if (window.cordova) {
-                // Init for cordova
-                document.addEventListener('deviceready', this.init, false);
+                this.initialized = new Promise((resolve, reject) => {
+                    // Init for cordova
+                    document.addEventListener('deviceready', () => {
+                        return this.init().then(resolve).catch(reject);
+                    }, false);
+                });
             } else {
                 // Init for the web
-                this.init();
+                this.initialized = this.init();
             }
         } else {
             this.initialized = Promise.resolve(true);
@@ -31,7 +35,7 @@ export class AuthService {
 
     async init() {
         const initOptions: KeycloakInitOptions = { onLoad: 'check-sso' };
-        this.initialized = this.auth.init(initOptions);
+        return await this.auth.init(initOptions);
     }
 
     getAuth() {
