@@ -21,14 +21,13 @@ export class AppComponent {
   ) {
     this.auth.getProfile().then((profile) => {
       this.user = profile;
+    }).catch((e) => {
+      console.log('Cannot get profile: ', e);
     });
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
-
-  login() {
-    this.auth.loginOrLogout();
-  }
+ 
 }

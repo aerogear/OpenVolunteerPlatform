@@ -17,7 +17,7 @@
               <h5>{{ user.email }}</h5>
             </div>
             <div *ngIf="!user">
-            <h2>AeroGear</h2>
+              <h2>AeroGear</h2>
             </div>
           </ion-item>
           <ion-menu-toggle auto-hide="false">
@@ -37,13 +37,13 @@
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
-              <ion-item routerDirection='root' routerLink="/profile">
-                <ion-icon slot="start" name="person"></ion-icon>
-                <ion-label>
-                  User Profile
-                </ion-label>
-              </ion-item>
-            </ion-menu-toggle>
+            <ion-item routerDirection='root' routerLink="/profile">
+              <ion-icon slot="start" name="person"></ion-icon>
+              <ion-label>
+                User Profile
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
             <ion-item routerDirection='root' routerLink="/files">
               <ion-icon slot="start" name="document"></ion-icon>
@@ -68,16 +68,6 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <div *ngIf="auth.authService">
-            <ion-menu-toggle auto-hide="false">
-              <ion-item routerDirection='root' routerLink="/" (click)="login()">
-                <ion-icon slot="start" name="log-out"></ion-icon>
-                <ion-label>
-                  Logout
-                </ion-label>
-              </ion-item>
-            </ion-menu-toggle>
-          </div>
         </ion-list>
       </ion-content>
     </ion-menu>
