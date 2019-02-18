@@ -43,14 +43,14 @@
       </ion-item>
       <ion-item>
         <ion-label> OTP 2FA Enabled</ion-label>
-        <ion-icon item-end color=green md-name="done" *ngIf=profile.totp></ion-icon>
-        <ion-icon item-end color=red md-name="close" *ngIf=!profile.totp></ion-icon>
+        <ion-icon item-end color=green name="done" *ngIf=profile.totp></ion-icon>
+        <ion-icon item-end color=red name="close" *ngIf=!profile.totp></ion-icon>
       </ion-item>
 
       <ion-item>
         <ion-label>Email Verified</ion-label>
-        <ion-icon item-end color=green md-name="done" *ngIf=profile.emailVerified></ion-icon>
-        <ion-icon item-end color=red md-name="close" *ngIf=!profile.emailVerified></ion-icon>
+        <ion-icon item-end color=green name="done" *ngIf=profile.emailVerified></ion-icon>
+        <ion-icon item-end color=red name="close" *ngIf=!profile.emailVerified></ion-icon>
       </ion-item>
     </ion-card>
     <ion-card>
@@ -64,5 +64,11 @@
       </ion-item-group>
     </ion-card>
   </ion-list>
-
 </ion-content>
+
+<ion-footer *ngIf="!isDisabled()">
+  <ion-toolbar color=primary (click)="authService.loginOrLogout()">
+    <ion-title *ngIf="!authenticated()" style="text-align: center">Login</ion-title>
+    <ion-title *ngIf="authenticated()" style="text-align: center">Logout</ion-title>
+  </ion-toolbar>
+</ion-footer>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Auth } from '@aerogear/auth';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +17,10 @@ export class ProfilePage implements OnInit {
 
   isDisabled() {
     return !this.authService.isEnabled();
+  }
+
+  authenticated() {
+    return this.authService.authenticated();
   }
 
   public ionViewDidEnter(): void {
