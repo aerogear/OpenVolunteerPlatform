@@ -14,12 +14,22 @@ export class AuthService {
     public auth: Auth | undefined;
 
     constructor(private openShift: OpenShiftService) {
-        if (this.openShift.hasAuthConfig()) {
+        if (this.isEnabled()) {
             const auth = new Auth(this.openShift.getConfig());
-            const initOptions: KeycloakInitOptions = { onLoad: 'check-sso' };
-            auth.init(initOptions);
+            if (window.cordova) {
+                 // Init for cordova
+                document.addEventListener('deviceready', this.init, false);
+            } else {
+                // Init for the web
+                this.init();
+            }
             this.auth = auth;
         }
+    }
+
+    async init() {
+        const initOptions: KeycloakInitOptions = { onLoad: 'check-sso' };
+        await this.auth.init(initOptions);
     }
 
     getAuth() {
@@ -27,7 +37,7 @@ export class AuthService {
     }
 
     isEnabled() {
-        return !!this.auth;
+        return this.openShift.hasAuthConfig();
     }
 
     getProfile() {
