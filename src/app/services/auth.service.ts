@@ -12,6 +12,7 @@ import { AuthContextProvider } from '@aerogear/voyager-client';
  */
 export class AuthService {
     public auth: Auth | undefined;
+    public initialized: Promise<boolean>;
 
     constructor(private openShift: OpenShiftService) {
         if (this.isEnabled()) {
@@ -23,12 +24,14 @@ export class AuthService {
                 // Init for the web
                 this.init();
             }
+        } else {
+            this.initialized = Promise.resolve(true);
         }
     }
 
     async init() {
         const initOptions: KeycloakInitOptions = { onLoad: 'check-sso' };
-        await this.auth.init(initOptions);
+        this.initialized = this.auth.init(initOptions);
     }
 
     getAuth() {
@@ -39,14 +42,24 @@ export class AuthService {
         return this.openShift.hasAuthConfig();
     }
 
+    authenticated() {
+        return this.auth.isAuthenticated();
+    }
+
     getProfile() {
         return new Promise((resolve, reject) => {
-            if (this.isEnabled() && this.auth.isAuthenticated()) {
-                this.auth.extract().loadUserProfile().success((profile) => {
-                    resolve(profile);
-                }).error(reject);
+            if (this.isEnabled()) {
+                this.initialized.then((success) => {
+                    if (success && this.auth.isAuthenticated()) {
+                        this.auth.extract().loadUserProfile().success((profile) => {
+                            resolve(profile);
+                        }).error(reject);
+                    } else {
+                        return reject('Not authenticated');
+                    }
+                }).catch(reject);
             } else {
-                reject('Not enabled');
+                return reject('Not enabled');
             }
         });
     }
