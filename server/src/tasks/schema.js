@@ -43,12 +43,25 @@ const taskResolvers = {
 
   Mutation: {
     createTask: async (obj, args, context, info) => {
+      const message = {
+        alert: `${args.title} created`
+      }
+      const options = {
+        config: {
+          ttl: 3600,
+        }
+      };
       console.log("Create", args)
       const result = await context.db('tasks').insert({
         ...args,
         version: 1
       }).returning('*').then((rows) => rows[0])
       // TODO context helper for publishing subscriptions in SDK?
+      if(context.pushClient){
+        context.pushClient.sender.send(message, options).then((response) => {
+          console.log("Notification sent, response received ", response);
+        })
+      }
       publish('CREATED', result)
       return result
     },

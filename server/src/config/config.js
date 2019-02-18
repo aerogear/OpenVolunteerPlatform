@@ -15,7 +15,10 @@ class Config {
     this.appUrl = process.env.URL || 'http://localhost:4000'
 
     this.keycloakConfigPath = process.env.KEYCLOAK_CONFIG || path.resolve(__dirname, './keycloak.json')
-    this.keycloakConfig = readKeycloakConfig(this.keycloakConfigPath)
+    this.keycloakConfig = readConfig(this.keycloakConfigPath)
+
+    this.pushConfigPath = process.env.PUSH_CONFIG || path.resolve(__dirname, './push-config.json')
+    this.pushConfig = readConfig(this.pushConfigPath)
 
     this.playgroundConfig = {
       settings: {
@@ -33,11 +36,11 @@ class Config {
   }
 }
 
-function readKeycloakConfig(path) {
+function readConfig(path) {
   try {
     return JSON.parse(fs.readFileSync(path, 'utf8'))
   } catch (e) {
-    console.error(`Warning: couldn't find a keycloak config at ${path}`)
+    console.error(`Warning: couldn't find config at ${path}`)
   }
 }
 

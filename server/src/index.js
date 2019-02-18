@@ -9,14 +9,23 @@ const config = require('./config/config')
 const connect = require('./db')
 const { subscriptionServer } = require('./subscriptions')
 const { appTypeDefs, appResolvers } = require('./schema')
+const agSender = require("unifiedpush-node-sender")
 
 let keycloakService = null
+let pushClient = null
 
 // if a keycloak config is present we create
 // a keycloak service which will be passed into
 // ApolloVoyagerServer
 if (config.keycloakConfig) {
   keycloakService = new KeycloakSecurityService(config.keycloakConfig)
+}
+
+if(config.pushConfig) {
+  let pushService = agSender(config.pushConfig)
+  pushClient = pushService.then((client) => {
+    return client;
+  })
 }
 
 async function start() {
@@ -51,6 +60,7 @@ async function start() {
       return {
         req: req,
         db: client,
+        pushClient: await pushClient
       }
     },
     uploads: {

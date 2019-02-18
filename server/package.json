@@ -26,6 +26,7 @@
     "merge-graphql-schemas": "^1.5.8",
     "nodemon": "^1.18.7",
     "pg": "^7.5.0",
-    "shortid": "^2.2.14"
+    "shortid": "^2.2.14",
+    "unifiedpush-node-sender": "^0.16.0"
   }
 }
