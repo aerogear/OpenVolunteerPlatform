@@ -15,6 +15,11 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
   }
+
+  isDisabled() {
+    return !this.authService.isEnabled();
+  }
+
   public ionViewDidEnter(): void {
     this.authService.getProfile().then((userProfile: any) => {
       const realmRoles = this.authService.auth.getRealmRoles();

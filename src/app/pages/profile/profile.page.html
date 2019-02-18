@@ -9,8 +9,22 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="aerogear-background-two">
-  <ion-list>
+<ion-content>
+  <!-- Auth disabled -->
+  <ion-card *ngIf="isDisabled()">
+    <ion-card-header>
+      <ion-card-title>Authentication not configured</ion-card-title>
+      <ion-card-subtitle>IDM service required</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      Profile page cannot be displayed.
+      Please enable Auth SDK by providing configuration pointing to your IDM service
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Profile info available -->
+  <ion-list *ngIf="profile">
     <ion-card>
       <ion-item-divider color="light">
         <h2>Profile</h2>

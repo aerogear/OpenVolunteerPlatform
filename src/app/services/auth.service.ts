@@ -15,15 +15,14 @@ export class AuthService {
 
     constructor(private openShift: OpenShiftService) {
         if (this.isEnabled()) {
-            const auth = new Auth(this.openShift.getConfig());
+            this.auth = new Auth(this.openShift.getConfig());
             if (window.cordova) {
-                 // Init for cordova
+                // Init for cordova
                 document.addEventListener('deviceready', this.init, false);
             } else {
                 // Init for the web
                 this.init();
             }
-            this.auth = auth;
         }
     }
 
