@@ -19,14 +19,10 @@ export class AuthService {
         if (this.isEnabled()) {
             this.auth = new Auth(this.openShift.getConfig());
             this.initialized = platform.ready().then(() => {
-                return this.init();
+                const initOptions: KeycloakInitOptions = { onLoad: 'login-required' };
+                return this.auth.init(initOptions);
             });
         }
-    }
-
-    async init() {
-        const initOptions: KeycloakInitOptions = { onLoad: 'check-sso' };
-        return await this.auth.init(initOptions);
     }
 
     getAuth() {
@@ -44,7 +40,7 @@ export class AuthService {
     getProfile() {
         return new Promise((resolve, reject) => {
             if (this.isEnabled()) {
-                this.initialized.then((success) => {
+                return this.initialized.then((success) => {
                     if (success && this.auth.isAuthenticated()) {
                         this.auth.extract().loadUserProfile().success((profile) => {
                             resolve(profile);
@@ -52,7 +48,9 @@ export class AuthService {
                     } else {
                         return reject('Not authenticated');
                     }
-                }).catch(reject);
+                }).catch((err) => {
+                    reject(err);
+                });
             } else {
                 return reject('Not enabled');
             }

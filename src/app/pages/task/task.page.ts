@@ -6,6 +6,7 @@ import { Task } from '../../services/sync/types';
 import { NetworkService } from '../../services/network.service';
 import { VoyagerService } from '../../services/sync/voyager.service';
 import { ToastController } from '@ionic/angular';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-page-task',
@@ -25,12 +26,14 @@ export class TaskPage implements OnInit {
     public itemService: ItemService,
     public networkService: NetworkService,
     public aerogear: VoyagerService,
-    public toastController: ToastController
+    public toastController: ToastController,
+    public auth: AuthService
   ) {
     this.items = [];
   }
 
   async ngOnInit() {
+    await this.auth.initialized;
     // Root element of the data app
     // When view is initialized:
     // We try to do network request first to get fresh data

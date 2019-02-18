@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FileEntry } from '../../services/file/types';
 import { FileService } from '../../services/file/file.service';
 import { AlertController } from '@ionic/angular';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-files',
@@ -12,9 +13,12 @@ export class FilesPage implements OnInit {
   private items: Array<FileEntry>;
   private files: FileList;
 
-  constructor(public fileService: FileService, public alertCtrl: AlertController) { }
+  constructor(public fileService: FileService,
+    public alertCtrl: AlertController,
+    public auth: AuthService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.auth.initialized;
     this.refreshData();
   }
 
