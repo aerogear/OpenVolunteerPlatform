@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { OpenShiftService } from './openshift.service';
 import { KeycloakInitOptions } from 'keycloak-js';
 import { AuthContextProvider } from '@aerogear/voyager-client';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
     providedIn: 'root'
@@ -14,22 +15,12 @@ export class AuthService {
     public auth: Auth | undefined;
     public initialized: Promise<boolean>;
 
-    constructor(private openShift: OpenShiftService) {
+    constructor(private openShift: OpenShiftService, public platform: Platform) {
         if (this.isEnabled()) {
             this.auth = new Auth(this.openShift.getConfig());
-            if (window.cordova) {
-                this.initialized = new Promise((resolve, reject) => {
-                    // Init for cordova
-                    document.addEventListener('deviceready', () => {
-                        return this.init().then(resolve).catch(reject);
-                    }, false);
-                });
-            } else {
-                // Init for the web
-                this.initialized = this.init();
-            }
-        } else {
-            this.initialized = Promise.resolve(true);
+            this.initialized = platform.ready().then(() => {
+                return this.init();
+            });
         }
     }
 
