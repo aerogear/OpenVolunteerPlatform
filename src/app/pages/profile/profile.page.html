@@ -23,6 +23,19 @@
     </ion-card-content>
   </ion-card>
 
+  <ion-card *ngIf="!isDisabled() && !authenticated()">
+    <ion-card-header>
+      <ion-card-title>Login required</ion-card-title>
+      <ion-card-subtitle>Login is required in order to see profile page</ion-card-subtitle>
+    </ion-card-header>
+    <div style="margin:0 auto; width: 80%">
+        <ion-img src="/assets/keycloak.png"></ion-img>
+    </div>
+    <ion-card-content>
+      Please login to see Profile Details
+    </ion-card-content>
+  </ion-card>
+
   <!-- Profile info available -->
   <ion-list *ngIf="profile">
     <ion-card>
