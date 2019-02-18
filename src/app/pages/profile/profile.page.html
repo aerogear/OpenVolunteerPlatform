@@ -23,7 +23,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="!isDisabled() && !authenticated()">
+  <ion-card *ngIf="!isDisabled() && !authenticated()" style="background: #f8f8f8">
     <ion-card-header>
       <ion-card-title>Login required</ion-card-title>
       <ion-card-subtitle>Login is required in order to see profile page</ion-card-subtitle>
