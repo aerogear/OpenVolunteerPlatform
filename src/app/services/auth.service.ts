@@ -16,7 +16,7 @@ export class AuthService {
     constructor(private openShift: OpenShiftService) {
         if (this.openShift.hasAuthConfig()) {
             const auth = new Auth(this.openShift.getConfig());
-            const initOptions: KeycloakInitOptions = { onLoad: 'login-required' };
+            const initOptions: KeycloakInitOptions = { onLoad: 'check-sso' };
             auth.init(initOptions);
             this.auth = auth;
         }
@@ -52,7 +52,7 @@ export class AuthService {
         }
     }
     getAuthContextProvider(): AuthContextProvider | undefined {
-        if (this.isEnabled) {
+        if (this.isEnabled()) {
             return this.auth.getAuthContextProvider();
         }
         return undefined;
