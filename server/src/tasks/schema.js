@@ -23,6 +23,8 @@ type Mutation {
 }
 `
 
+const PUSH_ALIAS = 'cordova';
+
 const taskResolvers = {
   Query: {
     allTasks: async (obj, args, context) => {
@@ -95,8 +97,16 @@ const taskResolvers = {
 function publish(actionType, data, pushClient) {
   if (pushClient) {
     pushClient.sender.send({
-      alert: `${actionType} ${data.title}`
-    }).then((response) => {
+      userData: {
+        title: data.title,
+        message: actionType
+      }
+    },
+      {
+        criteria: {
+          alias: [ PUSH_ALIAS ]
+        }
+      }).then((response) => {
       console.log("Notification sent, response received ", response);
     }).catch((error) => {
       console.log("Notification not sent, error received ", error)

@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
+import { PushService } from './services/push.service';
 import { init } from '@aerogear/app';
 
 @Component({
@@ -17,7 +18,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public auth: AuthService
+    public auth: AuthService,
+    private pushService: PushService
   ) {
     this.auth.getProfile().then((profile) => {
       this.user = profile;
