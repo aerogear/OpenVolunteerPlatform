@@ -98,6 +98,8 @@ function publish(actionType, data, pushClient) {
       alert: `${actionType} ${data.title}`
     }).then((response) => {
       console.log("Notification sent, response received ", response);
+    }).catch((error) => {
+      console.log("Notification not sent, error received ", error)
     })
   }
   pubSub.publish(TASKS_SUBSCRIPTION_KEY, {
