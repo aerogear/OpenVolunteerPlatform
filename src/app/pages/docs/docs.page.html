@@ -4,33 +4,129 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Documentation 
+      Documentation
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
-  <h3>Purpose of this application</h3> 
-  TODO Add introduction
-  <h3>Connecting with services</h3>
-  TODO Add list of the services
-  TODO link to individual docs
-  <h3>Implemented services</h3>
-  <h3>Device Security</h3>
-  <ion-label color=stable text-wrap>
-    <div style="padding-top: 2%">
-      <p text-center>
-        The Device Security service allows you to easily configure and manage device security, and trust checks for your mobile app
+<ion-content>
+  <ion-title>
+    <h2>Introduction</h2>
+  </ion-title>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Purpose of this application</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      This app demonstrates how to use the AeroGear Mobile services, backed by OpenShift to perform a wide range of
+      common mobile tasks such as Data Synchronisation, Identity Management, Device Security, Metrics Capture, Push
+      Notifications and more.
+    </ion-card-content>
+  </ion-card>
+  <ion-title>
+    <h2>Implemented Services</h2>
+  </ion-title>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Data Synchronization</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div>
+        <p>
+          Data Sync is a JavaScript framework that developers can use to add real time synchronization and enhanced
+          offline capabilities to their mobile applications.
+        </p>
+        <ul>
+          <li>Real Time Synchronisation</li>
+          <li>Conflict Resolution</li>
+          <li>Robust offline experience</li>
+          <li>Authentication and Authorization (using the Identity Management service)</li>
+          <li> Metrics (using the AeroGear Mobile Metrics Service)</li>
+          <li> Audit Logging</li>
+        </ul>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Identity Management</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        The Identity Management SDK allows you to add authentication and authorization to your mobile app.
+      </p>
+      <ul>
+        <li>Secure your mobile app using the industry standard OpenID Connect protocol</li>
+        <li>Add access control to your app based on user’s group membership</li>
+        <li>Easily implement SSO, multi factor authentication and Social Login support</li>
+        <li>Back end support for identity brokering and user federation.</li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Device Security</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        The Device Security SDK allows you to easily configure and manage device security, and trust checks for your
+        mobile app. Developers can perform a range of device trust checks on the mobile device such as checking if the
+        device is rooted and allows you take proactive action based on the results.
+      </p>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Push Notifications</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        The Push Notifications service allows you send native push notifications to different mobile operating
+        systems.
       </p>
       <ul>
         <li>
-          Perform a range of device trust checks on the mobile device, such as checking if the device is rooted, and allows you take
-          proactive action based on the results
+          Code once and send push notifications to iOS and Android
         </li>
         <li>
-          Distribute SSL certificates with a mobile app to create a direct chain of trust (certificate pinning)
+          Push notifications to defined groups
+        </li>
+        <li>
+          Push notifications to either iOS only or Android only
+        </li>
+        <li>
+          Push notifications to different variants of a mobile app
+        </li>
+        <li>
+          Push notifications from different back-end apps to the same mobile app
         </li>
       </ul>
-    </div>
-  </ion-label>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Metrics</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        The Mobile Metrics service allows you gather metrics on mobile apps, device versions, device security checks and
+        back-end
+        mobile service usage.
+      </p>
+      <ul>
+        <li>
+          Monitor usage by version of mobile app, platform and SDK
+        </li>
+        <li>
+          Monitor interactions with the Identity Management service
+        </li>
+      </ul>
+
+    </ion-card-content>
+  </ion-card>
+  <p text-center>
+    For further information, visit
+    <br />
+    <a href="https://www.aerogear.org/">www.aerogear.org</a>
+  </p>
 </ion-content>
