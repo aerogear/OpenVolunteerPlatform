@@ -32,7 +32,7 @@ const routes: Routes = [
   { path: 'tasks', loadChildren: loadTaskModule },
   { path: 'new-item', loadChildren: loadNewItemPageModule },
   { path: 'update-item', loadChildren: loadUpdateItemPageModule },
-  { path: 'docs', loadChildren: './pages/docs/docs.module#DocsPageModule' },
+  { path: 'about', loadChildren: './pages/about/docs.module#DocsPageModule' },
   { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
   { path: 'security', loadChildren: './pages/security/security.module#SecurityPageModule' },
   { path: 'files', loadChildren: './pages/files/files.module#FilesPageModule' },
