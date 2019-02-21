@@ -10,12 +10,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="welcome-card">
-    <ion-img class="logo" src="assets/aerogear.png"></ion-img>
-  </ion-card>
+  <ion-img class="logo" src="assets/aerogear.png"></ion-img>
   <ion-list lines="none">
     <ion-list-header>
-      <ion-label>Menu</ion-label>
+      <ion-label class="header-text">Menu</ion-label>
     </ion-list-header>
     <ion-item routerDirection='root' routerLink="docs">
       <ion-icon slot="start" color="medium" name="book"></ion-icon>
@@ -28,19 +26,22 @@
       <ion-icon slot="start" color="medium" name="build"></ion-icon>
       <ion-label text-wrap>
         Manage Tasks
-        <p>An example task manager to demonstrate how to perform data synchronisation with AeroGear Data Sync powered by Voyager GraphQL</p>
+        <p>An example task manager to demonstrate how to perform data synchronisation with AeroGear Data Sync powered by
+          Voyager GraphQL</p>
       </ion-label>
     </ion-item>
     <ion-item routerDirection='root' routerLink="profile">
       <ion-icon slot="start" color="medium" name="person"></ion-icon>
       <ion-label text-wrap>User profile
-        <p>An example to demonstrate how to perform user profile management with AeroGear Identity Management Service powered by Keycloak</p>
+        <p>An example to demonstrate how to perform user profile management with AeroGear Identity Management Service
+          powered by Keycloak</p>
       </ion-label>
     </ion-item>
     <ion-item routerDirection='root' routerLink="files">
       <ion-icon slot="start" color="medium" name="document"></ion-icon>
       <ion-label text-wrap>Files
-        <p>An example to demonstrate how to synchronise binary data with AeroGear Data Sync powered by Voyager GraphQL</p>
+        <p>An example to demonstrate how to synchronise binary data with AeroGear Data Sync powered by Voyager GraphQL
+        </p>
       </ion-label>
     </ion-item>
     <ion-item routerDirection='root' routerLink="security">
