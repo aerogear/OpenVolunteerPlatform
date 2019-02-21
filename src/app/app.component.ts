@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import {NavController, Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
-import { PushService } from './services/push.service';
-import { init } from '@aerogear/app';
+import { PushMessage, PushService } from './services/push.service';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +13,14 @@ import { init } from '@aerogear/app';
 export class AppComponent {
   private user;
 
+  // true if the application is running in background
+  private background = false;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    private navCtrl: NavController,
     public auth: AuthService,
     private pushService: PushService
   ) {
@@ -29,6 +32,24 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      // Initialize the push service
+      pushService.initialize(this.handleNotification.bind(this));
+      pushService.register();
+
+      if (document) {
+        document.addEventListener('deviceready', () => {
+          document.addEventListener('pause', () => { this.background = true; }, false);
+          document.addEventListener('resume', () => { this.background = false; }, false);
+        }, false);
+      }
     });
+  }
+
+  private handleNotification(notification: PushMessage) {
+    if (this.background) {
+      // if the application is running in background, move to the task page
+      this.navCtrl.navigateForward('tasks');
+    }
   }
 }

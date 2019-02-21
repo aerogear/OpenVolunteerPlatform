@@ -22,14 +22,21 @@ export class PushService {
 
   // We want one single instance & callback app wide
   public static pushObject: PushObject = null;
+
+  // The callback to be triggered when a push notification is received
   public static callback: (notification: PushMessage) => void;
 
-  public messages: PushMessage[] = [];
   private pushError: Error;
 
   constructor(private push: Push) { }
 
-  public initPush() {
+  public initialize(cb: (notification: PushMessage) => void) {
+    this.initPush();
+    PushService.callback = cb;
+    this.register();
+  }
+
+  private initPush() {
     PushService.pushObject = this.push.init({
       android: {},
       ios: {
@@ -40,15 +47,10 @@ export class PushService {
     });
   }
 
-  public emit(notification: PushMessage) {
+  private emit(notification: PushMessage) {
     if (PushService.callback) {
       PushService.callback(notification);
     }
-  }
-
-  // The callback will be triggered when a push notificatoin is received
-  public setCallback(cb: (notification: PushMessage) => void) {
-    PushService.callback = cb;
   }
 
   // No longer receive notifications
@@ -84,7 +86,6 @@ export class PushService {
         message: notification.message,
         received: new Date().toDateString(),
       };
-      this.messages.push(newNotification);
       this.emit(newNotification);
     });
   }
