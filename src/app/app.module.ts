@@ -14,11 +14,13 @@ import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { PushService } from './services/push.service';
 import { Push } from '@ionic-native/push/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { IonicStorageModule } from '@ionic/storage';
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, GraphQLModule, HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule, GraphQLModule, HttpClientModule],
   providers: [
     PushService,
     StatusBar,

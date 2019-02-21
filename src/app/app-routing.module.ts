@@ -36,6 +36,7 @@ const routes: Routes = [
   { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
   { path: 'security', loadChildren: './pages/security/security.module#SecurityPageModule' },
   { path: 'files', loadChildren: './pages/files/files.module#FilesPageModule' },
+  { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
 ];
 @NgModule({
   imports: [

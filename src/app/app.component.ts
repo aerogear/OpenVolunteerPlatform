@@ -35,7 +35,6 @@ export class AppComponent {
 
       // Initialize the push service
       pushService.initialize(this.handleNotification.bind(this));
-      pushService.register();
 
       if (document) {
         document.addEventListener('deviceready', () => {

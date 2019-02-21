@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Push, PushObject } from '@ionic-native/push/ngx';
 import { ConfigurationService } from '@aerogear/core';
 const config = require('../../mobile-services.js');
+import { Events } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 const PUSH_ALIAS = 'cordova';
 
@@ -28,12 +30,29 @@ export class PushService {
 
   private pushError: Error;
 
-  constructor(private push: Push) { }
+  constructor(private push: Push, private storage: Storage, public events: Events) { }
 
-  public initialize(cb: (notification: PushMessage) => void) {
-    this.initPush();
+  public async initialize(cb: (notification: PushMessage) => void) {
     PushService.callback = cb;
-    this.register();
+
+    this.events.subscribe('settings:changed', (key, value) => {
+      console.log('settings changes', key, value);
+      if (key === 'pushEnabled') {
+        if (value) {
+          this.initPush();
+          this.register();
+        } else {
+          this.unregister();
+        }
+      }
+    });
+
+    await this.storage.ready();
+    const pushEnabled = await this.storage.get('pushEnabled');
+    if (pushEnabled) {
+      this.initPush();
+      this.register();
+    }
   }
 
   private initPush() {
