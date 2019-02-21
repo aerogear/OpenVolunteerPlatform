@@ -23,6 +23,11 @@ export class ProfilePage implements OnInit {
     return this.authService.authenticated();
   }
 
+  loginOrLogout() {
+    this.profile = undefined;
+    this.authService.loginOrLogout();
+  }
+
   public ionViewDidEnter(): void {
     this.authService.getProfile().then((userProfile: any) => {
       const realmRoles = this.authService.auth.getRealmRoles();

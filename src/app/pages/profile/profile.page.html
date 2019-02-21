@@ -80,7 +80,7 @@
 </ion-content>
 
 <ion-footer *ngIf="!isDisabled()">
-  <ion-toolbar color=primary (click)="authService.loginOrLogout()">
+  <ion-toolbar color=primary (click)="loginOrLogout()">
     <ion-title *ngIf="!authenticated()" style="text-align: center">Login</ion-title>
     <ion-title *ngIf="authenticated()" style="text-align: center">Logout</ion-title>
   </ion-toolbar>
