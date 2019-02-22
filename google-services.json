@@ -1,0 +1,81 @@
+{
+  "project_info": {
+    "project_number": "754329551899",
+    "firebase_url": "https://dummy-showcase.firebaseio.com",
+    "project_id": "dummy-showcase",
+    "storage_bucket": "cordova-dummy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754329551899:android:621420eb6f5bc9df",
+        "android_client_info": {
+          "package_name": "com.aerogear.dummy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "754329551899-51ft15g97qnp11tmn5qnhj0obesraucd.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "754329551899-51ft15g97qnp11tmn5qnhj0obesraucd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAma1wAinfW5cLlbv8JeJDog0SQti9Thdw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754329551899:android:fb69acebfaeef82c",
+        "android_client_info": {
+          "package_name": "org.aerogear.js.showcase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "754329551899-51ft15g97qnp11tmn5qnhj0obesraucd.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "754329551899-51ft15g97qnp11tmn5qnhj0obesraucd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "dummy"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
