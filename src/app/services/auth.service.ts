@@ -40,6 +40,7 @@ export class AuthService {
     getProfile() {
         return new Promise((resolve, reject) => {
             if (this.isEnabled()) {
+
                 return this.initialized.then((success) => {
                     if (success && this.auth.isAuthenticated()) {
                         this.auth.extract().loadUserProfile().success((profile) => {
@@ -57,15 +58,22 @@ export class AuthService {
         });
     }
 
-    loginOrLogout(): any {
+    login(): Promise<void> {
         if (this.isEnabled()) {
-            if (this.auth.isAuthenticated()) {
-                this.auth.logout();
-            } else {
-                this.auth.login();
-            }
+            return this.auth.login();
+        } else {
+            return Promise.reject('not enabled');
         }
     }
+
+    logout() {
+        if (this.isEnabled()) {
+            return this.auth.logout();
+        } else {
+            return Promise.reject('not enabled');
+        }
+    }
+
     getAuthContextProvider(): AuthContextProvider | undefined {
         if (this.isEnabled()) {
             return this.auth.getAuthContextProvider();
