@@ -20,15 +20,22 @@ export class ProfilePage implements OnInit {
   }
 
   authenticated() {
-    return this.authService.authenticated();
+    return this.profile;
   }
 
-  loginOrLogout() {
-    this.profile = undefined;
-    this.authService.loginOrLogout();
+  login() {
+    this.authService.login().then(() => {
+      this.loadUserProfile();
+    });
   }
 
-  public ionViewDidEnter(): void {
+  logout() {
+    this.authService.logout().then(() => {
+      this.profile = undefined;
+    });
+  }
+
+  loadUserProfile() {
     this.authService.getProfile().then((userProfile: any) => {
       const realmRoles = this.authService.auth.getRealmRoles();
 
@@ -44,5 +51,9 @@ export class ProfilePage implements OnInit {
       };
     })
       .catch((err) => console.error('Error retrieving user profile', err));
+  }
+
+  public ionViewDidEnter(): void {
+    this.loadUserProfile();
   }
 }
