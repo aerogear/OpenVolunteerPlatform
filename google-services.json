@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:754329551899:android:621420eb6f5bc9df",
         "android_client_info": {
-          "package_name": "com.aerogear.dummy"
+          "package_name": "org.aerogear.ionic.showcase"
         }
       },
       "oauth_client": [
