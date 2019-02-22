@@ -1,13 +1,14 @@
-## AeroGear Apollo Voyager Example app
+## AeroGear Showcase Application
 
-Example application using Apollo GraphQL, Ionic and Cordova libraries
+Example application using AeroGear Mobile Services. 
 
 ## Implementation
 
 Implementation include:
 
-- Ionic4 Angular frontend backed by Cordova/Capacitor for mobile deployment
-- Apollo GraphQL Node.JS server implementing sample `Tasks` API
+- Integration with AeroGear Mobile Services
+- Ionic4 Angular frontend backed by Cordova
+- Voyager GraphQL Node.JS Server implementing sample `Tasks` API
 
 ### GraphQL Client
 
@@ -89,10 +90,6 @@ NOTE: If Keycloak integration is enabled for the server, and the Keycloak server
 
 > NOTE: To connect to the server running on local machine on Android emulator 
 please change [Client URL](https://github.com/aerogear/apollo-voyager-ionic-example/blob/master/src/app/services/voyager.service.ts#L42) from `localhost` to `10.0.2.2` 
-
-### Demo
-
-![](./resources/screenshot.png)
 
 ### OpenShift Integration
 
