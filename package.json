@@ -18,7 +18,7 @@
     "@aerogear/auth": "2.1.1",
     "@aerogear/push": "^2.1.1",
     "@aerogear/security": "2.1.1",
-    "@aerogear/voyager-client": "2.1.1",
+    "@aerogear/voyager-client": "2.1.2-dev.1",
     "@angular/common": "^7.2.2",
     "@angular/core": "^7.2.2",
     "@angular/forms": "^7.2.2",
