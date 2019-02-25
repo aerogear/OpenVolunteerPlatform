@@ -18,14 +18,21 @@ export class SettingsPage implements OnInit {
 
   async ngOnInit() {
     await this.storage.ready();
-    this.pushEnabled = await this.storage.get('pushEnabled');
+    const pushEnabledInStorage = await this.storage.get('pushEnabled');
+
+    // Enable Push if there is no configuration in storage from user yet
+    if (pushEnabledInStorage === null || pushEnabledInStorage) {
+      this.pushEnabled = true;
+    } else {
+      this.pushEnabled = false;
+    }
   }
 
   togglePushEnabled() {
     this.updateValue('pushEnabled', this.pushEnabled);
   }
 
-  private async updateValue(key: string, value: any) {
+  private async updateValue(key: string, value: boolean) {
     await this.storage.set(key, value);
     this.events.publish('settings:changed', key, value);
   }
