@@ -10,13 +10,6 @@ async function createTasksTables(db) {
             table.string('encoding')
             table.increments('id')
         })
-        // Insert sample file for integration tests
-        await db(PREFIX).insert({
-            filename: "test.doc",
-            url: `/${PREFIX}/test.doc`,
-            mimetype: "text/plain",
-            encoding: "UTF8"
-        })
     }
 }
 
