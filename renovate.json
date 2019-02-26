@@ -1,76 +1,8 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    ":pinVersions",
+    ":assignee(wtrocki)"
   ],
-  "aerogear": {
-    "description": "aerogear packages",
-    "packageNames": [
-      "@aerogear/app",
-      "@aerogear/auth",
-      "@aerogear/push",
-      "@aerogear/security",
-      "@aerogear/voyager-audit",
-      "@aerogear/voyager-conflicts",
-      "@aerogear/voyager-keycloak",
-      "@aerogear/voyager-metrics",
-      "@aerogear/voyager-server"
-    ]
-  },
-  "cordova": {
-    "description": "cordova packages",
-    "packageNames": [
-      "cordova-android",
-      "cordova-ios",
-      "cordova-plugin-badge",
-      "cordova-plugin-device",
-      "cordova-plugin-dialogs",
-      "cordova-plugin-inappbrowser",
-      "cordova-plugin-ionic-keyboard",
-      "cordova-plugin-ionic-webview",
-      "cordova-plugin-iroot",
-      "cordova-plugin-is-debug",
-      "cordova-plugin-local-notification",
-      "cordova-plugin-network-information",
-      "cordova-plugin-pincheck",
-      "cordova-plugin-splashscreen",
-      "cordova-plugin-whitelist",
-      "cordova-sqlite-storage",
-      "cordova-support-google-services"
-    ]
-  },
-  "IonicAngular": {
-    "description": "Ionic Angular dependencies",
-    "packageNames": [
-      "@angular/animations",
-      "@angular/bazel",
-      "@angular/benchpress",
-      "@angular/common",
-      "@angular/compiler-cli",
-      "@angular/compiler",
-      "@angular/core",
-      "@angular/elements",
-      "@angular/forms",
-      "@angular/http",
-      "@angular/language-service",
-      "@angular/platform-browser-dynamic",
-      "@angular/platform-browser",
-      "@angular/platform-server",
-      "@angular/platform-webworker-dynamic",
-      "@angular/platform-webworker",
-      "@angular/router",
-      "@angular/service-worker",
-      "@angular/upgrade",
-      "@angular/common",
-      "@angular/core",
-      "@angular/forms",
-      "@ionic-native/dialogs",
-      "@ionic-native/ionic-webview",
-      "@ionic-native/local-notifications",
-      "@ionic-native/push",
-      "@ionic-native/splash-screen",
-      "@ionic-native/status-bar",
-      "@ionic/angular",
-      "@ionic/storage"
-    ]
-  }
+  "groupName":"all"
 }

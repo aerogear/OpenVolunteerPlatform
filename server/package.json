@@ -28,4 +28,5 @@
     "shortid": "^2.2.14",
     "unifiedpush-node-sender": "^0.16.0"
   }
+  
 }
