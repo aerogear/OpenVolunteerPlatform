@@ -39,7 +39,7 @@ jobs:
   publish_example_server_container:
     docker:
       # image for building docker containers
-      - image: docker:17.05.0-ce-git
+      - image: docker:17.12.1-ce-git
     steps:
       - checkout
       # special workaround to allow running docker in docker https://circleci.com/docs/2.0/building-docker-images/
