@@ -58,8 +58,6 @@ workflows:
             tags:
               only: /.*/
       - publish_example_server_container:
-          requires:
-            - npm_publish
           filters:
             tags:
               only: /.*/
