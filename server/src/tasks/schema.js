@@ -104,13 +104,13 @@ function publish(actionType, data, pushClient) {
     },
       {
         criteria: {
-          alias: [ PUSH_ALIAS ]
+          alias: [PUSH_ALIAS]
         }
       }).then((response) => {
-      console.log("Notification sent, response received ", response);
-    }).catch((error) => {
-      console.log("Notification not sent, error received ", error)
-    })
+        console.log("Notification sent, response received ", response);
+      }).catch((error) => {
+        console.log("Notification not sent, error received ", error)
+      })
   }
   pubSub.publish(TASKS_SUBSCRIPTION_KEY, {
     tasks: {

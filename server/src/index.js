@@ -81,11 +81,9 @@ async function start() {
 
   const apolloServer = VoyagerServer(apolloConfig, voyagerConfig)
 
-
   apolloServer.applyMiddleware({
     app
   })
-  //apolloServer.installSubscriptionHandlers(httpServer)
   httpServer.listen({
     port: config.port
   }, () => {
