@@ -23,7 +23,17 @@ const fileTypeDefs = `
 const PREFIX = 'files'
 const UPLOAD_DIR = `./${PREFIX}`
 // Ensure upload directory exists.
-mkdirp.sync(UPLOAD_DIR)
+
+try {
+  mkdirp.sync(UPLOAD_DIR)
+} catch (e) {
+  console.error(e)
+  console.error(`could not create directory for file uploads ${UPLOAD_DIR}`)
+  console.error(`file uploads will not work`)
+  console.error(`if running in OpenShift, you must create a persistent volume`)
+  console.error(`and mount it with read-write permissions to ${UPLOAD_DIR}`)
+}
+
 
 const storeFS = ({ stream, filename }) => {
   const id = shortid.generate()
