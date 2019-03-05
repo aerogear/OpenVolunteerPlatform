@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DeviceCheckResult, DeviceCheckType, SecurityService } from '@aerogear/security';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { Platform } from '@ionic/angular';
-import { ConfigurationService, MetricsService } from '@aerogear/core';
-
-const config = require('../../../mobile-services.js');
+import { MetricsService } from '@aerogear/core';
+import { OpenShiftService } from '../../services/openshift.service';
 
 declare var navigator: any;
 @Component({
@@ -22,9 +21,10 @@ export class SecurityPage implements OnInit {
     public color: string;
     public securityService: SecurityService;
 
-    constructor(public platform: Platform, private dialogs: Dialogs) {
-        const configurationService = new ConfigurationService(config);
-
+    constructor(public platform: Platform,
+                private dialogs: Dialogs,
+                private openShift: OpenShiftService) {
+        const configurationService = openShift.getConfig();
         this.securityService = new SecurityService(new MetricsService({ configuration: configurationService.getConfigByType('metrics') }));
     }
 
