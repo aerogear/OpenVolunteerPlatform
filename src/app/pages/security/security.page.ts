@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { DeviceCheckResult, DeviceCheckType, SecurityService } from '@aerogear/security';
-import { Dialogs } from '@ionic-native/dialogs/ngx';
-import { Platform } from '@ionic/angular';
-import { MetricsService } from '@aerogear/core';
-import { OpenShiftService } from '../../services/openshift.service';
+import {Component, OnInit} from '@angular/core';
+import {DeviceCheckResult, DeviceCheckType, SecurityService} from '@aerogear/security';
+import {Dialogs} from '@ionic-native/dialogs/ngx';
+import {Platform} from '@ionic/angular';
+import {MetricsService} from '@aerogear/core';
+import {OpenShiftService, Service} from '../../services/openshift.service';
 
 declare var navigator: any;
 @Component({
@@ -24,8 +24,8 @@ export class SecurityPage implements OnInit {
     constructor(public platform: Platform,
                 private dialogs: Dialogs,
                 private openShift: OpenShiftService) {
-        const configurationService = openShift.getConfig();
-        this.securityService = new SecurityService(new MetricsService({ configuration: configurationService.getConfigByType('metrics') }));
+        this.securityService = new SecurityService(
+          new MetricsService({ configuration: openShift.getConfiguration(Service.Metrics) }));
     }
 
     ngOnInit() {
