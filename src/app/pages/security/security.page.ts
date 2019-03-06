@@ -4,6 +4,7 @@ import {Dialogs} from '@ionic-native/dialogs/ngx';
 import {Platform} from '@ionic/angular';
 import {MetricsService} from '@aerogear/core';
 import {OpenShiftService, Service} from '../../services/openshift.service';
+import { SecurityCheck } from './SecurityCheck';
 
 declare var navigator: any;
 @Component({
@@ -43,11 +44,12 @@ export class SecurityPage implements OnInit {
             this.detectDebug()]);
     }
 
-    public performChecksAndPublishMetrics(): Promise<DeviceCheckResult[]> {
-        return this.securityService.checkManyAndPublishMetric(DeviceCheckType.debugModeEnabled,
-            DeviceCheckType.rootEnabled,
-            DeviceCheckType.isEmulator,
-            DeviceCheckType.screenLockEnabled);
+    private performChecksAndPublishMetrics(): Promise<DeviceCheckResult[]> {
+        return this.securityService.checkManyAndPublishMetric(
+            new SecurityCheck(DeviceCheckType.debugModeEnabled, 'No Debugger Detected', 'Debugger Detected', true),
+            new SecurityCheck(DeviceCheckType.rootEnabled, 'No Root Access Detected', 'Root Access Detected', true),
+            new SecurityCheck(DeviceCheckType.isEmulator, 'No Emulator Access Detected', 'Emulator Access Detected', true),
+            new SecurityCheck(DeviceCheckType.screenLockEnabled, 'No Device Lock Enabled', 'Device Lock Enabled'));
     }
 
     public addDetection(label: string, isSecure: boolean) {
@@ -118,16 +120,19 @@ export class SecurityPage implements OnInit {
         }
     }
 
-    private runChecks(): void {
+    private async runChecks(): Promise<any> {
         this.detections = [];
         this.trustScore = 0;
         this.totalTests = 0;
         this.totalDetections = 0;
         this.totalPassed = 0;
-        this.performChecks().then(() => {
-            this.checkDialog(this.trustScore);
-        });
+
+        await this.performChecks();
         this.performChecksAndPublishMetrics();
+        // this.performChecks().then(() => {
+        //     this.checkDialog(this.trustScore);
+        // });
+        // this.performChecksAndPublishMetrics();
     }
 
     public ionViewWillEnter(): void {
