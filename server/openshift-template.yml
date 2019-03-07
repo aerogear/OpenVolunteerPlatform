@@ -252,6 +252,13 @@ objects:
           - containerPort: 4000
             protocol: TCP
           resources: {}
+          volumeMounts:
+          - mountPath: /usr/src/app/files
+            name: files-storage
+        volumes:
+        - name: files-storage
+          persistentVolumeClaim:
+            claimName: postgresql
     test: false
     triggers:
     - type: ConfigChange
