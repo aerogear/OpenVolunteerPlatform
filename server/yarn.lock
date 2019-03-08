@@ -2289,9 +2289,9 @@ pg-types@~2.0.0:
     postgres-date "~1.0.0"
     postgres-interval "^1.1.0"
 
-pg@7.8.1:
-  version "7.8.1"
-  resolved "https://registry.yarnpkg.com/pg/-/pg-7.8.1.tgz#327e25411784cffe067f1cd1ba275d506e92a82b"
+pg@7.8.2:
+  version "7.8.2"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-7.8.2.tgz#d53ffcbbaa789e15e80ffec570603294d90116e8"
   dependencies:
     buffer-writer "2.0.0"
     packet-reader "1.0.0"
@@ -2503,7 +2503,7 @@ repeat-string@^1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/repeat-string/-/repeat-string-1.6.1.tgz#8dcae470e1c88abc2d600fff4a776286da75e637"
 
-request@^2.81.0:
+request@^2.88.0:
   version "2.88.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   dependencies:
@@ -2952,11 +2952,11 @@ undefsafe@^2.0.2:
   dependencies:
     debug "^2.2.0"
 
-unifiedpush-node-sender@0.16.0:
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/unifiedpush-node-sender/-/unifiedpush-node-sender-0.16.0.tgz#9929d4669b8df4bc3d90e5e760b6abf4568e9ac2"
+unifiedpush-node-sender@0.16.1:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/unifiedpush-node-sender/-/unifiedpush-node-sender-0.16.1.tgz#fcfeb8c585a7f6bc861f8c430a1d9027fa62ca09"
   dependencies:
-    request "^2.81.0"
+    request "^2.88.0"
 
 union-value@^1.0.0:
   version "1.0.0"
