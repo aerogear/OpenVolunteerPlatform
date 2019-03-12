@@ -28,8 +28,12 @@ export class SettingsPage implements OnInit {
     }
   }
 
-  togglePushEnabled() {
-    this.updateValue('pushEnabled', this.pushEnabled);
+  async togglePushEnabled() {
+    const pushEnabledInStorage = await this.storage.get('pushEnabled');
+    
+    if (this.pushEnabled !== pushEnabledInStorage) {
+      this.updateValue('pushEnabled', this.pushEnabled);
+    }
   }
 
   private async updateValue(key: string, value: boolean) {
