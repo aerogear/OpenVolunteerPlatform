@@ -30,7 +30,7 @@ export class SettingsPage implements OnInit {
 
   async togglePushEnabled() {
     const pushEnabledInStorage = await this.storage.get('pushEnabled');
-    
+
     if (this.pushEnabled !== pushEnabledInStorage) {
       this.updateValue('pushEnabled', this.pushEnabled);
     }
@@ -40,5 +40,4 @@ export class SettingsPage implements OnInit {
     await this.storage.set(key, value);
     this.events.publish('settings:changed', key, value);
   }
-
 }
