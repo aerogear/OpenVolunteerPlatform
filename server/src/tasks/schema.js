@@ -97,6 +97,7 @@ const taskResolvers = {
 function publish(actionType, data, pushClient) {
   if (pushClient) {
     pushClient.sender.send({
+      alert: `New task: ${data.title}`,
       userData: {
         title: data.title,
         message: actionType
