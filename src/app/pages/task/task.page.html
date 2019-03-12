@@ -1,38 +1,41 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>
-        Manage Tasks
-      </ion-title>
-      <ion-buttons slot="end">
-          <ion-button (click)="openNewItemPage()">
-            <ion-icon slot="icon-only" name="add"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Manage Tasks
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openNewItemPage()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content class="outer-content">
   <div *ngIf="items">
     <ion-list>
-      <ion-item-group *ngFor="let item of items">
+      <ion-item-group *ngFor="let item of items; let last = last" 
+      [class.last-item]="last">
         <ion-item>
           <ion-label>
-            <h2>{{ item.title }}
-              <ion-badge color="primary"> V{{ item.version }}</ion-badge>
-            </h2>
+            <h2>{{ item.title }}</h2>
             <ion-note item-start>
               {{ item.description }}
             </ion-note>
+            <br />
+            <ion-note>
+              <ion-badge color="primary"> Server version: {{ item.version }}</ion-badge>
+            </ion-note>
           </ion-label>
           <!--<ion-toggle item-end style="margin-left:5px;" color="secondary"></ion-toggle>-->
-          <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="goToItem(item)">
-            <ion-icon name="arrow-forward"></ion-icon> Update
+          <ion-button item-start style="margin-left:15px;" color="primary" fill="outline" (click)="goToItem(item)">
+            <ion-icon name="create"></ion-icon>
           </ion-button>
           <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="deleteItem(item)">
-            <ion-icon name="trash"></ion-icon> Delete
+            <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>
       </ion-item-group>
@@ -41,14 +44,14 @@
 </ion-content>
 
 <ion-footer>
-  <div style="margin: 10px;">
+  <div>
     <ion-label>Number of items added when offline:
-      <ion-badge color="secondary">{{queue}}</ion-badge>
+      <ion-badge color="secondary">{{ queue }}</ion-badge>
     </ion-label>
-    <p></p>
+    <br />
     <ion-label>Network status:
-        <ion-badge color="secondary" *ngIf="online">Online</ion-badge>
-        <ion-badge color="primary" *ngIf="!online">Offline</ion-badge>
+      <ion-badge color="secondary" *ngIf="online">Online</ion-badge>
+      <ion-badge color="primary" *ngIf="!online">Offline</ion-badge>
     </ion-label>
   </div>
 </ion-footer>
