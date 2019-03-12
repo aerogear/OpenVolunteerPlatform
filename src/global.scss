@@ -13,3 +13,14 @@
 .banner {
     margin-right: 2vh;
 }
+
+ion-item {
+    --inner-padding-end: 0;
+    --padding-end: 16px;
+}
+
+.last-item {
+    ion-item {
+        --border-color: transparent;
+    }
+}

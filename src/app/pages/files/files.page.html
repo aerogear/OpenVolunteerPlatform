@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-card>
     <ion-card-header>
       <ion-card-title>Upload Document</ion-card-title>
@@ -29,7 +29,8 @@
       <ion-card-content>
         <div *ngIf="items">
           <ion-list>
-            <ion-item-group *ngFor="let item of items">
+            <ion-item-group *ngFor="let item of items; let last = last"
+            [class.last-item]="last">
               <ion-item href="{{ item.url }}">
                 <ion-label>
                   <h2>{{ item.filename }}</h2>

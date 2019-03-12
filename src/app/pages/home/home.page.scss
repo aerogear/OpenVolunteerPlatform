@@ -1,14 +1,35 @@
-.welcome-card ion-img {
-  max-height: 35vh;
+.welcome-header {
+  // background-color: var(--ion-color-light);
+  padding: 16px;
+  width: 100%;
+  text-align: center;
+}
+
+.welcome-header img {
+  max-width: 200px;
+  padding: 25px 5px 20px 0;
+}
+
+.welcome-header ion-img {
+  // max-height: 5vh;
   overflow: hidden;
 }
 
+.welcome-header ion-img img {
+  width: 100%;
+}
+
 .logo {
-  margin: 2vw;
+  margin: 1vw;
+  max-width: 40%
 }
 
 .menu-container {
   margin: 0vw;
+}
+
+.item-inner{
+  border-style: unset !important;
 }
 
 .header-text {
