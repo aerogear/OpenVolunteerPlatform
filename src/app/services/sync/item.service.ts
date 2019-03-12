@@ -9,6 +9,7 @@ import {
 import { AllTasks, Task, MutationType } from './types';
 import { VoyagerService } from './voyager.service';
 import { VoyagerClient, createOptimisticResponse } from '@aerogear/voyager-client';
+import { taskCacheUpdates } from './cache.updates';
 
 @Injectable({
   providedIn: 'root'
@@ -81,7 +82,7 @@ export class ItemService {
       variables: item,
       optimisticResponse:
         createOptimisticResponse('createTask', 'Task', item),
-      update: this.updateCacheOnAdd
+      update: taskCacheUpdates.createTask
     });
   }
 
@@ -89,7 +90,7 @@ export class ItemService {
     return this.apollo.mutate<Task>({
       mutation: UPDATE_TASK,
       variables: item,
-      update: this.updateCacheOnEdit,
+      update: taskCacheUpdates.updateTask,
       optimisticResponse:
         createOptimisticResponse('updateTask', 'Task', item, false)
     });
@@ -99,67 +100,10 @@ export class ItemService {
     return this.apollo.mutate<Task>({
       mutation: DELETE_TASK,
       variables: { id: item.id },
-      update: this.updateCacheOnDelete,
+      update: taskCacheUpdates.deleteTask,
       optimisticResponse:
         createOptimisticResponse('deleteTask', 'Task', { id: item.id }, false)
     });
   }
 
-  // Local cache updates for CRUD operations
-  updateCacheOnAdd(cache, { data }) {
-    data = data.createTask;
-    let { allTasks } = cache.readQuery({ query: GET_TASKS });
-    if (allTasks) {
-      if (!allTasks.find((task) => task.id === data.id)) {
-        allTasks.push(data);
-      }
-    } else {
-      allTasks = [data];
-    }
-    cache.writeQuery({
-      query: GET_TASKS,
-      data: {
-        'allTasks': allTasks
-      }
-    });
-  }
-
-  updateCacheOnEdit(cache, { data }) {
-    data = data.updateTask;
-    const { allTasks } = cache.readQuery({ query: GET_TASKS });
-    if (allTasks) {
-      const index = allTasks.findIndex((task) => {
-        return data.id === task.id;
-      });
-      allTasks[index] = data;
-    }
-    cache.writeQuery({
-      query: GET_TASKS,
-      data: {
-        'allTasks': allTasks
-      }
-    });
-  }
-
-  updateCacheOnDelete(cache, { data }) {
-    data = data.deleteTask;
-    let deletedId;
-    if (data.optimisticResponse) {
-      // Map optimistic response field
-      deletedId = data.id;
-    } else {
-      deletedId = data;
-    }
-
-    const { allTasks } = cache.readQuery({ query: GET_TASKS });
-    const newData = allTasks.filter((item) => {
-      return deletedId !== item.id;
-    });
-    cache.writeQuery({
-      query: GET_TASKS,
-      data: {
-        'allTasks': newData
-      }
-    });
-  }
 }

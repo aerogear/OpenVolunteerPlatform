@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { OpenShiftService } from '../openshift.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '../auth.service';
+import { taskCacheUpdates } from './cache.updates';
 
 /**
  * Class used to log data conflicts in server
@@ -62,10 +63,13 @@ export class VoyagerService {
         }
       }
     };
+    // Merget all cache updates functions (currently only single)
+    const mergedCacheUpdates = taskCacheUpdates;
     const options: DataSyncConfig = {
       offlineQueueListener: numberOfOperationsProvider,
       conflictListener: new ConflictLogger(this.alertCtrl),
-      fileUpload: true
+      fileUpload: true,
+      mutationCacheUpdates: mergedCacheUpdates
     };
     if (!this.openShift.hasSyncConfig()) {
       // Use default localhost urls when OpenShift config is missing
