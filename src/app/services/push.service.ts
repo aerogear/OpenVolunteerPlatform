@@ -48,10 +48,15 @@ export class PushService {
     });
 
     await this.storage.ready();
-    const pushEnabled = await this.storage.get('pushEnabled');
-    if (pushEnabled) {
+    const pushEnabledInStorage = await this.storage.get('pushEnabled');
+    
+    if (pushEnabledInStorage === null || pushEnabledInStorage) {
       this.initPush();
       this.register();
+
+      if (pushEnabledInStorage === null) {
+        await this.storage.set('pushEnabled', true);
+      }
     }
   }
 

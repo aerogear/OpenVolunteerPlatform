@@ -34,7 +34,7 @@ export class AppComponent {
       this.splashScreen.hide();
 
       // Initialize the push service
-      pushService.initialize(this.handleNotification.bind(this));
+      this.pushService.initialize(this.handleNotification.bind(this));
 
       if (document) {
         document.addEventListener('deviceready', () => {
