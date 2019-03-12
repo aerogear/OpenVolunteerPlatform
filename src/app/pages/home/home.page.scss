@@ -1,5 +1,4 @@
 .welcome-header {
-  // background-color: var(--ion-color-light);
   padding: 16px;
   width: 100%;
   text-align: center;
@@ -11,7 +10,6 @@
 }
 
 .welcome-header ion-img {
-  // max-height: 5vh;
   overflow: hidden;
 }
 
@@ -20,8 +18,8 @@
 }
 
 .logo {
-  margin: 1vw;
-  max-width: 40%
+  margin: 1vw auto;
+  max-width: 50%
 }
 
 .menu-container {
@@ -35,4 +33,3 @@
 .header-text {
   font-size: 2em;
 }
-
