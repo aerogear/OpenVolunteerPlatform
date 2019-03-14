@@ -78,7 +78,10 @@ export class VoyagerService {
     } else {
       options.openShiftConfig = this.openShift.getConfig();
     }
-    options.authContextProvider = this.injector.get(AuthService).auth.getAuthContextProvider();
+    const authService = this.injector.get(AuthService);
+    if (authService.isEnabled()) {
+      options.authContextProvider = authService.getAuthContextProvider();
+    }
     this._apolloClient = await createClient(options);
   }
 }
