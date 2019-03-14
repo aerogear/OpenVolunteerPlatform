@@ -1,6 +1,7 @@
 import { Auth } from '@aerogear/auth';
 import { Injectable } from '@angular/core';
 import { OpenShiftService } from './openshift.service';
+import { VoyagerService } from './sync/voyager.service';
 import { KeycloakInitOptions } from 'keycloak-js';
 import { AuthContextProvider } from '@aerogear/voyager-client';
 import { Platform } from '@ionic/angular';
@@ -14,10 +15,12 @@ import { Platform } from '@ionic/angular';
 export class AuthService {
     public auth: Auth | undefined;
     public initialized: Promise<boolean>;
+    private readonly aerogear: VoyagerService;
 
-    constructor(private openShift: OpenShiftService, public platform: Platform) {
+    constructor(private openShift: OpenShiftService, public platform: Platform, aerogear: VoyagerService) {
         if (this.isEnabled()) {
             this.auth = new Auth(this.openShift.getConfig());
+            this.aerogear = aerogear;
             this.initialized = platform.ready().then(() => {
                 const initOptions: KeycloakInitOptions = { onLoad: 'login-required' };
                 return this.auth.init(initOptions);
@@ -68,6 +71,9 @@ export class AuthService {
 
     logout() {
         if (this.isEnabled()) {
+            this.aerogear.apolloClient.clearStore();
+            this.aerogear.apolloClient.cache.reset();
+            window.localStorage.clear();
             return this.auth.logout();
         } else {
             return Promise.reject('not enabled');
