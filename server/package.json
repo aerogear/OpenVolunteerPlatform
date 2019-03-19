@@ -9,11 +9,11 @@
   },
   "license": "Apache 2.0",
   "dependencies": {
-    "@aerogear/voyager-audit": "0.5.0",
-    "@aerogear/voyager-conflicts": "0.5.0",
-    "@aerogear/voyager-keycloak": "0.5.0",
-    "@aerogear/voyager-metrics": "0.5.0",
-    "@aerogear/voyager-server": "0.5.0",
+    "@aerogear/voyager-audit": "0.5.1",
+    "@aerogear/voyager-conflicts": "0.5.1",
+    "@aerogear/voyager-keycloak": "0.5.1",
+    "@aerogear/voyager-metrics": "0.5.1",
+    "@aerogear/voyager-server": "0.5.1",
     "apollo-server": "2.4.8",
     "cors": "2.8.5",
     "deepmerge": "3.2.0",
@@ -24,7 +24,7 @@
     "knex": "0.16.3",
     "merge-graphql-schemas": "1.5.8",
     "nodemon": "1.18.10",
-    "pg": "7.8.2",
+    "pg": "7.9.0",
     "shortid": "2.2.14",
     "unifiedpush-node-sender": "0.16.1"
   }

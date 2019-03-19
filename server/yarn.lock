@@ -2,21 +2,21 @@
 # yarn lockfile v1
 
 
-"@aerogear/voyager-audit@0.5.0", "@aerogear/voyager-audit@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@aerogear/voyager-audit/-/voyager-audit-0.5.0.tgz#d9e07ebfa3d10f4f939b08fd9e4b88a1ed584a18"
+"@aerogear/voyager-audit@0.5.1", "@aerogear/voyager-audit@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@aerogear/voyager-audit/-/voyager-audit-0.5.1.tgz#19422043ffd65d5c25aec8187a15328f7ed03186"
   dependencies:
-    "@aerogear/voyager-tools" "^0.5.0"
+    "@aerogear/voyager-tools" "^0.5.1"
     graphql-tools "4.0.4"
     pino "5.11.1"
 
-"@aerogear/voyager-conflicts@0.5.0", "@aerogear/voyager-conflicts@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@aerogear/voyager-conflicts/-/voyager-conflicts-0.5.0.tgz#56d38cc76edf7b9cacdd1c14b3a38cdcfc2b7a21"
+"@aerogear/voyager-conflicts@0.5.1", "@aerogear/voyager-conflicts@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@aerogear/voyager-conflicts/-/voyager-conflicts-0.5.1.tgz#01639ea12bed22e6d3a3fcc95373aab74f6af4c5"
 
-"@aerogear/voyager-keycloak@0.5.0", "@aerogear/voyager-keycloak@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@aerogear/voyager-keycloak/-/voyager-keycloak-0.5.0.tgz#a8d0ba9f7ca2c0307b9ffaeb321767e6a2cc09dc"
+"@aerogear/voyager-keycloak@0.5.1", "@aerogear/voyager-keycloak@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@aerogear/voyager-keycloak/-/voyager-keycloak-0.5.1.tgz#b0bca5ad418b8e8140b850ba16028b2910419858"
   dependencies:
     apollo-server-express "2.4.8"
     express-session "1.15.6"
@@ -25,31 +25,31 @@
     keycloak-connect "4.8.3"
     pino "5.11.1"
 
-"@aerogear/voyager-metrics@0.5.0", "@aerogear/voyager-metrics@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@aerogear/voyager-metrics/-/voyager-metrics-0.5.0.tgz#5e6191745e77b87dbe70f11dde977aa6ae3c9bab"
+"@aerogear/voyager-metrics@0.5.1", "@aerogear/voyager-metrics@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@aerogear/voyager-metrics/-/voyager-metrics-0.5.1.tgz#a0e9e5b4c337930f6c41efd1835385c8dd606aeb"
   dependencies:
-    "@aerogear/voyager-tools" "^0.5.0"
+    "@aerogear/voyager-tools" "^0.5.1"
     apollo-server "2.4.8"
     apollo-server-express "2.4.8"
     prom-client "11.2.1"
 
-"@aerogear/voyager-server@0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@aerogear/voyager-server/-/voyager-server-0.5.0.tgz#0616698e57558ebe8309089840aea57fd161dfa9"
+"@aerogear/voyager-server@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@aerogear/voyager-server/-/voyager-server-0.5.1.tgz#2b13ec4cb995f17b3fabecd2ca47d5a99a9b0111"
   dependencies:
-    "@aerogear/voyager-audit" "^0.5.0"
-    "@aerogear/voyager-conflicts" "^0.5.0"
-    "@aerogear/voyager-keycloak" "^0.5.0"
-    "@aerogear/voyager-metrics" "^0.5.0"
-    "@aerogear/voyager-tools" "^0.5.0"
+    "@aerogear/voyager-audit" "^0.5.1"
+    "@aerogear/voyager-conflicts" "^0.5.1"
+    "@aerogear/voyager-keycloak" "^0.5.1"
+    "@aerogear/voyager-metrics" "^0.5.1"
+    "@aerogear/voyager-tools" "^0.5.1"
     apollo-server "2.4.8"
     apollo-server-express "2.4.8"
     graphql-tools "4.0.4"
 
-"@aerogear/voyager-tools@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@aerogear/voyager-tools/-/voyager-tools-0.5.0.tgz#3634a1441c6a6c16ab752f8584b6016a2efc75a8"
+"@aerogear/voyager-tools@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@aerogear/voyager-tools/-/voyager-tools-0.5.1.tgz#fec3a3d1c1335b15b6dc1545f4256b16b1b06574"
   dependencies:
     graphql-tools "4.0.4"
 
@@ -2289,9 +2289,9 @@ pg-types@~2.0.0:
     postgres-date "~1.0.0"
     postgres-interval "^1.1.0"
 
-pg@7.8.2:
-  version "7.8.2"
-  resolved "https://registry.yarnpkg.com/pg/-/pg-7.8.2.tgz#d53ffcbbaa789e15e80ffec570603294d90116e8"
+pg@7.9.0:
+  version "7.9.0"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-7.9.0.tgz#04f0024d810544463f47dbb5aada2486aa7dcc36"
   dependencies:
     buffer-writer "2.0.0"
     packet-reader "1.0.0"
