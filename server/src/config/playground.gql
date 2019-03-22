@@ -34,24 +34,6 @@ query allTasks {
   }
 }
 
-subscription taskModified {
-  tasks {
-    action
-    task {
-      ...TaskFields
-    }
-  }
-}
-
-subscription taskDeleted {
-  tasks {
-    action
-    task {
-      id
-    }
-  }
-}
-
  query uploads{
     uploads{
       filename
