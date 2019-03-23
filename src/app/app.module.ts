@@ -12,6 +12,7 @@ import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { PushService } from './services/push.service';
+import { OfflineToggleService } from './services/offlineSimulation.service';
 import { Push } from '@ionic-native/push/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { IonicStorageModule } from '@ionic/storage';
@@ -23,6 +24,7 @@ import { IonicStorageModule } from '@ionic/storage';
   imports: [BrowserModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule, GraphQLModule, HttpClientModule],
   providers: [
     PushService,
+    OfflineToggleService,
     StatusBar,
     SplashScreen,
     Push,

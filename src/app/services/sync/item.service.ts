@@ -16,9 +16,11 @@ import { taskCacheUpdates } from './cache.updates';
 })
 export class ItemService {
 
+  public voyagerService: VoyagerService;
   private readonly apollo: VoyagerClient;
 
   constructor(aeroGear: VoyagerService) {
+    this.voyagerService = aeroGear;
     this.apollo = aeroGear.apolloClient;
   }
 

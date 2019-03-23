@@ -1,20 +1,33 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-title>
-            Settings
-        </ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Settings
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
     <h4>Push Notification</h4>
     <ion-item>
-        <ion-label item-left>Enabled</ion-label>
-        <ion-toggle [(ngModel)]="pushEnabled" (ionChange)="togglePushEnabled();" item-right></ion-toggle>
+      <ion-label item-left>Enabled</ion-label>
+      <ion-toggle
+        [(ngModel)]="pushEnabled"
+        (ionChange)="togglePushEnabled()"
+        item-right
+      ></ion-toggle>
+    </ion-item>
+    <h4>Similate offline in Task page</h4>
+    <ion-item>
+      <ion-label item-left>Enabled</ion-label>
+      <ion-toggle
+        [(ngModel)]="offlineToggleEnabled"
+        (ionChange)="toggleOfflineEnabled()"
+        item-right
+      ></ion-toggle>
     </ion-item>
   </ion-list>
 </ion-content>

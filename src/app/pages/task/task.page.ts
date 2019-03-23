@@ -7,6 +7,7 @@ import { NetworkService } from '../../services/network.service';
 import { VoyagerService } from '../../services/sync/voyager.service';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
+import { OfflineToggleService } from '../../services/offlineSimulation.service';
 
 @Component({
   selector: 'app-page-task',
@@ -18,6 +19,7 @@ export class TaskPage implements OnInit {
 
   items: Array<Task>;
   online: boolean;
+  offlineToggle: boolean;
   queue: number;
   errors: any;
 
@@ -25,6 +27,7 @@ export class TaskPage implements OnInit {
     private router: Router,
     public itemService: ItemService,
     public networkService: NetworkService,
+    public offlineToggleService: OfflineToggleService,
     public aerogear: VoyagerService,
     public toastController: ToastController,
     public auth: AuthService
@@ -44,8 +47,16 @@ export class TaskPage implements OnInit {
   }
 
   // Setup status bar that shows online status
+  private offlineToggleEnabled() {
+    console.log('it wotrked');
+  }
+
   private async setupQueueStatusBar() {
     this.online = !await this.networkService.networkInterface.isOffline();
+    this.offlineToggle = this.offlineToggleService.offlineToggle;
+    console.log(this.offlineToggle);
+
+
     this.networkService.networkInterface.onStatusChangeListener({
       onStatusChange: (networkInfo) => {
         console.log(`Network state changed. Online: ${networkInfo.online}`);
@@ -53,6 +64,7 @@ export class TaskPage implements OnInit {
       }
     });
     console.log(`Online: ${this.online}`);
+
     console.log(`NetworkStatus Provider: ${this.networkService.networkInterface.constructor.name}`);
     const self = this;
     this.aerogear.queueListener = {
@@ -108,5 +120,9 @@ export class TaskPage implements OnInit {
     });
     toast.present();
   }
-}
 
+  restart() {
+    this.itemService.voyagerService.toggleOnline();
+    this.online = !this.online;
+  }
+}

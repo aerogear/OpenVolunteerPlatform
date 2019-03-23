@@ -1,12 +1,13 @@
 import {
   createClient, VoyagerClient, DataSyncConfig,
-  OfflineQueueListener, ConflictListener, AuthContextProvider
+  OfflineQueueListener, ConflictListener, AuthContextProvider, NetworkStatus
 } from '@aerogear/voyager-client';
 import { Injectable, Injector } from '@angular/core';
 import { OpenShiftService } from '../openshift.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '../auth.service';
 import { taskCacheUpdates } from './cache.updates';
+import { OfflineToggleService } from '../offlineSimulation.service';
 
 /**
  * Class used to log data conflicts in server
@@ -35,6 +36,7 @@ export class VoyagerService {
 
   private _apolloClient: VoyagerClient;
   private listener: OfflineQueueListener;
+  private networkStatus: OfflineToggleService;
 
   constructor(private openShift: OpenShiftService, public alertCtrl: AlertController, public injector: Injector) {
   }
@@ -46,6 +48,12 @@ export class VoyagerService {
   get apolloClient(): VoyagerClient {
     return this._apolloClient;
   }
+
+  public async toggleOnline() {
+    this.networkStatus.setOnline(await this.networkStatus.isOffline());
+    console.log("Offline: ", await this.networkStatus.isOffline());
+  }
+
 
   public async createApolloClient() {
     const self = this;
@@ -65,11 +73,14 @@ export class VoyagerService {
     };
     // Merget all cache updates functions (currently only single)
     const mergedCacheUpdates = taskCacheUpdates;
+    this.networkStatus = new OfflineToggleService();
+    this.networkStatus.setOnline(true);
     const options: DataSyncConfig = {
       offlineQueueListener: numberOfOperationsProvider,
       conflictListener: new ConflictLogger(this.alertCtrl),
       fileUpload: true,
-      mutationCacheUpdates: mergedCacheUpdates
+      mutationCacheUpdates: mergedCacheUpdates,
+      networkStatus: this.networkStatus
     };
     if (!this.openShift.hasSyncConfig()) {
       // Use default localhost urls when OpenShift config is missing
