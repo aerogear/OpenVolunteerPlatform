@@ -16,16 +16,10 @@
 
 <ion-content class="outer-content">
   <div *ngIf="items">
-    <ion-list style="width: 100%">
-      <ion-item-group
-        *ngFor="let item of items; let last = last"
-        [class.last-item]="last"
-      >
+    <ion-list>
+      <ion-item-group *ngFor="let item of items; let last = last" 
+      [class.last-item]="last">
         <ion-item>
-          <ion-checkbox
-            checked="false"
-            style="margin-right:15px;"
-          ></ion-checkbox>
           <ion-label>
             <h2>{{ item.title }}</h2>
             <ion-note item-start>
@@ -54,6 +48,9 @@
             fill="outline"
             (click)="deleteItem(item)"
           >
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+          <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="deleteItem(item)">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>
