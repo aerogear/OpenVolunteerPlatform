@@ -7,7 +7,7 @@ import { OpenShiftService } from '../openshift.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '../auth.service';
 import { taskCacheUpdates } from './cache.updates';
-import { OfflineToggleService } from '../offlineSimulation.service';
+import { OfflineSimulation } from '../offlineSimulation.service';
 
 /**
  * Class used to log data conflicts in server
@@ -36,7 +36,7 @@ export class VoyagerService {
 
   private _apolloClient: VoyagerClient;
   private listener: OfflineQueueListener;
-  private networkStatus: OfflineToggleService;
+  private networkStatus: OfflineSimulation;
 
   constructor(private openShift: OpenShiftService, public alertCtrl: AlertController, public injector: Injector) {
   }
@@ -73,7 +73,7 @@ export class VoyagerService {
     };
     // Merget all cache updates functions (currently only single)
     const mergedCacheUpdates = taskCacheUpdates;
-    this.networkStatus = new OfflineToggleService();
+    this.networkStatus = new OfflineSimulation();
     this.networkStatus.setOnline(true);
     const options: DataSyncConfig = {
       offlineQueueListener: numberOfOperationsProvider,

@@ -4,7 +4,7 @@ import { Events } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 
 @Injectable()
-export class OfflineToggleService {
+export class OfflineSimulation {
   private online: boolean;
   public offlineToggle: boolean;
   private callback: any;

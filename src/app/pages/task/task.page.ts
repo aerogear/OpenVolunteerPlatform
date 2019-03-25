@@ -7,7 +7,7 @@ import { NetworkService } from '../../services/network.service';
 import { VoyagerService } from '../../services/sync/voyager.service';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
-import { OfflineToggleService } from '../../services/offlineSimulation.service';
+import { OfflineSimulation } from '../../services/offlineSimulation.service';
 
 @Component({
   selector: 'app-page-task',
@@ -27,7 +27,7 @@ export class TaskPage implements OnInit {
     private router: Router,
     public itemService: ItemService,
     public networkService: NetworkService,
-    public offlineToggleService: OfflineToggleService,
+    public offlineSimulation: OfflineSimulation,
     public aerogear: VoyagerService,
     public toastController: ToastController,
     public auth: AuthService
@@ -53,7 +53,7 @@ export class TaskPage implements OnInit {
 
   private async setupQueueStatusBar() {
     this.online = !await this.networkService.networkInterface.isOffline();
-    this.offlineToggle = this.offlineToggleService.offlineToggle;
+    this.offlineToggle = this.offlineSimulation.offlineToggle;
     console.log(this.offlineToggle);
 
 
