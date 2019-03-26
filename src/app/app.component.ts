@@ -5,8 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
 import { PushMessage, PushService } from './services/push.service';
-import { OfflineSimulation } from './services/offlineSimulation.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
@@ -24,7 +22,6 @@ export class AppComponent {
     private navCtrl: NavController,
     public auth: AuthService,
     private pushService: PushService,
-    private offlineSimulation: OfflineSimulation
   ) {
     this.auth.getProfile().then((profile) => {
       this.user = profile;
@@ -37,8 +34,6 @@ export class AppComponent {
 
       // Initialize the push service
       this.pushService.initialize(this.handleNotification.bind(this));
-      
-      this.offlineSimulation.initialize();
 
       if (document) {
         document.addEventListener('deviceready', () => {
