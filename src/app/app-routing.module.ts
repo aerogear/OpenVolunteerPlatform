@@ -26,6 +26,12 @@ export function loadUpdateItemPageModule() {
   return UpdateItemPageModule;
 }
 
+import { OfflineQueuePageModule } from './pages/offline-queue/offline-queue.module';
+
+export function loadOfflineQueuePageModule() {
+  return OfflineQueuePageModule;
+}
+
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: loadHomePageModule },
@@ -37,6 +43,7 @@ const routes: Routes = [
   { path: 'security', loadChildren: './pages/security/security.module#SecurityPageModule' },
   { path: 'files', loadChildren: './pages/files/files.module#FilesPageModule' },
   { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
+  { path: 'offline-queue', loadChildren: './pages/offline-queue/offline-queue.module#OfflineQueuePageModule' },
 ];
 @NgModule({
   imports: [
