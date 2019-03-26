@@ -60,7 +60,6 @@
   <div>
     <ion-label>
       <ion-button
-        [disabled]="queue == 0"
         size="small"
         color="primary"
         fill="outline"
@@ -69,7 +68,7 @@
       >
         Offline changes
       </ion-button>
-      <ion-badge color="primary" class="offline-queue-badge" [class.network-badge-disabled]="queue == 0">{{
+      <ion-badge color="primary" class="offline-queue-badge">{{
         queue
       }}</ion-badge>
     </ion-label>
