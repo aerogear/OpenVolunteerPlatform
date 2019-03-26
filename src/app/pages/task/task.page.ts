@@ -43,9 +43,9 @@ export class TaskPage implements OnInit {
     await this.setupQueueStatusBar();
   }
 
+  // Setup status bar that shows online status
   private async setupQueueStatusBar() {
     this.online = !await this.networkService.networkInterface.isOffline();
-
     this.networkService.networkInterface.onStatusChangeListener({
       onStatusChange: (networkInfo) => {
         console.log(`Network state changed. Online: ${networkInfo.online}`);
@@ -53,7 +53,6 @@ export class TaskPage implements OnInit {
       }
     });
     console.log(`Online: ${this.online}`);
-
     console.log(`NetworkStatus Provider: ${this.networkService.networkInterface.constructor.name}`);
     const self = this;
     this.aerogear.queueListener = {
@@ -110,3 +109,4 @@ export class TaskPage implements OnInit {
     toast.present();
   }
 }
+

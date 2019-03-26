@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
 import { PushMessage, PushService } from './services/push.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
@@ -21,7 +22,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     private navCtrl: NavController,
     public auth: AuthService,
-    private pushService: PushService,
+    private pushService: PushService
   ) {
     this.auth.getProfile().then((profile) => {
       this.user = profile;
