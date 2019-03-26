@@ -17,8 +17,10 @@
 <ion-content class="outer-content">
   <div *ngIf="items">
     <ion-list>
-      <ion-item-group *ngFor="let item of items; let last = last" 
-      [class.last-item]="last">
+      <ion-item-group
+        *ngFor="let item of items; let last = last"
+        [class.last-item]="last"
+      >
         <ion-item>
           <ion-label>
             <h2>{{ item.title }}</h2>
@@ -27,14 +29,27 @@
             </ion-note>
             <br />
             <ion-note>
-              <ion-badge color="primary"> Server version: {{ item.version }}</ion-badge>
+              <ion-badge color="primary">
+                Server version: {{ item.version }}</ion-badge
+              >
             </ion-note>
           </ion-label>
-          <!--<ion-toggle item-end style="margin-left:5px;" color="secondary"></ion-toggle>-->
-          <ion-button item-start style="margin-left:15px;" color="primary" fill="outline" (click)="goToItem(item)">
+          <ion-button
+            item-start
+            class="create-button"
+            color="primary"
+            fill="outline"
+            (click)="goToItem(item)"
+          >
             <ion-icon name="create"></ion-icon>
           </ion-button>
-          <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="deleteItem(item)">
+          <ion-button
+            item-end
+            class="trash-button"
+            color="primary"
+            fill="outline"
+            (click)="deleteItem(item)"
+          >
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>
@@ -45,13 +60,26 @@
 
 <ion-footer>
   <div>
-    <ion-label>Number of items added when offline:
-      <ion-badge color="secondary">{{ queue }}</ion-badge>
+    <ion-label>
+      <ion-button
+        [disabled]="queue == 0"
+        size="small"
+        color="primary"
+        fill="outline"
+        routerLink="/offline-queue"
+        class="offline-queue-button"
+      >
+        Offline queue
+      </ion-button>
+      <ion-badge color="primary" class="offline-queue-badge" [class.network-badge-disabled]="queue == 0">{{
+        queue
+      }}</ion-badge>
     </ion-label>
-    <br />
-    <ion-label>Network status:
-      <ion-badge color="secondary" *ngIf="online">Online</ion-badge>
-      <ion-badge color="primary" *ngIf="!online">Offline</ion-badge>
-    </ion-label>
+    <ion-badge class="network-badge" color="secondary" *ngIf="online"
+      >Online</ion-badge
+    >
+    <ion-badge class="network-badge" color="primary" *ngIf="!online"
+      >Offline</ion-badge
+    >
   </div>
 </ion-footer>
