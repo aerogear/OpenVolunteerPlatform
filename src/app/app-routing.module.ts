@@ -26,12 +26,6 @@ export function loadUpdateItemPageModule() {
   return UpdateItemPageModule;
 }
 
-import { OfflineQueuePageModule } from './pages/offline-queue/offline-queue.module';
-
-export function loadOfflineQueuePageModule() {
-  return OfflineQueuePageModule;
-}
-
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: loadHomePageModule },
