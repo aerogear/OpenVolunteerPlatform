@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content class="outer-content">
-  <div *ngIf="items > 0">
+  <div *ngIf="items">
     <ion-list>
       <ion-item-group *ngFor="let item of items; let last = last" 
       [class.last-item]="last">

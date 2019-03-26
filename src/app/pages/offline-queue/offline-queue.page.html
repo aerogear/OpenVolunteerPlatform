@@ -4,13 +4,13 @@
       <ion-back-button defaultHref="tasks"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      Offline Changes
+      Offline queue
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="outer-content">
-  <ion-list *ngIf="stagedItems > 0">
+  <ion-list *ngIf="stagedItems">
     <ion-item-group
       *ngFor="let stagedItem of stagedItems; let last = last"
       [class.last-item]="last"
