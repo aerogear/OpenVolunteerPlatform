@@ -50,9 +50,6 @@
           >
             <ion-icon name="trash"></ion-icon>
           </ion-button>
-          <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="deleteItem(item)">
-            <ion-icon name="trash"></ion-icon>
-          </ion-button>
         </ion-item>
       </ion-item-group>
     </ion-list>
@@ -70,7 +67,7 @@
         routerLink="/offline-queue"
         class="offline-queue-button"
       >
-        Offline queue
+        Offline changes
       </ion-button>
       <ion-badge color="primary" class="offline-queue-badge" [class.network-badge-disabled]="queue == 0">{{
         queue

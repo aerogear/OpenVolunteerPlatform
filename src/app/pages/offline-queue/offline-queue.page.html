@@ -17,18 +17,28 @@
     >
       <ion-item>
         <ion-label>
-          <h2>{{ stagedItem.variables.title || stagedItem.variables.id }}</h2>
-          <div *ngIf="stagedItem.variables.description">
-            <ion-note item-start>
-              {{ stagedItem.variables.description }}
-            </ion-note>
-            <br />
-          </div>
-          <ion-note>Task type:
+          <h2>
+            Mutation type:
             <ion-badge color="primary">
               {{ stagedItem.operationName }}
             </ion-badge>
-          </ion-note>
+          </h2>
+          <div *ngIf="stagedItem.variables.title">
+            <ion-note item-start>
+              Title: {{ stagedItem.variables.title }}
+            </ion-note>
+            <br />
+          </div>
+          <div *ngIf="stagedItem.variables.description">
+            <ion-note item-start>
+              Description: {{ stagedItem.variables.description }}
+            </ion-note>
+            <br />
+          </div>
+          <div *ngIf="stagedItem.variables.id">
+            <ion-note item-start> Id: {{ stagedItem.variables.id }} </ion-note>
+            <br />
+          </div>
         </ion-label>
       </ion-item>
     </ion-item-group>
