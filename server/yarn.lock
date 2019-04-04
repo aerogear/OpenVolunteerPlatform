@@ -211,6 +211,17 @@ ajv@^6.5.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
+altair-express-middleware@2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/altair-express-middleware/-/altair-express-middleware-2.1.5.tgz#cc949cb875cc4ebebf91877447a841c5ccd7e3fb"
+  dependencies:
+    altair-static "^2.1.5"
+    express "^4.16.2"
+
+altair-static@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-2.1.5.tgz#d907475e61414de401eccb81b0df423b05d24d2d"
+
 ansi-align@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ansi-align/-/ansi-align-2.0.0.tgz#c36aeccba563b89ceb556f3690f0b1d9e3547f7f"
@@ -990,7 +1001,7 @@ express-session@1.15.6:
     uid-safe "~2.1.5"
     utils-merge "1.0.1"
 
-express@4.16.4, express@^4.0.0:
+express@4.16.4, express@^4.0.0, express@^4.16.2:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.4.tgz#fddef61926109e24c515ea97fd2f1bdbf62df12e"
   dependencies:
