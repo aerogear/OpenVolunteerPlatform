@@ -19,7 +19,12 @@ ion-item {
     --padding-end: 16px;
 }
 
+.first-item {
+    padding-top: 8px;
+}
+
 .last-item {
+    padding-bottom: 8px;
     ion-item {
         --border-color: transparent;
     }

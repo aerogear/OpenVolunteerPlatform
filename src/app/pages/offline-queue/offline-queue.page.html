@@ -11,10 +11,8 @@
 
 <ion-content class="outer-content">
   <ion-list *ngIf="stagedItems">
-    <ion-item-group
-      *ngFor="let stagedItem of stagedItems; let last = last"
-      [class.last-item]="last"
-    >
+    <ion-item-group *ngFor="let stagedItem of stagedItems; let first = first; let last = last" [class.last-item]="last"
+      [class.first-item]="first">
       <ion-item>
         <ion-label>
           <h2>
