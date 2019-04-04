@@ -95,7 +95,7 @@ npm run ionic:android
 ```
 
 NOTE: To connect to the local GraphQL server, when the app is running in the Android emulator,
-change [Client URL](https://github.com/aerogear/ionic-showcase/blob/master/src/app/services/sync/voyager.service.ts#L76) from `localhost` to `10.0.2.2` 
+change [Client URL](https://github.com/aerogear/ionic-showcase/blob/master/src/app/services/sync/voyager.service.ts#L76) from `localhost` to `10.0.2.2`. Note that Push notifications do not work in an emulator.
 
 === OpenShift Integration
 
