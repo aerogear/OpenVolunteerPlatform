@@ -41,4 +41,15 @@
       </ion-item>
     </ion-item-group>
   </ion-list>
+
+  <ion-grid class="queue-empty ion-justify-content-center" *ngIf="!stagedItems || stagedItems.length == 0">
+    <ion-row class="ion-justify-content-center">
+      <ion-col>
+        <ion-text color="medium">
+          <p>You currently have no changes<br /> staged offline.</p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

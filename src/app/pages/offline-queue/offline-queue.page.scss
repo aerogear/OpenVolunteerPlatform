@@ -22,3 +22,14 @@ ion-badge {
     white-space: pre-line;
     text-align: left;
 }
+
+.queue-empty {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    p {
+        line-height: 150%
+    }
+}
