@@ -1,8 +1,12 @@
+.list-md {
+  padding: 0;
+}
+
 .task-item {
   padding-bottom: 0;
 }
 
-.item .sc-ion-label-md-h {
+.item ion-label {
   overflow: visible;
   white-space: pre-wrap;
 }

@@ -11,10 +11,8 @@
 
 <ion-content class="outer-content">
   <ion-list *ngIf="stagedItems">
-    <ion-item-group
-      *ngFor="let stagedItem of stagedItems; let last = last"
-      [class.last-item]="last"
-    >
+    <ion-item-group *ngFor="let stagedItem of stagedItems; let first = first; let last = last" [class.last-item]="last"
+      [class.first-item]="first">
       <ion-item>
         <ion-label>
           <h2>
@@ -43,4 +41,15 @@
       </ion-item>
     </ion-item-group>
   </ion-list>
+
+  <ion-grid class="queue-empty ion-justify-content-center" *ngIf="!stagedItems || stagedItems.length == 0">
+    <ion-row class="ion-justify-content-center">
+      <ion-col>
+        <ion-text color="medium">
+          <p>You currently have no changes<br /> staged offline.</p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
