@@ -19,6 +19,12 @@ ion-item {
     --padding-end: 16px;
 }
 
+.menu {
+    ion-item {
+        --padding-end: 0;
+    }
+}
+
 .last-item {
     ion-item {
         --border-color: transparent;
