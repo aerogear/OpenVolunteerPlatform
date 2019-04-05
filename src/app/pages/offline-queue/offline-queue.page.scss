@@ -2,6 +2,10 @@
     padding-bottom: 0;
 }
 
+.list-md {
+    padding: 0;
+}
+
 .item .sc-ion-label-md-h {
     overflow: visible;
     white-space: pre-wrap;
@@ -17,4 +21,15 @@ ion-badge {
     vertical-align: middle;
     white-space: pre-line;
     text-align: left;
+}
+
+.queue-empty {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    p {
+        line-height: 150%
+    }
 }
