@@ -9,6 +9,13 @@ type Task {
   version: Int
   title: String!
   description: String!
+  status: TaskStatus!
+}
+
+enum TaskStatus {
+  OPEN
+  ASSIGNED
+  COMPLETE
 }
 
 type Query {
@@ -18,7 +25,7 @@ type Query {
 
 type Mutation {
   createTask(title: String!, description: String!): Task
-  updateTask(id: ID!, title: String, description: String, version: Int!): Task
+  updateTask(id: ID!, title: String, description: String, version: Int!, status: TaskStatus): Task
   deleteTask(id: ID!): ID
 }
 `
@@ -48,7 +55,8 @@ const taskResolvers = {
       console.log("Create", args)
       const result = await context.db('tasks').insert({
         ...args,
-        version: 1
+        version: 1,
+        status: 'OPEN'
       }).returning('*').then((rows) => rows[0])
       // TODO context helper for publishing subscriptions in SDK?
       // TODO move from passing pushClient in context and use boolean to push or not here

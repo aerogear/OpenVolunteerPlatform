@@ -1,12 +1,13 @@
 import gql from 'graphql-tag';
 
 export const ADD_TASK = gql`
-mutation createTask($description: String!, $title: String!){
-    createTask(description: $description, title: $title){
+mutation createTask($description: String!, $title: String!, $status: TaskStatus){
+    createTask(description: $description, title: $title, status: $status){
       id
       title
       description
       version
+      status
     }
   }
 `;
@@ -18,6 +19,7 @@ export const GET_TASKS = gql`
       title
       description
       version
+      status
     }
 }
 `;
@@ -29,12 +31,13 @@ mutation deleteTask($id: ID!){
 `;
 
 export const UPDATE_TASK = gql`
-mutation updateTask($description: String, $id: ID!, $title: String, $version: Int!) {
-  updateTask(description: $description, id: $id, title: $title, version: $version) {
+mutation updateTask($description: String, $id: ID!, $title: String, $version: Int!, $status: TaskStatus) {
+  updateTask(description: $description, id: $id, title: $title, version: $version, status: $status) {
     id
     title
     description
     version
+    status
   }
 }
 `;

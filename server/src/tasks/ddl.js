@@ -9,6 +9,7 @@ async function createTasksTables(db) {
             // Required for conflict resolution
             table.integer('version')
             table.increments('id')
+            table.string('status')
         })
     }
 }

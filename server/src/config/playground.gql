@@ -3,6 +3,7 @@ fragment TaskFields on Task {
     version
     title
     description
+    status
 }
 
 
@@ -13,7 +14,7 @@ mutation createTask {
 }
 
 mutation updateTask {
-  updateTask(id: "1", title: "Task2", version: 1) {
+  updateTask(id: "1", title: "Task2", version: 1, status: ASSIGNED) {
     ...TaskFields
   }
 }
