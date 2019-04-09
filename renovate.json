@@ -1,7 +1,7 @@
 {
   "extends": [
     "config:base",
-    ":pinVersions",
+    ":pinVersions"
   ],
   "groupName":"all",
   "ignoreDeps": ["typescript", "ts-node"]
