@@ -9,7 +9,7 @@ type Task {
   version: Int
   title: String!
   description: String!
-  status: TaskStatus!
+  status: TaskStatus
 }
 
 enum TaskStatus {
@@ -24,7 +24,7 @@ type Query {
 }
 
 type Mutation {
-  createTask(title: String!, description: String!): Task
+  createTask(title: String!, description: String!, status: TaskStatus): Task
   updateTask(id: ID!, title: String, description: String, version: Int!, status: TaskStatus): Task
   deleteTask(id: ID!): ID
 }

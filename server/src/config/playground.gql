@@ -8,13 +8,13 @@ fragment TaskFields on Task {
 
 
 mutation createTask {
-  createTask(title: "Task1" description: "test") {
+  createTask(title: "Task1", description: "test", status: OPEN) {
      ...TaskFields
   }
 }
 
 mutation updateTask {
-  updateTask(id: "1", title: "Task2", version: 1, status: ASSIGNED) {
+  updateTask(id: "1", title: "Task2", version: 1) {
     ...TaskFields
   }
 }

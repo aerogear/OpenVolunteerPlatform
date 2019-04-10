@@ -28,6 +28,7 @@ export class UpdateItemPage implements OnInit {
         this.edit_item_form = this.formBuilder.group({
           title: new FormControl(this.item.title, Validators.required),
           description: new FormControl(this.item.description, Validators.required),
+          status: new FormControl(this.item.status, Validators.required)
         });
       }
     );
@@ -42,7 +43,8 @@ export class UpdateItemPage implements OnInit {
       id: this.item.id,
       version: Number(this.item.version), // For some reason it's a string
       title: value.title,
-      description: value.description
+      description: value.description,
+      status: value.status
     };
     this.itemService.updateItem(newValues).then(result => {
       console.log('Result from server for mutation', result);

@@ -8,6 +8,7 @@ import { VoyagerService } from '../../services/sync/voyager.service';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 
+
 @Component({
   selector: 'app-page-task',
   templateUrl: 'task.page.html',
@@ -16,6 +17,7 @@ import { AuthService } from '../../services/auth.service';
 
 export class TaskPage implements OnInit {
 
+  item: Task;
   items: Array<Task>;
   online: boolean;
   queue: number;
@@ -98,6 +100,27 @@ export class TaskPage implements OnInit {
     this.itemService.deleteItem(item).then(result => {
       console.log('Result from delete mutation', result);
       this.presentToast('Item deleted');
+    });
+  }
+
+  markItemStatus(item) {
+    let newValues;
+
+    if (item.status === 'COMPLETE') {
+      newValues = {
+        ...item,
+        status: 'OPEN'
+      };
+    } else {
+      newValues = {
+        ...item,
+        status: 'COMPLETE'
+      };
+    }
+    this.itemService.updateItem(newValues).then(result => {
+      console.log('Result from server for mutation', result);
+    }).catch((error) => {
+      console.error(error);
     });
   }
 

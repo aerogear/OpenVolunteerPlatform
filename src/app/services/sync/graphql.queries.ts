@@ -51,6 +51,7 @@ export const TASK_MUTATED_SUBSCRIPTION = gql`
         title
         description
         version
+        status
       }
     }
   }
