@@ -25,7 +25,6 @@ export class NewItemPage implements OnInit {
     this.new_item_form = this.formBuilder.group({
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
-      status: new FormControl('', Validators.required)
     });
   }
 
@@ -34,7 +33,7 @@ export class NewItemPage implements OnInit {
   }
 
   createItem(value) {
-    this.itemService.createItem(value.title, value.description, value.status).then(result => {
+    this.itemService.createItem(value.title, value.description).then(result => {
       console.log('Got result from server for mutation', result);
     }).catch((error) => {
       console.error(error);

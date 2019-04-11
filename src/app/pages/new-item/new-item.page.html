@@ -17,14 +17,7 @@
       <ion-label color="primary" position="floating">Description</ion-label>
       <ion-input type="text" formControlName="description" required></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label color="primary" position="floating">Status</ion-label>
-      <ion-select formControlName="status">
-        <ion-select-option value="OPEN">Open</ion-select-option>
-        <ion-select-option value="COMPLETE">Complete</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-button class="submit-btn" expand="block" type="submit" [disabled]="!new_item_form.valid">Create</ion-button>
+      <ion-button class="submit-btn" expand="block" type="submit" [disabled]="!new_item_form.valid">Create</ion-button>
   </form>
 
 </ion-content>
