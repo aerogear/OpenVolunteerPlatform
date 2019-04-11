@@ -20,5 +20,42 @@ ion-badge {
 }
 
 ion-footer div {
+<<<<<<< HEAD
     margin: 10px;
+=======
+  margin: 10px;
+}
+
+.create-button {
+  margin-left:15px;
+  z-index: 9999;
+}
+
+.trash-button {
+  margin-left:5px;
+  z-index: 9999;
+}
+
+.network-badge {
+  float: right;
+  height: calc(2.1em + 4px);
+  font-size: 13px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  line-height: calc(2.1em + 4px);
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0.9em;
+  --padding-end: 0.9em;
+}
+
+.offline-queue-button {
+  -webkit-margin-start: 0px;
+  margin-inline-start: 0px;
+}
+
+.offline-queue-badge {
+  margin-left: -7px;
+  vertical-align: top;
+>>>>>>> 4e2ed76... fix: button z-index
 }
