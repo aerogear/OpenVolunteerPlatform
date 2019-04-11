@@ -105,7 +105,6 @@ export class TaskPage implements OnInit {
 
   markItemStatus(item) {
     let newValues;
-
     if (item.status === 'COMPLETE') {
       newValues = {
         ...item,
@@ -122,6 +121,13 @@ export class TaskPage implements OnInit {
     }).catch((error) => {
       console.error(error);
     });
+  }
+
+  isChecked(item) {
+    if (item.status === 'COMPLETE') {
+      return true;
+    }
+    return false;
   }
 
   async presentToast(message) {

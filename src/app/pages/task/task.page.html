@@ -29,7 +29,7 @@
 >>>>>>> Add status
 >>>>>>> 1c14522... Add status
         <ion-item>
-          <ion-checkbox (click)="markItemStatus(item)" [checked]="item.status === 'COMPLETE'" class="ion-margin-end ion-align-items-start"></ion-checkbox>
+          <ion-checkbox (click)="markItemStatus(item)" [checked]="isChecked(item)" class="ion-margin-end ion-align-items-start"></ion-checkbox>
           <ion-label>
             <h2>{{ item.title }}</h2>
             <p>
