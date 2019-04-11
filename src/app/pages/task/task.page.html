@@ -17,6 +17,7 @@
   <div *ngIf="items" class="item-container">
     <ion-list>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <ion-item-group *ngFor="let item of items; let last = last" 
       [class.last-item]="last">
 =======
@@ -28,6 +29,10 @@
         [class.first-item]="first">
 >>>>>>> Add status
 >>>>>>> 1c14522... Add status
+=======
+      <ion-item-group *ngFor="let item of items; let first = first; let last = last" [class.first-item]="first"
+        [class.last-item]="last">
+>>>>>>> c006154... fix: small fix
         <ion-item>
           <ion-checkbox (click)="markItemStatus(item)" [checked]="isChecked(item)" class="ion-margin-end ion-align-items-start"></ion-checkbox>
           <ion-label>
@@ -44,14 +49,16 @@
             <p>
               <ion-badge color="primary">
 <<<<<<< HEAD
+<<<<<<< HEAD
                 Server version: {{ item.version }}</ion-badge>
 >>>>>>> 1c14522... Add status
             </ion-note>
 =======
+=======
+>>>>>>> c006154... fix: small fix
                 Server version: {{ item.version }}
               </ion-badge>
             </p>
->>>>>>> Add status
           </ion-label>
           <!--<ion-toggle item-end style="margin-left:5px;" color="secondary"></ion-toggle>-->
           <ion-button item-start style="margin-left:15px;" color="primary" fill="outline" (click)="goToItem(item)">

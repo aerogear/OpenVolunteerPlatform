@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { ItemService } from '../../services/sync/item.service';
-import { Task } from '../../services/sync/types';
 
 @Component({
   selector: 'new-item',
@@ -12,7 +11,6 @@ import { Task } from '../../services/sync/types';
 })
 export class NewItemPage implements OnInit {
 
-  item: Task;
   new_item_form: FormGroup;
 
   constructor(
@@ -24,7 +22,7 @@ export class NewItemPage implements OnInit {
   ngOnInit() {
     this.new_item_form = this.formBuilder.group({
       title: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required)
     });
   }
 
