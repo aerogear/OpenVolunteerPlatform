@@ -37,6 +37,7 @@ const routes: Routes = [
   { path: 'security', loadChildren: './pages/security/security.module#SecurityPageModule' },
   { path: 'files', loadChildren: './pages/files/files.module#FilesPageModule' },
   { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
+  { path: 'offline-queue', loadChildren: './pages/offline-queue/offline-queue.module#OfflineQueuePageModule' },
 ];
 @NgModule({
   imports: [

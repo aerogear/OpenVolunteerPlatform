@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tasks"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Offline queue
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="outer-content">
+  <ion-list *ngIf="stagedItems">
+    <ion-item-group *ngFor="let stagedItem of stagedItems; let first = first; let last = last" [class.last-item]="last"
+      [class.first-item]="first">
+      <ion-item>
+        <ion-label>
+          <h2>
+            Mutation type:
+            <ion-badge color="primary">
+              {{ stagedItem.operationName }}
+            </ion-badge>
+          </h2>
+          <div *ngIf="stagedItem.variables.title">
+            <ion-note item-start>
+              Title: {{ stagedItem.variables.title }}
+            </ion-note>
+            <br />
+          </div>
+          <div *ngIf="stagedItem.variables.description">
+            <ion-note item-start>
+              Description: {{ stagedItem.variables.description }}
+            </ion-note>
+            <br />
+          </div>
+          <div *ngIf="stagedItem.variables.id">
+            <ion-note item-start> Id: {{ stagedItem.variables.id }} </ion-note>
+            <br />
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+
+  <ion-grid class="queue-empty ion-justify-content-center" *ngIf="!stagedItems || stagedItems.length == 0">
+    <ion-row class="ion-justify-content-center">
+      <ion-col>
+        <ion-text color="medium">
+          <p>You currently have no changes<br /> staged offline.</p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

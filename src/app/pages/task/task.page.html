@@ -34,7 +34,7 @@
           <ion-button item-start style="margin-left:15px;" color="primary" fill="outline" (click)="goToItem(item)">
             <ion-icon name="create"></ion-icon>
           </ion-button>
-          <ion-button item-end style="margin-left:5px;" color="primary" fill="outline" (click)="deleteItem(item)">
+          <ion-button item-end class="trash-button" color="primary" fill="outline" (click)="deleteItem(item)">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>
@@ -53,5 +53,7 @@
           queue
         }}</ion-badge>
     </ion-label>
+    <ion-badge class="network-badge" color="secondary" *ngIf="online">Online</ion-badge>
+    <ion-badge class="network-badge" color="primary" *ngIf="!online">Offline</ion-badge>
   </div>
 </ion-footer>

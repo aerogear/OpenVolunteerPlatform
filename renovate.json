@@ -1,8 +1,8 @@
 {
   "extends": [
     "config:base",
-    ":pinVersions",
-    ":assignee(wtrocki)"
+    ":pinVersions"
   ],
-  "groupName":"all"
+  "groupName":"all",
+  "ignoreDeps": ["typescript", "ts-node", "core-js"]
 }
