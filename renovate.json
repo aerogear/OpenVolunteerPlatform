@@ -4,5 +4,5 @@
     ":pinVersions"
   ],
   "groupName":"all",
-  "ignoreDeps": ["typescript", "ts-node"]
+  "ignoreDeps": ["typescript", "ts-node", "core-js"]
 }
