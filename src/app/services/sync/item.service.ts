@@ -107,4 +107,11 @@ export class ItemService {
     });
   }
 
+  filterItems(items, searchTerm) {
+    return items.filter((item) => {
+      const itemContent = item['title'] + item['description'];
+      return itemContent.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+    });
+  }
+
 }

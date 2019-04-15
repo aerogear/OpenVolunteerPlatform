@@ -9,6 +9,7 @@ export class OfflineQueuePage implements OnInit {
   interval: number;
   constructor() { }
   stagedItems: any;
+  Object = Object;
 
   async ngOnInit() {
     this.getData();
@@ -26,9 +27,7 @@ export class OfflineQueuePage implements OnInit {
   private fetchData() {
     const tempItems = JSON.parse(window.localStorage.getItem('offline-mutation-store'));
     if (tempItems.length > 0) {
-      this.stagedItems = tempItems.map(taskItem => {
-        return taskItem.operation;
-      });
+      this.stagedItems = tempItems.map(taskItem => taskItem.operation );
     } else {
       this.stagedItems = [];
     }
