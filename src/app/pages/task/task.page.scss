@@ -29,10 +29,12 @@ ion-footer div {
 
 .create-button {
   margin-left:15px;
+  z-index: 9999;
 }
 
 .trash-button {
   margin-left:5px;
+  z-index: 9999;
 }
 
 .network-badge {

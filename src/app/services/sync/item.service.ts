@@ -75,7 +75,8 @@ export class ItemService {
     const item = {
       'title': title,
       'description': description,
-      'version': 1
+      'version': 1,
+      'status': 'OPEN'
     };
     return this.apollo.mutate<Task>({
       mutation: ADD_TASK,

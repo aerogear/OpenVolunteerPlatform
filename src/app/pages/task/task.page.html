@@ -13,23 +13,23 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content class="outer-content">
-  <div *ngIf="items">
+  <div *ngIf="items" class="item-container">
     <ion-list>
       <ion-item-group *ngFor="let item of items; let first = first; let last = last" [class.first-item]="first"
         [class.last-item]="last">
         <ion-item>
+          <ion-checkbox (click)="markItemStatus(item)" [checked]="isChecked(item)" class="ion-margin-end ion-align-items-start"></ion-checkbox>
           <ion-label>
             <h2>{{ item.title }}</h2>
-            <ion-note item-start>
+            <p>
               {{ item.description }}
-            </ion-note>
-            <br />
-            <ion-note>
+            </p>
+            <p>
               <ion-badge color="primary">
-                Server version: {{ item.version }}</ion-badge>
-            </ion-note>
+                Server version: {{ item.version }}
+              </ion-badge>
+            </p>
           </ion-label>
           <ion-button item-start class="create-button" color="primary" fill="outline" (click)="goToItem(item)">
             <ion-icon name="create"></ion-icon>
@@ -50,8 +50,8 @@
         Offline changes
       </ion-button>
       <ion-badge color="primary" class="offline-queue-badge">{{
-        queue
-      }}</ion-badge>
+          queue
+        }}</ion-badge>
     </ion-label>
     <ion-badge class="network-badge" color="secondary" *ngIf="online">Online</ion-badge>
     <ion-badge class="network-badge" color="primary" *ngIf="!online">Offline</ion-badge>
