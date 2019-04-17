@@ -137,8 +137,8 @@ export class TaskPage implements OnInit {
   }
 
   checkCase(itemCase, item) {
-    if (itemCase.case === 'complete') {
-      if (item.status === 'COMPLETE') {
+    if (itemCase.case === 'open') {
+      if (item.status === 'OPEN') {
         return true;
       }
       return false;
