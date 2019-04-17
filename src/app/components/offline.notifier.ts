@@ -11,11 +11,11 @@ export class OfflineNotifier {
 
   protected handleOfflineMutation(error: any) {
     if (error.networkError && error.networkError.offline) {
-      this.presentToast('Added Task to offline queue');
+      this.presentToast('New object added to offline queue');
       const offlineError = error.networkError;
       offlineError.watchOfflineChange().then((result) => {
         console.log('Offline change replicated', result);
-        this.presentToast(`New task replicated to server`);
+        this.presentToast('New object replicated to server');
       }).catch(err => {
         console.log('Error when replicating change to server', err);
       });
@@ -25,7 +25,7 @@ export class OfflineNotifier {
   private async presentToast(message) {
     const toast = await this.toastController.create({
       message: message,
-      duration: 4000
+      duration: 3000
     });
     toast.present();
   }
