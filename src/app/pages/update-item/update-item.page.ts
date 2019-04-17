@@ -3,13 +3,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ItemService } from '../../services/sync/item.service';
 import { Task } from '../../services/sync/types';
+import { ToastController } from '@ionic/angular';
+import { OfflineNotifier } from '../../components/offline.notifier';
 
 @Component({
   selector: 'update-item',
   templateUrl: './update-item.page.html',
   styleUrls: ['./update-item.page.scss'],
 })
-export class UpdateItemPage implements OnInit {
+export class UpdateItemPage extends OfflineNotifier implements OnInit {
 
   item: Task;
   edit_item_form: FormGroup;
@@ -18,8 +20,11 @@ export class UpdateItemPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public formBuilder: FormBuilder,
-    private itemService: ItemService
-  ) { }
+    private itemService: ItemService,
+    toastController: ToastController
+  ) {
+    super(toastController);
+  }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -47,9 +52,10 @@ export class UpdateItemPage implements OnInit {
     };
     this.itemService.updateItem(newValues).then(result => {
       console.log('Result from server for mutation', result);
+      this.goBack();
     }).catch((error) => {
-      console.error(error);
+      this.handleOfflineMutation(error);
+      this.goBack();
     });
-    this.goBack();
   }
 }
