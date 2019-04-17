@@ -36,7 +36,7 @@ export class TaskPage implements OnInit {
     public auth: AuthService
   ) {
     this.items = [];
-    this.cases = [{ case: 'all' }, { case: 'complete'}];
+    this.cases = [{ case: 'all' }, { case: 'open'}];
   }
 
   async ngOnInit() {

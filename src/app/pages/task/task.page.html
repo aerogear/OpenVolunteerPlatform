@@ -27,15 +27,17 @@
 
 <ion-content class="outer-content">
   <ion-toolbar *ngIf="items" class="searchbar-container">
-    <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" (ionClear)="resetChanges()"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" (ionClear)="resetChanges()">
+    </ion-searchbar>
   </ion-toolbar>
 
   <div [ngSwitch]="selectedSegment">
     <div *ngFor="let case of cases">
       <ion-list *ngSwitchCase="case.case">
-        <ion-item-group *ngFor="let item of items; let last = last"
-          [class.last-item]="last">
+        <ion-item-group *ngFor="let item of items; let last = last" [class.last-item]="last">
           <ion-item *ngIf="checkCase(case, item)">
+            <ion-checkbox (click)="markItemStatus(item)" [checked]="isChecked(item)"
+              class="ion-margin-end ion-align-items-start"></ion-checkbox>
             <ion-label>
               <h2>{{ item.title }}</h2>
               <ion-note item-start>
