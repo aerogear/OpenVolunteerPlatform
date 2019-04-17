@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 /**
  * Helper service to show how SDK tracking the network status on different platforms.
  */
+// TODO - should be part of the SDK
 export class NetworkService {
     public networkInterface: NetworkStatus;
     constructor() {
