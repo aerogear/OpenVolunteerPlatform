@@ -10,6 +10,7 @@ exports.config = {
     './src/**/*.e2e-spec.ts'
   ],
   capabilities: {
+    project: 'ionic-showcase',
     browserName: '',
     device: 'Google Pixel',
     app: process.env.BROWSERSTACK_APP,
