@@ -82,6 +82,40 @@ jobs:
           root: platforms/android/app/build/outputs/apk/debug/
           paths:
             - app-debug.apk
+  e2e-android:
+    docker:
+      - image: circleci/node:carbon
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore node modules cache
+          keys: 
+            - node-modules-{{ .Branch }}-{{ checksum "package.json" }}
+            - node-modules-{{ .Branch }}-
+            - node-modules-
+      - run:
+          name: Install node modules
+          command: npm install
+      - save_cache:
+          name: Save node modules cache
+          key: node-modules-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - restore_cache:
+          name: Restoring cordova plugins cache
+          keys: 
+            - cordova-plugins-{{ .Branch }}-{{ checksum "config.xml" }}
+            - cordova-plugins-{{ .Branch }}-
+            - cordova-plugins-
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Run E2E tests
+          command: |
+            export BROWSERSTACK_APP="$(curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_KEY" \
+              -X POST https://api-cloud.browserstack.com/app-automate/upload \
+              -F "file=@/tmp/workspace/app-debug.apk" | cut -d '"' -f 4)"
+            npm run e2e
   publish_example_server_container:
     docker:
       # image for building docker containers
@@ -104,6 +138,9 @@ workflows:
             tags:
               only: /.*/
       - build-android
+      - e2e-android:
+          requires:
+            - build-android
       - publish_example_server_container:
           filters:
             tags:
