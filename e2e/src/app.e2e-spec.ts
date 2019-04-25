@@ -1,14 +1,7 @@
-import { AppPage } from './app.po';
+import { element, by } from 'protractor';
 
-describe('new App', () => {
-  let page: AppPage;
-
-  beforeEach(() => {
-    page = new AppPage();
-  });
-
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getParagraphText()).toContain('The world is your oyster.');
+describe('App', () => {
+  it('AeroGear logo should be visible', () => {
+    expect(element(by.css('ion-img.logo')).isDisplayed()).toBeTruthy();
   });
 });
