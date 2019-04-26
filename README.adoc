@@ -1,4 +1,4 @@
-= AeroGear Data Sync Showcase Application
+= AeroGear Showcase Application
 
 Example application using AeroGear Mobile Services.
 
@@ -55,9 +55,12 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 
 . Log into your OpenShift instance with the `oc login` command.
 . Deploy the Server with PostgreSQL
+Templates can be found in https://github.com/aerogear/datasync-deployment repository.
+
+
 +
 ```shell
-oc new-app -f server/openshift-template.yml
+oc new-app -f datasync-showcase.yml
 ```
 
 . To deprovision all of the resources from the template, run
