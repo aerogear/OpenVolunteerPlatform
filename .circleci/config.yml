@@ -137,7 +137,12 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - build-android
+      - build-android:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only: master
       - e2e-android:
           requires:
             - build-android
@@ -146,5 +151,4 @@ workflows:
             tags:
               only: /.*/
             branches:
-              only:
-                - master
+              only: master
