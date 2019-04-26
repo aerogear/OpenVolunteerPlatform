@@ -211,16 +211,16 @@ ajv@^6.5.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-altair-express-middleware@2.1.6:
-  version "2.1.6"
-  resolved "https://registry.yarnpkg.com/altair-express-middleware/-/altair-express-middleware-2.1.6.tgz#d061050218b6eef6ac300a1ac4248de2135445d0"
+altair-express-middleware@2.1.7:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/altair-express-middleware/-/altair-express-middleware-2.1.7.tgz#249be050b374fbddda4cf54220670762f6df888d"
   dependencies:
-    altair-static "^2.1.6"
+    altair-static "^2.1.7"
     express "^4.16.2"
 
-altair-static@^2.1.6:
-  version "2.1.6"
-  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-2.1.6.tgz#b4da73d721e181a1f1a60e0c8ab376ca77a56418"
+altair-static@^2.1.7:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-2.1.7.tgz#7be71363d0f3f44ee9245741f64b15763b846aeb"
 
 ansi-align@^2.0.0:
   version "2.0.0"
@@ -2300,9 +2300,9 @@ pg-types@~2.0.0:
     postgres-date "~1.0.0"
     postgres-interval "^1.1.0"
 
-pg@7.9.0:
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/pg/-/pg-7.9.0.tgz#04f0024d810544463f47dbb5aada2486aa7dcc36"
+pg@7.10.0:
+  version "7.10.0"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-7.10.0.tgz#2a359ee29ed1971344ac7f44317a9d1bcd80a8ff"
   dependencies:
     buffer-writer "2.0.0"
     packet-reader "1.0.0"
