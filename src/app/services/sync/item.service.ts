@@ -8,7 +8,7 @@ import {
 } from './graphql.queries';
 import { AllTasks, Task, MutationType } from './types';
 import { VoyagerService } from './voyager.service';
-import { VoyagerClient, createOptimisticResponse, DataSyncConfig } from '@aerogear/voyager-client';
+import { VoyagerClient, createOptimisticResponse, OfflineStore } from '@aerogear/voyager-client';
 import { taskCacheUpdates } from './cache.updates';
 
 @Injectable({
@@ -17,11 +17,11 @@ import { taskCacheUpdates } from './cache.updates';
 export class ItemService {
 
   private readonly apollo: VoyagerClient;
-  private voyagerConfig: DataSyncConfig;
+  private offlineStore: OfflineStore;
 
   constructor(aeroGear: VoyagerService) {
     this.apollo = aeroGear.apolloClient;
-    this.voyagerConfig = aeroGear.voyagerConfig;
+    this.offlineStore = aeroGear.offlineStore;
   }
 
   /**
@@ -116,14 +116,7 @@ export class ItemService {
     });
   }
 
-  async getOfflineItems() {
-    const stored = await this.voyagerConfig.storage.getItem(this.voyagerConfig.mutationsQueueName);
-    let offlineData;
-    if (stored) {
-      offlineData = JSON.parse(stored.toString());
-    } else {
-      offlineData = [];
-    }
-    return offlineData;
+  getOfflineItems() {
+    return this.offlineStore.getOfflineData();
   }
 }
