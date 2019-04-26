@@ -1,6 +1,6 @@
 import {
-  createClient, VoyagerClient, DataSyncConfig,
-  OfflineQueueListener, ConflictListener, AuthContextProvider
+  createClient, VoyagerClient, Voyager, DataSyncConfig,
+  OfflineQueueListener, OfflineStore, ConflictListener, AuthContextProvider
 } from '@aerogear/voyager-client';
 import { Injectable, Injector } from '@angular/core';
 import { OpenShiftService } from '../openshift.service';
@@ -35,6 +35,7 @@ export class VoyagerService {
 
   private _apolloClient: VoyagerClient;
   private listener: OfflineQueueListener;
+  private _voyagerConfig: DataSyncConfig;
 
   constructor(private openShift: OpenShiftService, public alertCtrl: AlertController, public injector: Injector) {
   }
@@ -45,6 +46,10 @@ export class VoyagerService {
 
   get apolloClient(): VoyagerClient {
     return this._apolloClient;
+  }
+
+  get voyagerConfig(): DataSyncConfig {
+    return this._voyagerConfig;
   }
 
   public async createApolloClient() {
@@ -82,6 +87,8 @@ export class VoyagerService {
     if (authService.isEnabled()) {
       options.authContextProvider = authService.getAuthContextProvider();
     }
-    this._apolloClient = await createClient(options);
+    const voyager = await createClient(options);
+    this._apolloClient = voyager.client;
+    this._voyagerConfig = voyager.config;
   }
 }

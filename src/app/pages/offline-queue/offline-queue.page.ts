@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ItemService } from '../../services/sync/item.service';
 
 @Component({
   selector: 'app-offline-queue',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OfflineQueuePage implements OnInit {
   interval: number;
-  constructor() { }
+  constructor(private itemService: ItemService) { }
   stagedItems: any;
   Object = Object;
 
@@ -24,8 +25,8 @@ export class OfflineQueuePage implements OnInit {
     this.interval = window.setInterval(this.fetchData.bind(this), 2000);
   }
 
-  private fetchData() {
-    const tempItems = JSON.parse(window.localStorage.getItem('offline-mutation-store'));
+  private async fetchData() {
+    const tempItems = await this.itemService.getOfflineItems();
     if (tempItems.length > 0) {
       this.stagedItems = tempItems.map(taskItem => taskItem.operation );
     } else {
