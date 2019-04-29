@@ -91,6 +91,6 @@ export class VoyagerService {
 
     const offlineClient = new OfflineClient(options);
     this._offlineStore = offlineClient.getOfflineStore();
-    this._apolloClient = await offlineClient.createClient();
+    this._apolloClient = await offlineClient.init();
   }
 }
