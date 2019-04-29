@@ -4,15 +4,20 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
 
 exports.config = {
+  seleniumAddress: 'http://hub.browserstack.com/wd/hub',
   allScriptsTimeout: 11000,
   specs: [
     './src/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    'browserName': 'chrome'
+    project: 'ionic-showcase',
+    browserName: '',
+    device: 'Google Pixel',
+    app: process.env.BROWSERSTACK_APP,
+    autoWebview: true,
+    'browserstack.user': process.env.BROWSERSTACK_USER,
+    'browserstack.key': process.env.BROWSERSTACK_KEY,
   },
-  directConnect: true,
-  baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
