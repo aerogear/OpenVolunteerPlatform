@@ -8,7 +8,7 @@ import {
 } from './graphql.queries';
 import { AllTasks, Task, MutationType } from './types';
 import { VoyagerService } from './voyager.service';
-import { VoyagerClient, createOptimisticResponse, OfflineStore } from '@aerogear/voyager-client';
+import { ApolloOfflineClient, createOptimisticResponse, OfflineStore } from '@aerogear/voyager-client';
 import { taskCacheUpdates } from './cache.updates';
 
 @Injectable({
@@ -16,7 +16,7 @@ import { taskCacheUpdates } from './cache.updates';
 })
 export class ItemService {
 
-  private readonly apollo: VoyagerClient;
+  private readonly apollo: ApolloOfflineClient;
   private offlineStore: OfflineStore;
 
   constructor(aeroGear: VoyagerService) {

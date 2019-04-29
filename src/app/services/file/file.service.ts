@@ -4,7 +4,7 @@ import {
   UPLOAD_FILE
 } from './graphql.queries';
 import { VoyagerService } from '../sync/voyager.service';
-import { VoyagerClient, createOptimisticResponse } from '@aerogear/voyager-client';
+import { ApolloOfflineClient } from '@aerogear/voyager-client';
 import { FileEntries, FileEntry } from './types';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { FileEntries, FileEntry } from './types';
 })
 export class FileService {
 
-  private readonly apollo: VoyagerClient;
+  private readonly apollo: ApolloOfflineClient;
 
   constructor(aeroGear: VoyagerService) {
     this.apollo = aeroGear.apolloClient;

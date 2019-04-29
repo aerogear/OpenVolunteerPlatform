@@ -1,5 +1,5 @@
 import {
-  VoyagerClient, DataSyncConfig,
+  ApolloOfflineClient, DataSyncConfig,
   OfflineQueueListener, ConflictListener, OfflineClient, OfflineStore
 } from '@aerogear/voyager-client';
 import { Injectable, Injector } from '@angular/core';
@@ -33,10 +33,9 @@ class ConflictLogger implements ConflictListener {
  */
 export class VoyagerService {
 
-  private _apolloClient: VoyagerClient;
+  private _apolloClient: ApolloOfflineClient;
   private _offlineStore: OfflineStore;
   private listener: OfflineQueueListener;
-  private _voyagerConfig: DataSyncConfig;
 
   constructor(private openShift: OpenShiftService, public alertCtrl: AlertController, public injector: Injector) {
   }
@@ -45,7 +44,7 @@ export class VoyagerService {
     this.listener = listener;
   }
 
-  get apolloClient(): VoyagerClient {
+  get apolloClient(): ApolloOfflineClient {
     return this._apolloClient;
   }
 
@@ -90,7 +89,7 @@ export class VoyagerService {
     }
 
     const offlineClient = new OfflineClient(options);
-    this._offlineStore = offlineClient.getOfflineStore();
+    this._offlineStore = offlineClient.offlineStore;
     this._apolloClient = await offlineClient.init();
   }
 }
