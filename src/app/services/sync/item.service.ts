@@ -119,4 +119,5 @@ export class ItemService {
   getOfflineItems() {
     return this.offlineStore.getOfflineData();
   }
+
 }

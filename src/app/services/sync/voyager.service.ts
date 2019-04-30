@@ -35,13 +35,8 @@ export class VoyagerService {
 
   private _apolloClient: ApolloOfflineClient;
   private _offlineStore: OfflineStore;
-  private listener: OfflineQueueListener;
 
   constructor(private openShift: OpenShiftService, public alertCtrl: AlertController, public injector: Injector) {
-  }
-
-  set queueListener(listener: OfflineQueueListener) {
-    this.listener = listener;
   }
 
   get apolloClient(): ApolloOfflineClient {
@@ -53,25 +48,9 @@ export class VoyagerService {
   }
 
   public async createApolloClient() {
-    const self = this;
-    // Provides basic info about the offline queue
-    const numberOfOperationsProvider: OfflineQueueListener = {
-      onOperationEnqueued(operation) {
-        if (self.listener) {
-          self.listener.onOperationEnqueued(operation);
-        }
-      },
-
-      queueCleared() {
-        if (self.listener) {
-          self.listener.queueCleared();
-        }
-      }
-    };
-    // Merget all cache updates functions (currently only single)
+    // Merge all cache updates functions (currently only single)
     const mergedCacheUpdates = taskCacheUpdates;
     const options: DataSyncConfig = {
-      offlineQueueListener: numberOfOperationsProvider,
       conflictListener: new ConflictLogger(this.alertCtrl),
       fileUpload: true,
       mutationCacheUpdates: mergedCacheUpdates

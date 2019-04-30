@@ -36,7 +36,7 @@ export class TaskPage implements OnInit {
     public auth: AuthService
   ) {
     this.items = [];
-    this.cases = [{ case: 'all' }, { case: 'open'}];
+    this.cases = [{ case: 'all' }, { case: 'open' }];
   }
 
   async ngOnInit() {
@@ -62,14 +62,14 @@ export class TaskPage implements OnInit {
     console.log(`Online: ${this.online}`);
     console.log(`NetworkStatus Provider: ${this.networkService.networkInterface.constructor.name}`);
     const self = this;
-    this.aerogear.queueListener = {
+    this.aerogear.apolloClient.registerOfflineEventListener({
       onOperationEnqueued() {
         self.queue = self.queue + 1;
       },
       queueCleared() {
         self.queue = 0;
       }
-    };
+    });
     this.queue = 0;
   }
 
