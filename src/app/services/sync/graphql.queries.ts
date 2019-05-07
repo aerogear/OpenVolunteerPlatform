@@ -42,17 +42,38 @@ mutation updateTask($description: String, $id: ID!, $title: String, $version: In
 }
 `;
 
-export const TASK_MUTATED_SUBSCRIPTION = gql`
-  subscription tasks {
-    tasks {
-      action
-      task {
+export const TASK_ADDED_SUBSCRIPTION = gql`
+  subscription taskAdded {
+      taskAdded {
         id
         title
         description
         version
         status
       }
-    }
+  }
+`;
+
+export const TASK_DELETED_SUBSCRIPTION = gql`
+  subscription taskDeleted {
+      taskDeleted {
+        id
+        title
+        description
+        version
+        status
+      }
+  }
+`;
+
+export const TASK_UPDATED_SUBSCRIPTION = gql`
+  subscription taskUpdated {
+      taskUpdated {
+        id
+        title
+        description
+        version
+        status
+      }
   }
 `;

@@ -10,12 +10,9 @@ export interface Task {
 export interface AllTasks {
     allTasks: Task[];
     task: Task;
-    tasks: TaskSubscription;
-}
-
-interface TaskSubscription {
-  action: MutationType;
-  task: Task;
+    taskAdded: Task;
+    taskDeleted: Task;
+    taskUpdated: Task;
 }
 
 export enum MutationType {

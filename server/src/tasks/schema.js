@@ -1,7 +1,6 @@
 const { pubSub } = require('../subscriptions')
-const { gql } = require('apollo-server')
 const { conflictHandler } = require("@aerogear/voyager-conflicts")
-const { TASKS_SUBSCRIPTION_KEY } = require("./subscriptions")
+const { TASK_ADDED, TASK_DELETED, TASK_UPDATED } = require("./subscriptions")
 
 const typeDefs = `
 type Task {
@@ -58,9 +57,10 @@ const taskResolvers = {
         version: 1,
         status: 'OPEN'
       }).returning('*').then((rows) => rows[0])
+      console.log("TASK CREATED", result)
       // TODO context helper for publishing subscriptions in SDK?
       // TODO move from passing pushClient in context and use boolean to push or not here
-      publish('CREATED', result, context.pushClient)
+      publish(TASK_ADDED, result, context.pushClient)
       return result
     },
     updateTask: async (obj, clientData, context, info) => {
@@ -82,7 +82,7 @@ const taskResolvers = {
           'id': clientData.id
         }).returning('*').then((rows) => rows[0])
 
-      publish('MUTATED', update)
+      publish(TASK_UPDATED, update)
       return update;
     },
     deleteTask: async (obj, args, context, info) => {
@@ -91,7 +91,7 @@ const taskResolvers = {
         .where('id', args.id).returning('*').then((rows) => {
           if (rows[0]) {
             const deletedId = rows[0].id
-            publish('DELETED', rows[0])
+            publish(TASK_DELETED, rows[0])
             return deletedId;
           } else {
             throw new Error(`Cannot delete object ${args.id}`);
@@ -121,12 +121,17 @@ function publish(actionType, data, pushClient) {
         console.log("Notification not sent, error received ", error)
       })
   }
-  pubSub.publish(TASKS_SUBSCRIPTION_KEY, {
-    tasks: {
-      action: actionType,
-      task: data
-    }
-  });
+  switch(actionType){
+    case(TASK_ADDED):
+      pubSub.publish(actionType, { taskAdded: data});
+      break;
+    case(TASK_DELETED):
+      pubSub.publish(actionType, { taskDeleted: data});
+      break;
+    case(TASK_UPDATED):
+      pubSub.publish(actionType, { taskUpdated: data});
+      break;
+  }
 }
 
 module.exports = {

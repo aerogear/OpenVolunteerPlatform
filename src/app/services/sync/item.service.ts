@@ -3,12 +3,15 @@ import {
   ADD_TASK,
   DELETE_TASK,
   GET_TASKS,
-  TASK_MUTATED_SUBSCRIPTION,
+  TASK_ADDED_SUBSCRIPTION,
+  TASK_DELETED_SUBSCRIPTION,
+  TASK_UPDATED_SUBSCRIPTION,
   UPDATE_TASK
 } from './graphql.queries';
-import { AllTasks, Task, MutationType } from './types';
+import { AllTasks, Task } from './types';
 import { VoyagerService } from './voyager.service';
-import { ApolloOfflineClient, createOptimisticResponse, OfflineStore } from '@aerogear/voyager-client';
+import { ApolloOfflineClient, createOptimisticResponse,
+         OfflineStore, createSubscriptionOptions, CacheOperation } from '@aerogear/voyager-client';
 import { taskCacheUpdates } from './cache.updates';
 
 @Injectable({
@@ -43,33 +46,27 @@ export class ItemService {
       fetchPolicy: 'cache-first',
       errorPolicy: 'none'
     });
-    getTasks.subscribeToMore({
-      document: TASK_MUTATED_SUBSCRIPTION,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data.tasks.task) {
-          return prev;
-        }
-        if (subscriptionData.data.tasks.action === MutationType.CREATED) {
-          const newTask = subscriptionData.data.tasks.task;
-          // don't double add the message
-          if (!prev.allTasks.find((task) => task.id === newTask.id)) {
-            return Object.assign({}, prev, {
-              allTasks: [...prev.allTasks, newTask]
-            });
-          } else {
-            return prev;
-          }
-        }
-        if (subscriptionData.data.tasks.action === MutationType.DELETED) {
-          const { id } = subscriptionData.data.tasks.task;
-          const filteredTasks = prev.allTasks.filter(item => {
-            return Number(item.id) !== Number(id);
-          });
-          prev.allTasks = filteredTasks;
-          return prev;
-        }
-      }
-    });
+    getTasks.subscribeToMore(createSubscriptionOptions(TASK_ADDED_SUBSCRIPTION, GET_TASKS, CacheOperation.ADD));
+    getTasks.subscribeToMore(createSubscriptionOptions(TASK_UPDATED_SUBSCRIPTION, GET_TASKS, CacheOperation.UPDATE));
+    getTasks.subscribeToMore(createSubscriptionOptions(TASK_DELETED_SUBSCRIPTION, GET_TASKS, CacheOperation.DELETE));
+    // getTasks.subscribeToMore({
+    //   document: TASK_ADDED_SUBSCRIPTION,
+    //   updateQuery: (prev, { subscriptionData }) => {
+    //     if (!subscriptionData.data.taskAdded) {
+    //       return prev;
+    //     }
+    //       const newTask = subscriptionData.data.taskAdded;
+    //       // don't double add the message
+    //       if (!prev.allTasks.find((task) => task.id === newTask.id)) {
+    //         return Object.assign({}, prev, {
+    //           allTasks: [...prev.allTasks, newTask]
+    //         });
+    //       } else {
+    //         return prev;
+    //       }
+
+    //   }
+    // });
     return getTasks;
   }
 

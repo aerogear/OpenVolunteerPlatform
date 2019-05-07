@@ -1,30 +1,28 @@
-const { gql } = require('apollo-server')
 const { pubSub } = require('../subscriptions')
 
-const TASKS_SUBSCRIPTION_KEY = 'tasks'
+const TASK_ADDED = 'TASK_ADDED'
+const TASK_DELETED = 'TASK_DELETED'
+const TASK_UPDATED = 'TASK_UPDATED'
 
 
 const subscriptionTypeDefs = `
 type Subscription {
-  tasks: TaskSubscription!
-}
-
-type TaskSubscription {
-  action: actionType!
-  task: Task!
-}
-
-enum actionType {
-  CREATED
-  MUTATED
-  DELETED
+  taskAdded: Task,
+  taskDeleted: Task,
+  taskUpdated: Task
 }
 `
 
 const subscriptionResolvers = {
   Subscription: {
-    tasks: {
-      subscribe: () => pubSub.asyncIterator(TASKS_SUBSCRIPTION_KEY)
+    taskAdded: {
+      subscribe: () => pubSub.asyncIterator(TASK_ADDED)
+    },
+    taskDeleted: {
+      subscribe: () => pubSub.asyncIterator(TASK_DELETED)
+    },
+    taskUpdated: {
+      subscribe: () => pubSub.asyncIterator(TASK_UPDATED)
     }
   },
 }
@@ -32,5 +30,7 @@ const subscriptionResolvers = {
 module.exports = {
   subscriptionTypeDefs,
   subscriptionResolvers,
-  TASKS_SUBSCRIPTION_KEY
+  TASK_ADDED,
+  TASK_DELETED,
+  TASK_UPDATED
 }
