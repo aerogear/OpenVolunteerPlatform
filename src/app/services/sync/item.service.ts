@@ -47,26 +47,7 @@ export class ItemService {
       errorPolicy: 'none'
     });
     getTasks.subscribeToMore(createSubscriptionOptions(TASK_ADDED_SUBSCRIPTION, GET_TASKS, CacheOperation.ADD));
-    getTasks.subscribeToMore(createSubscriptionOptions(TASK_UPDATED_SUBSCRIPTION, GET_TASKS, CacheOperation.UPDATE));
     getTasks.subscribeToMore(createSubscriptionOptions(TASK_DELETED_SUBSCRIPTION, GET_TASKS, CacheOperation.DELETE));
-    // getTasks.subscribeToMore({
-    //   document: TASK_ADDED_SUBSCRIPTION,
-    //   updateQuery: (prev, { subscriptionData }) => {
-    //     if (!subscriptionData.data.taskAdded) {
-    //       return prev;
-    //     }
-    //       const newTask = subscriptionData.data.taskAdded;
-    //       // don't double add the message
-    //       if (!prev.allTasks.find((task) => task.id === newTask.id)) {
-    //         return Object.assign({}, prev, {
-    //           allTasks: [...prev.allTasks, newTask]
-    //         });
-    //       } else {
-    //         return prev;
-    //       }
-
-    //   }
-    // });
     return getTasks;
   }
 
