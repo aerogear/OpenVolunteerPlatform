@@ -3,16 +3,18 @@ import {
   ADD_TASK,
   DELETE_TASK,
   GET_TASKS,
-  TASK_ADDED_SUBSCRIPTION,
-  TASK_DELETED_SUBSCRIPTION,
-  TASK_UPDATED_SUBSCRIPTION,
   UPDATE_TASK
 } from './graphql.queries';
 import { AllTasks, Task } from './types';
 import { VoyagerService } from './voyager.service';
-import { ApolloOfflineClient, createOptimisticResponse,
-         OfflineStore, createSubscriptionOptions, CacheOperation } from '@aerogear/voyager-client';
-import { taskCacheUpdates } from './cache.updates';
+import {
+  ApolloOfflineClient,
+  OfflineStore,
+  CacheOperation,
+  createMutationOptions,
+  subscribeToMoreHelper
+} from '@aerogear/voyager-client';
+import { subscriptionOptions } from './cache.updates';
 
 @Injectable({
   providedIn: 'root'
@@ -46,45 +48,48 @@ export class ItemService {
       fetchPolicy: 'cache-first',
       errorPolicy: 'none'
     });
-    getTasks.subscribeToMore(createSubscriptionOptions(TASK_ADDED_SUBSCRIPTION, GET_TASKS, CacheOperation.ADD));
-    getTasks.subscribeToMore(createSubscriptionOptions(TASK_DELETED_SUBSCRIPTION, GET_TASKS, CacheOperation.DELETE));
+    subscribeToMoreHelper(getTasks, subscriptionOptions);
     return getTasks;
   }
 
   createItem(title, description) {
-    const item = {
-      'title': title,
-      'description': description,
-      'version': 1,
-      'status': 'OPEN'
-    };
-    return this.apollo.mutate<Task>({
-      mutation: ADD_TASK,
-      variables: item,
-      optimisticResponse:
-        createOptimisticResponse('createTask', 'Task', item),
-      update: taskCacheUpdates.createTask
-    });
+    return this.apollo.mutate<Task>(
+      createMutationOptions({
+        mutation: ADD_TASK,
+        variables: {
+          'title': title,
+          'description': description,
+          'version': 1,
+          'status': 'OPEN'
+        },
+        updateQuery: GET_TASKS,
+        typeName: 'Task'
+      })
+    );
   }
 
   updateItem(item) {
-    return this.apollo.mutate<Task>({
-      mutation: UPDATE_TASK,
-      variables: item,
-      update: taskCacheUpdates.updateTask,
-      optimisticResponse:
-        createOptimisticResponse('updateTask', 'Task', item, false)
-    });
+    return this.apollo.mutate<Task>(
+      createMutationOptions({
+        mutation: UPDATE_TASK,
+        variables: item,
+        updateQuery: GET_TASKS,
+        typeName: 'Task',
+        operationType: CacheOperation.REFRESH
+      })
+    );
   }
 
   deleteItem(item) {
-    return this.apollo.mutate<Task>({
-      mutation: DELETE_TASK,
-      variables: { id: item.id },
-      update: taskCacheUpdates.deleteTask,
-      optimisticResponse:
-        createOptimisticResponse('deleteTask', 'Task', { id: item.id }, false)
-    });
+    return this.apollo.mutate<Task>(
+      createMutationOptions({
+        mutation: DELETE_TASK,
+        variables: item,
+        updateQuery: GET_TASKS,
+        typeName: 'Task',
+        operationType: CacheOperation.DELETE
+      })
+    );
   }
 
   filterItems(items, searchTerm) {
