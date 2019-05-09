@@ -1,7 +1,7 @@
 import { init, AeroGearApp } from '@aerogear/app';
 import { Injectable } from '@angular/core';
 
-const config = require('../../mobile-services.js');
+const config = require('../../mobile-services.json');
 
 export enum Service {
     Metrics,

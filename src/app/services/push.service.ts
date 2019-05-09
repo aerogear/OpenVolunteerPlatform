@@ -2,7 +2,7 @@ import { PushRegistration } from '@aerogear/push';
 import { Injectable } from '@angular/core';
 import { Push, PushObject } from '@ionic-native/push/ngx';
 import { ConfigurationService } from '@aerogear/core';
-const config = require('../../mobile-services.js');
+const config = require('../../mobile-services.json');
 import { Events } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
