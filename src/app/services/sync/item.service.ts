@@ -53,8 +53,7 @@ export class ItemService {
   }
 
   createItem(title, description) {
-    return this.apollo.mutate<Task>(
-      createMutationOptions({
+    return this.apollo.offlineMutation<Task>({
         mutation: ADD_TASK,
         variables: {
           'title': title,
@@ -64,31 +63,28 @@ export class ItemService {
         },
         updateQuery: GET_TASKS,
         typeName: 'Task'
-      })
-    );
+      });
   }
 
   updateItem(item) {
-    return this.apollo.mutate<Task>(
-      createMutationOptions({
+    return this.apollo.offlineMutation<Task>({
         mutation: UPDATE_TASK,
         variables: item,
         updateQuery: GET_TASKS,
         typeName: 'Task',
         operationType: CacheOperation.REFRESH
-      })
+      }
     );
   }
 
   deleteItem(item) {
-    return this.apollo.mutate<Task>(
-      createMutationOptions({
+    return this.apollo.offlineMutation<Task>({
         mutation: DELETE_TASK,
         variables: item,
         updateQuery: GET_TASKS,
         typeName: 'Task',
         operationType: CacheOperation.DELETE
-      })
+      }
     );
   }
 
