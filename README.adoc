@@ -9,6 +9,8 @@ Implementation includes:
 - Integration with AeroGear Mobile Services
 - Ionic 4 Angular frontend backed by Cordova
 - A Node.js GraphQL Server that implements a sample `Tasks` workflow
+- Authentication provided by Keycloak integration on the server and client side
+- GraphQL Subscriptions backed by an MQTT broker
 
 === GraphQL Client
 
@@ -28,11 +30,11 @@ Requirements:
 
 === Running the server
 
-. Start the PostgreSQL container
+. Start the Postgres database and the MQTT broker
 +
 ```shell
 cd ./server
-docker-compose up -d
+docker-compose up
 ```
 
 . Start the server
@@ -50,6 +52,32 @@ If Keycloak integration is enabled on the server, and the Keycloak server is run
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 ```
 ====
+
+=== Running the Server with the Keycloak Integration
+
+Follow these instructions to set up Keycloak for Authentication/Authorization.
+
+. Start Keycloak Server
++
+```shell
+npm run keycloak
+```
+
+. Configure the Keycloak Server
++
+```shell
+npm run keycloak:init
+```
+
+This command creates the necessary resources in Keycloak and prints instructions *you must follow to enable the integration.* 
+
+Follow the instructions and copy the JSON configurations to the appropriate location.
+The showcase app and server will read these configurations and the integration will be enabled when they are started.
+
+By default, two users that can log into the application are created.
+
+- username: `developer`, password: `developer`
+- username: `admin`, password: `admin`
 
 === Running the Server on OpenShift 
 

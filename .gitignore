@@ -33,4 +33,5 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 package-lock.json 
-src/mobile-services.js
+src/mobile-services.json
+server/src/config/keycloak.json
