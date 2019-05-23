@@ -95,7 +95,7 @@ export class PushService {
 
     // Invokes the UPS registration endpoint
     PushService.pushObject.on('registration').subscribe((data) => {
-      new PushRegistration(new ConfigurationService(config)).register(data.registrationId, PUSH_ALIAS).then(() => {
+      new PushRegistration(new ConfigurationService(config)).register(data.registrationId, PUSH_ALIAS, ['ionic', 'showcase']).then(() => {
         PushService.registered = true;
         console.log('Push registration successful');
       }).catch((err) => {
