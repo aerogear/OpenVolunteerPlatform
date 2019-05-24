@@ -26,11 +26,6 @@
 </ion-toolbar>
 
 <ion-content class="outer-content">
-  <ion-toolbar *ngIf="items" class="searchbar-container">
-    <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" (ionClear)="resetChanges()">
-    </ion-searchbar>
-  </ion-toolbar>
-
   <div [ngSwitch]="selectedSegment">
     <div *ngFor="let case of cases">
       <ion-list *ngSwitchCase="case.case">

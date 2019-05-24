@@ -19,11 +19,9 @@ export class TaskPage implements OnInit {
 
   item: Task;
   items: Array<Task>;
-  itemsSearchList: Array<Task>;
   online: boolean;
   queue: number;
   errors: any;
-  searchTerm: string;
   cases: { case: string; }[];
   selectedSegment = 'all';
 
@@ -83,7 +81,6 @@ export class TaskPage implements OnInit {
       if (result && !result.errors) {
         console.log('Result from query', result);
         this.items = result.data && result.data.allTasks;
-        this.itemsSearchList = this.items;
       } else {
         console.log('error from query', result);
         this.presentToast('Cannot load data from cache');
@@ -144,15 +141,6 @@ export class TaskPage implements OnInit {
       return false;
     }
     return true;
-  }
-
-  setFilteredItems() {
-    this.resetChanges();
-    this.items = this.itemService.filterItems(this.items, this.searchTerm);
-  }
-
-  resetChanges = () => {
-    this.items = this.itemsSearchList;
   }
 
   async presentToast(message) {
