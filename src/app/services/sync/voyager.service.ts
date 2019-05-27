@@ -48,12 +48,10 @@ export class VoyagerService {
   }
 
   public async createApolloClient() {
-    // Merge all cache updates functions (currently only single)
-    const mergedCacheUpdates = taskCacheUpdates;
     const options: DataSyncConfig = {
       conflictListener: new ConflictLogger(this.alertCtrl),
       fileUpload: true,
-      mutationCacheUpdates: mergedCacheUpdates
+      mutationCacheUpdates: taskCacheUpdates
     };
     if (!this.openShift.hasSyncConfig()) {
       // Use default localhost urls when OpenShift config is missing
