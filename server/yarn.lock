@@ -79,9 +79,9 @@
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@apollographql/graphql-playground-html/-/graphql-playground-html-1.6.6.tgz#022209e28a2b547dcde15b219f0c50f47aa5beb3"
 
-"@babel/polyfill@^7.4.3":
-  version "7.4.3"
-  resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.4.3.tgz#332dc6f57b718017c3a8b37b4eea8aa6eeac1187"
+"@babel/polyfill@^7.4.4":
+  version "7.4.4"
+  resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.4.4.tgz#78801cf3dbe657844eeabf31c1cae3828051e893"
   dependencies:
     core-js "^2.6.5"
     regenerator-runtime "^0.13.2"
@@ -135,9 +135,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/bluebird@^3.5.26":
-  version "3.5.26"
-  resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.26.tgz#a38c438ae84fa02431d6892edf86e46edcbca291"
+"@types/bluebird@^3.5.27":
+  version "3.5.27"
+  resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.27.tgz#61eb4d75dc6bfbce51cf49ee9bbebe941b2cb5d0"
 
 "@types/body-parser@*", "@types/body-parser@1.17.0":
   version "1.17.0"
@@ -234,16 +234,16 @@ ajv@^6.5.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-altair-express-middleware@2.1.8:
-  version "2.1.8"
-  resolved "https://registry.yarnpkg.com/altair-express-middleware/-/altair-express-middleware-2.1.8.tgz#3265a4955dc8ea455defd219ad36c97f16d959e4"
+altair-express-middleware@2.1.9:
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/altair-express-middleware/-/altair-express-middleware-2.1.9.tgz#db828b290100e8fc321e7d8f41a06f4e4cd74166"
   dependencies:
-    altair-static "^2.1.8"
+    altair-static "^2.1.9"
     express "^4.16.2"
 
-altair-static@^2.1.8:
-  version "2.1.8"
-  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-2.1.8.tgz#161f94e352cd9ad2e6f81b70caa8f39162199c4a"
+altair-static@^2.1.9:
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-2.1.9.tgz#b865eddc3496f685678a53b257ed74db0f8f9d5c"
 
 ansi-align@^2.0.0:
   version "2.0.0"
@@ -547,9 +547,9 @@ bl@^1.2.1, bl@^1.2.2:
     readable-stream "^2.3.5"
     safe-buffer "^5.1.1"
 
-bluebird@^3.5.4:
-  version "3.5.4"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.4.tgz#d6cc661595de30d5b3af5fcedd3c0b3ef6ec5714"
+bluebird@^3.5.5:
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.5.tgz#a8d0afd73251effbbd5fe384a77d73003c17a71f"
 
 bn.js@^4.0.0, bn.js@^4.4.0:
   version "4.11.8"
@@ -746,9 +746,9 @@ color-name@1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
 
-colorette@1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/colorette/-/colorette-1.0.7.tgz#7adf43c445ee63a541b4a4aef7d13f03df1e0cc0"
+colorette@1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/colorette/-/colorette-1.0.8.tgz#421ff11c80b7414027ebed922396bc1833d1903c"
 
 combined-stream@^1.0.6, combined-stream@~1.0.6:
   version "1.0.7"
@@ -1160,9 +1160,9 @@ express-session@1.16.1:
     safe-buffer "5.1.2"
     uid-safe "~2.1.5"
 
-express@4.17.0:
-  version "4.17.0"
-  resolved "https://registry.yarnpkg.com/express/-/express-4.17.0.tgz#288af62228a73f4c8ea2990ba3b791bb87cd4438"
+express@4.17.1:
+  version "4.17.1"
+  resolved "https://registry.yarnpkg.com/express/-/express-4.17.1.tgz#4491fc38605cf51f8629d39c2b5d026f98a4c134"
   dependencies:
     accepts "~1.3.7"
     array-flatten "1.1.1"
@@ -1426,9 +1426,9 @@ get-value@^2.0.3, get-value@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/get-value/-/get-value-2.0.6.tgz#dc15ca1c672387ca76bd37ac0a395ba2042a2c28"
 
-getopts@2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/getopts/-/getopts-2.2.3.tgz#11d229775e2ec2067ed8be6fcc39d9b4bf39cf7d"
+getopts@2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/getopts/-/getopts-2.2.4.tgz#3137fe8a5fddf304904059a851bdc1c22f0f54fb"
 
 getpass@^0.1.1:
   version "0.1.7"
@@ -2047,17 +2047,17 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
 
-knex@0.16.5:
-  version "0.16.5"
-  resolved "https://registry.yarnpkg.com/knex/-/knex-0.16.5.tgz#8ba3806289a5d543dd42ed21420a31c578476993"
+knex@0.17.3:
+  version "0.17.3"
+  resolved "https://registry.yarnpkg.com/knex/-/knex-0.17.3.tgz#699e6cee9239f54e221d69bd472721ee1e63d57a"
   dependencies:
-    "@babel/polyfill" "^7.4.3"
-    "@types/bluebird" "^3.5.26"
-    bluebird "^3.5.4"
-    colorette "1.0.7"
+    "@babel/polyfill" "^7.4.4"
+    "@types/bluebird" "^3.5.27"
+    bluebird "^3.5.5"
+    colorette "1.0.8"
     commander "^2.20.0"
     debug "4.1.1"
-    getopts "2.2.3"
+    getopts "2.2.4"
     inherits "~2.0.3"
     interpret "^1.2.0"
     liftoff "3.1.0"
@@ -2067,7 +2067,7 @@ knex@0.16.5:
     tarn "^1.1.5"
     tildify "1.2.0"
     uuid "^3.3.2"
-    v8flags "^3.1.2"
+    v8flags "^3.1.3"
 
 latest-version@^3.0.0:
   version "3.1.0"
@@ -2385,9 +2385,9 @@ node-pre-gyp@^0.10.0:
     semver "^5.3.0"
     tar "^4"
 
-nodemon@1.19.0:
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.19.0.tgz#358e005549a1e9e1148cb2b9b8b28957dc4e4527"
+nodemon@1.19.1:
+  version "1.19.1"
+  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.19.1.tgz#576f0aad0f863aabf8c48517f6192ff987cd5071"
   dependencies:
     chokidar "^2.1.5"
     debug "^3.1.0"
@@ -3575,9 +3575,9 @@ uuid@^3.1.0, uuid@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
 
-v8flags@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/v8flags/-/v8flags-3.1.2.tgz#fc5cd0c227428181e6c29b2992e4f8f1da5e0c9f"
+v8flags@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/v8flags/-/v8flags-3.1.3.tgz#fc9dc23521ca20c5433f81cc4eb9b3033bb105d8"
   dependencies:
     homedir-polyfill "^1.0.1"
 
