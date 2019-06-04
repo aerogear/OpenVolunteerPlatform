@@ -17,7 +17,7 @@
     "@aerogear/app": "2.5.0",
     "@aerogear/auth": "2.5.0",
     "@aerogear/cordova-plugin-aerogear-metrics": "2.5.0",
-    "@aerogear/push": "2.5.0",
+    "@aerogear/push": "2.5.1-dev.1",
     "@aerogear/security": "2.5.0",
     "@aerogear/voyager-client": "2.5.0",
     "@angular/common": "7.2.12",
