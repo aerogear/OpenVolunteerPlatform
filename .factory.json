@@ -1,0 +1,94 @@
+{
+  "v": "4.0",
+  "name": "ionic-showcase",
+  "workspace": {
+    "defaultEnv": "default",
+    "environments": {
+      "default": {
+        "machines": {
+          "dev-machine": {
+            "attributes": {
+              "memoryLimitBytes": "2147483648"
+            },
+            "servers": {
+              "preview": {
+                "port": "8100",
+                "attributes": {},
+                "protocol": "http"
+              },
+              "5000/tcp": {
+                "port": "5000",
+                "attributes": {},
+                "protocol": "http"
+              },
+              "3000/tcp": {
+                "port": "3000",
+                "attributes": {},
+                "protocol": "http"
+              },
+              "9000/tcp": {
+                "port": "9000",
+                "attributes": {},
+                "protocol": "http"
+              }
+            },
+            "volumes": {},
+            "installers": [
+              "org.eclipse.che.exec",
+              "org.eclipse.che.terminal",
+              "org.eclipse.che.ws-agent",
+              "org.eclipse.che.ls.js-ts",
+              "com.redhat.bayesian.lsp"
+            ],
+            "env": {}
+          }
+        },
+        "recipe": {
+          "type": "dockerimage",
+          "content": "registry.access.redhat.com/codeready-workspaces/stacks-node"
+        }
+      }
+    },
+    "projects": [
+      {
+        "links": [],
+        "name": "ionic-showcase",
+        "attributes": {
+          "contribute_to_branch": [
+            "master"
+          ]
+        },
+        "type": "blank",
+        "path": "/ionic-showcase",
+        "description": "",
+        "problems": [],
+        "mixins": [
+          "pullrequest"
+        ]
+      }
+    ],
+    "name": "ionic-showcase",
+    "attributes": {},
+    "commands": [
+      {
+        "commandLine": "cd ionic-showcase && npm run ng -- run app:serve --host=0.0.0.0 --port=9000 --disableHostCheck=true",
+        "name": "serve",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": "${server.9000/tcp}"
+        },
+        "type": "custom"
+      },
+      {
+        "commandLine": "cd ionic-showcase && npm install .",
+        "name": "build",
+        "attributes": {
+          "goal": "Build",
+          "previewUrl": ""
+        },
+        "type": "custom"
+      }
+    ],
+    "links": []
+  }
+}
