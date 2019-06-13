@@ -2,9 +2,10 @@ import { PushRegistration } from '@aerogear/push';
 import { Injectable } from '@angular/core';
 import { Push, PushObject } from '@ionic-native/push/ngx';
 import { ConfigurationService } from '@aerogear/core';
-const config = require('../../mobile-services.json');
 import { Events } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+
+const config = require('../../mobile-services.json');
 
 const PUSH_ALIAS = 'cordova';
 
@@ -80,8 +81,13 @@ export class PushService {
   // No longer receive notifications
   public unregister() {
     PushService.pushObject.unregister().then(() => {
-      PushService.registered = false;
-      console.log('Successfully unregistered');
+      new PushRegistration(new ConfigurationService(config)).unregister().then(() => {
+        PushService.registered = false;
+        console.log('Successfully unregistered');
+      }).catch((err) => {
+        PushService.registered = true;
+        console.error('Error unregistering', err);
+      });
     }).catch(() => {
       console.error('Error unregistering');
     });
@@ -99,6 +105,7 @@ export class PushService {
         PushService.registered = true;
         console.log('Push registration successful');
       }).catch((err) => {
+        PushService.registered = false;
         this.pushError = err;
         console.error('Push registration unsuccessful ', this.pushError);
       });
