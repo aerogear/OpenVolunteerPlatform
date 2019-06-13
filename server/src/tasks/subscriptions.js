@@ -1,8 +1,8 @@
 const { pubSub } = require('../subscriptions')
 
-const TASK_ADDED = 'TASK_ADDED'
-const TASK_DELETED = 'TASK_DELETED'
-const TASK_UPDATED = 'TASK_UPDATED'
+const TASK_ADDED = 'tasks/added'
+const TASK_DELETED = 'tasks/deleted'
+const TASK_UPDATED = 'tasks/updated'
 
 
 const subscriptionTypeDefs = `
