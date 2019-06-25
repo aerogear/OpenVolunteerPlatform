@@ -80,16 +80,12 @@ export class PushService {
 
   // No longer receive notifications
   public unregister() {
-    PushService.pushObject.unregister().then(() => {
-      new PushRegistration(new ConfigurationService(config)).unregister().then(() => {
-        PushService.registered = false;
-        console.log('Successfully unregistered');
-      }).catch((err) => {
-        PushService.registered = true;
-        console.error('Error unregistering', err);
-      });
-    }).catch(() => {
-      console.error('Error unregistering');
+    new PushRegistration(new ConfigurationService(config)).unregister().then(() => {
+      PushService.registered = false;
+      console.log('Successfully unregistered');
+    }).catch((err) => {
+      PushService.registered = true;
+      console.error('Error unregistering', err);
     });
   }
 
