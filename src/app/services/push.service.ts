@@ -78,7 +78,6 @@ export class PushService {
     }
   }
 
-  // No longer receive notifications
   public unregister() {
     new PushRegistration(new ConfigurationService(config)).unregister().then(() => {
       PushService.registered = false;
@@ -90,21 +89,13 @@ export class PushService {
   }
 
   public register() {
-    PushService.pushObject.on('error').subscribe((err) => {
+    new PushRegistration(new ConfigurationService(config)).register('cordova', ['ionic', 'showcase']).then(() => {
+      PushService.registered = true;
+      console.log('Push registration successful');
+    }).catch((err) => {
+      PushService.registered = false;
       this.pushError = err;
-      console.error(`Error configuring push notifications ${err.message}`);
-    });
-
-    // Invokes the UPS registration endpoint
-    PushService.pushObject.on('registration').subscribe((data) => {
-      new PushRegistration(new ConfigurationService(config)).register(data.registrationId, PUSH_ALIAS, ['ionic', 'showcase']).then(() => {
-        PushService.registered = true;
-        console.log('Push registration successful');
-      }).catch((err) => {
-        PushService.registered = false;
-        this.pushError = err;
-        console.error('Push registration unsuccessful ', this.pushError);
-      });
+      console.error('Push registration unsuccessful ', this.pushError);
     });
 
     PushService.pushObject.on('notification').subscribe((notification) => {
