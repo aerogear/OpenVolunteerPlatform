@@ -67,15 +67,13 @@ jobs:
       - restore_cache:
           name: Restoring cordova plugins cache
           keys: 
-            - cordova-plugins-{{ .Branch }}-{{ checksum "config.xml" }}
-            - cordova-plugins-{{ .Branch }}-
-            - cordova-plugins-
+            - cordova-plugins-{{ checksum "config.xml" }}
       - run:
           name: Build android app
           command: npx ionic cordova build android
       - save_cache:
           name: Save cordova plugins cache
-          key: cordova-plugins-{{ .Branch }}-{{ checksum "config.xml" }}
+          key: cordova-plugins-{{ checksum "config.xml" }}
           paths:
             - plugins
       - persist_to_workspace:
