@@ -99,12 +99,6 @@ jobs:
           key: node-modules-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - restore_cache:
-          name: Restoring cordova plugins cache
-          keys: 
-            - cordova-plugins-{{ .Branch }}-{{ checksum "config.xml" }}
-            - cordova-plugins-{{ .Branch }}-
-            - cordova-plugins-
       - attach_workspace:
           at: /tmp/workspace
       - run:
