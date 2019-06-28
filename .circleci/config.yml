@@ -134,7 +134,7 @@ workflows:
             tags:
               only: /.*/
             branches:
-              only: master
+              only: /.*/
       - e2e-android:
           requires:
             - build-android
