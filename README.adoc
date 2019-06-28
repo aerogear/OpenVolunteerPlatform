@@ -106,7 +106,7 @@ oc delete all -l app=ionic-showcase-server \
 . Install Cordova & Ionic 4
 +
 ```shell
-npm install -g cordova@8 ionic@4
+npm install -g cordova ionic@4
 ```
 
 . Install dependencies

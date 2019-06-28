@@ -48,7 +48,7 @@ jobs:
           command: sudo npm --global install ionic
       - run:
           name: Install cordova
-          command: sudo npm --global install cordova@8
+          command: sudo npm --global install cordova
       - checkout
       - restore_cache:
           name: Restore node modules cache

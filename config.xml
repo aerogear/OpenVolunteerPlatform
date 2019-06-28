@@ -75,7 +75,7 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^2.3.1" />
     <plugin name="cordova-plugin-inappbrowser" spec="3.0.0" />
     <plugin name="cordova-plugin-is-debug" spec="1.0.0" />
-    <plugin name="cordova-plugin-iroot" spec="0.8.0">
+    <plugin name="cordova-plugin-iroot" spec="@aerogear/cordova-plugin-iroot@~0.8.1">
         <variable name="ENABLE_BUSYBOX_CHECK" value="true" />
     </plugin>
     <plugin name="cordova-plugin-pincheck" spec="0.0.6" />
