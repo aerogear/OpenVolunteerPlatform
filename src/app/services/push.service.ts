@@ -1,16 +1,12 @@
 import { PushRegistration } from '@aerogear/push';
 import { Injectable } from '@angular/core';
-import { Push, PushObject } from '@ionic-native/push/ngx';
 import { ConfigurationService } from '@aerogear/core';
 import { Events } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 const config = require('../../mobile-services.json');
 
-const PUSH_ALIAS = 'cordova';
-
 export interface PushMessage {
-  title: string;
   message: string;
   received: string;
 }
@@ -23,24 +19,18 @@ export interface PushMessage {
 export class PushService {
   public static registered = false;
 
-  // We want one single instance & callback app wide
-  public static pushObject: PushObject = null;
-
-  // The callback to be triggered when a push notification is received
-  public static callback: (notification: PushMessage) => void;
-
-  private pushError: Error;
-
-  constructor(private push: Push, private storage: Storage, public events: Events) { }
+  constructor(private storage: Storage, public events: Events) { }
 
   public async initialize(cb: (notification: PushMessage) => void) {
-    PushService.callback = cb;
+
+    PushRegistration.onMessageReceived((notification: any) => {
+      cb({message: notification.message, received: new Date().toDateString()});
+    });
 
     this.events.subscribe('settings:changed', (key, value) => {
       console.log('settings changes', key, value);
       if (key === 'pushEnabled') {
         if (value) {
-          this.initPush();
           this.register();
         } else {
           this.unregister();
@@ -49,10 +39,10 @@ export class PushService {
     });
 
     await this.storage.ready();
+
     const pushEnabledInStorage = await this.storage.get('pushEnabled');
 
     if (pushEnabledInStorage === null || pushEnabledInStorage) {
-      this.initPush();
       this.register();
 
       if (pushEnabledInStorage === null) {
@@ -61,25 +51,24 @@ export class PushService {
     }
   }
 
-  private initPush() {
-    PushService.pushObject = this.push.init({
-      android: {},
-      ios: {
-        alert: true,
-        badge: true,
-        sound: true,
-      },
+  public register() {
+    new PushRegistration(new ConfigurationService(config))
+    .register({
+      alias: 'cordova',
+      categories: ['ionic', 'showcase']
+    }).then(() => {
+      PushService.registered = true;
+      console.log('Push registration successful');
+    }).catch((err) => {
+      PushService.registered = false;
+      console.error('Push registration unsuccessful ', err);
     });
   }
 
-  private emit(notification: PushMessage) {
-    if (PushService.callback) {
-      PushService.callback(notification);
-    }
-  }
-
   public unregister() {
-    new PushRegistration(new ConfigurationService(config)).unregister().then(() => {
+    new PushRegistration(new ConfigurationService(config))
+    .unregister()
+    .then(() => {
       PushService.registered = false;
       console.log('Successfully unregistered');
     }).catch((err) => {
@@ -88,31 +77,4 @@ export class PushService {
     });
   }
 
-  public register() {
-    new PushRegistration(new ConfigurationService(config)).register('cordova', ['ionic', 'showcase']).then(() => {
-      PushService.registered = true;
-      console.log('Push registration successful');
-    }).catch((err) => {
-      PushService.registered = false;
-      this.pushError = err;
-      console.error('Push registration unsuccessful ', this.pushError);
-    });
-
-    PushService.pushObject.on('notification').subscribe((notification) => {
-      const newNotification = {
-        title: notification.title,
-        message: notification.message,
-        received: new Date().toDateString(),
-      };
-      this.emit(newNotification);
-    });
-  }
-
-  public getError() {
-    return this.pushError;
-  }
-
-  public isRegistered() {
-    return PushService.registered;
-  }
 }
