@@ -17,8 +17,6 @@ export interface PushMessage {
  */
 @Injectable()
 export class PushService {
-  public static registered = false;
-
   constructor(private storage: Storage, public events: Events) { }
 
   public async initialize(cb: (notification: PushMessage) => void) {
@@ -57,10 +55,8 @@ export class PushService {
       alias: 'cordova',
       categories: ['ionic', 'showcase']
     }).then(() => {
-      PushService.registered = true;
       console.log('Push registration successful');
     }).catch((err) => {
-      PushService.registered = false;
       console.error('Push registration unsuccessful ', err);
     });
   }
@@ -69,10 +65,8 @@ export class PushService {
     new PushRegistration(new ConfigurationService(config))
     .unregister()
     .then(() => {
-      PushService.registered = false;
       console.log('Successfully unregistered');
     }).catch((err) => {
-      PushService.registered = true;
       console.error('Error unregistering', err);
     });
   }
