@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "dev": "MQTT_HOST=localhost nodemon src/index.js",
     "push": "docker build . -t aerogear/voyager-server-example-task && docker push aerogear/voyager-server-example-task",
     "keycloak": "docker-compose -f ./scripts/keycloak/docker-compose.yml up",
     "keycloak:init": "node ./scripts/keycloak/initKeycloak.js"
@@ -28,9 +29,11 @@
     "knex": "0.19.0",
     "merge-graphql-schemas": "1.5.8",
     "mqtt": "3.0.0",
-    "nodemon": "1.19.1",
     "pg": "7.11.0",
     "shortid": "2.2.14",
     "unifiedpush-node-sender": "0.16.1"
+  },
+  "devDependencies": {
+    "nodemon": "1.19.1"
   }
 }
