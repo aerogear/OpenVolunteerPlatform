@@ -3,6 +3,19 @@
     "config:base",
     ":pinVersions"
   ],
-  "groupName":"all",
-  "ignoreDeps": ["typescript", "ts-node", "core-js"]
+  "groupName": "all",
+  "ignoreDeps": [
+    "typescript",
+    "ts-node",
+    "core-js"
+  ],
+  "packageRules": [
+    {
+      "packagePatterns": [
+        "^.*ionic.*/",
+        "^.*angular.*/"
+      ],
+      "enabled": false
+    }
+  ]
 }
