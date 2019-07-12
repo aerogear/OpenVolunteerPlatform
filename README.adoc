@@ -41,7 +41,7 @@ docker-compose up
 +
 ```shell
 npm install
-npm run start
+npm run dev
 ```
 +
 [NOTE]
