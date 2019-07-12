@@ -12,9 +12,9 @@ import {
 
 
 export const taskCacheUpdates = {
-    createTask: getUpdateFunction('createTask', 'id', GET_TASKS, CacheOperation.ADD),
-    updateTask: getUpdateFunction('updateTask', 'id', GET_TASKS, CacheOperation.REFRESH),
-    deleteTask: getUpdateFunction('deleteTask', 'id', GET_TASKS, CacheOperation.DELETE)
+    createTask: getUpdateFunction('createTask', 'id', CacheOperation.ADD, GET_TASKS),
+    updateTask: getUpdateFunction('updateTask', 'id', CacheOperation.REFRESH, GET_TASKS),
+    deleteTask: getUpdateFunction('deleteTask', 'id', CacheOperation.DELETE, GET_TASKS)
 };
 
 export const taskAddedHelper: SubscriptionHelperOptions = {

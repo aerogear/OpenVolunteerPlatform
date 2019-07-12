@@ -57,7 +57,7 @@ export class PushService {
     }).then(() => {
       console.log('Push registration successful');
     }).catch((err) => {
-      console.error('Push registration unsuccessful ', err);
+      console.warn('Push registration unsuccessful');
     });
   }
 

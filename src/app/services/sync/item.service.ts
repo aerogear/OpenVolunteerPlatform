@@ -62,7 +62,7 @@ export class ItemService {
           'status': 'OPEN'
         },
         updateQuery: GET_TASKS,
-        typeName: 'Task'
+        returnType: 'Task'
       });
   }
 
@@ -71,7 +71,7 @@ export class ItemService {
         mutation: UPDATE_TASK,
         variables: item,
         updateQuery: GET_TASKS,
-        typeName: 'Task',
+        returnType: 'Task',
         operationType: CacheOperation.REFRESH
       }
     );
@@ -82,7 +82,7 @@ export class ItemService {
         mutation: DELETE_TASK,
         variables: item,
         updateQuery: GET_TASKS,
-        typeName: 'Task',
+        returnType: 'Task',
         operationType: CacheOperation.DELETE
       }
     );

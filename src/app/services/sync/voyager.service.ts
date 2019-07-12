@@ -23,6 +23,18 @@ class ConflictLogger implements ConflictListener {
     dialog.present();
     console.log(`data: ${JSON.stringify(resolvedData)}, server: ${JSON.stringify(server)} client: ${JSON.stringify(client)} `);
   }
+  async mergeOccurred(operationName: string, resolvedData: any, server: any, client: any) {
+    const dialog = await this.alertCtrl.create({
+      message: `Merged data ${operationName}.</br>,
+      Version from server: ${server.version}.</br>`,
+      header: `🎉 Auto merge occurred`
+    });
+    dialog.present();
+    setTimeout(() => {
+      dialog.dismiss();
+    }, 5000);
+    console.log(`data: ${JSON.stringify(resolvedData)}, server: ${JSON.stringify(server)} client: ${JSON.stringify(client)} `);
+  }
 }
 
 @Injectable({

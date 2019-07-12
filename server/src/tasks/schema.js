@@ -1,5 +1,5 @@
 const { pubSub } = require('../subscriptions')
-const { conflictHandler } = require("@aerogear/voyager-conflicts")
+const { conflictHandler } = require("offix-conflicts-server")
 const { TASK_ADDED, TASK_DELETED, TASK_UPDATED } = require("./subscriptions")
 
 const typeDefs = `
@@ -71,11 +71,10 @@ const taskResolvers = {
         throw new Error(`Invalid ID for task object: ${clientData.id}`);
       }
 
-      if (conflictHandler.hasConflict(task, clientData)) {
-        const { response } = conflictHandler.resolveOnClient(task, clientData)
-        return response
+      const conflictError = conflictHandler.checkForConflict(task, clientData);
+      if(conflictError){
+        throw conflictError;
       }
-      conflictHandler.nextState(clientData)
 
       const update = await context.db('tasks').update(clientData)
         .where({

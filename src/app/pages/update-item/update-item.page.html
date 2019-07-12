@@ -9,6 +9,24 @@
 
 <ion-content padding>
   <form [formGroup]="edit_item_form" (submit)="updateItem(edit_item_form.value)">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Item</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label>
+          <h2>{{ item.title }}</h2>
+          <ion-note item-start>
+            {{ item.description }}
+          </ion-note>
+          <br />
+          <ion-note>
+            <ion-badge color="primary">
+              Server version: {{ item.version }}</ion-badge>
+          </ion-note>
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
     <ion-item>
       <ion-label color="primary" position="floating">Title</ion-label>
       <ion-input type="text" formControlName="title" required></ion-input>
