@@ -17,7 +17,11 @@
     graphql-tools "4.0.4"
     pino "5.12.5"
 
-"@aerogear/voyager-conflicts@0.6.1-dev-1", "@aerogear/voyager-conflicts@^0.6.1-dev-1":
+"@aerogear/voyager-conflicts@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@aerogear/voyager-conflicts/-/voyager-conflicts-0.5.1.tgz#01639ea12bed22e6d3a3fcc95373aab74f6af4c5"
+
+"@aerogear/voyager-conflicts@^0.6.1-dev-1":
   version "0.6.1-dev-1"
   resolved "https://registry.yarnpkg.com/@aerogear/voyager-conflicts/-/voyager-conflicts-0.6.1-dev-1.tgz#204d792fbcd9ee3fc0b043b03083f43628a8355b"
 
@@ -2646,6 +2650,10 @@ object.pick@^1.2.0, object.pick@^1.3.0:
   resolved "https://registry.yarnpkg.com/object.pick/-/object.pick-1.3.0.tgz#87a10ac4c1694bd2e1cbf53591a66141fb5dd747"
   dependencies:
     isobject "^3.0.1"
+
+offix-conflicts-server@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/offix-conflicts-server/-/offix-conflicts-server-0.6.1.tgz#3422b28d762afd2974f5afd3ffb852a3679b96f8"
 
 on-finished@~2.3.0:
   version "2.3.0"
