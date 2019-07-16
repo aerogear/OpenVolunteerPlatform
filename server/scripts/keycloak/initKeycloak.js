@@ -33,7 +33,7 @@ const PUBLIC_CLIENT_NAME = 'voyager-testing-public'
 const BEARER_CLIENT_NAME = 'voyager-testing-bearer'
 let PUBLIC_CLIENT
 
-// The client roles you want created for the PUBLIC_CLIENT_NAME client
+// The client roles you want created for the BEARER_CLIENT_NAME client
 const clientRoleNames = [
   'admin',
   'developer'
@@ -96,7 +96,7 @@ async function prepareKeycloak () {
 
     console.log('creating client roles')
     for (let roleName of clientRoleNames) {
-      await createClientRole(PUBLIC_CLIENT, roleName)
+      await createClientRole(BEARER_CLIENT, roleName)
     }
 
     console.log('creating realm roles')
@@ -107,7 +107,7 @@ async function prepareKeycloak () {
     // get the actual role objects from keycloak after creating them
     // need to get the ids that were created on them
     realmRoles = await getRealmRoles()
-    clientRoles = await getClientRoles(PUBLIC_CLIENT)
+    clientRoles = await getClientRoles(BEARER_CLIENT)
 
     for (let user of users) {
       // Create a new user
@@ -116,7 +116,7 @@ async function prepareKeycloak () {
       
       // Assign roles to the user
       await assignRealmRolesToUser(user, userIdUrl)
-      await assignClientRolesToUser(user, PUBLIC_CLIENT, userIdUrl)
+      await assignClientRolesToUser(user, BEARER_CLIENT, userIdUrl)
     }
 
     const bearerInstallation = await getClientInstallation(BEARER_CLIENT)
