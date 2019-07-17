@@ -44,11 +44,8 @@ jobs:
           name: Install SDKMan - a package manager used to install gradle
           command: curl -s "https://get.sdkman.io" | bash
       - run:
-          name: Run SDK Man init script (Puts it on the path)
-          command: source ~/.sdkman/bin/sdkman-init.sh
-      - run:
-          name: Install gradle
-          command: sdk install gradle
+          name: Run SDK Man init script and install gradle
+          command: source ~/.sdkman/bin/sdkman-init.sh && sdk install gradle
       - run:
           name: Install ionic
           command: sudo npm --global install ionic
