@@ -40,12 +40,6 @@ jobs:
       - image: circleci/android:api-28-node
     steps:
       - checkout
-      - run :
-          name: Install SDKMan - a package manager used to install gradle
-          command: curl -s "https://get.sdkman.io" | bash
-      - run:
-          name: Run SDK Man init script and install gradle
-          command: source ~/.sdkman/bin/sdkman-init.sh && sdk install gradle
       - run:
           name: Install ionic
           command: sudo npm --global install ionic
@@ -72,7 +66,12 @@ jobs:
             - cordova-plugins-{{ checksum "config.xml" }}
       - run:
           name: Build android app
-          command: npx ionic cordova build android
+          command: |
+            # Install SDKMan - a package manager used to install gradle
+            curl -s "https://get.sdkman.io" | bash && source ~/.sdkman/bin/sdkman-init.sh
+            sdk install gradle 4.10.3
+            # actually build the app
+            npx ionic cordova build android
       - save_cache:
           name: Save cordova plugins cache
           key: cordova-plugins-{{ checksum "config.xml" }}
