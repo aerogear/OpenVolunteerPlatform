@@ -1,5 +1,5 @@
 const { pubSub } = require('../subscriptions')
-const { conflictHandler } = require("offix-conflicts-server")
+const { conflictHandler } = require("@aerogear/voyager-conflicts")
 const { TASK_ADDED, TASK_DELETED, TASK_UPDATED } = require("./subscriptions")
 
 const typeDefs = `
