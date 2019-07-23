@@ -73,7 +73,7 @@ export class VoyagerService {
       options.openShiftConfig = this.openShift.getConfig();
     }
     const authService = this.injector.get(AuthService);
-    if (authService.isEnabled()) {
+    if (authService.isEnabled() && await authService.initialized) {
       options.authContextProvider = authService.getAuthContextProvider();
     }
 
