@@ -8,11 +8,11 @@ import { SecurityCheck, SecurityCheckResult } from './SecurityCheck';
 
 declare var navigator: any;
 @Component({
-    selector: 'app-security',
-    templateUrl: './security.page.html',
-    styleUrls: ['./security.page.scss'],
+    selector: 'devicetrust',
+    templateUrl: './devicetrust.page.html',
+    styleUrls: ['./devicetrust.page.scss'],
 })
-export class SecurityPage implements OnInit {
+export class DeviceTrustPage implements OnInit {
   private static readonly METRICS_KEY = 'security';
   public detections: Array<{ label: string, detected: boolean }>;
   public trustScore: number;
@@ -44,7 +44,7 @@ export class SecurityPage implements OnInit {
       new SecurityCheck(DeviceCheckType.rootEnabled, 'No Root Access Detected', 'Root Access Detected', true),
       new SecurityCheck(DeviceCheckType.isEmulator, 'No Emulator Access Detected', 'Emulator Access Detected', true),
       new SecurityCheck(DeviceCheckType.screenLockEnabled, 'Device Lock Enabled', 'No Device Lock Enabled'));
-      this.metricService.publish(SecurityPage.METRICS_KEY, [ new CheckResultMetrics(res) ]);
+      this.metricService.publish(DeviceTrustPage.METRICS_KEY, [ new CheckResultMetrics(res) ]);
     return res;
   }
 

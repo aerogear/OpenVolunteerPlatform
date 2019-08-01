@@ -8,13 +8,20 @@ import { PushMessage, PushService } from './services/push.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent {
   private user;
 
   // true if the application is running in background
   private background = false;
+
+  showSubmenu = false;
+
+  menuItemHandler(): void {
+    this.showSubmenu = !this.showSubmenu;
+  }
 
   constructor(
     private platform: Platform,

@@ -1,0 +1,67 @@
+  
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Application Trust
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Application Trust is disabled -->
+  <ion-card *ngIf="isDisabled()">
+    <ion-card-header>
+      <ion-card-title>Application Trust not configured</ion-card-title>
+      <ion-card-subtitle>Mobile Security service required</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      Application Trust page cannot be displayed.
+      Please enable the Security SDK by providing configuration pointing to your Mobile Security Service
+      as outlined in <a href="https://www.aerogear.org/aerogear/latest/app-security/#setup">Setting up Application Trust</a>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="!isDisabled()">
+    <ion-card-header>
+      <ion-card-title>Application Security Status </ion-card-title>
+    </ion-card-header>
+    
+    <ion-card-content>
+        This feature checks with the backend Mobile Security Service, 
+        to see whether the version of the App has been marked as disabled or not. 
+        Use the button below to invoke the check, 
+        which is normally performed on App initialisation.
+        <br /><br />
+      <ion-button size="default" (click)="this.clientInit()">
+        Check the Security Service
+      </ion-button>
+        <br /><br />
+        More details in the <a href="https://www.aerogear.org/aerogear/latest/app-security/">Application Trust Documentation</a>.
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="!isDisabled()">
+    <ion-card-header>
+      <ion-card-title>Steps to Disable/Enable App Version</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        Press the following link to access the Mobile Security Service backend 
+        <br />
+        <a href="{{serverUrl.url}}">Mobile Security Service</a>
+      <br /><br />
+
+      In the Mobile Security Service backend disable/enable the following Application:
+      <br />
+      <ion-text color="primary">
+        org.aerogear.ionic.showcase
+      </ion-text>
+      <br /><br />
+    </ion-card-content>
+  </ion-card>
+  
+</ion-content>

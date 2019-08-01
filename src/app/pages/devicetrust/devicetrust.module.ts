@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
-import { SecurityPage } from './security.page';
+import { DeviceTrustPage } from './devicetrust.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: SecurityPage
+    component: DeviceTrustPage
   }
 ];
 
@@ -20,6 +20,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SecurityPage]
+  declarations: [DeviceTrustPage]
 })
-export class SecurityPageModule {}
+export class DeviceTrustPageModule {}

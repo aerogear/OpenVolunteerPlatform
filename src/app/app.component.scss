@@ -1,0 +1,13 @@
+.menu {
+  ion-item-group[submenu] {
+    overflow: hidden;
+    display: block;
+    height: 0;
+    transition: height .3s linear;
+    padding-left: 20%;
+    &.visible {
+        height: inherit;
+        // this is just sample value, calculate how much space you need for your menu items
+    }
+  }
+}

@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SecurityPage } from './security.page';
+import { DeviceTrustPage } from './devicetrust.page';
 
-describe('SecurityPage', () => {
-  let component: SecurityPage;
-  let fixture: ComponentFixture<SecurityPage>;
+describe('DeviceTrustPage', () => {
+  let component: DeviceTrustPage;
+  let fixture: ComponentFixture<DeviceTrustPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SecurityPage ],
+      declarations: [ DeviceTrustPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SecurityPage);
+    fixture = TestBed.createComponent(DeviceTrustPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
