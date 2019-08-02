@@ -3,7 +3,7 @@ import {
   OfflineQueueListener, ConflictListener, OfflineClient, OfflineStore
 } from '@aerogear/voyager-client';
 import { Injectable, Injector } from '@angular/core';
-import { OpenShiftService } from '../openshift.service';
+import { OpenShiftConfigService } from '../config.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '../auth.service';
 import { taskCacheUpdates } from './cache.updates';
@@ -48,7 +48,7 @@ export class VoyagerService {
   private _apolloClient: ApolloOfflineClient;
   private _offlineStore: OfflineStore;
 
-  constructor(private openShift: OpenShiftService, public alertCtrl: AlertController, public injector: Injector) {
+  constructor(private openShift: OpenShiftConfigService, public alertCtrl: AlertController, public injector: Injector) {
   }
 
   get apolloClient(): ApolloOfflineClient {
@@ -65,10 +65,11 @@ export class VoyagerService {
       fileUpload: true,
       mutationCacheUpdates: taskCacheUpdates
     };
+
     if (!this.openShift.hasSyncConfig()) {
       // Use default localhost urls when OpenShift config is missing
-      options.httpUrl = 'http://localhost:4000/graphql';
-      options.wsUrl = 'ws://localhost:4000/graphql';
+      options.httpUrl = this.openShift.getLocalServerUrl();
+      options.wsUrl = this.openShift.getWSLocalServerUrl();
     } else {
       options.openShiftConfig = this.openShift.getConfig();
     }

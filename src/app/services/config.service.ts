@@ -4,11 +4,11 @@ import { Injectable } from '@angular/core';
 const config = require('../../mobile-services.json');
 
 export enum Service {
-    Metrics,
-    Sync,
-    Push,
-    Auth,
-    Security
+  Metrics,
+  Sync,
+  Push,
+  Auth,
+  Security
 }
 
 @Injectable({
@@ -16,9 +16,9 @@ export enum Service {
 })
 
 /**
- * Service that initializes OpenShift specific SDK's
+ * Service that manages OpenShift specific configuration
  */
-export class OpenShiftService {
+export class OpenShiftConfigService {
   app: AeroGearApp;
 
   constructor() {
@@ -44,6 +44,22 @@ export class OpenShiftService {
       service.type === 'security'));
   }
 
+  getServerUrl() {
+    const syncConfig = (config.services.find((service) =>
+      service.type === 'sync-app'));
+    if (syncConfig) {
+      return syncConfig.url;
+    }
+    return this.getLocalServerUrl();
+  }
+
+  getLocalServerUrl() {
+    return 'http://localhost:4000/graphql';
+  }
+
+  getWSLocalServerUrl() {
+    return 'ws://localhost:4000/graphql';
+  }
 
   getConfiguration(type: Service) {
     switch (type) {

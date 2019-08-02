@@ -57,11 +57,6 @@ const fileResolvers = {
   Query: {
     uploads: async (obj, args, context) => {
       return context.db.select().from(PREFIX).then((files) => {
-        console.log("Fetching files")
-        // Dynamically append app url to all files
-        files.forEach((file) => {
-          file.url = `${config.appUrl}${file.url}`
-        })
         return files;
       })
     }

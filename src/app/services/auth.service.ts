@@ -1,6 +1,6 @@
 import { Auth } from '@aerogear/auth';
 import { Injectable } from '@angular/core';
-import { OpenShiftService } from './openshift.service';
+import { OpenShiftConfigService } from './config.service';
 import { VoyagerService } from './sync/voyager.service';
 import { KeycloakInitOptions } from 'keycloak-js';
 import { AuthContextProvider } from '@aerogear/voyager-client';
@@ -17,7 +17,7 @@ export class AuthService {
     public initialized: Promise<boolean>;
     private readonly aerogear: VoyagerService;
 
-    constructor(private openShift: OpenShiftService, public platform: Platform, aerogear: VoyagerService) {
+    constructor(private openShift: OpenShiftConfigService, public platform: Platform, aerogear: VoyagerService) {
         if (this.isEnabled()) {
             this.auth = new Auth(this.openShift.getConfig());
             this.aerogear = aerogear;

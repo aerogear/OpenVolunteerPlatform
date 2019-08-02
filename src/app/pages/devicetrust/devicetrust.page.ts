@@ -1,16 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {CheckResultMetrics, DeviceCheckResult, DeviceCheckType, SecurityService} from '@aerogear/security';
-import {Dialogs} from '@ionic-native/dialogs/ngx';
-import {Platform} from '@ionic/angular';
-import {MetricsService} from '@aerogear/core';
-import {OpenShiftService, Service} from '../../services/openshift.service';
+import { Component, OnInit } from '@angular/core';
+import { CheckResultMetrics, DeviceCheckResult, DeviceCheckType, SecurityService } from '@aerogear/security';
+import { Platform } from '@ionic/angular';
+import { MetricsService } from '@aerogear/core';
+import { OpenShiftConfigService, Service } from '../../services/config.service';
 import { SecurityCheck, SecurityCheckResult } from './SecurityCheck';
 
 declare var navigator: any;
 @Component({
-    selector: 'devicetrust',
-    templateUrl: './devicetrust.page.html',
-    styleUrls: ['./devicetrust.page.scss'],
+  selector: 'devicetrust',
+  templateUrl: './devicetrust.page.html',
+  styleUrls: ['./devicetrust.page.scss'],
 })
 export class DeviceTrustPage implements OnInit {
   private static readonly METRICS_KEY = 'security';
@@ -24,18 +23,16 @@ export class DeviceTrustPage implements OnInit {
   public securityService: SecurityService;
   private readonly metricService: MetricsService;
 
-  constructor(public platform: Platform,
-              private dialogs: Dialogs,
-              private openShift: OpenShiftService) {
-      this.metricService = new MetricsService({ configuration: openShift.getConfiguration(Service.Metrics) });
-      this.securityService = new SecurityService(this.metricService);
+  constructor(public platform: Platform, openShift: OpenShiftConfigService) {
+    this.metricService = new MetricsService({ configuration: openShift.getConfiguration(Service.Metrics) });
+    this.securityService = new SecurityService(this.metricService);
   }
 
   ngOnInit() {
   }
 
   public isAvailable() {
-      return this.platform.is('cordova');
+    return this.platform.is('cordova');
   }
 
   private async performChecksAndPublishMetrics(): Promise<DeviceCheckResult[]> {
@@ -44,7 +41,7 @@ export class DeviceTrustPage implements OnInit {
       new SecurityCheck(DeviceCheckType.rootEnabled, 'No Root Access Detected', 'Root Access Detected', true),
       new SecurityCheck(DeviceCheckType.isEmulator, 'No Emulator Access Detected', 'Emulator Access Detected', true),
       new SecurityCheck(DeviceCheckType.screenLockEnabled, 'Device Lock Enabled', 'No Device Lock Enabled'));
-      this.metricService.publish(DeviceTrustPage.METRICS_KEY, [ new CheckResultMetrics(res) ]);
+    this.metricService.publish(DeviceTrustPage.METRICS_KEY, [new CheckResultMetrics(res)]);
     return res;
   }
 

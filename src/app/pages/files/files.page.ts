@@ -3,6 +3,7 @@ import { FileEntry } from '../../services/file/types';
 import { FileService } from '../../services/file/file.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
+import { OpenShiftConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-files',
@@ -12,19 +13,30 @@ import { AuthService } from '../../services/auth.service';
 export class FilesPage implements OnInit {
   private items: Array<FileEntry>;
   private files: FileList;
+  baseURL: string;
 
   constructor(public fileService: FileService,
     public alertCtrl: AlertController,
-    public auth: AuthService) { }
+    public auth: AuthService, openShift: OpenShiftConfigService) {
+    // Note: File Endpoint assume that server returns relative paths to files
+    this.baseURL = new URL(openShift.getServerUrl()).origin;
+  }
 
   async ngOnInit() {
     await this.auth.initialized;
     this.refreshData();
+
   }
 
   refreshData() {
     this.fileService.getItems().then((items) => {
-      this.items = items.data.uploads;
+      if (items.data) {
+        const uploads = items.data.uploads;
+        if (uploads) {
+          uploads.forEach((item) => item.url = `${this.baseURL}${item.url}`);
+        }
+        this.items = items.data.uploads;
+      }
     }).catch((err) => {
       this.alertCtrl.create({
         message: `Cannot fetch files. Please make sure you are online.`,

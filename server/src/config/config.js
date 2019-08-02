@@ -12,14 +12,11 @@ class Config {
       port: process.env.DB_PORT || '5432'
     }
 
-    this.appUrl = process.env.URL || 'http://localhost:4000'
-
     this.keycloakConfigPath = process.env.KEYCLOAK_CONFIG || path.resolve(__dirname, './keycloak.json')
     this.keycloakConfig = readConfig(this.keycloakConfigPath)
 
     this.pushConfigPath = process.env.PUSH_CONFIG || path.resolve(__dirname, './push-config.json')
     this.pushConfig = readConfig(this.pushConfigPath)
-
 
     this.playgroundConfig = {
       tabs: [
