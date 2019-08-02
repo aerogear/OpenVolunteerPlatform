@@ -37,8 +37,8 @@ export class UpdateItemPage extends OfflineNotifier implements OnInit {
 
   private buildForm() {
     this.edit_item_form = this.formBuilder.group({
-      title: new FormControl(this.item.title, Validators.required),
-      description: new FormControl(this.item.description, Validators.required)
+      title: new FormControl(this.item.title, [Validators.required, Validators.maxLength(255)]),
+      description: new FormControl(this.item.description, [Validators.required, Validators.maxLength(255)])
     });
   }
 

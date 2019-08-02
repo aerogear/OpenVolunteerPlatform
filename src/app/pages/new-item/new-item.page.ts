@@ -26,8 +26,8 @@ export class NewItemPage extends OfflineNotifier implements OnInit {
 
   ngOnInit() {
     this.new_item_form = this.formBuilder.group({
-      title: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required)
+      title: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+      description: new FormControl('', [Validators.required, Validators.maxLength(255)])
     });
   }
 
