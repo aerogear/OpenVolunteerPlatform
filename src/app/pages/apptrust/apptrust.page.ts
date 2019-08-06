@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { SecurityService } from '../../services/security.service';
+import { isMobileCordova } from '@aerogear/core';
 
 
 declare var navigator: any;
@@ -24,6 +25,9 @@ export class AppTrustPage {
 
   public isDisabled() {
     return !this.securityService.isEnabled();
+  }
+  public isNotMobileCordova() {
+    return !isMobileCordova();
   }
 
   public clientInit() {
