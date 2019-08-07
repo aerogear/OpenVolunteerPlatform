@@ -24,6 +24,11 @@ export class AuthService {
             this.initialized = platform.ready().then(() => {
                 const initOptions: KeycloakInitOptions = { onLoad: 'login-required' };
                 return this.auth.init(initOptions);
+            }).catch((error) => {
+                console.warn(`Failed to intialize keycloak
+Please review your keycloak client configuration on keycloak server
+and check if you have setup proper "Valid Redirect URIs" and "Web Origins" values`);
+                return false;
             });
         }
     }

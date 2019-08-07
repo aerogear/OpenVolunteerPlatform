@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -9,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
 export class ProfilePage implements OnInit {
   profile: any;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, public alertCtrl: AlertController) {
   }
 
   ngOnInit() {
@@ -26,12 +27,16 @@ export class ProfilePage implements OnInit {
   login() {
     this.authService.login().then(() => {
       this.loadUserProfile();
+    }).catch((err) => {
+      console.warn('Login failed', err);
     });
   }
 
   logout() {
     this.authService.logout().then(() => {
       this.profile = undefined;
+    }).catch((err) => {
+      console.warn('Login failed', err);
     });
   }
 
@@ -49,8 +54,16 @@ export class ProfilePage implements OnInit {
         emailVerified: userProfile.emailVerified ? userProfile.emailVerified : false,
         realmRoles,
       };
-    })
-      .catch((err) => console.error('Error retrieving user profile', err));
+    }).catch((err) => {
+      this.alertCtrl.create({
+        message: `Cannot retrieve profile. Please review keycloak client configuration.`,
+        header: `Login failed`,
+        buttons: ['OK']
+      }).then((dialog) => {
+        dialog.present();
+      }).catch(() => { });
+      console.error('Error retrieving user profile', err);
+    });
   }
 
   public ionViewDidEnter(): void {
