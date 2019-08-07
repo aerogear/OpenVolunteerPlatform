@@ -51,7 +51,6 @@
     },
     "projects": [
       {
-        "links": [],
         "name": "ionic-showcase",
         "attributes": {
           "contribute_to_branch": [
@@ -59,6 +58,14 @@
           ]
         },
         "type": "blank",
+        "source": {
+          "location": "https://github.com/aerogear/ionic-showcase/",
+          "type": "git",
+          "parameters": {
+            "keepVcs": "false",
+            "branch": "master"
+          }
+        },
         "path": "/ionic-showcase",
         "description": "",
         "problems": [],
