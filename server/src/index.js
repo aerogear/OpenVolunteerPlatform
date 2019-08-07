@@ -51,6 +51,7 @@ async function start() {
     typeDefs: appTypeDefs,
     resolvers: appResolvers,
     playground: config.playgroundConfig,
+    introspection: true,
     context: async ({
       req
     }) => {
