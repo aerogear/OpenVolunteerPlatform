@@ -5,7 +5,7 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 
 exports.config = {
   seleniumAddress: 'http://hub.browserstack.com/wd/hub',
-  allScriptsTimeout: 11000,
+  allScriptsTimeout: 30000,
   specs: [
     './src/**/*.e2e-spec.ts'
   ],
@@ -17,6 +17,8 @@ exports.config = {
     autoWebview: true,
     'browserstack.user': process.env.BROWSERSTACK_USER,
     'browserstack.key': process.env.BROWSERSTACK_KEY,
+    'browserstack.debug': true,
+    'browserstack.networkLogs': true,
   },
   framework: 'jasmine',
   jasmineNodeOpts: {
