@@ -74,11 +74,9 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
         }
     }
 
-    logout() {
+    async logout() {
         if (this.isEnabled()) {
-            this.aerogear.apolloClient.clearStore();
-            this.aerogear.apolloClient.cache.reset();
-            window.localStorage.clear();
+            await this.aerogear.apolloClient.resetStore();
             return this.auth.logout();
         } else {
             return Promise.reject('not enabled');
