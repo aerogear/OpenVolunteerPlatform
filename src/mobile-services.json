@@ -1,47 +1,6 @@
 {
-  "clientId": "org.aerogear.ionic.showcase",
-  "namespace": "mobile-developer-console",
-  "services": [
-    {
-      "config": {
-        "android": {
-          "variantId": "fcf0202d-8f31-430b-ab9a-a98d461c32ee",
-          "variantSecret": "9f32fe21-3fee-4508-b935-e4a2be50674c"
-        }
-      },
-      "id": "e99addc8-bcd5-11e9-84cc-02523cbacb50",
-      "name": "push",
-      "type": "push",
-      "url": "https://unifiedpush-unifiedpush-proxy-mobile-unifiedpush.apps.jhellar-f729.openshiftworkshop.com"
-    },
-    {
-      "config": {
-        "auth-server-url": "https://sso-user-sso.apps.jhellar-f729.openshiftworkshop.com/auth",
-        "confidential-port": 0,
-        "public-client": true,
-        "realm": "org.aerogear.ionic.showcase-realm",
-        "resource": "org.aerogear.ionic.showcase-client",
-        "ssl-required": "external"
-      },
-      "id": "6a6797aa-bcd4-11e9-84cc-02523cbacb50",
-      "name": "keycloak",
-      "type": "keycloak",
-      "url": "https://sso-user-sso.apps.jhellar-f729.openshiftworkshop.com/auth"
-    },
-    {
-      "config": {
-        "websocketUrl": "wss://ionic-showcase-server-jhellar.apps.jhellar-f729.openshiftworkshop.com/graphql"
-      },
-      "id": "0305fe00-bcd7-11e9-84cc-02523cbacb50",
-      "name": "sync-app",
-      "type": "sync-app",
-      "url": "https://ionic-showcase-server-jhellar.apps.jhellar-f729.openshiftworkshop.com/graphql"
-    },
-    {
-      "id": "04d3952a-bcd6-11e9-84cc-02523cbacb50",
-      "name": "security",
-      "type": "security",
-      "url": "https://route-mobile-security-service.apps.jhellar-f729.openshiftworkshop.com"
-    }
-  ]
+  "version": 1,
+  "namespace": "voyager",
+  "clientId": "voyager-ionic-example",
+  "services": []
 }
