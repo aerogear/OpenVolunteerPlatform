@@ -77,6 +77,7 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
     async logout() {
         if (this.isEnabled()) {
             await this.aerogear.apolloClient.resetStore();
+            await this.aerogear.apolloClient.cache.reset();
             return this.auth.logout();
         } else {
             return Promise.reject('not enabled');
