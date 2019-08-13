@@ -5,7 +5,7 @@ import { ItemService } from '../../services/sync/item.service';
 import { Task } from '../../services/sync/types';
 import { NetworkService } from '../../services/network.service';
 import { VoyagerService } from '../../services/sync/voyager.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 
 
@@ -31,7 +31,8 @@ export class TaskPage implements OnInit {
     public networkService: NetworkService,
     public aerogear: VoyagerService,
     public toastController: ToastController,
-    public auth: AuthService
+    public auth: AuthService,
+    public alertCtrl: AlertController
   ) {
     this.items = [];
     this.cases = [{ case: 'all' }, { case: 'open' }];
@@ -66,6 +67,13 @@ export class TaskPage implements OnInit {
       },
       queueCleared() {
         self.queue = 0;
+      },
+      onOperationFailure: (operation) => {
+        this.alertCtrl.create({
+          message: `Failed to replicate offline change: ${operation.operationName}`
+        }).then((dialog) => {
+          dialog.present();
+        });
       }
     });
     this.queue = 0;

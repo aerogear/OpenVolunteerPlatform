@@ -63,16 +63,7 @@ export class VoyagerService {
     const options: DataSyncConfig = {
       conflictListener: new ConflictLogger(this.alertCtrl),
       fileUpload: true,
-      mutationCacheUpdates: taskCacheUpdates,
-      offlineQueueListener: {
-        onOperationFailure: (operation) => {
-          this.alertCtrl.create({
-            message: `Failed to replicate offline change: ${operation.operationName}`
-          }).then((dialog) => {
-            dialog.present();
-          });
-        }
-      }
+      mutationCacheUpdates: taskCacheUpdates
     };
 
     if (!this.openShift.hasSyncConfig()) {
