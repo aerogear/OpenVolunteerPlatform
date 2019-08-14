@@ -68,7 +68,7 @@
     "phonegap-plugin-push": "2.3.0",
     "rxjs": "6.5.3",
     "subscriptions-transport-ws": "0.9.16",
-    "zone.js": "0.9.1"
+    "zone.js": "0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/architect": "0.13.9",
