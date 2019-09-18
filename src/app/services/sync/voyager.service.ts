@@ -48,11 +48,11 @@ export class VoyagerService {
 
   private _apolloClient: ApolloOfflineClient;
   private _offlineStore: OfflineStore;
-  private _authServiceService: AuthStateService;
+  private _authStateService: AuthStateService;
 
   constructor(private openShift: OpenShiftConfigService, public alertCtrl: AlertController, public authService: AuthService, authStateService: AuthStateService) {
-    this._authServiceService = authStateService;
-    this._authServiceService.subscribe({
+    this._authStateService = authStateService;
+    this._authStateService.subscribe({
       next: async (info) => {
         if (info.type === 'logout' && this._apolloClient) {
           console.log('user logged out, reset store');
