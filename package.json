@@ -27,7 +27,9 @@
     "@angular/http": "7.2.12",
     "@angular/platform-browser": "7.2.12",
     "@angular/platform-browser-dynamic": "7.2.12",
+    "@angular/pwa": "^0.12.4",
     "@angular/router": "7.2.12",
+    "@angular/service-worker": "7.2.12",
     "@ionic-native/core": "5.5.1",
     "@ionic-native/dialogs": "5.5.1",
     "@ionic-native/ionic-webview": "5.5.1",
@@ -88,7 +90,7 @@
     "ts-node": "8.0.3",
     "tslint": "5.18.0",
     "typescript": "3.2.4"
-  }, 
+  },
   "cordova": {
     "plugins": {
       "cordova-plugin-inappbrowser": {},

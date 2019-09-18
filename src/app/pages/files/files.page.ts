@@ -11,8 +11,8 @@ import { OpenShiftConfigService } from '../../services/config.service';
   styleUrls: ['./files.page.scss'],
 })
 export class FilesPage implements OnInit {
-  private items: Array<FileEntry>;
-  private files: FileList;
+  public items: Array<FileEntry>;
+  public files: FileList;
   baseURL: string;
 
   constructor(public fileService: FileService,
