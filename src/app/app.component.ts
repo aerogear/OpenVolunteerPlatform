@@ -12,7 +12,7 @@ import { PushMessage, PushService } from './services/push.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  private user;
+  public user;
 
   // true if the application is running in background
   private background = false;

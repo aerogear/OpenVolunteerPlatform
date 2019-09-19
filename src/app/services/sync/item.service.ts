@@ -11,7 +11,6 @@ import {
   ApolloOfflineClient,
   OfflineStore,
   CacheOperation,
-  createMutationOptions,
   subscribeToMoreHelper
 } from '@aerogear/voyager-client';
 import { subscriptionOptions } from './cache.updates';

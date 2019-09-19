@@ -1,10 +1,10 @@
 import { Auth } from '@aerogear/auth';
 import { Injectable } from '@angular/core';
 import { OpenShiftConfigService } from './config.service';
-import { VoyagerService } from './sync/voyager.service';
 import { KeycloakInitOptions } from 'keycloak-js';
 import { AuthContextProvider } from '@aerogear/voyager-client';
 import { Platform } from '@ionic/angular';
+import { AuthStateService } from './auth-state.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,12 +15,12 @@ import { Platform } from '@ionic/angular';
 export class AuthService {
     public auth: Auth | undefined;
     public initialized: Promise<boolean>;
-    private readonly aerogear: VoyagerService;
+    private authState: AuthStateService;
 
-    constructor(private openShift: OpenShiftConfigService, public platform: Platform, aerogear: VoyagerService) {
+    constructor(private openShift: OpenShiftConfigService, public platform: Platform, authState: AuthStateService) {
         if (this.isEnabled()) {
             this.auth = new Auth(this.openShift.getConfig());
-            this.aerogear = aerogear;
+            this.authState = authState;
             this.initialized = platform.ready().then(() => {
                 const initOptions: KeycloakInitOptions = { onLoad: 'login-required' };
                 return this.auth.init(initOptions);
@@ -74,19 +74,25 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
         }
     }
 
-    async logout() {
+    logout() {
         if (this.isEnabled()) {
-            await this.aerogear.apolloClient.resetStore();
-            await this.aerogear.apolloClient.cache.reset();
+            this.authState.logout();
             return this.auth.logout();
         } else {
             return Promise.reject('not enabled');
         }
     }
 
-    getAuthContextProvider(): AuthContextProvider | undefined {
+    getAuthContextProvider(): Promise<AuthContextProvider | undefined> {
         if (this.isEnabled()) {
-            return this.auth.getAuthContextProvider();
+            return this.initialized.then( (success) => {
+                if (success) {
+                    return this.auth.getAuthContextProvider();
+                }
+                return undefined;
+            }).catch( (error) => {
+                return undefined;
+            });
         }
         return undefined;
     }

@@ -2,11 +2,12 @@ import {
   ApolloOfflineClient, DataSyncConfig,
   OfflineQueueListener, ConflictListener, OfflineClient, OfflineStore
 } from '@aerogear/voyager-client';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { OpenShiftConfigService } from '../config.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '../auth.service';
 import { taskCacheUpdates } from './cache.updates';
+import { AuthStateService } from '../auth-state.service';
 
 /**
  * Class used to log data conflicts in server
@@ -47,8 +48,20 @@ export class VoyagerService {
 
   private _apolloClient: ApolloOfflineClient;
   private _offlineStore: OfflineStore;
+  private _authStateService: AuthStateService;
 
-  constructor(private openShift: OpenShiftConfigService, public alertCtrl: AlertController, public injector: Injector) {
+  constructor(private openShift: OpenShiftConfigService, public alertCtrl: AlertController,
+    public authService: AuthService, authStateService: AuthStateService) {
+    this._authStateService = authStateService;
+    this._authStateService.subscribe({
+      next: async (info) => {
+        if (info.type === 'logout' && this._apolloClient) {
+          console.log('user logged out, reset store');
+          await this._apolloClient.resetStore();
+          await this._apolloClient.cache.reset();
+        }
+      }
+    });
   }
 
   get apolloClient(): ApolloOfflineClient {
@@ -73,11 +86,7 @@ export class VoyagerService {
     } else {
       options.openShiftConfig = this.openShift.getConfig();
     }
-    const authService = this.injector.get(AuthService);
-    if (authService.isEnabled() && await authService.initialized) {
-      options.authContextProvider = authService.getAuthContextProvider();
-    }
-
+    options.authContextProvider = await this.authService.getAuthContextProvider();
     const offlineClient = new OfflineClient(options);
     this._offlineStore = offlineClient.offlineStore;
     this._apolloClient = await offlineClient.init();
