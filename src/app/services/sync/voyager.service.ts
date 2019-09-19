@@ -50,7 +50,8 @@ export class VoyagerService {
   private _offlineStore: OfflineStore;
   private _authStateService: AuthStateService;
 
-  constructor(private openShift: OpenShiftConfigService, public alertCtrl: AlertController, public authService: AuthService, authStateService: AuthStateService) {
+  constructor(private openShift: OpenShiftConfigService, public alertCtrl: AlertController,
+    public authService: AuthService, authStateService: AuthStateService) {
     this._authStateService = authStateService;
     this._authStateService.subscribe({
       next: async (info) => {

@@ -1,11 +1,11 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-type AuthInfoType = "none" | "init" | "login" | "logout";
+type AuthInfoType = 'none' | 'init' | 'login' | 'logout';
 
 interface AuthInfo {
-  type : AuthInfoType
-  payload? : any
+  type: AuthInfoType;
+  payload?: any;
 }
 
 /**
@@ -18,10 +18,10 @@ interface AuthInfo {
   providedIn: 'root'
 })
 export class AuthStateService {
-  private state : BehaviorSubject<AuthInfo>;
+  private state: BehaviorSubject<AuthInfo>;
 
-  constructor(){
-    this.state = new BehaviorSubject<AuthInfo>({ type : "none"});
+  constructor() {
+    this.state = new BehaviorSubject<AuthInfo>({ type : 'none'});
   }
 
   subscribe(handler) {
@@ -29,14 +29,14 @@ export class AuthStateService {
   }
 
   init() {
-    this.state.next({type: "init"});
+    this.state.next({type: 'init'});
   }
 
   login(user) {
-    this.state.next({type: "login", payload: user});
+    this.state.next({type: 'login', payload: user});
   }
 
   logout() {
-    this.state.next({type: "logout"});
+    this.state.next({type: 'logout'});
   }
 }
