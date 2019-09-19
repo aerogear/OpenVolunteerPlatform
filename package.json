@@ -6,11 +6,13 @@
     "ng": "ng",
     "start": "ionic serve",
     "build": "ionic build",
+    "build:prod": "ionic build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ionic:android": "ionic cordova run android",
-    "ionic:ios": "ionic cordova run ios -- --buildFlag='-UseModernBuildSystem=0'"
+    "ionic:ios": "ionic cordova run ios -- --buildFlag='-UseModernBuildSystem=0'",
+    "ionic:pwa": "ionic build --prod && serve -p 9000 www"
   },
   "private": true,
   "dependencies": {
@@ -75,9 +77,9 @@
     "@angular/compiler-cli": "7.2.12",
     "@angular/language-service": "7.2.12",
     "@ionic/angular-toolkit": "1.5.1",
-    "@types/node": "10.14.15",
     "@types/jasmine": "3.4.0",
     "@types/jasminewd2": "2.0.6",
+    "@types/node": "10.14.15",
     "codelyzer": "5.1.0",
     "jasmine-core": "3.4.0",
     "jasmine-spec-reporter": "4.2.1",
@@ -87,6 +89,7 @@
     "karma-jasmine": "2.0.1",
     "karma-jasmine-html-reporter": "1.4.2",
     "protractor": "5.4.2",
+    "serve": "^11.1.0",
     "ts-node": "8.0.3",
     "tslint": "5.18.0",
     "typescript": "3.2.4"
