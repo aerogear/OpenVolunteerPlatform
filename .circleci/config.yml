@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: update-npm
-          command: 'sudo npm install -g npm@latest'
+          command: "sudo npm install -g npm@latest"
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -48,7 +48,7 @@ jobs:
           command: sudo npm --global install cordova
       - restore_cache:
           name: Restore node modules cache
-          keys: 
+          keys:
             - node-modules-{{ .Branch }}-{{ checksum "package.json" }}
             - node-modules-{{ .Branch }}-
             - node-modules-
@@ -62,19 +62,19 @@ jobs:
             - node_modules
       - restore_cache:
           name: Restoring cordova plugins cache
-          keys: 
-            - cordova-plugins-{{ checksum "config.xml" }}
+          keys:
+            - cordova-plugins-{{ checksum "package.json" }}
       - run:
           name: Build android app
           command: |
-            # Install SDKMan - a package manager used to install gradle
+            # install SDKMan - a package manager used to install gradle
             curl -s "https://get.sdkman.io" | bash && source ~/.sdkman/bin/sdkman-init.sh
             sdk install gradle 4.10.3
             # actually build the app
             npx ionic cordova build android
       - save_cache:
           name: Save cordova plugins cache
-          key: cordova-plugins-{{ checksum "config.xml" }}
+          key: cordova-plugins-{{ checksum "package.json" }}
           paths:
             - plugins
       - persist_to_workspace:
@@ -88,7 +88,7 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore node modules cache
-          keys: 
+          keys:
             - node-modules-{{ .Branch }}-{{ checksum "package.json" }}
             - node-modules-{{ .Branch }}-
             - node-modules-
