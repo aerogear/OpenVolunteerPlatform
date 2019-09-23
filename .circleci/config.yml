@@ -72,6 +72,12 @@ jobs:
             sdk install gradle 4.10.3
             # actually build the app
             npx ionic cordova build android
+      - run:
+          # Wheen restoring the plugins cordova will change the version 
+          # of some of the node dependencies. The good think is that when
+          # this happened cordova will also change the package.json.
+          name: Verify that package.json has not changed
+          command: git diff --exit-code -- package.json
       - save_cache:
           name: Save cordova plugins cache
           key: cordova-plugins-{{ checksum "package.json" }}
