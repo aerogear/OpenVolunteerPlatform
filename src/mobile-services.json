@@ -2,40 +2,6 @@
   "clientId": "showcase-app-2",
   "namespace": "mobile-developer-console",
   "services": [
-    {
-      "config": {
-        "android": {
-          "variantId": "50049896-b2cc-43c2-9445-90821a4843a1",
-          "variantSecret": "ee91d275-6225-4856-b224-c77b3775c7c4"
-        }
-      },
-      "id": "7831aef4-d955-11e9-8f42-125dba193044",
-      "name": "push",
-      "type": "push",
-      "url": "https://unifiedpush-unifiedpush-proxy-mobile-unifiedpush.apps.dbizzarr-b9fe.open.redhat.com"
-    },
-    {
-      "config": {
-        "auth-server-url": "https://sso-user-sso.apps.dbizzarr-b9fe.open.redhat.com/auth",
-        "confidential-port": 0,
-        "public-client": true,
-        "realm": "showcase-app-2-realm",
-        "resource": "showcase-app-2-client",
-        "ssl-required": "external"
-      },
-      "id": "65f3535c-d953-11e9-8f42-125dba193044",
-      "name": "keycloak",
-      "type": "keycloak",
-      "url": "https://sso-user-sso.apps.dbizzarr-b9fe.open.redhat.com/auth"
-    },
-    {
-      "config": {
-        "websocketUrl": "wss://ionic-showcase-server-evals07-mobile-2f9d.apps.dbizzarr-b9fe.open.redhat.com/graphql"
-      },
-      "id": "951f2899-d952-11e9-8f42-125dba193044",
-      "name": "sync-app",
-      "type": "sync-app",
-      "url": "https://ionic-showcase-server-evals07-mobile-2f9d.apps.dbizzarr-b9fe.open.redhat.com/graphql"
-    }
+   
   ]
 }
