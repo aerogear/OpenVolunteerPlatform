@@ -68,9 +68,9 @@ export class TaskPage implements OnInit {
       queueCleared() {
         self.queue = 0;
       },
-      onOperationFailure: (operation) => {
+      onOperationFailure: ({ op }) => {
         this.alertCtrl.create({
-          message: `Failed to replicate offline change: ${operation.operationName}`
+          message: `Failed to replicate offline change: ${op.context.operationName}`
         }).then((dialog) => {
           dialog.present();
         });

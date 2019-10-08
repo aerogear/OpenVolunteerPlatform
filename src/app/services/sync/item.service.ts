@@ -9,9 +9,9 @@ import { AllTasks, Task } from './types';
 import { VoyagerService } from './voyager.service';
 import {
   ApolloOfflineClient,
-  OfflineStore,
   CacheOperation,
-  subscribeToMoreHelper
+  subscribeToMoreHelper,
+  ApolloOfflineStore
 } from '@aerogear/voyager-client';
 import { subscriptionOptions } from './cache.updates';
 
@@ -21,7 +21,7 @@ import { subscriptionOptions } from './cache.updates';
 export class ItemService {
 
   private readonly apollo: ApolloOfflineClient;
-  private offlineStore: OfflineStore;
+  private offlineStore: ApolloOfflineStore;
 
   constructor(aeroGear: VoyagerService) {
     this.apollo = aeroGear.apolloClient;
