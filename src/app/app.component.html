@@ -21,7 +21,7 @@
             </div>
           </ion-item>
           <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection='root' routerLink="/">
+            <ion-item id="e2e-menu-item-home" routerDirection='root' routerLink="/">
               <ion-icon slot="start" name="home"></ion-icon>
               <ion-label>
                 Home
@@ -29,7 +29,7 @@
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection='root' routerLink="/tasks">
+            <ion-item id="e2e-menu-item-tasks" routerDirection='root' routerLink="/tasks">
               <ion-icon slot="start" name="build"></ion-icon>
               <ion-label>
                 Manage Tasks
@@ -37,7 +37,7 @@
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection='root' routerLink="/profile">
+            <ion-item id="e2e-menu-item-profile" routerDirection='root' routerLink="/profile">
               <ion-icon slot="start" name="person"></ion-icon>
               <ion-label>
                 User Profile
@@ -45,33 +45,33 @@
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection='root' routerLink="/files">
+            <ion-item id="e2e-menu-item-files" routerDirection='root' routerLink="/files">
               <ion-icon slot="start" name="document"></ion-icon>
               <ion-label>
                 Files
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-            <ion-item (click)="menuItemHandler()">
+            <ion-item id="e2e-menu-item-security" (click)="menuItemHandler()">
               <ion-icon slot="start" name="warning"></ion-icon>
               <ion-label>Security</ion-label>
             </ion-item>
           <ion-item-group submenu [class.visible]="showSubmenu">
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerDirection='root' routerLink="/devicetrust">
+              <ion-item id="e2e-menu-item-devicetrust" routerDirection='root' routerLink="/devicetrust">
                 <ion-icon slot="start" name="phone-portrait"></ion-icon>
                 <ion-label>Device Trust</ion-label>
               </ion-item>
             </ion-menu-toggle>
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerDirection='root' routerLink="/apptrust">
+              <ion-item id="e2e-menu-item-apptrust" routerDirection='root' routerLink="/apptrust">
                 <ion-icon slot="start" name="appstore"></ion-icon>
                 <ion-label>Application Trust</ion-label>
               </ion-item>
             </ion-menu-toggle>
           </ion-item-group>
           <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection='root' routerLink="/settings">
+            <ion-item id="e2e-menu-item-settings" routerDirection='root' routerLink="/settings">
               <ion-icon slot="start" name="settings"></ion-icon>
               <ion-label>
                 Settings
@@ -79,7 +79,7 @@
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection='root' routerLink="/about">
+            <ion-item id="e2e-menu-item-about" routerDirection='root' routerLink="/about">
               <ion-icon slot="start" name="book"></ion-icon>
               <ion-label>
                 About

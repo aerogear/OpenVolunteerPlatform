@@ -13,14 +13,14 @@
   <ion-grid style="height: 25%">
     <ion-row justify-content-center align-items-center>
       <h1>
-        <strong>{{trustScore}}%</strong>
+        <strong id="e2e-devicetrust-score">{{trustScore}}%</strong>
       </h1>
     </ion-row>
     <ion-row justify-content-center align-items-center>
       <div align="center" color=light>Device Trust Score</div>
     </ion-row>
     <ion-row justify-content-center align-items-center style="padding-top: 1em">
-      <div align="center" color=light>({{totalPassed}} out of {{totalTests}} checks passing)</div>
+      <div id="e2e-devicetrust-passed" align="center" color=light>({{totalPassed}} out of {{totalTests}} checks passing)</div>
     </ion-row>
   </ion-grid>
   <ion-list *ngIf="isAvailable()">
