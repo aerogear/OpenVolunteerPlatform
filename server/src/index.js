@@ -10,6 +10,11 @@ const { createSubscriptionServer } = require('@aerogear/voyager-subscriptions')
 const { appTypeDefs, appResolvers } = require('./schema')
 const agSender = require("unifiedpush-node-sender")
 
+process.on('unhandledRejection', error => {
+  console.error('unhandledRejection', error.message);
+  process.exit(1);
+});
+
 let keycloakService = null
 let pushClient = null
 
