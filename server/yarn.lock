@@ -881,7 +881,7 @@ bl@^1.2.1, bl@^1.2.2:
     readable-stream "^2.3.5"
     safe-buffer "^5.1.1"
 
-bluebird@^3.7.0:
+bluebird@^3.7.1:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.1.tgz#df70e302b471d7473489acf26a93d63b53f874de"
 
@@ -2444,11 +2444,11 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
 
-knex@0.19.5:
-  version "0.19.5"
-  resolved "https://registry.yarnpkg.com/knex/-/knex-0.19.5.tgz#3597ebecf88a5942f18c3e6d91af53bda59eeb5d"
+knex@0.20.1:
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/knex/-/knex-0.20.1.tgz#e2765492a810b3ae6b4c1b49a7bc4719c83f5c12"
   dependencies:
-    bluebird "^3.7.0"
+    bluebird "^3.7.1"
     colorette "1.1.0"
     commander "^3.0.2"
     debug "4.1.1"
