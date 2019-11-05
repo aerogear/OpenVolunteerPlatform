@@ -124,7 +124,6 @@ jobs:
       # special workaround to allow running docker in docker https://circleci.com/docs/2.0/building-docker-images/
       - setup_remote_docker:
           version: 17.05.0-ce
-          docker_layer_caching: true
       - run: |
           cd server          
           TAG=$CIRCLE_TAG ../scripts/publish_example_server_container.sh
