@@ -40,6 +40,7 @@ jobs:
       - image: circleci/android:api-28-node
     steps:
       - checkout
+      - run: echo "save-prefix=" > ~/.npmrc
       - run:
           name: Install ionic
           command: sudo npm --global install ionic
@@ -73,7 +74,7 @@ jobs:
             # actually build the app
             npx ionic cordova build android
       - run:
-          # Wheen restoring the plugins cordova will change the version 
+          # Wheen restoring the plugins cordova will change the version
           # of some of the node dependencies. The good think is that when
           # this happened cordova will also change the package.json.
           name: Verify that package.json has not changed
@@ -139,8 +140,8 @@ workflows:
           filters:
             tags:
               only: /.*/
-            branches:
-              only: master
+            # branches:
+            #   only: master
       - e2e-android:
           requires:
             - build-android
