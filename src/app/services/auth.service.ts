@@ -51,7 +51,7 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
 
                 return this.initialized.then((success) => {
                     if (success && this.auth.isAuthenticated()) {
-                        this.auth.extract().loadUserProfile().then(resolve).catch(reject);
+                        this.auth.loadUserProfile().then(resolve).catch(reject);
                     } else {
                         return reject('Not authenticated');
                     }
