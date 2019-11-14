@@ -40,7 +40,6 @@ jobs:
       - image: circleci/android:api-28-node
     steps:
       - checkout
-      - run: echo "save-prefix=" > ~/.npmrc
       - run:
           name: Install ionic
           command: sudo npm --global install ionic
@@ -61,10 +60,6 @@ jobs:
           key: node-modules-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - restore_cache:
-          name: Restoring cordova plugins cache
-          keys:
-            - cordova-plugins-{{ checksum "package.json" }}
       - run:
           name: Build android app
           command: |
@@ -73,17 +68,6 @@ jobs:
             sdk install gradle 4.10.3
             # actually build the app
             npx ionic cordova build android
-      - run:
-          # Wheen restoring the plugins cordova will change the version
-          # of some of the node dependencies. The good think is that when
-          # this happened cordova will also change the package.json.
-          name: Verify that package.json has not changed
-          command: git diff --exit-code -- package.json
-      - save_cache:
-          name: Save cordova plugins cache
-          key: cordova-plugins-{{ checksum "package.json" }}
-          paths:
-            - plugins
       - persist_to_workspace:
           root: platforms/android/app/build/outputs/apk/debug/
           paths:
