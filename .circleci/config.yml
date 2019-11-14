@@ -46,20 +46,9 @@ jobs:
       - run:
           name: Install cordova
           command: sudo npm --global install cordova
-      - restore_cache:
-          name: Restore node modules cache
-          keys:
-            - node-modules-{{ .Branch }}-{{ checksum "package.json" }}
-            - node-modules-{{ .Branch }}-
-            - node-modules-
       - run:
           name: Install node modules
           command: npm install
-      - save_cache:
-          name: Save node modules cache
-          key: node-modules-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - node_modules
       - run:
           name: Build android app
           command: |
