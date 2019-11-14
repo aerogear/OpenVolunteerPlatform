@@ -113,8 +113,8 @@ workflows:
           filters:
             tags:
               only: /.*/
-            # branches:
-            #   only: master
+            branches:
+              only: master
       - e2e-android:
           requires:
             - build-android
