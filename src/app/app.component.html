@@ -52,24 +52,6 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-            <ion-item id="e2e-menu-item-security" (click)="menuItemHandler()">
-              <ion-icon slot="start" name="warning"></ion-icon>
-              <ion-label>Security</ion-label>
-            </ion-item>
-          <ion-item-group submenu [class.visible]="showSubmenu">
-            <ion-menu-toggle auto-hide="false">
-              <ion-item id="e2e-menu-item-devicetrust" routerDirection='root' routerLink="/devicetrust">
-                <ion-icon slot="start" name="phone-portrait"></ion-icon>
-                <ion-label>Device Trust</ion-label>
-              </ion-item>
-            </ion-menu-toggle>
-            <ion-menu-toggle auto-hide="false">
-              <ion-item id="e2e-menu-item-apptrust" routerDirection='root' routerLink="/apptrust">
-                <ion-icon slot="start" name="appstore"></ion-icon>
-                <ion-label>Application Trust</ion-label>
-              </ion-item>
-            </ion-menu-toggle>
-          </ion-item-group>
           <ion-menu-toggle auto-hide="false">
             <ion-item id="e2e-menu-item-settings" routerDirection='root' routerLink="/settings">
               <ion-icon slot="start" name="settings"></ion-icon>
