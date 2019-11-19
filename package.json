@@ -18,10 +18,7 @@
   "dependencies": {
     "@aerogear/app": "2.8.0-rc1",
     "@aerogear/auth": "2.8.0-rc1",
-    "@aerogear/cordova-plugin-aerogear-metrics": "npm:@aerogear/cordova-plugin-aerogear-metrics@2.7.0",
-    "@aerogear/cordova-plugin-iroot": "npm:@aerogear/cordova-plugin-iroot@0.8.1",
     "@aerogear/push": "2.8.0-rc1",
-    "@aerogear/security": "2.8.0-rc1",
     "@aerogear/voyager-client": "2.8.0-rc1",
     "@angular/common": "7.2.12",
     "@angular/core": "7.2.12",
