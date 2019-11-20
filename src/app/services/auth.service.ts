@@ -18,8 +18,9 @@ export class AuthService {
     private authState: AuthStateService;
 
     constructor(private openShift: OpenShiftConfigService, public platform: Platform, authState: AuthStateService) {
-        if (this.isEnabled()) {
-            this.auth = new Auth(this.openShift.getConfig());
+        const config = this.openShift.getAuthConfig();
+        if (!!config) {
+            this.auth = new Auth(config);
             this.authState = authState;
             this.initialized = platform.ready().then(() => {
                 const initOptions: KeycloakInitOptions = { onLoad: 'login-required' };
@@ -38,7 +39,7 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
     }
 
     isEnabled() {
-        return this.openShift.hasAuthConfig();
+        return !!this.openShift.getAuthConfig();
     }
 
     authenticated() {
@@ -83,12 +84,12 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
 
     getAuthContextProvider(): Promise<AuthContextProvider | undefined> {
         if (this.isEnabled()) {
-            return this.initialized.then( (success) => {
+            return this.initialized.then((success) => {
                 if (success) {
                     return this.auth.getAuthContextProvider();
                 }
                 return undefined;
-            }).catch( (error) => {
+            }).catch((error) => {
                 return undefined;
             });
         }

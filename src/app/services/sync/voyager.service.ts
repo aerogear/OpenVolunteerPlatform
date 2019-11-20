@@ -2,12 +2,11 @@ import {
   ApolloOfflineClient,
   DataSyncConfig,
   ConflictListener,
-  OfflineClient,
   createClient,
   ApolloOfflineStore
 } from '@aerogear/voyager-client';
 import { Injectable } from '@angular/core';
-import { OpenShiftConfigService } from '../config.service';
+import { OpenShiftConfigService, Service } from '../config.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '../auth.service';
 import { taskCacheUpdates } from './cache.updates';
@@ -77,19 +76,16 @@ export class VoyagerService {
   }
 
   public async createApolloClient() {
+    const openShiftConfig = this.openShift.getSyncConfig();
     const options: DataSyncConfig = {
+      httpUrl: this.openShift.getLocalServerUrl(),
+      wsUrl: this.openShift.getWSLocalServerUrl(),
       conflictListener: new ConflictLogger(this.alertCtrl),
       fileUpload: true,
-      mutationCacheUpdates: taskCacheUpdates
+      mutationCacheUpdates: taskCacheUpdates,
+      ...openShiftConfig.config
     };
 
-    if (!this.openShift.hasSyncConfig()) {
-      // Use default localhost urls when OpenShift config is missing
-      options.httpUrl = this.openShift.getLocalServerUrl();
-      options.wsUrl = this.openShift.getWSLocalServerUrl();
-    } else {
-      options.openShiftConfig = this.openShift.getConfig();
-    }
     options.authContextProvider = await this.authService.getAuthContextProvider();
     const offlineClient = await createClient(options);
     this._offlineStore = offlineClient.offlineStore;

@@ -27,14 +27,19 @@ export class OpenShiftConfigService {
     return this.app.config;
   }
 
-  hasSyncConfig() {
-    return !!(config.services.find((service) =>
-      service.type === 'sync-app'));
+  getSyncConfig() {
+    return config.services.find((service) =>
+      service.type === 'sync-app');
   }
 
-  hasAuthConfig() {
-    return !!(config.services.find((service) =>
-      service.type === 'keycloak'));
+  getPushConfig() {
+    return config.services.find((service) =>
+      service.type === 'push');
+  }
+
+  getAuthConfig() {
+    return config.services.find((service) =>
+      service.type === 'keycloak');
   }
 
   getServerUrl() {
@@ -54,12 +59,5 @@ export class OpenShiftConfigService {
     return 'ws://localhost:4000/graphql';
   }
 
-  getConfiguration(type: Service) {
-    switch (type) {
-      case Service.Sync: return this.getConfig().getConfigByType('sync-app');
-      case Service.Auth: return this.getConfig().getConfigByType('keycloak');
-      case Service.Push: return this.getConfig().getConfigByType('push');
-    }
-  }
 }
 
