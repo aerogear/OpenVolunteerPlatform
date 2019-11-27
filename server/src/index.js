@@ -25,7 +25,7 @@ if (config.keycloakConfig) {
   keycloakService = new KeycloakSecurityService(config.keycloakConfig)
 }
 
-if(config.pushConfig) {
+if (config.pushConfig) {
   let pushService = agSender(config.pushConfig)
   pushClient = pushService.then((client) => {
     return client;
@@ -47,6 +47,9 @@ async function start() {
 
   const { applyFileMiddelware } = require('./files');
   applyFileMiddelware(app);
+
+  app.use('/', express.static('website'))
+
   app.get('/health', (req, res) => res.sendStatus(200))
 
   // connect to db
