@@ -91,7 +91,10 @@ async function start() {
   apolloServer.applyMiddleware({ app })
 
   const server = app.listen(config.port, () => {
-    console.log(`🚀  Server ready at http://localhost:${config.port}/graphql`)
+    console.log(`\n    ***********************************************************
+    🎮 Ionic PWA application available at http://localhost:${config.port}
+    🚀 GraphQL Playground is available at http://localhost:${config.port}/graphql
+    ***********************************************************`)
     createSubscriptionServer({
       securityService: keycloakService,
       schema: apolloServer.schema
