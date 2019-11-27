@@ -89,7 +89,7 @@ jobs:
               -X POST https://api-cloud.browserstack.com/app-automate/upload \
               -F "file=@/tmp/workspace/app-debug.apk" | cut -d '"' -f 4)"
             npm run e2e
-  publish_example_server_container:
+  publish_showcase_container:
     docker:
       # image for building docker containers
       - image: docker:17.12.1-ce-git
@@ -100,7 +100,7 @@ jobs:
           version: 17.05.0-ce
       - run: |
           cd server          
-          TAG=$CIRCLE_TAG ../scripts/publish_example_server_container.sh
+          TAG=$CIRCLE_TAG ../scripts/publish_showcase_container.sh
 workflows:
   version: 2
   build_and_release:
@@ -118,7 +118,7 @@ workflows:
       - e2e-android:
           requires:
             - build-android
-      - publish_example_server_container:
+      - publish_showcase_container:
           filters:
             tags:
               only: /.*/
