@@ -21,7 +21,7 @@ export class AuthService {
     constructor(private configService: ShowcaseConfigService, public platform: Platform, authState: AuthStateService) {
         const config = configService.getAuthConfig();
         if (!!config) {
-            this.keycloak = new Keycloak(config);
+            this.keycloak = new Keycloak({ ...config, promiseType: 'native' });
             this.authState = authState;
             this.initialized = platform.ready().then(() => {
                 const initOptions: KeycloakInitOptions = { onLoad: 'login-required' };

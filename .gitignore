@@ -36,3 +36,4 @@ package-lock.json
 server/src/config/keycloak.json
 
 server/website
+yarn.lock
