@@ -49,10 +49,6 @@ export class PushService {
   }
 
   public register() {
-    if (!this.configService.getPushConfig()) {
-      // Disabled temporarily
-      return;
-    }
     new PushRegistration(this.configService.getPushConfig())
       .register({
         alias: 'cordova',

@@ -30,7 +30,7 @@ export class AuthService {
                 };
                 return this.keycloak.init(initOptions);
             }).catch((error) => {
-                console.warn(`Failed to intialize keycloak
+                console.warn(`Failed to initialize keycloak
 Please review your keycloak client configuration on keycloak server
 and check if you have setup proper "Valid Redirect URIs" and "Web Origins" values`);
                 return false;
@@ -122,7 +122,7 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
                     };
                 }
                 return undefined;
-            }).catch((error) => {
+            }).catch(() => {
                 return undefined;
             });
         }

@@ -25,7 +25,7 @@ export class ShowcaseConfigService {
   public config: ServicesConfig;
 
   constructor() {
-    this.config = (window as unknown as any).showcaseConfig;
+    this.config = (window as any).showcaseConfig;
     if (!this.config || !this.config.backend) {
       throw new Error('Config is not properly initialized');
     }
@@ -39,4 +39,3 @@ export class ShowcaseConfigService {
     return this.config.auth;
   }
 }
-
