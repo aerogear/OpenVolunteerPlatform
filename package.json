@@ -16,9 +16,7 @@
   },
   "private": true,
   "dependencies": {
-    "keycloak-js": "8.0.0",
     "@aerogear/push": "3.0.0-alpha.1",
-    "offix-client-boost": "0.11.0-dev1",
     "@angular/common": "7.2.12",
     "@angular/core": "7.2.12",
     "@angular/forms": "7.2.12",
@@ -55,6 +53,8 @@
     "core-js": "2.6.5",
     "graphql": "14.5.8",
     "graphql-tag": "2.10.1",
+    "keycloak-js": "8.0.0",
+    "offix-client-boost": "^0.11.0-dev3",
     "phonegap-plugin-multidex": "1.0.0",
     "phonegap-plugin-push": "2.3.0",
     "rxjs": "6.5.3",

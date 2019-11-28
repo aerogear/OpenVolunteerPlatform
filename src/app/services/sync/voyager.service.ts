@@ -1,9 +1,9 @@
 import {
   ApolloOfflineClient,
-  DataSyncConfig,
   ConflictListener,
   createClient,
-  ApolloOfflineStore
+  ApolloOfflineStore,
+  OffixBoostOptions
 } from 'offix-client-boost';
 import { Injectable } from '@angular/core';
 import { ShowcaseConfigService } from '../config.service';
@@ -77,7 +77,7 @@ export class VoyagerService {
 
   public async createApolloClient() {
     const urls = this.configService.config.backend;
-    const options: DataSyncConfig = {
+    const options: OffixBoostOptions = {
       httpUrl: urls.serverUrl,
       wsUrl: urls.wsServerUrl,
       conflictListener: new ConflictLogger(this.alertCtrl),
@@ -88,6 +88,6 @@ export class VoyagerService {
     options.authContextProvider = await this.authService.getAuthContextProvider();
     const offlineClient = await createClient(options);
     this._offlineStore = offlineClient.offlineStore;
-    this._apolloClient = offlineClient.apolloClient;
+    this._apolloClient = offlineClient;
   }
 }

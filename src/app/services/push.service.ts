@@ -1,6 +1,5 @@
 import { PushRegistration } from '@aerogear/push';
 import { Injectable } from '@angular/core';
-import { ConfigurationService } from '@aerogear/core';
 import { Events } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { ShowcaseConfigService } from './config.service';
