@@ -95,42 +95,23 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
         }
     }
 
-    getAuthContextProvider(): Promise<AuthContextProvider | undefined> {
-        if (this.isEnabled()) {
-            return this.initialized.then((success) => {
-                if (success) {
-                    return () => {
-                        const tokenUpdate = this.keycloak.updateToken(30) as any;
-                        // Keycloak doesn't use a proper promise. Instead it uses success/error.
-                        return new Promise<AuthContext>((resolve, reject) => {
-                            tokenUpdate.success(() => {
-                                if (this.keycloak.token) {
-                                    resolve({
-                                        headers: {
-                                            'Authorization': 'Bearer ' + this.keycloak.token
-                                        }
-                                    });
-                                } else {
-                                    reject('No keycloak token available');
-                                }
-                            }).error((error: any) => {
-                                // tslint:disable-next-line: no-console
-                                console.info('Cannot update keycloak token', error);
-                                reject(error);
-                            });
-                        });
+    async getAuthContextProvider(): Promise<AuthContextProvider | undefined> {
+        if (this.isEnabled() && await this.initialized) {
+            return async () => {
+                await this.keycloak.updateToken(50);
+                if (this.keycloak.token) {
+                    return {
+                        headers: {
+                            'Authorization': 'Bearer ' + this.keycloak.token
+                        }
                     };
+                } else {
+                    throw Error('No keycloak token available');
                 }
-                return undefined;
-            }).catch(() => {
-                return undefined;
-            });
+            };
         }
         return undefined;
     }
-
-
-
 }
 
 /**
