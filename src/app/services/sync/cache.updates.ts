@@ -4,7 +4,7 @@ import {
   TASK_UPDATED_SUBSCRIPTION,
   TASK_DELETED_SUBSCRIPTION
 } from './graphql.queries';
-import { SubscriptionHelperOptions, CacheOperation, getUpdateFunction } from '@aerogear/voyager-client';
+import { SubscriptionHelperOptions, CacheOperation, getUpdateFunction } from 'offix-client-boost';
 
 export const taskCacheUpdates = {
   createTask: getUpdateFunction({

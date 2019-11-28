@@ -4,7 +4,7 @@ import {
   ConflictListener,
   createClient,
   ApolloOfflineStore
-} from '@aerogear/voyager-client';
+} from 'offix-client-boost';
 import { Injectable } from '@angular/core';
 import { ShowcaseConfigService } from '../config.service';
 import { AlertController } from '@ionic/angular';

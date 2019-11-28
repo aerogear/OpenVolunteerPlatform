@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ShowcaseConfigService } from './config.service';
 import { KeycloakInstance, KeycloakInitOptions } from 'keycloak-js';
-import { AuthContextProvider } from '@aerogear/voyager-client';
+import { AuthContextProvider } from 'offix-client-boost';
 import { Platform } from '@ionic/angular';
 import { AuthStateService } from './auth-state.service';
 

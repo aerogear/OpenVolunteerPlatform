@@ -1,4 +1,4 @@
-import { CordovaNetworkStatus, WebNetworkStatus, NetworkStatus } from '@aerogear/voyager-client';
+import { CordovaNetworkStatus, WebNetworkStatus, NetworkStatus } from 'offix-client-boost';
 import { Injectable } from '@angular/core';
 
 @Injectable({

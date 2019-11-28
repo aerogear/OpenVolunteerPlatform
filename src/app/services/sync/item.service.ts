@@ -12,7 +12,7 @@ import {
   CacheOperation,
   subscribeToMoreHelper,
   ApolloOfflineStore
-} from '@aerogear/voyager-client';
+} from 'offix-client-boost';
 import { subscriptionOptions } from './cache.updates';
 
 @Injectable({

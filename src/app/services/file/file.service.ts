@@ -4,7 +4,7 @@ import {
   UPLOAD_FILE
 } from './graphql.queries';
 import { VoyagerService } from '../sync/voyager.service';
-import { ApolloOfflineClient } from '@aerogear/voyager-client';
+import { ApolloOfflineClient } from 'offix-client-boost';
 import { FileEntries, FileEntry } from './types';
 
 @Injectable({
