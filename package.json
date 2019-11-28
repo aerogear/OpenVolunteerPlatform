@@ -16,7 +16,6 @@
   },
   "private": true,
   "dependencies": {
-    "@aerogear/app": "2.8.0-rc1",
     "@aerogear/auth": "2.8.0-rc1",
     "@aerogear/push": "2.8.0-rc1",
     "@aerogear/voyager-client": "2.8.0-rc1",

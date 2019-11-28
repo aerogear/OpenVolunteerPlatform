@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ConfigurationService } from '@aerogear/core';
 import { Events } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { OpenShiftConfigService } from './config.service';
+import { ShowcaseConfigService } from './config.service';
 
 export interface PushMessage {
   message: string;
@@ -16,7 +16,7 @@ export interface PushMessage {
  */
 @Injectable()
 export class PushService {
-  constructor(private storage: Storage, public events: Events, private openShift: OpenShiftConfigService) { }
+  constructor(private storage: Storage, public events: Events, private configService: ShowcaseConfigService) { }
 
   public async initialize(cb: (notification: PushMessage) => void) {
 
@@ -49,7 +49,7 @@ export class PushService {
   }
 
   public register() {
-    new PushRegistration(this.openShift.getPushConfig())
+    new PushRegistration(this.configService.getPushConfig())
     .register({
       alias: 'cordova',
       categories: ['ionic', 'showcase']
@@ -61,7 +61,7 @@ export class PushService {
   }
 
   public unregister() {
-    new PushRegistration(this.openShift.getPushConfig())
+    new PushRegistration(this.configService.getPushConfig())
     .unregister()
     .then(() => {
       console.log('Successfully unregistered');

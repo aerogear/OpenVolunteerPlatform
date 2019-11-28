@@ -1,6 +1,6 @@
 import { Auth } from '@aerogear/auth';
 import { Injectable } from '@angular/core';
-import { OpenShiftConfigService } from './config.service';
+import { ShowcaseConfigService } from './config.service';
 import { KeycloakInitOptions } from 'keycloak-js';
 import { AuthContextProvider } from '@aerogear/voyager-client';
 import { Platform } from '@ionic/angular';
@@ -17,8 +17,8 @@ export class AuthService {
     public initialized: Promise<boolean>;
     private authState: AuthStateService;
 
-    constructor(private openShift: OpenShiftConfigService, public platform: Platform, authState: AuthStateService) {
-        const config = this.openShift.getAuthConfig();
+    constructor(private configService: ShowcaseConfigService, public platform: Platform, authState: AuthStateService) {
+        const config = this.configService.getAuthConfig();
         if (!!config) {
             this.auth = new Auth(config);
             this.authState = authState;
@@ -39,7 +39,7 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
     }
 
     isEnabled() {
-        return !!this.openShift.getAuthConfig();
+        return !!this.configService.getAuthConfig();
     }
 
     authenticated() {

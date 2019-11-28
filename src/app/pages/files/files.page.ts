@@ -3,7 +3,7 @@ import { FileEntry } from '../../services/file/types';
 import { FileService } from '../../services/file/file.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
-import { OpenShiftConfigService } from '../../services/config.service';
+import { ShowcaseConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-files',
@@ -17,9 +17,9 @@ export class FilesPage implements OnInit {
 
   constructor(public fileService: FileService,
     public alertCtrl: AlertController,
-    public auth: AuthService, openShift: OpenShiftConfigService) {
+    public auth: AuthService, configService: ShowcaseConfigService) {
     // Note: File Endpoint assume that server returns relative paths to files
-    this.baseURL = new URL(openShift.getServerUrl()).origin;
+    this.baseURL = new URL(configService.config.backend.serverUrl).origin;
   }
 
   async ngOnInit() {

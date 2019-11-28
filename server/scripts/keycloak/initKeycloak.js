@@ -128,7 +128,7 @@ async function prepareKeycloak () {
     console.log()
     console.log(JSON.stringify(bearerInstallation, null, 2))
     console.log()
-    console.log('2. Copy the following app config into the services array in ionic-showcase/src/mobile-services.json')
+    console.log('2. Copy the following app config into the auth section in ionic-showcase/assets/config.js')
     console.log(JSON.stringify(getMobileServicesConfig(publicInstallation), null, 2))
     console.log('Done. Please follow the instructions printed above to ensure your environment is set up properly.')
   } catch(e) {

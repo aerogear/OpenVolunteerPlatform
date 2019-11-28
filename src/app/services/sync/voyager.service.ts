@@ -6,7 +6,7 @@ import {
   ApolloOfflineStore
 } from '@aerogear/voyager-client';
 import { Injectable } from '@angular/core';
-import { OpenShiftConfigService, Service } from '../config.service';
+import { ShowcaseConfigService } from '../config.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '../auth.service';
 import { taskCacheUpdates } from './cache.updates';
@@ -53,7 +53,7 @@ export class VoyagerService {
   private _offlineStore: ApolloOfflineStore;
   private _authStateService: AuthStateService;
 
-  constructor(private openShift: OpenShiftConfigService, public alertCtrl: AlertController,
+  constructor(private configService: ShowcaseConfigService, public alertCtrl: AlertController,
     public authService: AuthService, authStateService: AuthStateService) {
     this._authStateService = authStateService;
     this._authStateService.subscribe({
@@ -76,14 +76,13 @@ export class VoyagerService {
   }
 
   public async createApolloClient() {
-    const openShiftConfig = this.openShift.getSyncConfig();
+    const urls = this.configService.config.backend;
     const options: DataSyncConfig = {
-      httpUrl: this.openShift.getLocalServerUrl(),
-      wsUrl: this.openShift.getWSLocalServerUrl(),
+      httpUrl: urls.serverUrl,
+      wsUrl: urls.wsServerUrl,
       conflictListener: new ConflictLogger(this.alertCtrl),
       fileUpload: true,
       mutationCacheUpdates: taskCacheUpdates,
-      ...openShiftConfig.config
     };
 
     options.authContextProvider = await this.authService.getAuthContextProvider();
