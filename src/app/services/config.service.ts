@@ -8,7 +8,7 @@ export interface ServicesConfig {
   backend: {
     serverUrl: string,
     wsServerUrl: string
-  },
+  };
   push: any;
   auth: any;
 }
@@ -27,7 +27,7 @@ export class ShowcaseConfigService {
   constructor() {
     this.config = (window as unknown as any).showcaseConfig;
     if (!this.config || !this.config.backend) {
-      throw new Error('Config is not properly initialized')
+      throw new Error('Config is not properly initialized');
     }
   }
 

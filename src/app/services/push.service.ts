@@ -21,7 +21,7 @@ export class PushService {
   public async initialize(cb: (notification: PushMessage) => void) {
 
     PushRegistration.onMessageReceived((notification: any) => {
-      cb({message: notification.message, received: new Date().toDateString()});
+      cb({ message: notification.message, received: new Date().toDateString() });
     });
 
     this.events.subscribe('settings:changed', (key, value) => {
@@ -49,25 +49,29 @@ export class PushService {
   }
 
   public register() {
+    if (!this.configService.getPushConfig()) {
+      // Disabled temporarily
+      return;
+    }
     new PushRegistration(this.configService.getPushConfig())
-    .register({
-      alias: 'cordova',
-      categories: ['ionic', 'showcase']
-    }).then(() => {
-      console.log('Push registration successful');
-    }).catch((err) => {
-      console.warn('Push registration unsuccessful');
-    });
+      .register({
+        alias: 'cordova',
+        categories: ['ionic', 'showcase']
+      }).then(() => {
+        console.log('Push registration successful');
+      }).catch((err) => {
+        console.warn('Push registration unsuccessful');
+      });
   }
 
   public unregister() {
     new PushRegistration(this.configService.getPushConfig())
-    .unregister()
-    .then(() => {
-      console.log('Successfully unregistered');
-    }).catch((err) => {
-      console.error('Error unregistering', err);
-    });
+      .unregister()
+      .then(() => {
+        console.log('Successfully unregistered');
+      }).catch((err) => {
+        console.error('Error unregistering', err);
+      });
   }
 
 }

@@ -5,6 +5,6 @@ window.showcaseConfig = {
     "serverUrl": "http://localhost:4000/graphql",
     "wsServerUrl": "ws://localhost:4000/graphql"
   },
-  "push": {},
-  "auth": {}
+  // "push": {},
+  // "auth": {}
 };

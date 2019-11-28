@@ -1,10 +1,11 @@
-import { Auth } from '@aerogear/auth';
 import { Injectable } from '@angular/core';
 import { ShowcaseConfigService } from './config.service';
-import { KeycloakInitOptions } from 'keycloak-js';
+import { KeycloakInstance, KeycloakInitOptions } from 'keycloak-js';
 import { AuthContextProvider } from '@aerogear/voyager-client';
 import { Platform } from '@ionic/angular';
 import { AuthStateService } from './auth-state.service';
+
+const Keycloak = require('keycloak-js');
 
 @Injectable({
     providedIn: 'root'
@@ -13,18 +14,18 @@ import { AuthStateService } from './auth-state.service';
  * Service provides Apollo Voyager client
  */
 export class AuthService {
-    public auth: Auth | undefined;
+    private keycloak: KeycloakInstance | undefined;
     public initialized: Promise<boolean>;
     private authState: AuthStateService;
 
     constructor(private configService: ShowcaseConfigService, public platform: Platform, authState: AuthStateService) {
-        const config = this.configService.getAuthConfig();
+        const config = configService.getAuthConfig();
         if (!!config) {
-            this.auth = new Auth(config);
+            this.keycloak = new Keycloak(config);
             this.authState = authState;
             this.initialized = platform.ready().then(() => {
                 const initOptions: KeycloakInitOptions = { onLoad: 'login-required' };
-                return this.auth.init(initOptions);
+                return this.keycloak.init(initOptions);
             }).catch((error) => {
                 console.warn(`Failed to intialize keycloak
 Please review your keycloak client configuration on keycloak server
@@ -35,7 +36,7 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
     }
 
     getAuth() {
-        return this.auth;
+        return this.keycloak;
     }
 
     isEnabled() {
@@ -43,16 +44,15 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
     }
 
     authenticated() {
-        return this.auth.isAuthenticated();
+        return this.keycloak.authenticated;
     }
 
     getProfile() {
         return new Promise((resolve, reject) => {
             if (this.isEnabled()) {
-
                 return this.initialized.then((success) => {
-                    if (success && this.auth.isAuthenticated()) {
-                        this.auth.loadUserProfile().then(resolve).catch(reject);
+                    if (success && this.keycloak.authenticated) {
+                        this.keycloak.loadUserProfile().then(resolve).catch(reject);
                     } else {
                         return reject('Not authenticated');
                     }
@@ -67,16 +67,26 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
 
     login(): Promise<void> {
         if (this.isEnabled()) {
-            return this.auth.login();
+            return this.keycloak.login();
         } else {
             return Promise.reject('not enabled');
         }
     }
 
+    /**
+   * Return the users realm level roles
+   */
+    public getRealmRoles(): string[] {
+        if (this.keycloak.realmAccess && this.keycloak.realmAccess.roles) {
+            return this.keycloak.realmAccess.roles;
+        }
+        return [];
+    }
+
     logout() {
         if (this.isEnabled()) {
             this.authState.logout();
-            return this.auth.logout();
+            return this.keycloak.logout();
         } else {
             return Promise.reject('not enabled');
         }
@@ -86,7 +96,27 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
         if (this.isEnabled()) {
             return this.initialized.then((success) => {
                 if (success) {
-                    return this.auth.getAuthContextProvider();
+                    return () => {
+                        const tokenUpdate = this.keycloak.updateToken(30) as any;
+                        // Keycloak doesn't use a proper promise. Instead it uses success/error.
+                        return new Promise<AuthContext>((resolve, reject) => {
+                            tokenUpdate.success(() => {
+                                if (this.keycloak.token) {
+                                    resolve({
+                                        headers: {
+                                            'Authorization': 'Bearer ' + this.keycloak.token
+                                        }
+                                    });
+                                } else {
+                                    reject('No keycloak token available');
+                                }
+                            }).error((error: any) => {
+                                // tslint:disable-next-line: no-console
+                                console.info('Cannot update keycloak token', error);
+                                reject(error);
+                            });
+                        });
+                    };
                 }
                 return undefined;
             }).catch((error) => {
@@ -95,5 +125,16 @@ and check if you have setup proper "Valid Redirect URIs" and "Web Origins" value
         }
         return undefined;
     }
+
+
+
 }
 
+/**
+ * Abstracts auth headers
+ */
+export interface AuthContext {
+    headers: {
+        Authorization: string
+    };
+}

@@ -16,7 +16,7 @@
   },
   "private": true,
   "dependencies": {
-    "@aerogear/auth": "2.8.0-rc1",
+    "keycloak-js": "8.0.0",
     "@aerogear/push": "2.8.0-rc1",
     "@aerogear/voyager-client": "2.8.0-rc1",
     "@angular/common": "7.2.12",

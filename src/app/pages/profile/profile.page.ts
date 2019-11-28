@@ -42,7 +42,7 @@ export class ProfilePage implements OnInit {
 
   loadUserProfile() {
     this.authService.getProfile().then((userProfile: any) => {
-      const realmRoles = this.authService.auth.getRealmRoles();
+      const realmRoles = this.authService.getRealmRoles();
 
       this.profile = {
         username: userProfile.username ? userProfile.username : 'Unknown Username',
@@ -67,6 +67,8 @@ export class ProfilePage implements OnInit {
   }
 
   public ionViewDidEnter(): void {
-    this.loadUserProfile();
+    if (!this.isDisabled()) {
+      this.loadUserProfile();
+    }
   }
 }

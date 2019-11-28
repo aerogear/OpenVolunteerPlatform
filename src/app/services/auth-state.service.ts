@@ -9,7 +9,6 @@ interface AuthInfo {
 }
 
 /**
- *
  * A service that can be used to publish/subscribe to the auth status of the app.
  * @export
  * @class AuthStateService
