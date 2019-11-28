@@ -14,17 +14,20 @@ const Keycloak = require('keycloak-js');
  * Service provides Apollo Voyager client
  */
 export class AuthService {
-    private keycloak: KeycloakInstance | undefined;
+    private keycloak: KeycloakInstance<'native'> | undefined;
     public initialized: Promise<boolean>;
     private authState: AuthStateService;
 
     constructor(private configService: ShowcaseConfigService, public platform: Platform, authState: AuthStateService) {
         const config = configService.getAuthConfig();
         if (!!config) {
-            this.keycloak = new Keycloak({ ...config, promiseType: 'native' });
+            this.keycloak = new Keycloak({ ...config });
             this.authState = authState;
             this.initialized = platform.ready().then(() => {
-                const initOptions: KeycloakInitOptions = { onLoad: 'login-required' };
+                const initOptions: KeycloakInitOptions = {
+                    onLoad: 'login-required',
+                    promiseType: 'native'
+                };
                 return this.keycloak.init(initOptions);
             }).catch((error) => {
                 console.warn(`Failed to intialize keycloak
