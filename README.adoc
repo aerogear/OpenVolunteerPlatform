@@ -136,6 +136,25 @@ npm run ionic:pwa
 NOTE: To connect to the local GraphQL server, when the app is running in the Android emulator,
 change [Client URL](https://github.com/aerogear/ionic-showcase/blob/master/src/app/services/sync/voyager.service.ts#L76) from `localhost` to `10.0.2.2`. Note that Push notifications do not work in an emulator.
 
+=== Adding integrations to the client
+
+Client side is being configured dynamically by assets file located in `src/assets/config/config.js`.
+Making changes in config can point client side application to remote server and add additional integrations for Push and Auth
+
+Example config: 
+
+```
+window.showcaseConfig = {
+  "backend": {
+    "serverUrl": "http://yourserver/graphql",
+    "wsServerUrl": "ws://yourserver/graphql"
+  }
+};
+```
+
+
+> NOTE: When running in cloud developers can swap this file dynamically using config-map or openshift secret
+
 === OpenShift Integration
 
 To integrate with OpenShift mobile config please paste your configuration into
