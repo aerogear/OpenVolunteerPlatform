@@ -54,7 +54,7 @@
     "graphql": "14.5.8",
     "graphql-tag": "2.10.1",
     "keycloak-js": "8.0.1",
-    "offix-client-boost": "^0.11.0-dev3",
+    "offix-client-boost": "0.11.0-dev3",
     "phonegap-plugin-multidex": "1.0.0",
     "phonegap-plugin-push": "2.3.0",
     "rxjs": "6.5.3",
