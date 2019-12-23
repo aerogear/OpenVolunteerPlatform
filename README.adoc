@@ -25,7 +25,7 @@ The GraphQL server uses https://github.com/aerogear/voyager-server[Voyager Serve
 Requirements:
 
 - Docker
-- Node.js 6.x or above to run server
+- Node.js 8.x or above to run server
 - (optional) access to a running OpenShift instance
 
 === Running the server
