@@ -74,7 +74,7 @@ const users = [
 
 // This is called by an immediately invoked function expression
 // at the bottom of the file
-async function prepareKeycloak () {
+async function prepareKeycloak() {
   try {
     console.log('Authenticating with keycloak server')
     token = await authenticateKeycloak()
@@ -113,7 +113,7 @@ async function prepareKeycloak () {
       // Create a new user
       console.log(`creating user ${user.name} with password ${user.password}`)
       const userIdUrl = await createUser(user.name, user.password)
-      
+
       // Assign roles to the user
       await assignRealmRolesToUser(user, userIdUrl)
       await assignClientRolesToUser(user, BEARER_CLIENT, userIdUrl)
@@ -122,16 +122,27 @@ async function prepareKeycloak () {
     const bearerInstallation = await getClientInstallation(BEARER_CLIENT)
     const publicInstallation = await getClientInstallation(PUBLIC_CLIENT)
 
+    const clientConfig = {
+      auth: {
+        url: bearerInstallation['auth-server-url'],
+        realm: bearerInstallation.realm,
+        clientId: bearerInstallation.resource
+      }
+    }
+
+    let configFormatted = JSON.stringify(clientConfig, null, 2);
+    configFormatted = configFormatted.substring(1, configFormatted.length - 1);
+
     console.log()
     console.log('Your keycloak server is set up for local usage and development')
     console.log('1. Copy the following server config into ionic-showcase/server/src/config/keycloak.json')
     console.log()
-    console.log(JSON.stringify(bearerInstallation, null, 2))
+    console.log(`window.showcaseConfig = {\n  ...\n${configFormatted}\n  ...\n}`)
     console.log()
-    console.log('2. Copy the following app config into the auth section in ionic-showcase/assets/config.js')
+    console.log('2. Copy the following app config into the auth section in ionic-showcase/src/assets/config/config.js')
     console.log(JSON.stringify(getMobileServicesConfig(publicInstallation), null, 2))
     console.log('Done. Please follow the instructions printed above to ensure your environment is set up properly.')
-  } catch(e) {
+  } catch (e) {
     console.error(e)
     process.exit(1)
   }
@@ -174,7 +185,7 @@ async function assignClientRolesToUser(user, client, userIdUrl) {
   }
 }
 
-async function authenticateKeycloak () {
+async function authenticateKeycloak() {
   const res = await axios({
     method: 'POST',
     url: `${KEYCLOAK_URL}/realms/${ADMIN_REALM}/protocol/openid-connect/token`,
@@ -183,7 +194,7 @@ async function authenticateKeycloak () {
   return `Bearer ${res.data['access_token']}`
 }
 
-async function importRealm () {
+async function importRealm() {
   return await axios({
     method: 'POST',
     url: `${KEYCLOAK_URL}/admin/realms`,
@@ -192,7 +203,7 @@ async function importRealm () {
   })
 }
 
-async function getRealmRoles () {
+async function getRealmRoles() {
   const res = await axios({
     method: 'GET',
     url: `${KEYCLOAK_URL}/admin/realms/${APP_REALM}/roles`,
@@ -201,7 +212,7 @@ async function getRealmRoles () {
   return res.data
 }
 
-async function createClientRole (client, roleName) {
+async function createClientRole(client, roleName) {
   try {
     return await axios({
       method: 'POST',
@@ -241,7 +252,7 @@ async function createRealmRole(roleName) {
   }
 }
 
-async function getClients () {
+async function getClients() {
   const res = await axios({
     method: 'GET',
     url: `${KEYCLOAK_URL}/admin/realms/${APP_REALM}/clients`,
@@ -250,7 +261,7 @@ async function getClients () {
   return res.data
 }
 
-async function getClientRoles (client) {
+async function getClientRoles(client) {
   const res = await axios({
     method: 'GET',
     url: `${KEYCLOAK_URL}/admin/realms/${APP_REALM}/clients/${client.id}/roles`,
@@ -259,7 +270,7 @@ async function getClientRoles (client) {
   return res.data
 }
 
-async function createUser (name, password) {
+async function createUser(name, password) {
   const res = await axios({
     method: 'post',
     url: `${KEYCLOAK_URL}/admin/realms/${APP_REALM}/users`,
@@ -275,7 +286,7 @@ async function createUser (name, password) {
   }
 }
 
-async function assignRealmRoleToUser (userIdUrl, role) {
+async function assignRealmRoleToUser(userIdUrl, role) {
   const res = await axios({
     method: 'POST',
     url: `${userIdUrl}/role-mappings/realm`,
@@ -285,7 +296,7 @@ async function assignRealmRoleToUser (userIdUrl, role) {
   return res.data
 }
 
-async function assignClientRoleToUser (userIdUrl, client, role) {
+async function assignClientRoleToUser(userIdUrl, client, role) {
   const res = await axios({
     method: 'POST',
     url: `${userIdUrl}/role-mappings/clients/${client.id}`,
@@ -295,14 +306,14 @@ async function assignClientRoleToUser (userIdUrl, client, role) {
   return res.data
 }
 
-async function resetKeycloakConfiguration () {
+async function resetKeycloakConfiguration() {
   try {
     await axios({
       method: 'DELETE',
       url: `${KEYCLOAK_URL}/admin/realms/${APP_REALM}`,
       headers: { 'Authorization': token }
     })
-  } catch(e) {
+  } catch (e) {
     if (e.response.status !== 404) {
       throw e
     }

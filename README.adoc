@@ -57,9 +57,11 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 
 Follow these instructions to set up Keycloak for Authentication/Authorization.
 
+
 . Start Keycloak Server
 +
 ```shell
+cd keycloak
 npm run keycloak
 ```
 
@@ -142,15 +144,28 @@ Client side is being configured dynamically by assets file located in `src/asset
 Making changes in config can point client side application to remote server and add additional integrations for Push and Auth
 
 Example config: 
-
-```
+[source,js]
+----
 window.showcaseConfig = {
   "backend": {
     "serverUrl": "http://yourserver/graphql",
     "wsServerUrl": "ws://yourserver/graphql"
+  },
+  "auth": {
+    "realm": "<your realm>",
+    "url": "https://your-server/auth",
+    "clientId": "<your-client>"
+  },
+  "push": {
+    "pushServerURL": "http://localhost:9999/",
+    "android": {
+      "senderID": "test",
+      "variantID": "b7522eb7-5b73-464c-8a2b-b249ec1bd18b",
+      "variantSecret": "60de4619-03b5-4536-a17c-bd13aa574e6a"
+    }
   }
 };
-```
+----
 
 
-> NOTE: When running in cloud developers can swap this file dynamically using config-map or openshift secret
+> NOTE: When running in cloud, developers can swap this file dynamically using config-map or openshift secret
