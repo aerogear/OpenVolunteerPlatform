@@ -26,10 +26,10 @@
     "graphql": "14.5.8",
     "graphql-resolvers": "0.3.3",
     "graphql-tools": "4.0.6",
-    "knex": "0.20.4",
-    "merge-graphql-schemas": "1.7.4",
+    "knex": "0.20.6",
+    "merge-graphql-schemas": "1.7.5",
     "mqtt": "3.0.0",
-    "pg": "7.15.1",
+    "pg": "7.17.0",
     "shortid": "2.2.15",
     "unifiedpush-node-sender": "0.16.1"
   },
