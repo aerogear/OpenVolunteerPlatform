@@ -124,23 +124,21 @@ async function prepareKeycloak() {
 
     const clientConfig = {
       auth: {
-        url: bearerInstallation['auth-server-url'],
-        realm: bearerInstallation.realm,
-        clientId: bearerInstallation.resource
+        url: publicInstallation['auth-server-url'],
+        realm: publicInstallation.realm,
+        clientId: publicInstallation.resource
       }
     }
 
-    let configFormatted = JSON.stringify(clientConfig, null, 2);
-    configFormatted = configFormatted.substring(1, configFormatted.length - 1);
-
     console.log()
     console.log('Your keycloak server is set up for local usage and development')
-    console.log('1. Copy the following server config into ionic-showcase/server/src/config/keycloak.json')
+    console.log('1. Copy the following app config into the auth section in ionic-showcase/src/assets/config/config.js')
     console.log()
-    console.log(`window.showcaseConfig = {\n  ...\n${configFormatted}\n  ...\n}`)
+    console.log(`window.showcaseConfig = {\n  ...\n${JSON.stringify(clientConfig, null, 2)}\n  ...\n}`)
     console.log()
-    console.log('2. Copy the following app config into the auth section in ionic-showcase/src/assets/config/config.js')
-    console.log(JSON.stringify(getMobileServicesConfig(publicInstallation), null, 2))
+    console.log('2. Copy the following server config into ionic-showcase/server/src/config/keycloak.json')
+    console.log()
+    console.log(JSON.stringify(bearerInstallation, null, 2))
     console.log('Done. Please follow the instructions printed above to ensure your environment is set up properly.')
   } catch (e) {
     console.error(e)

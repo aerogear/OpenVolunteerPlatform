@@ -81,6 +81,34 @@ By default, two users that can log into the application are created.
 - username: `developer`, password: `developer`
 - username: `admin`, password: `admin`
 
+==== Using the GraphQL playground with Keycloak
+
+The GraphQL playground needs to be configured in order to send the Keycloak `Authorization` header along with its requests to the GraphQL server.
+
+In the bottom left corner of the playground there is a field called **HTTP Headers** which will be added to requests sent by the playground.
+
+Use `scripts/getToken.js` to get a valid header for the `developer` user.
+
+The following script can be used to get a token for the default Keycloak credentials
+
+```
+node scripts/getToken.js
+```
+
+Alternatively, the user-defined username and password can be passed into the script as arguments, as below
+
+```
+node scripts/getToken.js <username> <password>
+```
+
+The output will be in the form of a JSON object
+
+```
+{"Authorization":"Bearer <token string>"}
+```
+
+Copy the entire JSON object, then paste it into the HTTP Headers field in the playground. The error message should disappear.
+
 === Running the Server on OpenShift 
 
 . Log into your OpenShift instance with the `oc login` command.
