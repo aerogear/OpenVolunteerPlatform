@@ -100,7 +100,7 @@ jobs:
           version: 17.05.0-ce
       - run: | 
           npm i
-          npm run build
+          npm run build:prod
       - run: |
           cd server          
           TAG=$CIRCLE_TAG ../scripts/publish_showcase_container.sh
