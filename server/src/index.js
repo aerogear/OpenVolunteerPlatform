@@ -8,8 +8,7 @@ const config = require('./config/config')
 const connect = require('./db')
 const { createSubscriptionServer } = require('@aerogear/voyager-subscriptions')
 const { appTypeDefs, appResolvers } = require('./schema')
-const agSender = require('unifiedpush-node-sender')
-const path = require('path')
+const agSender = require("unifiedpush-node-sender")
 
 process.on('unhandledRejection', error => {
   console.error('unhandledRejection', error.message);
@@ -48,6 +47,8 @@ async function start() {
 
   const { applyFileMiddelware } = require('./files');
   applyFileMiddelware(app);
+
+  app.use('/', express.static('website'))
 
   app.get('/health', (req, res) => res.sendStatus(200))
 
@@ -88,11 +89,6 @@ async function start() {
   const apolloServer = VoyagerServer(apolloConfig, voyagerConfig)
 
   apolloServer.applyMiddleware({ app })
-
-  app.use('/', express.static('website'))
-  app.get('*', (req, res) => {                       
-    res.sendFile(path.resolve('website', 'index.html'));                               
-  });
 
   const server = app.listen(config.port, () => {
     console.log(`\n    ***********************************************************
