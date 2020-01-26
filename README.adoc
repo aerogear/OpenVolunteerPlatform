@@ -61,13 +61,14 @@ Follow these instructions to set up Keycloak for Authentication/Authorization.
 . Start Keycloak Server
 +
 ```shell
-cd keycloak
+cd server/scripts/keycloak
 npm run keycloak
 ```
 
 . Configure the Keycloak Server
 +
 ```shell
+cd server
 npm run keycloak:init
 ```
 
@@ -83,6 +84,9 @@ By default, two users that can log into the application are created.
 
 ==== Using the GraphQL playground with Keycloak
 
+> NOTE: Integrated server playground will not work when server is protected by keycloak. 
+Please use any other client that can send GraphQL requests.
+
 The GraphQL playground needs to be configured in order to send the Keycloak `Authorization` header along with its requests to the GraphQL server.
 
 In the bottom left corner of the playground there is a field called **HTTP Headers** which will be added to requests sent by the playground.
@@ -92,13 +96,14 @@ Use `scripts/getToken.js` to get a valid header for the `developer` user.
 The following script can be used to get a token for the default Keycloak credentials
 
 ```
-node scripts/getToken.js
+cd server/scripts/keycloak
+node getToken.js
 ```
 
 Alternatively, the user-defined username and password can be passed into the script as arguments, as below
 
 ```
-node scripts/getToken.js <username> <password>
+node getToken.js <username> <password>
 ```
 
 The output will be in the form of a JSON object
