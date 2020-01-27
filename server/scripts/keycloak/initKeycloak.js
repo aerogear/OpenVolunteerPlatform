@@ -138,7 +138,7 @@ async function prepareKeycloak() {
     console.log()
     console.log('2. Copy the following server config into ionic-showcase/server/src/config/keycloak.json')
     console.log()
-    console.log(JSON.stringify(bearerInstallation, null, 2))
+    console.log(JSON.stringify(publicInstallation, null, 2))
     console.log('Done. Please follow the instructions printed above to ensure your environment is set up properly.')
   } catch (e) {
     console.error(e)

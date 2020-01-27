@@ -61,7 +61,7 @@ Follow these instructions to set up Keycloak for Authentication/Authorization.
 . Start Keycloak Server
 +
 ```shell
-cd server/scripts/keycloak
+cd server
 npm run keycloak
 ```
 
@@ -84,10 +84,15 @@ By default, two users that can log into the application are created.
 
 ==== Using the GraphQL playground with Keycloak
 
-> NOTE: Integrated server playground will not work when server is protected by keycloak. 
-Please use any other client that can send GraphQL requests.
+The GraphQL playground is available after a Keycloak login screen. Initially the following error will be displayed.
 
-The GraphQL playground needs to be configured in order to send the Keycloak `Authorization` header along with its requests to the GraphQL server.
+```
+{
+  "error": "Failed to fetch schema. Please check your connection"
+}
+```
+
+The playground must be configured to send the Keycloak `Authorization` header with requests to the GraphQL server.
 
 In the bottom left corner of the playground there is a field called **HTTP Headers** which will be added to requests sent by the playground.
 
@@ -112,7 +117,10 @@ The output will be in the form of a JSON object
 {"Authorization":"Bearer <token string>"}
 ```
 
-Copy the entire JSON object, then paste it into the HTTP Headers field in the playground. The error message should disappear.
+Copy the entire JSON object, then paste it into the HTTP Headers field in the playground. 
+The error message should disappear and it is now possible to use the playground.
+
+> NOTE: The GraphQL server is using a `public` Keycloak client to redirect browsers to the login page. This is useful for testing the server locally but **it is not recommended for production**. For production GraphQL server applications you should use a `bearer` client.
 
 === Running the Server on OpenShift 
 
