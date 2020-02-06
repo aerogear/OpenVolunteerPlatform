@@ -18,7 +18,7 @@ import { subscriptionOptions } from './cache.updates';
 @Injectable({
   providedIn: 'root'
 })
-export class ItemService {
+export class TaskService {
 
   private readonly apollo: ApolloOfflineClient;
   private offlineStore: ApolloOfflineStore;
@@ -31,7 +31,7 @@ export class ItemService {
   /**
    * Force cache refresh to get recent data
    */
-  refreshItems() {
+  refreshTasks() {
     // Force cache refresh by performing network
     return this.apollo.query<AllTasks>({
       query: GET_TASKS,
@@ -41,7 +41,7 @@ export class ItemService {
   }
 
   // Watch local cache for updates
-  getItems() {
+  getTasks() {
     const getTasks = this.apollo.watchQuery<AllTasks>({
       query: GET_TASKS,
       fetchPolicy: 'cache-first',
@@ -51,7 +51,7 @@ export class ItemService {
     return getTasks;
   }
 
-  createItem(title, description) {
+  createTask(title, description) {
     return this.apollo.offlineMutate<Task>({
         mutation: ADD_TASK,
         variables: {
@@ -65,10 +65,10 @@ export class ItemService {
       });
   }
 
-  updateItem(item) {
+  updateTask(task) {
     return this.apollo.offlineMutate<Task>({
         mutation: UPDATE_TASK,
-        variables: item,
+        variables: task,
         updateQuery: GET_TASKS,
         returnType: 'Task',
         operationType: CacheOperation.REFRESH
@@ -76,10 +76,10 @@ export class ItemService {
     );
   }
 
-  deleteItem(item) {
+  deleteTask(task) {
     return this.apollo.offlineMutate<Task>({
         mutation: DELETE_TASK,
-        variables: item,
+        variables: task,
         updateQuery: GET_TASKS,
         returnType: 'Task',
         operationType: CacheOperation.DELETE
@@ -87,7 +87,7 @@ export class ItemService {
     );
   }
 
-  getOfflineItems() {
+  getOfflineTasks() {
     return this.offlineStore.getOfflineData();
   }
 

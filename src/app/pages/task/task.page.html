@@ -7,7 +7,7 @@
       Manage Tasks
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="openNewItemPage()">
+      <ion-button (click)="openNewTaskPage()">
         <ion-icon slot="icon-only" name="add"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -29,25 +29,25 @@
   <div [ngSwitch]="selectedSegment">
     <div *ngFor="let case of cases">
       <ion-list *ngSwitchCase="case.case">
-        <ion-item-group *ngFor="let item of items; let last = last" [class.last-item]="last">
-          <ion-item *ngIf="checkCase(case, item)">
-            <ion-checkbox (click)="markItemStatus(item)" [checked]="isChecked(item)"
+        <ion-item-group *ngFor="let task of tasks; let last = last" [class.last-item]="last">
+          <ion-item *ngIf="checkCase(case, task)">
+            <ion-checkbox (click)="markTaskStatus(task)" [checked]="isChecked(task)"
               class="ion-margin-end ion-align-items-start"></ion-checkbox>
             <ion-label>
-              <h2>{{ item.title }}</h2>
+              <h2>{{ task.title }}</h2>
               <ion-note item-start>
-                {{ item.description }}
+                {{ task.description }}
               </ion-note>
               <br />
               <ion-note>
                 <ion-badge color="primary">
-                  Server version: {{ item.version }}</ion-badge>
+                  Server version: {{ task.version }}</ion-badge>
               </ion-note>
             </ion-label>
-            <ion-button item-start class="create-button" color="primary" fill="outline" (click)="goToItem(item)">
+            <ion-button item-start class="create-button" color="primary" fill="outline" (click)="goToTask(task)">
               <ion-icon name="create"></ion-icon>
             </ion-button>
-            <ion-button item-end class="trash-button" color="primary" fill="outline" (click)="deleteItem(item)">
+            <ion-button item-end class="trash-button" color="primary" fill="outline" (click)="deleteTask(task)">
               <ion-icon name="trash"></ion-icon>
             </ion-button>
           </ion-item>

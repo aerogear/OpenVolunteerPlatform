@@ -1,48 +1,38 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
-// Disable lazy loading
-import { HomePageModule } from './pages/home/home.module';
-
-export function loadHomePageModule() {
-  return HomePageModule;
-}
-
 import { TaskPageModule } from './pages/task/task.module';
 
 export function loadTaskModule() {
   return TaskPageModule;
 }
 
-import { NewItemPageModule } from './pages/new-item/new-item.module';
+import { NewTaskPageModule } from './pages/new-task/new-task.module';
 
-export function loadNewItemPageModule() {
-  return NewItemPageModule;
+export function loadNewTaskPageModule() {
+  return NewTaskPageModule;
 }
 
-import { UpdateItemPageModule } from './pages/update-item/update-item.module';
+import { UpdateTaskPageModule } from './pages/update-task/update-task.module';
 
-export function loadUpdateItemPageModule() {
-  return UpdateItemPageModule;
+export function loadUpdateTaskPageModule() {
+  return UpdateTaskPageModule;
 }
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', loadChildren: loadHomePageModule },
+  { path: '', redirectTo: 'tasks', pathMatch: 'full' },
   { path: 'tasks', loadChildren: loadTaskModule },
-  { path: 'new-item', loadChildren: loadNewItemPageModule },
-  { path: 'update-item', loadChildren: loadUpdateItemPageModule },
-  { path: 'about', loadChildren: './pages/about/docs.module#DocsPageModule' },
+  { path: 'new-task', loadChildren: loadNewTaskPageModule },
+  { path: 'update-task', loadChildren: loadUpdateTaskPageModule },
   { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
   { path: 'files', loadChildren: './pages/files/files.module#FilesPageModule' },
-  { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
   { path: 'offline-queue', loadChildren: './pages/offline-queue/offline-queue.module#OfflineQueuePageModule' },
 ];
 @NgModule({
   imports: [
-    HomePageModule,
-    NewItemPageModule,
-    UpdateItemPageModule,
+    TaskPageModule,
+    NewTaskPageModule,
+    UpdateTaskPageModule,
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Update Item</ion-title>
+    <ion-title>Update Task</ion-title>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -8,21 +8,21 @@
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="edit_item_form" (submit)="updateItem(edit_item_form.value)">
+  <form [formGroup]="edit_task_form" (submit)="updateTask(edit_task_form.value)">
     <ion-card>
       <ion-card-header>
-        <ion-card-subtitle>Item</ion-card-subtitle>
+        <ion-card-subtitle>Task</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <ion-label>
-          <h2>{{ item.title }}</h2>
+          <h2>{{ task.title }}</h2>
           <ion-note item-start>
-            {{ item.description }}
+            {{ task.description }}
           </ion-note>
           <br />
           <ion-note>
             <ion-badge color="primary">
-              Server version: {{ item.version }}</ion-badge>
+              Server version: {{ task.version }}</ion-badge>
           </ion-note>
         </ion-label>
       </ion-card-content>
@@ -35,6 +35,6 @@
       <ion-label color="primary" position="floating">Description</ion-label>
       <ion-input type="text" formControlName="description" required></ion-input>
     </ion-item>
-    <ion-button class="submit-btn" expand="block" type="submit" [disabled]="!edit_item_form.valid">Update</ion-button>
+    <ion-button class="submit-btn" expand="block" type="submit" [disabled]="!edit_task_form.valid">Update</ion-button>
   </form>
 </ion-content>

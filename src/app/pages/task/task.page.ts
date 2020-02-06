@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import _ from 'lodash';
-import { Router, NavigationEnd } from '@angular/router';
-import { ItemService } from '../../services/sync/item.service';
+import { Router } from '@angular/router';
+import { TaskService } from '../../services/sync/task.service';
 import { Task } from '../../services/sync/types';
 import { NetworkService } from '../../services/network.service';
 import { VoyagerService } from '../../services/sync/voyager.service';
@@ -17,8 +17,8 @@ import { AuthService } from '../../services/auth.service';
 
 export class TaskPage implements OnInit {
 
-  item: Task;
-  items: Array<Task>;
+  task: Task;
+  tasks: Array<Task>;
   online: boolean;
   queue: number;
   errors: any;
@@ -27,14 +27,14 @@ export class TaskPage implements OnInit {
 
   constructor(
     private router: Router,
-    public itemService: ItemService,
+    public taskService: TaskService,
     public networkService: NetworkService,
     public aerogear: VoyagerService,
     public toastController: ToastController,
     public auth: AuthService,
     public alertCtrl: AlertController
   ) {
-    this.items = [];
+    this.tasks = [];
     this.cases = [{ case: 'all' }, { case: 'open' }];
   }
 
@@ -81,14 +81,14 @@ export class TaskPage implements OnInit {
 
   private async loadData() {
     // Refresh cache first
-    await this.itemService.refreshItems().catch(() => {
-      this.presentToast('Cannot refresh items from server');
+    await this.taskService.refreshTasks().catch(() => {
+      this.presentToast('Cannot refresh tasks from server');
     });
     // Subscribe to local cache changes
-    this.itemService.getItems().subscribe(result => {
+    this.taskService.getTasks().subscribe(result => {
       if (result && !result.errors) {
         console.log('Result from query', result);
-        this.items = result.data && result.data.allTasks;
+        this.tasks = result.data && result.data.allTasks;
       } else {
         console.log('error from query', result);
         this.presentToast('Cannot load data from cache');
@@ -99,51 +99,51 @@ export class TaskPage implements OnInit {
     });
   }
 
-  openNewItemPage() {
-    this.router.navigate(['/new-item']);
+  openNewTaskPage() {
+    this.router.navigate(['/new-task']);
   }
 
-  goToItem(item) {
-    this.router.navigate(['/update-item', item]);
+  goToTask(task) {
+    this.router.navigate(['/update-task', task]);
   }
 
-  deleteItem(item) {
-    this.itemService.deleteItem(item).then(result => {
+  deleteTask(task) {
+    this.taskService.deleteTask(task).then(result => {
       console.log('Result from delete mutation', result);
-      this.presentToast('Item deleted');
+      this.presentToast('Task deleted');
     });
   }
 
-  markItemStatus(item) {
+  markTaskStatus(task) {
     let newValues;
-    if (item.status === 'COMPLETE') {
+    if (task.status === 'COMPLETE') {
       newValues = {
-        ...item,
+        ...task,
         status: 'OPEN'
       };
     } else {
       newValues = {
-        ...item,
+        ...task,
         status: 'COMPLETE'
       };
     }
-    this.itemService.updateItem(newValues).then(result => {
+    this.taskService.updateTask(newValues).then(result => {
       console.log('Result from server for mutation', result);
     }).catch((error) => {
       console.error(error);
     });
   }
 
-  isChecked(item) {
-    if (item.status === 'COMPLETE') {
+  isChecked(task) {
+    if (task.status === 'COMPLETE') {
       return true;
     }
     return false;
   }
 
-  checkCase(itemCase, item) {
+  checkCase(itemCase, task) {
     if (itemCase.case === 'open') {
-      if (item.status === 'OPEN') {
+      if (task.status === 'OPEN') {
         return true;
       }
       return false;

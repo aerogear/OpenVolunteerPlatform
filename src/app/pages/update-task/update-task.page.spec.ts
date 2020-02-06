@@ -1,22 +1,24 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { NewItemPage } from './new-item.page';
+import { UpdateTaskPage } from './update-task.page';
 
-describe('NewItemPage', () => {
-  let component: NewItemPage;
-  let fixture: ComponentFixture<NewItemPage>;
+describe('UpdateTaskPage', () => {
+  let component: UpdateTaskPage;
+  let fixture: ComponentFixture<UpdateTaskPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewItemPage ],
+      declarations: [ UpdateTaskPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [ReactiveFormsModule],  // Also add it to 'imports' array
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewItemPage);
+    fixture = TestBed.createComponent(UpdateTaskPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
