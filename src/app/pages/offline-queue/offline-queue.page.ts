@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemService } from '../../services/sync/item.service';
+import { TaskService } from '../../services/sync/task.service';
 
 @Component({
   selector: 'app-offline-queue',
@@ -8,8 +8,8 @@ import { ItemService } from '../../services/sync/item.service';
 })
 export class OfflineQueuePage implements OnInit {
   interval: number;
-  constructor(private itemService: ItemService) { }
-  stagedItems: any;
+  constructor(private taskService: TaskService) { }
+  stagedTasks: any;
   Object = Object;
 
   async ngOnInit() {
@@ -26,11 +26,11 @@ export class OfflineQueuePage implements OnInit {
   }
 
   private async fetchData() {
-    const tempItems = await this.itemService.getOfflineItems();
-    if (tempItems.length > 0) {
-      this.stagedItems = tempItems.map(taskItem => taskItem.operation );
+    const tempTasks = await this.taskService.getOfflineTasks();
+    if (tempTasks.length > 0) {
+      this.stagedTasks = tempTasks.map(task => task.operation.op);
     } else {
-      this.stagedItems = [];
+      this.stagedTasks = [];
     }
   }
 }
