@@ -1,5 +1,5 @@
-const { PubSub } = require('apollo-server')
 const mqtt = require('mqtt')
+const { PubSub } = require('apollo-server')
 const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
 
 function getPubSub() {
@@ -37,5 +37,5 @@ function getPubSub() {
 }
 
 module.exports = {
-    pubSub: getPubSub()
+  pubSub: getPubSub()
 }
