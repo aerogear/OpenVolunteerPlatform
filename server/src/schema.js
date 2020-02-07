@@ -9,14 +9,10 @@ const {
 } = require('./tasks')
 
 
-const {
-    fileTypeDefs,
-    fileResolvers,
-} = require('./files')
 // TODO Replace with GraphQL-modules once Voyager will allow for that
 
-const appResolvers = mergeResolvers([taskResolvers, subscriptionResolvers, fileResolvers])
-const appTypeDefs = mergeTypes([taskTypeDefs, subscriptionTypeDefs, fileTypeDefs], 
+const appResolvers = mergeResolvers([taskResolvers, subscriptionResolvers])
+const appTypeDefs = mergeTypes([taskTypeDefs, subscriptionTypeDefs], 
     { all: true })
 
 module.exports = {

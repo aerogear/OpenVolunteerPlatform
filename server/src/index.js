@@ -2,8 +2,6 @@ const express = require('express')
 const cors = require('cors')
 const { VoyagerServer } = require('@aerogear/voyager-server')
 const { KeycloakSecurityService } = require('@aerogear/voyager-keycloak')
-const metrics = require('@aerogear/voyager-metrics')
-const auditLogger = require('@aerogear/voyager-audit')
 const config = require('./config/config')
 const connect = require('./db')
 const { createSubscriptionServer } = require('@aerogear/voyager-subscriptions')
@@ -37,16 +35,10 @@ async function start() {
   const app = express()
 
   app.use(cors())
-  metrics.applyMetricsMiddlewares(app, {
-    path: '/metrics'
-  })
 
   if (keycloakService) {
     keycloakService.applyAuthMiddleware(app)
   }
-
-  const { applyFileMiddelware } = require('./files');
-  applyFileMiddelware(app);
 
   app.use('/', express.static('website'))
 
@@ -81,9 +73,7 @@ async function start() {
   }
 
   const voyagerConfig = {
-    securityService: keycloakService,
-    metrics,
-    auditLogger
+    securityService: keycloakService
   }
 
   const apolloServer = VoyagerServer(apolloConfig, voyagerConfig)

@@ -34,11 +34,3 @@ query allTasks {
     ...TaskFields
   }
 }
-
- query uploads{
-    uploads{
-      filename
-      mimetype
-      url
-    }
-  }

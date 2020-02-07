@@ -25,7 +25,6 @@ const routes: Routes = [
   { path: 'new-task', loadChildren: loadNewTaskPageModule },
   { path: 'update-task', loadChildren: loadUpdateTaskPageModule },
   { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
-  { path: 'files', loadChildren: './pages/files/files.module#FilesPageModule' },
   { path: 'offline-queue', loadChildren: './pages/offline-queue/offline-queue.module#OfflineQueuePageModule' },
 ];
 @NgModule({
