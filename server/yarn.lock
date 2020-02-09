@@ -2403,7 +2403,7 @@ keycloak-connect@8.0.2:
   optionalDependencies:
     chromedriver "*"
 
-keycloak-request-token@^0.1.0:
+keycloak-request-token@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/keycloak-request-token/-/keycloak-request-token-0.1.0.tgz#919d1ac46237db568d4d45322a213cee2636e2a8"
 

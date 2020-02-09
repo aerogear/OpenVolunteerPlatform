@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "axios": "0.19.2",
-    "keycloak-request-token": "^0.1.0",
+    "keycloak-request-token": "0.1.0",
     "nodemon": "1.19.4"
   }
 }
