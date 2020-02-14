@@ -2,6 +2,8 @@
 
 Example application using AeroGear Mobile Services.
 
+A new client has been built in React and is available in the `client` directory.
+
 == Implementation
 
 Implementation includes:
