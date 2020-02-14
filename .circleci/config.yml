@@ -35,60 +35,7 @@ jobs:
           prefix: coverage
       - store_test_results:
           path: test-results.xml
-  build-android:
-    docker:
-      - image: circleci/android:api-28-node
-    steps:
-      - checkout
-      - run:
-          name: Install ionic
-          command: sudo npm --global install ionic
-      - run:
-          name: Install cordova
-          command: sudo npm --global install cordova
-      - run:
-          name: Install node modules
-          command: npm install
-      - run:
-          name: Build android app
-          command: |
-            # install SDKMan - a package manager used to install gradle
-            curl -s "https://get.sdkman.io" | bash && source ~/.sdkman/bin/sdkman-init.sh
-            sdk install gradle 4.10.3
-            # actually build the app
-            npx ionic cordova build android
-      - persist_to_workspace:
-          root: platforms/android/app/build/outputs/apk/debug/
-          paths:
-            - app-debug.apk
-  e2e-android:
-    docker:
-      - image: circleci/node:lts
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore node modules cache
-          keys:
-            - node-modules-{{ .Branch }}-{{ checksum "package.json" }}
-            - node-modules-{{ .Branch }}-
-            - node-modules-
-      - run:
-          name: Install node modules
-          command: npm install
-      - save_cache:
-          name: Save node modules cache
-          key: node-modules-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          name: Run E2E tests
-          command: |
-            export BROWSERSTACK_APP="$(curl -u "$BROWSERSTACK_USER:$BROWSERSTACK_KEY" \
-              -X POST https://api-cloud.browserstack.com/app-automate/upload \
-              -F "file=@/tmp/workspace/app-debug.apk" | cut -d '"' -f 4)"
-            npm run e2e
+
   publish_showcase_container:
     docker:
       # image for building docker containers
@@ -112,15 +59,6 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - build-android:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              only: master
-      - e2e-android:
-          requires:
-            - build-android
       - publish_showcase_container:
           filters:
             tags:
