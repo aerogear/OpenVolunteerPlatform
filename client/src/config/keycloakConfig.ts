@@ -7,9 +7,9 @@ export const keycloakConfig : { initConfig: Keycloak.KeycloakInitOptions, auth?:
     token: (token) ? token : undefined,
     refreshToken: (refreshToken) ? refreshToken : undefined,
   },
-  auth: {
-    url: "http://localhost:8080/auth",
-    realm: "voyager-testing",
-    clientId: "voyager-testing-public"
-  },
+  // auth: {
+  //   url: <keycloak-url>,
+  //   realm: <realm-name>,
+  //   clientId: <client-id>
+  // },
 };
