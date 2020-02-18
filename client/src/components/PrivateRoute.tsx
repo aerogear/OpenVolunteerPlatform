@@ -4,8 +4,7 @@ import { useKeycloak } from '@react-keycloak/web'
 import { AppContext } from '../services/AppContext';
 import { Loading } from './Loading';
 
-// @ts-ignore
-export const PrivateRoute = ({ component: Component, ...rest }) => {
+export const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
   const [keycloak, initialized] = useKeycloak();
   const { keycloakEnabled } = useContext(AppContext);
 

@@ -8,11 +8,11 @@ import { AppContext } from './services/AppContext';
 import { keycloakConfig, clientConfig } from './config';
 import { keycloakEnabled, onKeycloakTokens } from './helpers/keycloakHelpers';
 import { Loading } from './components/Loading';
+import { IContainerProps } from './declarations';
 
 const client = new ApolloOfflineClient(clientConfig);
 
-// @ts-ignore
-export const AppContainer = ({ app: App }) => {
+export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
 
   const [initialized, setInitialized] = useState(false);
 

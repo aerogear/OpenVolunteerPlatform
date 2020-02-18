@@ -19,10 +19,10 @@ import { UPDATE_TASK, GET_TASK } from '../gql/queries';
 import { Header } from '../components/Header';
 import { Empty } from '../components/Empty';
 import { mutationOptions } from '../helpers';
+import { IUpdateMatchParams } from '../declarations';
 
-export const UpdateTaskPage: React.FC<RouteComponentProps> = ({ history, match }) => {
+export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ history, match }) => {
 
-  // @ts-ignore
   const { id } = match.params;
   
   const [title, setTitle] = useState<string>(null!);
