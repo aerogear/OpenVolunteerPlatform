@@ -7,7 +7,7 @@ import { ITask } from '../declarations';
 import { Empty } from './Empty';
 import { mutationOptions } from '../helpers';
 
-const TaskList: React.FC<any> = ({ tasks }) => {
+export const TaskList: React.FC<any> = ({ tasks }) => {
 
   const [updateTask] = useOfflineMutation(UPDATE_TASK, mutationOptions.updateTask);
   const [deleteTask] = useOfflineMutation(DELETE_TASK, mutationOptions.deleteTask);
@@ -38,5 +38,3 @@ const TaskList: React.FC<any> = ({ tasks }) => {
   );
 
 };
-
-export default TaskList;

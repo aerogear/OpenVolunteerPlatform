@@ -16,15 +16,12 @@ import {
   IonFooter, 
   IonLoading 
 } from '@ionic/react';
-import TaskList from '../components/TaskList';
 import { GET_TASKS } from '../gql/queries';
 import { subscriptionOptions,  } from '../helpers';
 import { useSubscribeToMore } from '../hooks';
-import { Empty } from '../components/Empty';
-import { NetworkBadge } from '../components/NetworkBadge';
-import { OfflineQueueBadge } from '../components/OfflineQueueBadge';
+import { Empty, TaskList, NetworkBadge, OfflineQueueBadge } from '../components';
 
-const Task: React.FC = () => {
+export const TaskPage: React.FC = () => {
 
   const { loading, error, data, subscribeToMore } = useQuery(GET_TASKS);
   useSubscribeToMore({ options: Object.values(subscriptionOptions), subscribeToMore});
@@ -76,5 +73,3 @@ const Task: React.FC = () => {
   return <Empty message={<p>No tasks available</p>} />
   
 };
-
-export default Task;

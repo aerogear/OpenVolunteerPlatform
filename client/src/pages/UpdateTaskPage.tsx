@@ -20,7 +20,7 @@ import { Header } from '../components/Header';
 import { Empty } from '../components/Empty';
 import { mutationOptions } from '../helpers';
 
-const UpdateTask: React.FC<RouteComponentProps> = ({ history, match }) => {
+export const UpdateTaskPage: React.FC<RouteComponentProps> = ({ history, match }) => {
 
   // @ts-ignore
   const { id } = match.params;
@@ -97,5 +97,3 @@ const UpdateTask: React.FC<RouteComponentProps> = ({ history, match }) => {
   );
 
 }
-
-export default UpdateTask;

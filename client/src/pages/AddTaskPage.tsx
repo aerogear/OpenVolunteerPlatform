@@ -12,7 +12,7 @@ import { ADD_TASK } from '../gql/queries';
 import { mutationOptions } from '../helpers';
 import { Header } from '../components/Header';
 
-const AddTask: React.FC<RouteComponentProps> = ({ history }) => {
+export const AddTaskPage: React.FC<RouteComponentProps> = ({ history }) => {
 
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
@@ -63,5 +63,3 @@ const AddTask: React.FC<RouteComponentProps> = ({ history }) => {
     </>
   )
 }
-
-export default AddTask;

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Header } from '../components/Header';
-import { OfflineList } from '../components/OfflineList';
 import { useApolloOfflineClient } from 'react-offix-hooks';
+import { Header, OfflineList } from '../components';
 
-const OfflineQueue: React.FC = () => {
+export const OfflineQueuePage: React.FC = () => {
 
   const { queue } = useApolloOfflineClient();
 
@@ -14,5 +13,3 @@ const OfflineQueue: React.FC = () => {
     </>
   );
 };
-
-export default OfflineQueue;
