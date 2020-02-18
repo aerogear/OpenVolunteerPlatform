@@ -55,7 +55,7 @@ export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
 
   if (data && data.getTask) return (
     <>
-      <Header title="Update task" backHref="/tasks" />
+      <Header title="Update task" backHref="/tasks" match={match} />
       <IonContent>
         <IonCard>
           <IonCardHeader>Task</IonCardHeader>
@@ -91,7 +91,7 @@ export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
 
   return (
     <>
-      <Header title="Update task" backHref="/tasks" />
+      <Header title="Update task" backHref="/tasks" match={match} />
       <Empty message={<p>No task found</p>} />
     </>
   );

@@ -6,7 +6,7 @@ import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { globalCacheUpdates, ConflictLogger } from '../helpers';
 
-
+// retrieve token and get authorization header
 const getToken = () => {
   const token = localStorage.getItem('token');
   return token ? `Bearer ${token}` : '';
@@ -17,6 +17,8 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     lazy: true,
+    // add authorization headers for graphql
+    // subscriptions
     connectionParams: () => ({
       authorization: getToken(),
     }),
@@ -27,6 +29,8 @@ const httpLink = new HttpLink({
   uri: 'http://localhost:4000/graphql',
 });
 
+// add authorization headers for queries
+// to grapqhql backend
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
@@ -36,6 +40,9 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
+// split queries and subscriptions.
+// send subscriptions to websocket url &
+// queries to http url
 const link = split(
   ({ query }) => {
     const { kind, operation} : any = getMainDefinition(query);

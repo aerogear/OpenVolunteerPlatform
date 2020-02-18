@@ -12,7 +12,7 @@ import { ADD_TASK } from '../gql/queries';
 import { mutationOptions } from '../helpers';
 import { Header } from '../components/Header';
 
-export const AddTaskPage: React.FC<RouteComponentProps> = ({ history }) => {
+export const AddTaskPage: React.FC<RouteComponentProps> = ({ history, match }) => {
 
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
@@ -34,7 +34,7 @@ export const AddTaskPage: React.FC<RouteComponentProps> = ({ history }) => {
   
   return (
     <>
-      <Header title="Add task" backHref="/tasks" />
+      <Header title="Add task" backHref="/tasks" match={match} />
       <IonContent>
         <form onSubmit={submit} style={{ padding: '0 16px' }}>
           <IonItem>

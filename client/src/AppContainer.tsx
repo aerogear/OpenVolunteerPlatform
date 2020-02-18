@@ -4,7 +4,7 @@ import { KeycloakProvider } from '@react-keycloak/web';
 import { ApolloOfflineClient } from 'offix-client';
 import { ApolloOfflineProvider } from 'react-offix-hooks';
 import { ApolloProvider } from '@apollo/react-hooks';
-import { AppContext } from './services/AppContext';
+import { AppContext } from './AppContext';
 import { keycloakConfig, clientConfig } from './config';
 import { keycloakEnabled, onKeycloakTokens } from './helpers/keycloakHelpers';
 import { Loading } from './components/Loading';

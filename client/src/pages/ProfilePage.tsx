@@ -14,7 +14,8 @@ import {
 } from '@ionic/react';
 import { Header } from '../components';
 import { useKeycloak } from '@react-keycloak/web';
-import { AppContext } from '../services/AppContext';
+import { AppContext } from '../AppContext';
+import { RouteComponentProps } from 'react-router';
 
 const userInit = {
   username: 'unknown',
@@ -24,7 +25,7 @@ const userInit = {
   emailVerified: false,
 }
 
-export const ProfilePage: React.FC = () => {
+export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
   const { keycloakEnabled } = useContext(AppContext);
   const [keycloak] = useKeycloak();
   const [user, setUser] = useState<Keycloak.KeycloakProfile>(userInit);
@@ -65,7 +66,7 @@ export const ProfilePage: React.FC = () => {
 
     return (
       <>
-        <Header title="Profile" backHref="/tasks" />
+        <Header title="Profile" backHref="/tasks" match={match} />
         <IonContent>
           <IonList>
             <IonCard>

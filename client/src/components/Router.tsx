@@ -3,10 +3,10 @@ import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { useKeycloak } from '@react-keycloak/web';
-import { TaskPage, AddTaskPage, OfflineQueuePage, UpdateTaskPage, LoginPage, ProfilePage } from '../pages';
+import { TaskPage, AddTaskPage, OfflineQueuePage, UpdateTaskPage, ProfilePage } from '../pages';
 import { PrivateRoute } from './PrivateRoute';
 import { Loading } from './Loading';
-import { AppContext } from '../services/AppContext';
+import { AppContext } from '../AppContext';
 
 export const Router: React.FC = () => {
   const { initialized } = useKeycloak(); 
@@ -23,7 +23,6 @@ export const Router: React.FC = () => {
           <PrivateRoute path="/offlineQueue" component={OfflineQueuePage} exact={true} />
           <PrivateRoute path="/tasks" component={TaskPage} exact={true} />
           <PrivateRoute path="/profile" component={ProfilePage} exact={true} />
-          <Route path="/login" component={LoginPage} exact={true} />
           <Route exact path="/" render={() => <Redirect to="/tasks" />} />
         </IonRouterOutlet>
       </IonReactRouter>
