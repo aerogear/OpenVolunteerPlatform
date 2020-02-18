@@ -1,0 +1,14 @@
+""" @model """
+""" @datasync """
+type Task {
+  id: ID!
+  title: String!
+  description: String!
+  status: TaskStatus
+}
+
+enum TaskStatus {
+  OPEN
+  ASSIGNED
+  COMPLETE
+}
