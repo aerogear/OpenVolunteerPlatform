@@ -21,6 +21,8 @@ extensions:
       graphback-resolvers:
         format: ts
         outputPath: ./src/resolvers
+      graphback-offix:
+        outputPath: ./src/resolvers
     dbmigrations:
       connection:
         filename: ./db.sqlite

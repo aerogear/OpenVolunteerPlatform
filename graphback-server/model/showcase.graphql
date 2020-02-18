@@ -1,5 +1,7 @@
-""" @model """
-""" @datasync """
+""" 
+@model
+@datasync
+"""
 type Task {
   id: ID!
   title: String!
