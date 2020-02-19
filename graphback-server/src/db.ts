@@ -1,19 +1,15 @@
+const MongoClient = require('mongodb').MongoClient;
 
-import { loadConfig } from 'graphql-config';
-import knex from 'knex'
+export async function connect() {
+    // TODO config
+    const url = 'mongodb://localhost:27017';
 
-/**
- * Creates knex based database using migration configuration
- * For production use please use different source of the configuration
- */
-export const createDB = async () => {
-    const config = await loadConfig({
-        extensions: [() => ({ name: 'graphback' })]
-    });
+    // Database Name
+    const dbName = 'showcase';
 
-    const generateConfig = await config!.getDefault().extension('graphback');
-
-    // connect to db
-    const db = knex(generateConfig.dbmigrations)
-    return db
+    // Use connect method to connect to the server
+    const client = await MongoClient.connect(url);
+    const db = client.db(dbName);
+    return db;
 }
+
