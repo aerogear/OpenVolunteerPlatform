@@ -11,14 +11,15 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "graphback-cli": "0.11.0-alpha1",
+    "graphback-cli": "0.11.0-rc1",
     "graphql": "14.6.0",
     "tslint": "5.20.1",
     "typescript": "3.7.5"
   },
   "dependencies": {
-    "@graphback/codegen-offix": "0.11.0-alpha1",
-    "@graphback/runtime": "^0.10.0-alpha2",
+    "@graphback/codegen-offix": "0.11.0-rc1",
+    "@graphback/runtime": "0.11.0-rc1",
+    "@graphback/runtime-mongo": "0.11.0-dev1",
     "@graphql-toolkit/file-loading": "0.9.7",
     "@types/cors": "2.8.6",
     "@types/express": "4.17.2",
