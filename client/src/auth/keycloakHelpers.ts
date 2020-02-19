@@ -8,9 +8,9 @@ export const getLocalTokens = () => {
 };
 
 // save tokens to localstorage
-export const setLocalTokens = ({ token, refreshToken } : { token: string, refreshToken: string}) => {
-  localStorage.setItem('token', token);
-  localStorage.setItem('refreshToken', refreshToken);
+export const setLocalTokens = ({ token, refreshToken } : { token: string | undefined, refreshToken: string | undefined}) => {
+  if (token) localStorage.setItem('token', token);
+  if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
 };
 
 export const getInitConfig = () : KeycloakInitOptions => {

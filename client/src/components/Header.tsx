@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonToast, IonButton, IonIcon } from '@ionic/react';
 import { person, exit } from 'ionicons/icons';
 import { AppContext } from '../AppContext';
-import { keycloakHelpers } from '../helpers';
+import { keycloakHelpers } from '../auth';
 import { useNetworkStatus } from 'react-offix-hooks';
 
 export const Header : React.FC<{ title: string, backHref?: string, match: any }> = ({ title, backHref, match }) => {

@@ -6,7 +6,7 @@ import { AppContext } from './AppContext';
 import { clientConfig } from './config';
 import { Loading } from './components/Loading';
 import { IContainerProps } from './declarations';
-import { keycloakInstance } from './auth/keycloakAuth';
+import { getKeycloakInstance } from './auth/keycloakAuth';
 
 let keycloak: any;
 const client = new ApolloOfflineClient(clientConfig);
@@ -18,7 +18,7 @@ export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
   // Initialize the client
   useEffect(() => {
     const init = async () => {
-      keycloak = await keycloakInstance();
+      keycloak = await getKeycloakInstance();
       await client.init();
       setInitialized(true);
     }

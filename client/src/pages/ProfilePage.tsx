@@ -29,12 +29,14 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
   const [user, setUser] = useState<Keycloak.KeycloakProfile>(userInit);
 
   useEffect(() => {
-    if (keycloak) {
+    const loadProfile = async () => {
+      await keycloak?.loadUserProfile();
       setUser({
         ...userInit,
         ...keycloak?.profile
       });
     }
+    if (keycloak) loadProfile()
   }, [keycloak]);
 
   if (!keycloak) return (

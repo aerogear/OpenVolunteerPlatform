@@ -1,30 +1,28 @@
 import Keycloak, { KeycloakInstance, KeycloakInitOptions } from 'keycloak-js';
-import { keycloakHelpers } from '../helpers';
+import { setLocalTokens, getInitConfig, flushInvalidTokens } from './keycloakHelpers';
 
-export const keycloak: KeycloakInstance<'native'> | undefined = new (Keycloak as any )();
+export let keycloak: KeycloakInstance<'native'> | undefined;
 
-export const keycloakInstance = async () => {
-  await init(keycloak);
+export const getKeycloakInstance = async () => {
+  flushInvalidTokens();
+  await init();
   return keycloak;
 } 
 
 // initiate keycloak instance
-export const init = async (keycloak : any) => {
+export const init = async () => {
   try {
-    const config: KeycloakInitOptions = keycloakHelpers.getInitConfig();
-    await keycloak.init(config);
-    keycloakHelpers.setLocalTokens(keycloak);
-  } catch(error) {
+    const config: KeycloakInitOptions = getInitConfig();
+    keycloak = new (Keycloak as any )();
+    if (keycloak) {
+      await keycloak.init(config);
+      setLocalTokens({
+        token: keycloak.token,
+        refreshToken: keycloak.refreshToken
+      });
+    }
+  } catch {
     keycloak = undefined;
-    console.log(error);
-  }
-}
-
-// load user profile
-export const loadUserProfile = async (keycloak: any) => {
-  try {
-    await keycloak.loadUserProfile();
-  } catch(error) {
-    console.log(error);
+    console.error('Keycloak error: Unable to initialize keycloak');
   }
 }
