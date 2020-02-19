@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonToast, IonButton, IonIcon } from '@ionic/react';
-import { useKeycloak } from '@react-keycloak/web';
 import { person, exit } from 'ionicons/icons';
 import { AppContext } from '../AppContext';
 import { keycloakHelpers } from '../helpers';
@@ -10,9 +9,8 @@ export const Header : React.FC<{ title: string, backHref?: string, match: any }>
 
   const { url } = match;
 
-  const [ keycloak ] = useKeycloak();
   const isOnline = useNetworkStatus();
-  const { keycloakEnabled } = useContext(AppContext);
+  const { keycloak } = useContext(AppContext);
   const [ showToast, setShowToast ] = useState(false);
 
   const logout = async () => {
@@ -26,7 +24,7 @@ export const Header : React.FC<{ title: string, backHref?: string, match: any }>
   // if keycloak is not configured, don't display logout and
   // profile icons. Only show login and profile icons on the home
   // screen
-  const buttons = (!keycloakEnabled || url !== '/tasks') ? <></> : (
+  const buttons = (!keycloak || url !== '/tasks') ? <></> : (
     <IonButtons slot="end">
       <IonButton href="/profile">
         <IonIcon slot="icon-only" icon={person}  />

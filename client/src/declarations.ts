@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "react-router";
+import { KeycloakInstance } from "keycloak-js";
 
 export interface ITask {
   id: string;
@@ -56,4 +56,8 @@ export interface ILoadingProps {
 
 export interface IUpdateMatchParams {
   id: string
+}
+
+export interface IAppContext {
+  keycloak: KeycloakInstance<'native'> | undefined
 }
