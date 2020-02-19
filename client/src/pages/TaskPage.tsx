@@ -2,29 +2,24 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { add } from 'ionicons/icons';
 import { 
-  IonHeader, 
   IonPage, 
-  IonTitle, 
-  IonToolbar, 
   IonSegment, 
   IonSegmentButton, 
   IonLabel, 
-  IonButtons, 
   IonIcon, 
-  IonButton, 
-  IonMenuButton, 
-  IonFooter, 
-  IonLoading 
+  IonFooter,
+  IonLoading,
+  IonFab,
+  IonFabButton,
+  IonContent,
 } from '@ionic/react';
-import TaskList from '../components/TaskList';
 import { GET_TASKS } from '../gql/queries';
 import { subscriptionOptions,  } from '../helpers';
 import { useSubscribeToMore } from '../hooks';
-import { Empty } from '../components/Empty';
-import { NetworkBadge } from '../components/NetworkBadge';
-import { OfflineQueueBadge } from '../components/OfflineQueueBadge';
+import { Empty, TaskList, NetworkBadge, OfflineQueueBadge, Header } from '../components';
+import { RouteComponentProps } from 'react-router';
 
-const Task: React.FC = () => {
+export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
 
   const { loading, error, data, subscribeToMore } = useQuery(GET_TASKS);
   useSubscribeToMore({ options: Object.values(subscriptionOptions), subscribeToMore});
@@ -38,32 +33,20 @@ const Task: React.FC = () => {
 
   if (data && data.allTasks) return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton></IonMenuButton>
-          </IonButtons>
-          <IonTitle>Manage Tasks</IonTitle>
-          <IonButtons slot="end">
-            <IonButton>
-              <IonButton href="/addTask">
-                <IonIcon slot="icon-only" icon={add} />
-              </IonButton>
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonToolbar>
+      <Header title="Manage Tasks"  match={match}  />
+      <IonContent className="ion-padding" >
         <IonSegment>
           <IonSegmentButton value="all">
             <IonLabel>All Tasks</IonLabel>
           </IonSegmentButton>
-          {/* <IonSegmentButton value="open">
-            <IonLabel>Open</IonLabel>
-          </IonSegmentButton> */}
         </IonSegment>
-      </IonToolbar>
-      <TaskList tasks={data.allTasks} />
+        <TaskList tasks={data.allTasks} />
+        <IonFab vertical="bottom" horizontal="end" slot="fixed" style={{ 'marginBottom': '2em', 'marginRight': '1em' }}>
+          <IonFabButton href="/addTask">
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
+      </IonContent>
       <IonFooter>
         <div>
           <OfflineQueueBadge />
@@ -76,5 +59,3 @@ const Task: React.FC = () => {
   return <Empty message={<p>No tasks available</p>} />
   
 };
-
-export default Task;

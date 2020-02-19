@@ -1,3 +1,1 @@
-import { useSubscribeToMore } from './useSubscribeToMore';
-
-export { useSubscribeToMore };
+export { useSubscribeToMore } from './useSubscribeToMore';

@@ -1,16 +1,27 @@
-import { InMemoryCache } from 'apollo-cache-inmemory';
 import { split } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
+import { setContext } from 'apollo-link-context';
 import { getMainDefinition } from 'apollo-utilities';
-import { ConflictListener } from 'offix-client';
-import { globalCacheUpdates } from './helpers';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { globalCacheUpdates, ConflictLogger } from '../helpers';
+
+// retrieve token and get authorization header
+const getToken = () => {
+  const token = localStorage.getItem('token');
+  return token ? `Bearer ${token}` : '';
+}
 
 const wsLink = new WebSocketLink({
   uri: 'ws://localhost:4000/graphql',
   options: {
     reconnect: true,
     lazy: true,
+    // add authorization headers for graphql
+    // subscriptions
+    connectionParams: () => ({
+      authorization: getToken(),
+    }),
   },
 });
 
@@ -18,17 +29,20 @@ const httpLink = new HttpLink({
   uri: 'http://localhost:4000/graphql',
 });
 
-class ConflictLogger implements ConflictListener {
-  conflictOccurred(operationName:any, resolvedData:any, server:any, client:any) {
-    console.log("Conflict occurred with the following:")
-    console.log(`data: ${JSON.stringify(resolvedData)}, server: ${JSON.stringify(server)}, client: ${JSON.stringify(client)}, operation:  ${JSON.stringify(operationName)}`);
+// add authorization headers for queries
+// to grapqhql backend
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      authorization: getToken(),
+    }
   }
-  mergeOccurred(operationName:any, resolvedData:any, server:any, client:any) {
-    console.log("Merge occurred with the following:")
-    console.log(`data: ${JSON.stringify(resolvedData)}, server: ${JSON.stringify(server)}, client: ${JSON.stringify(client)}, operation:  ${JSON.stringify(operationName)}`);
-  }
-}
+});
 
+// split queries and subscriptions.
+// send subscriptions to websocket url &
+// queries to http url
 const link = split(
   ({ query }) => {
     const { kind, operation} : any = getMainDefinition(query);
@@ -39,6 +53,8 @@ const link = split(
 );
 
 const cache =  new InMemoryCache({
+  // cache redirects are used
+  // to query the cache for individual Task item
   cacheRedirects: {
     Query: {
       getTask: (_, args, { getCacheKey }) =>
@@ -48,7 +64,7 @@ const cache =  new InMemoryCache({
 });
 
 export const clientConfig = {
-  link,
+  link: authLink.concat(link),
   cache: cache,
   conflictListener: new ConflictLogger(),
   mutationCacheUpdates: globalCacheUpdates,

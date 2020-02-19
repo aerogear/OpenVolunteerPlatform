@@ -1,3 +1,5 @@
+import { RouteComponentProps } from "react-router";
+
 export interface ITask {
   id: string;
   version: number;
@@ -43,3 +45,15 @@ export interface ITaskProps {
   updateTask: Function,
   deleteTask: Function
 };
+
+export interface IContainerProps {
+  app: React.FC
+};
+
+export interface ILoadingProps {
+  loading: boolean
+};
+
+export interface IUpdateMatchParams {
+  id: string
+}
