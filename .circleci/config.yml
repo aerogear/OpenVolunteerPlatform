@@ -10,31 +10,17 @@ jobs:
           name: update-npm
           command: "sudo npm install -g npm@latest"
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "client/package.json" }}
       - run:
           name: install-dependencies
-          command: npm install
+          command: "cd client && npm install"
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "client/package.json" }}
           paths:
-            - ./node_modules
-      - run:
-          name: run lint
-          command: npm run lint
-      - run:
-          name: run ionic install
-          command: npm install ionic
+            - ./client/node_modules
       - run:
           name: run build
-          command: npm run build
-      - store_artifacts:
-          path: test-results.xml
-          prefix: tests
-      - store_artifacts:
-          path: coverage
-          prefix: coverage
-      - store_test_results:
-          path: test-results.xml
+          command: "cd client && npm run build"
 
   publish_showcase_container:
     docker:
