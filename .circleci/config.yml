@@ -20,7 +20,7 @@ jobs:
             - ./node_modules
       - run:
           name: run build
-          command: "cd client && npm run build"
+          command: "yarn build"
 
   publish_showcase_container:
     docker:
