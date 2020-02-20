@@ -1,4 +1,5 @@
-import { RouteComponentProps } from "react-router";
+import { KeycloakInstance } from "keycloak-js";
+import { ApolloOfflineClient } from "offix-client";
 
 export interface ITask {
   id: string;
@@ -56,4 +57,19 @@ export interface ILoadingProps {
 
 export interface IUpdateMatchParams {
   id: string
+}
+
+export interface IAppContext {
+  keycloak: KeycloakInstance<'native'> | undefined
+}
+
+export interface IAuthHeaders {
+  headers: {
+    Authorization: String
+  }
+}
+
+export interface ILogoutParams {
+  keycloak: Keycloak.KeycloakInstance<'native'> | undefined,
+  client: ApolloOfflineClient
 }

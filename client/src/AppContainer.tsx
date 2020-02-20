@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Keycloak from 'keycloak-js';
-import { KeycloakProvider } from '@react-keycloak/web';
 import { ApolloOfflineClient } from 'offix-client';
 import { ApolloOfflineProvider } from 'react-offix-hooks';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { AppContext } from './AppContext';
-import { keycloakConfig, clientConfig } from './config';
-import { keycloakEnabled, onKeycloakTokens } from './helpers/keycloakHelpers';
+import { clientConfig } from './config';
 import { Loading } from './components/Loading';
 import { IContainerProps } from './declarations';
+import { getKeycloakInstance } from './auth/keycloakAuth';
 
-const client = new ApolloOfflineClient(clientConfig);
+let keycloak: any;
+const apolloClient = new ApolloOfflineClient(clientConfig);
 
 export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
 
@@ -18,44 +17,26 @@ export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
 
   // Initialize the client
   useEffect(() => {
-    client.init().then(() => setInitialized(true));
+    const init = async () => {
+      keycloak = await getKeycloakInstance();
+      await apolloClient.init();
+      setInitialized(true);
+    }
+    init();
   }, []);
 
   if (!initialized) return <Loading loading={!initialized} />;
 
-  // check if keycloak is configured
-  if (keycloakEnabled(keycloakConfig)) {
-
-    // get keycloak config options
-    const { auth, initConfig} = keycloakConfig;
-
-    // instantiate keycloak
-    const keycloak: Keycloak.KeycloakInstance = new (Keycloak as any)(auth);
-
-    // return container with keycloak provider
-    return (
-      <AppContext.Provider value={{ keycloakEnabled: true }}>
-        <KeycloakProvider keycloak={keycloak} initConfig={initConfig} onTokens={onKeycloakTokens}>
-          <ApolloOfflineProvider client={client}>
-            <ApolloProvider client={client}>
-              <App />
-            </ApolloProvider>
-          </ApolloOfflineProvider>
-        </KeycloakProvider>
-      </AppContext.Provider>
-    );
-  }
-
-  // if keycloak is not configured
-  // return container without keycloak provider
+  // return container with keycloak provider
   return (
-    <AppContext.Provider value={{ keycloakEnabled: false }}>
-      <ApolloOfflineProvider client={client}>
-        <ApolloProvider client={client}>
+    <AppContext.Provider value={{ keycloak }}>
+      <ApolloOfflineProvider client={apolloClient}>
+        <ApolloProvider client={apolloClient}>
           <App />
         </ApolloProvider>
       </ApolloOfflineProvider>
     </AppContext.Provider>
   );
+
 
 };

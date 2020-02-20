@@ -1,23 +1,22 @@
 import React, { useContext, useState } from 'react';
 import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonToast, IonButton, IonIcon } from '@ionic/react';
-import { useKeycloak } from '@react-keycloak/web';
 import { person, exit } from 'ionicons/icons';
 import { AppContext } from '../AppContext';
-import { keycloakHelpers } from '../helpers';
-import { useNetworkStatus } from 'react-offix-hooks';
+import { logout } from '../auth/keycloakAuth';
+import { useNetworkStatus, useApolloOfflineClient } from 'react-offix-hooks';
 
 export const Header : React.FC<{ title: string, backHref?: string, match: any }> = ({ title, backHref, match }) => {
 
   const { url } = match;
 
-  const [ keycloak ] = useKeycloak();
   const isOnline = useNetworkStatus();
-  const { keycloakEnabled } = useContext(AppContext);
+  const client = useApolloOfflineClient();
+  const { keycloak } = useContext(AppContext);
   const [ showToast, setShowToast ] = useState(false);
 
-  const logout = async () => {
+  const handleLogout = async () => {
     if (isOnline) {
-      await keycloakHelpers.logout({ keycloak });
+      await logout({ keycloak, client });
       return;
     }
     setShowToast(true);
@@ -26,12 +25,12 @@ export const Header : React.FC<{ title: string, backHref?: string, match: any }>
   // if keycloak is not configured, don't display logout and
   // profile icons. Only show login and profile icons on the home
   // screen
-  const buttons = (!keycloakEnabled || url !== '/tasks') ? <></> : (
+  const buttons = (!keycloak || url !== '/tasks') ? <></> : (
     <IonButtons slot="end">
       <IonButton href="/profile">
         <IonIcon slot="icon-only" icon={person}  />
       </IonButton>
-      <IonButton onClick={logout}>
+      <IonButton onClick={handleLogout}>
         <IonIcon slot="icon-only" icon={exit} />
       </IonButton>
     </IonButtons>

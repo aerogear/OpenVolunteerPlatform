@@ -5,23 +5,20 @@ import { setContext } from 'apollo-link-context';
 import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { globalCacheUpdates, ConflictLogger } from '../helpers';
+import { getAuthHeader } from '../auth/keycloakAuth';
 
-// retrieve token and get authorization header
-const getToken = () => {
-  const token = localStorage.getItem('token');
-  return token ? `Bearer ${token}` : '';
-}
-
+/**
+ * Create websocket link and
+ * define websocket link options
+ * 
+ */
 const wsLink = new WebSocketLink({
   uri: 'ws://localhost:4000/graphql',
   options: {
     reconnect: true,
     lazy: true,
-    // add authorization headers for graphql
-    // subscriptions
-    connectionParams: () => ({
-      authorization: getToken(),
-    }),
+    // returns auth header or empty string
+    connectionParams: async () => (await getAuthHeader()), 
   },
 });
 
@@ -29,20 +26,27 @@ const httpLink = new HttpLink({
   uri: 'http://localhost:4000/graphql',
 });
 
-// add authorization headers for queries
-// to grapqhql backend
-const authLink = setContext((_, { headers }) => {
+/**
+ * add authorization headers for queries
+ * to grapqhql backend
+ * 
+ */
+const authLink = setContext(async (_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: getToken(),
+      // returns auth header or empty string
+      ...await getAuthHeader()
     }
   }
 });
 
-// split queries and subscriptions.
-// send subscriptions to websocket url &
-// queries to http url
+/**
+ * split queries and subscriptions.
+ * send subscriptions to websocket url &
+ * queries to http url
+ * 
+ */
 const link = split(
   ({ query }) => {
     const { kind, operation} : any = getMainDefinition(query);
@@ -52,6 +56,11 @@ const link = split(
   httpLink,
 );
 
+/**
+ * Instantiate cache object
+ * and define cache redirect queries
+ * 
+ */
 const cache =  new InMemoryCache({
   // cache redirects are used
   // to query the cache for individual Task item
