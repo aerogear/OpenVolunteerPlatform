@@ -9,7 +9,7 @@ import { IContainerProps } from './declarations';
 import { getKeycloakInstance } from './auth/keycloakAuth';
 
 let keycloak: any;
-const client = new ApolloOfflineClient(clientConfig);
+const apolloClient = new ApolloOfflineClient(clientConfig);
 
 export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
 
@@ -19,7 +19,7 @@ export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
   useEffect(() => {
     const init = async () => {
       keycloak = await getKeycloakInstance();
-      await client.init();
+      await apolloClient.init();
       setInitialized(true);
     }
     init();
@@ -30,8 +30,8 @@ export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
   // return container with keycloak provider
   return (
     <AppContext.Provider value={{ keycloak }}>
-      <ApolloOfflineProvider client={client}>
-        <ApolloProvider client={client}>
+      <ApolloOfflineProvider client={apolloClient}>
+        <ApolloProvider client={apolloClient}>
           <App />
         </ApolloProvider>
       </ApolloOfflineProvider>

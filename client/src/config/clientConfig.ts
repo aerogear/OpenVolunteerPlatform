@@ -5,18 +5,15 @@ import { setContext } from 'apollo-link-context';
 import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { globalCacheUpdates, ConflictLogger } from '../helpers';
-import { getAuthHeader } from '../auth/keycloakHelpers';
+import { getAuthHeader } from '../auth/keycloakAuth';
 
 const wsLink = new WebSocketLink({
   uri: 'ws://localhost:4000/graphql',
   options: {
     reconnect: true,
     lazy: true,
-    // add authorization headers for graphql
-    // subscriptions
-    connectionParams: () => ({
-      authorization: getAuthHeader(),
-    }),
+    // returns auth header or empty string
+    connectionParams: async () => (await getAuthHeader()), 
   },
 });
 
@@ -26,11 +23,12 @@ const httpLink = new HttpLink({
 
 // add authorization headers for queries
 // to grapqhql backend
-const authLink = setContext((_, { headers }) => {
+const authLink = setContext(async (_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: getAuthHeader(),
+      // returns auth header or empty string
+      ...await getAuthHeader()
     }
   }
 });

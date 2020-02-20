@@ -2,20 +2,21 @@ import React, { useContext, useState } from 'react';
 import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonToast, IonButton, IonIcon } from '@ionic/react';
 import { person, exit } from 'ionicons/icons';
 import { AppContext } from '../AppContext';
-import { keycloakHelpers } from '../auth';
-import { useNetworkStatus } from 'react-offix-hooks';
+import { logout } from '../auth/keycloakAuth';
+import { useNetworkStatus, useApolloOfflineClient } from 'react-offix-hooks';
 
 export const Header : React.FC<{ title: string, backHref?: string, match: any }> = ({ title, backHref, match }) => {
 
   const { url } = match;
 
   const isOnline = useNetworkStatus();
+  const client = useApolloOfflineClient();
   const { keycloak } = useContext(AppContext);
   const [ showToast, setShowToast ] = useState(false);
 
-  const logout = async () => {
+  const handleLogout = async () => {
     if (isOnline) {
-      await keycloakHelpers.logout({ keycloak });
+      await logout({ keycloak, client });
       return;
     }
     setShowToast(true);
@@ -29,7 +30,7 @@ export const Header : React.FC<{ title: string, backHref?: string, match: any }>
       <IonButton href="/profile">
         <IonIcon slot="icon-only" icon={person}  />
       </IonButton>
-      <IonButton onClick={logout}>
+      <IonButton onClick={handleLogout}>
         <IonIcon slot="icon-only" icon={exit} />
       </IonButton>
     </IonButtons>

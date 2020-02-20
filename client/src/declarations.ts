@@ -1,4 +1,5 @@
 import { KeycloakInstance } from "keycloak-js";
+import { ApolloOfflineClient } from "offix-client";
 
 export interface ITask {
   id: string;
@@ -60,4 +61,15 @@ export interface IUpdateMatchParams {
 
 export interface IAppContext {
   keycloak: KeycloakInstance<'native'> | undefined
+}
+
+export interface IAuthHeaders {
+  headers: {
+    Authorization: String
+  }
+}
+
+export interface ILogoutParams {
+  keycloak: Keycloak.KeycloakInstance<'native'> | undefined,
+  client: ApolloOfflineClient
 }
