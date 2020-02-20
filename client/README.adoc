@@ -1,6 +1,6 @@
 = React Client
 
-Example application using https://github.com/aerogear/offix[Offix Client] to provide additional offline capabilities on top of Apollo GraphQL.
+Example React Web application using AeroGear DataSync GraphQL capabilities
 
 == Getting Started
 
