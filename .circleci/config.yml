@@ -6,18 +6,16 @@ jobs:
       - image: circleci/node:lts
     steps:
       - checkout
-      - run:
-          name: update-npm
-          command: "sudo npm install -g npm@latest"
       - restore_cache:
-          key: dependency-cache-{{ checksum "client/package.json" }}
+          key: dependency-cache-{{ checksum "client/package.json" }}-{{checksum "server/package.json"}}
       - run:
           name: install-dependencies
-          command: "cd client && npm install"
+          command: yarn
+      - run:
+          name: install-package-dependencies
+          command: yarn
       - save_cache:
-          key: dependency-cache-{{ checksum "client/package.json" }}
-          paths:
-            - ./client/node_modules
+          key: dependency-cache-{{ checksum "client/package.json" }}-{{checksum "server/package.json"}}
       - run:
           name: run build
           command: "cd client && npm run build"
