@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "showcase-datasync-client",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -22,7 +22,7 @@
     "ionicons": "4.6.3",
     "keycloak-js": "8.0.2",
     "offix-cache": "0.13.1",
-    "offix-client": "0.13.1",
+    "offix-client": "0.13.2",
     "react": "16.12.0",
     "react-dom": "16.12.0",
     "react-offix-hooks": "0.13.1",
