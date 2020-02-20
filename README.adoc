@@ -2,21 +2,19 @@
 
 Example application using AeroGear Mobile Services.
 
-A new client has been built in React and is available in the `client` directory.
-
 == Implementation
 
 Implementation includes:
 
-- Integration with AeroGear Mobile Services
-- Ionic 4 Angular frontend backed by Cordova
+- Integration with Datasync
+- Ionic React frontend backed by Cordova
 - A Node.js GraphQL Server that implements a sample `Tasks` workflow
 - Authentication provided by Keycloak integration on the server and client side
 - GraphQL Subscriptions backed by an MQTT broker
 
 === GraphQL Client
 
-The mobile application uses https://github.com/aerogear/aerogear-js-sdk/tree/master/packages/sync[Voyager Client] to provide additional offline capabilities on top of Apollo GraphQL.
+The mobile application uses https://github.com/aerogear/offix[Offix Client] to provide additional offline capabilities on top of Apollo GraphQL.
 
 === GraphQL Server
 
@@ -27,8 +25,9 @@ The GraphQL server uses https://github.com/aerogear/voyager-server[Voyager Serve
 Requirements:
 
 - Docker
-- Node.js 8.x or above to run server
+- Node.js 12.x or above to run server
 - (optional) access to a running OpenShift instance
+- (optional) Keycloack server
 
 === Running the server
 
@@ -76,7 +75,7 @@ npm run keycloak:init
 
 This command creates the necessary resources in Keycloak and prints instructions *you must follow to enable the integration.* 
 
-Follow the instructions and copy the JSON configurations to the appropriate location.
+Follow the instructions and copy the JSON configurations to the appropriate locations.
 The showcase app and server will read these configurations and the integration will be enabled when they are started.
 
 By default, two users that can log into the application are created.
@@ -148,10 +147,10 @@ oc delete all -l app=ionic-showcase-server \
 
 === Running the Client
 
-. Install Cordova & Ionic 4
+. Install Ionic
 +
 ```shell
-npm install -g cordova ionic@4
+npm install -g @ionic/cli
 ```
 
 . Install dependencies
@@ -160,55 +159,28 @@ npm install -g cordova ionic@4
 npm install
 ```
 
-. Browse Ionic 4 app
+. Start the app
 +
 ```shell
 npm run start
 ```
 
-. Alternatively - Run as a mobile application in the Android emulator.
-+
-```shell
-npm run ionic:android
-```
+=== Adding keycloak integration to the client
 
-. Or run as a PWA app
-+
-```shell
-npm run ionic:pwa
-```
-
-NOTE: To connect to the local GraphQL server, when the app is running in the Android emulator,
-change url in`src/assets/config/config.js` from `localhost` to `10.0.2.2`. Note that Push notifications do not work in an emulator.
-
-=== Adding integrations to the client
-
-Client side is being configured dynamically by assets file located in `src/assets/config/config.js`.
-Making changes in config can point client side application to remote server and add additional integrations for Push and Auth
-
-Example config: 
+Rename the `keycloak.example.json` to `keycloak.json`. Replace the contents of the file
+with the keycloak json object generated during the keycloak integration init script.
+ 
 [source,js]
 ----
-window.showcaseConfig = {
-  "backend": {
-    "serverUrl": "http://yourserver/graphql",
-    "wsServerUrl": "ws://yourserver/graphql"
-  },
-  "auth": {
-    "realm": "<your realm>",
-    "url": "https://your-server/auth",
-    "clientId": "<your-client>"
-  },
-  "push": {
-    "pushServerURL": "http://localhost:9999/",
-    "android": {
-      "senderID": "test",
-      "variantID": "b7522eb7-5b73-464c-8a2b-b249ec1bd18b",
-      "variantSecret": "60de4619-03b5-4536-a17c-bd13aa574e6a"
-    }
-  }
-};
+{
+  "realm": "<your realm>",
+  "auth-server-url": "https://your-server/auth",
+  "ssl-required": "none",
+  "resource": "<your-client>",
+  "public-client": true,
+  "use-resource-role-mappings": true,
+  "confidential-port": 0
+}
 ----
-
 
 > NOTE: When running in cloud, developers can swap this file dynamically using config-map or openshift secret
