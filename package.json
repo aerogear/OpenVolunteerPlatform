@@ -1,0 +1,17 @@
+{
+  "name": "showcase-monorepository",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mono repository for Ionic Showcase",
+  "main": "index.js",
+  "devDependencies": {
+  },
+  "scripts": {
+    "start:server": "cd server/ && yarn start",
+    "start:client": "cd client/ && yarn start"
+  },
+  "workspaces": [
+    "client/*",
+    "server/**"
+  ]
+}
