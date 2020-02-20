@@ -16,6 +16,8 @@ jobs:
           command: yarn
       - save_cache:
           key: dependency-cache-{{ checksum "client/package.json" }}-{{checksum "server/package.json"}}
+          paths:
+            - ./node_modules
       - run:
           name: run build
           command: "cd client && npm run build"
