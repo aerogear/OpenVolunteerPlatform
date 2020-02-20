@@ -3,12 +3,25 @@ import { ILogoutParams } from '../declarations';
 
 export let keycloak: KeycloakInstance<'native'> | undefined;
 
+/**
+ * Get keycloak instance
+ * 
+ * @return an initiated keycloak instance or `undefined`
+ * if keycloak isn't configured
+ * 
+ */
 export const getKeycloakInstance = async () => {
   await init();
   return keycloak;
 } 
 
-// initiate keycloak instance
+/**
+ * Initiate keycloak instance.
+ * 
+ * Set keycloak to undefined if 
+ * keycloak isn't configured
+ * 
+ */
 export const init = async () => {
   try {
     keycloak = new (Keycloak as any )();
@@ -25,10 +38,15 @@ export const init = async () => {
 }
 
 
-// This function keeps getting called by wslink
-// connection param function, so carry out 
-// an early return if keycloak is not initialized
-// otherwise get the auth token
+/**
+ * This function keeps getting called by wslink
+ * connection param function, so carry out 
+ * an early return if keycloak is not initialized
+ * otherwise get the auth token
+ * 
+ * @return authorization header or empty string
+ * 
+ */
 export const getAuthHeader = async () => {
   if (!keycloak) return '';
   return {
@@ -37,6 +55,14 @@ export const getAuthHeader = async () => {
 };
 
 
+/**
+ * Use keycloak update token function to retrieve
+ * keycloak token
+ * 
+ * @return keycloak token or empty string if keycloak
+ * isn't configured
+ * 
+ */
 const getKeyCloakToken = async () => {
   await keycloak?.updateToken(50);
   if (keycloak?.token) return keycloak.token;
@@ -44,8 +70,14 @@ const getKeyCloakToken = async () => {
   return '';
 }
 
-// logout of keycloak, clear cache and offline store then redirect to
-// keycloak login page
+/**
+ * logout of keycloak, clear cache and offline store then redirect to 
+ * keycloak login page
+ * 
+ * @param keycloak the keycloak instance
+ * @param client offix client
+ *  
+ */
 export const logout = async ({ keycloak, client: apolloClient } : ILogoutParams) => {
   if(keycloak) {
     await keycloak.logout();

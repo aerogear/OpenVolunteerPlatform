@@ -1,0 +1,49 @@
+= React Client
+
+Example application using https://github.com/aerogear/offix[Offix Client] to provide additional offline capabilities on top of Apollo GraphQL.
+
+== Getting Started
+
+Requirements:
+
+- Node.js 12.x or above to run server
+- (optional) Keycloack server
+
+=== Running the Client
+
+. Install Ionic
++
+```shell
+npm install -g @ionic/cli
+```
+
+. Install dependencies
++
+```shell
+npm install
+```
+
+. Start the app
++
+```shell
+npm run start
+```
+
+=== Adding keycloak integration to the client
+
+Rename the `keycloak.example.json` to `keycloak.json` and update the fields
+accordingly.
+ 
+[source,js]
+----
+{
+  "realm": "<your realm>",
+  "auth-server-url": "https://your-server/auth",
+  "ssl-required": "none",
+  "resource": "<your-client>",
+  "public-client": true,
+  "use-resource-role-mappings": true,
+  "confidential-port": 0
+}
+----
+
