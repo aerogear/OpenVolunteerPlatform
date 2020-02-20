@@ -6,21 +6,21 @@ jobs:
       - image: circleci/node:lts
     steps:
       - checkout
-      - run:
-          name: update-npm
-          command: "sudo npm install -g npm@latest"
       - restore_cache:
-          key: dependency-cache-{{ checksum "client/package.json" }}
+          key: dependency-cache-{{ checksum "client/package.json" }}-{{checksum "server/package.json"}}
       - run:
           name: install-dependencies
-          command: "cd client && npm install"
+          command: yarn
+      - run:
+          name: install-package-dependencies
+          command: yarn
       - save_cache:
-          key: dependency-cache-{{ checksum "client/package.json" }}
+          key: dependency-cache-{{ checksum "client/package.json" }}-{{checksum "server/package.json"}}
           paths:
-            - ./client/node_modules
+            - ./node_modules
       - run:
           name: run build
-          command: "cd client && npm run build"
+          command: "yarn build"
 
   publish_showcase_container:
     docker:
@@ -32,8 +32,8 @@ jobs:
       - setup_remote_docker:
           version: 17.05.0-ce
       - run: | 
-          npm i
-          npm run build:prod
+          yarn
+          cd client && yarn build:prod
       - run: |
           cd server          
           TAG=$CIRCLE_TAG ../scripts/publish_showcase_container.sh
