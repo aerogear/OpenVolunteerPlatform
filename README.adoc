@@ -6,7 +6,7 @@ Example application using AeroGear Mobile Services.
 
 Implementation includes:
 
-- Integration with Datasync
+- Integration with AeroGear Data Sync
 - Ionic React frontend backed by Cordova
 - A Node.js GraphQL Server that implements a sample `Tasks` workflow
 - Authentication provided by Keycloak integration on the server and client side
