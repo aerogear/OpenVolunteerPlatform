@@ -4,7 +4,7 @@ import { ApolloServer, PubSub } from 'apollo-server-express';
 import { buildSchema } from 'graphql';
 import { join } from 'path';
 import { connect } from './db';
-import { createCRUDResolversRuntimeContext } from './resolvers/createContext';
+import { createCRUDResolversRuntimeContext } from './resolvers/createMongoContext';
 import resolvers from './resolvers/resolvers';
 
 /**
