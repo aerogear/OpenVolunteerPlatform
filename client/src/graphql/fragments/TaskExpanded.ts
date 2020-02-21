@@ -1,7 +1,7 @@
 import gql from "graphql-tag"
 
 export const TaskExpandedFragment = gql`
-  fragment TaskExpandedField on Task {
+  fragment TaskExpandedFields on Task {
    id
    title
    description

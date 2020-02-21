@@ -14,11 +14,15 @@ export const TaskList: React.FC<any> = ({ tasks }) => {
   const [deleteTaskMutation] = useOfflineMutation(deleteTask, mutationOptions.deleteTask);
   
   const handleDelete = (task: ITask) => {
-    deleteTaskMutation({ variables: { input: task } });
+    const input = task;
+    delete input.__typename;
+    deleteTaskMutation({ variables: { input } });
   };
 
   const handleUpdate = (task: ITask) => {
-    updateTaskMutation({variables: { input: task }});
+    const input = task;
+    delete input.__typename;
+    updateTaskMutation({variables: { input }});
   }
   
   if(tasks.length < 1) {

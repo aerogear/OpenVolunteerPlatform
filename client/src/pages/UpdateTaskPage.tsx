@@ -19,17 +19,17 @@ import { Header } from '../components/Header';
 import { Empty } from '../components/Empty';
 import { mutationOptions } from '../helpers';
 import { IUpdateMatchParams } from '../declarations';
-import { findAllTasks } from '../graphql/queries/findAllTasks';
 import { updateTask } from '../graphql/mutations/updateTask';
+import { findTasks } from '../graphql/queries/findTasks';
 
 export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ history, match }) => {
 
   const { id } = match.params;
-  
+
   const [title, setTitle] = useState<string>(null!);
   const [description, setDescription] = useState<string>(null!);
-  const { loading, error, data } = useQuery(findAllTasks, { 
-    variables: { id },
+  const { loading, error, data } = useQuery(findTasks, { 
+    variables: { fields:  id },
     fetchPolicy: 'cache-only',
   });
 
@@ -37,12 +37,14 @@ export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
 
   const submit = (event: SyntheticEvent) => {
     event.preventDefault();
+    const task = data.getTask;
+    delete task.__typename;
     updateTaskMutation({
       variables: { 
         input: {
-          ...data.getTask,
-          title: title || data.getTask.title,
-          description: description || data.getTask.description,
+          ...task,
+          title: title || task.title,
+          description: description || task.description,
         }
       },
     });
