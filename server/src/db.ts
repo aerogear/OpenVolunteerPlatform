@@ -8,7 +8,7 @@ export async function connect() {
     const dbName = 'showcase';
 
     // Use connect method to connect to the server
-    const client = await MongoClient.connect(url);
+    const client = await MongoClient.connect(url, { useUnifiedTopology: true });
     const db = client.db(dbName);
     return db;
 }

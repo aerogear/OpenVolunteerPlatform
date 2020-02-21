@@ -21,6 +21,27 @@ export default {
     },
     updateTask: (parent, args, context) => {
       return context.Task.update(args.input, context)
+    },
+    deleteTask: (parent, args, context) => {
+      return context.Task.delete(args.input, context)
+    }
+  },
+
+  Subscription: {
+    newTask: {
+      subscribe: (parent, args, context) => {
+        return context.Task.subscribeToCreate(args, context)
+      }
+    },
+    updatedTask: {
+      subscribe: (parent, args, context) => {
+        return context.Task.subscribeToUpdate(args, context)
+      }
+    },
+    deletedTask: {
+      subscribe: (parent, args, context) => {
+        return context.Task.subscribeToDelete(args, context)
+      }
     }
   }
 }

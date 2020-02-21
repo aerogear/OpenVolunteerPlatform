@@ -3,3 +3,4 @@ dist
 types
 yarn.lock
 yarn-error.log
+data/*
