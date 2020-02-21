@@ -13,15 +13,15 @@ import {
   IonFabButton,
   IonContent,
 } from '@ionic/react';
-import { GET_TASKS } from '../gql/queries';
 import { subscriptionOptions,  } from '../helpers';
 import { useSubscribeToMore } from '../hooks';
 import { Empty, TaskList, NetworkBadge, OfflineQueueBadge, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
+import { findAllTasks } from '../graphql/queries/findAllTasks';
 
 export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
 
-  const { loading, error, data, subscribeToMore } = useQuery(GET_TASKS);
+  const { loading, error, data, subscribeToMore } = useQuery(findAllTasks);
   useSubscribeToMore({ options: Object.values(subscriptionOptions), subscribeToMore});
 
   if (error) return <pre>{ JSON.stringify(error) }</pre>;
@@ -31,7 +31,11 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
     message={'Loading...'}
   />;
 
-  if (data && data.allTasks) return (
+  const content = (data && data.allTasks) 
+    ? <TaskList tasks={data.allTasks} />
+    : <Empty message={<p>No tasks available</p>} />;
+
+  return (
     <IonPage>
       <Header title="Manage Tasks"  match={match}  />
       <IonContent className="ion-padding" >
@@ -40,7 +44,7 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
             <IonLabel>All Tasks</IonLabel>
           </IonSegmentButton>
         </IonSegment>
-        <TaskList tasks={data.allTasks} />
+        { content }
         <IonFab vertical="bottom" horizontal="end" slot="fixed" style={{ 'marginBottom': '2em', 'marginRight': '1em' }}>
           <IonFabButton href="/addTask">
             <IonIcon icon={add} />
@@ -55,7 +59,5 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
       </IonFooter>
     </IonPage>
   );
-
-  return <Empty message={<p>No tasks available</p>} />
   
 };

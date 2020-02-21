@@ -16,7 +16,7 @@ export const createApolloServer = async () => {
 
     const typeDefs = loadSchemaFiles(join(__dirname, '/schema/')).join('\n');
     const schema = buildSchema(typeDefs);
-    const context = createCRUDResolversRuntimeContext({ schema, db, pubSub });
+    const context = createCRUDResolversRuntimeContext(schema, db, pubSub);
     const apolloServer = new ApolloServer({
         typeDefs: typeDefs,
         resolvers,

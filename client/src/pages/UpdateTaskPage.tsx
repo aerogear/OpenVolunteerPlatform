@@ -15,11 +15,12 @@ import {
 } from '@ionic/react';
 import { useOfflineMutation } from 'react-offix-hooks';
 import { useQuery } from '@apollo/react-hooks';
-import { UPDATE_TASK, GET_TASK } from '../gql/queries';
 import { Header } from '../components/Header';
 import { Empty } from '../components/Empty';
 import { mutationOptions } from '../helpers';
 import { IUpdateMatchParams } from '../declarations';
+import { findAllTasks } from '../graphql/queries/findAllTasks';
+import { updateTask } from '../graphql/mutations/updateTask';
 
 export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ history, match }) => {
 
@@ -27,20 +28,22 @@ export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
   
   const [title, setTitle] = useState<string>(null!);
   const [description, setDescription] = useState<string>(null!);
-  const { loading, error, data } = useQuery(GET_TASK, { 
+  const { loading, error, data } = useQuery(findAllTasks, { 
     variables: { id },
     fetchPolicy: 'cache-only',
   });
 
-  const [updateTask] = useOfflineMutation(UPDATE_TASK, mutationOptions.updateTask);
+  const [updateTaskMutation] = useOfflineMutation(updateTask, mutationOptions.updateTask);
 
   const submit = (event: SyntheticEvent) => {
     event.preventDefault();
-    updateTask({
-      variables: {
-        ...data.getTask,
-        title: title || data.getTask.title,
-        description: description || data.getTask.description,
+    updateTaskMutation({
+      variables: { 
+        input: {
+          ...data.getTask,
+          title: title || data.getTask.title,
+          description: description || data.getTask.description,
+        }
       },
     });
     history.push('/tasks');

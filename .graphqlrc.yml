@@ -19,10 +19,10 @@ extensions:
         format: graphql
         outputPath: ./server/src/schema
       graphback-resolvers:
-        format: ts
+        format: 'ts'
         outputPath: ./server/src/resolvers
       graphback-client:
-        format: 'graphql'
+        format: 'ts'
         outputPath: ./client/src/graphql
       graphback-offix:
         outputPath: ./server/src/resolvers

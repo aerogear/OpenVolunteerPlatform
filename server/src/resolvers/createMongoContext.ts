@@ -14,9 +14,9 @@ export const createCRUDResolversRuntimeContext = (
         publishUpdate: true,
         publishDelete: true
       }
-    }];
+    }
+  ];
 
-  return {
-    Task: createMongoCRUDRuntimeContext(model, schema, db, pubSub)
-  }
+  return createMongoCRUDRuntimeContext(model, schema, db, pubSub);
+  
 }
