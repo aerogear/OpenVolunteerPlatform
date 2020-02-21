@@ -18,6 +18,7 @@
   },
   "workspaces": [
     "client",
-    "server"
+    "server",
+    "graphback-server"
   ]
 }
