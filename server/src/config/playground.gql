@@ -19,7 +19,9 @@ mutation updateTask {
 }
 
 mutation deleteTask {
-  deleteTask(input: { id: "1" })
+ deleteTask(input: { id: "1" }){
+    id
+  }
 }
 
 query allTasks {
