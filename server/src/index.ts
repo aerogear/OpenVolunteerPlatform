@@ -26,6 +26,7 @@ async function start() {
   if (config.keycloakConfig) {
     keycloakService = new KeycloakSecurityService(config.keycloakConfig)
     keycloakService.applyAuthMiddleware(app)
+    // TODO how to use service without voyager
   }
 
   const apolloServer = await createApolloServer();
