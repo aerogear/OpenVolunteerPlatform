@@ -17,7 +17,8 @@ export function getPubSub() {
       rejectUnauthorized: false
     }
 
-    const client = mqtt.connect(mqttHost, mqttOptions)
+    // Types are broken
+    const client = mqtt.connect(mqttHost, mqttOptions as any)
 
     console.log(`attempting to connect to messaging service ${mqttHost}`)
 
