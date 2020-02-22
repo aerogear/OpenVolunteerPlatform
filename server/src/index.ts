@@ -3,14 +3,9 @@ import express from 'express';
 
 import { KeycloakSecurityService } from '@aerogear/voyager-keycloak'
 import { createSubscriptionServer } from '@aerogear/voyager-subscriptions'
+import { VoyagerServer } from '@aerogear/voyager-server'
 
 import { config } from './config/config'
-
-process.on('unhandledRejection', (error: any) => {
-  console.error(error.message, error.stack)
-  process.exit(1)
-})
-
 
 import { createApolloServer } from './graphql';
 
@@ -26,10 +21,9 @@ async function start() {
   if (config.keycloakConfig) {
     keycloakService = new KeycloakSecurityService(config.keycloakConfig)
     keycloakService.applyAuthMiddleware(app)
-    // TODO how to use service without voyager
   }
 
-  const apolloServer = await createApolloServer();
+  const apolloServer = await createApolloServer(keycloakService);
   apolloServer.applyMiddleware({ app });
 
   const server = app.listen(config.port, () => {
@@ -51,4 +45,10 @@ start().catch((err) => {
     🎮 Ionic PWA application available at http://localhost:${config.port}
     🚀 GraphQL Playground is available at http://localhost:${config.port}/graphql
     ***********************************************************`)
+})
+
+
+process.on('unhandledRejection', (error: any) => {
+  console.error(error.message, error.stack)
+  process.exit(1)
 })

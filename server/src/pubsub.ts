@@ -2,7 +2,7 @@ import mqtt from 'mqtt'
 import { PubSub } from 'apollo-server'
 import { MQTTPubSub } from '@aerogear/graphql-mqtt-subscriptions'
 
-function getPubSub() {
+export function getPubSub() {
   const mqttHost = process.env.MQTT_HOST
 
   if (mqttHost) {
@@ -34,8 +34,4 @@ function getPubSub() {
   }
   console.log('Using In Memory PubSub')
   return new PubSub()
-}
-
-export default {
-  pubSub: getPubSub()
 }
