@@ -22,6 +22,8 @@ export function buildKeycloakApolloConfig(app: Express, apolloConfig: any) {
             store: memoryStore
         }, config.keycloakConfig);
 
+        app.use(keycloak.middleware())
+
         app.use(graphqlPath, keycloak.protect());
 
         return {
@@ -29,6 +31,7 @@ export function buildKeycloakApolloConfig(app: Express, apolloConfig: any) {
             schemaDirectives: KeycloakSchemaDirectives as any, // 2. Add the KeycloakSchemaDirectives
             resolvers: apolloConfig.resolvers,
             playground: apolloConfig.playground,
+            path: graphqlPath,
             context: ({ req }) => {
                 return {
                     ...apolloConfig.context,
