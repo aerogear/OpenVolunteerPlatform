@@ -3,7 +3,7 @@ import path from 'path'
 
 export class Config {
   public port: string | number
-  public db: { database: string; user: string; password: string; host: string; port: string }
+  public db: { database: string; user?: string; password?: string; host: string }
   public keycloakConfigPath: string
   public keycloakConfig: any
   public pushConfigPath: string
@@ -12,12 +12,12 @@ export class Config {
 
   constructor() {
     this.port = process.env.PORT || 4000
+    
     this.db = {
-      database: process.env.DB_NAME || 'users',
-      user: process.env.DB_USERNAME || 'postgresql',
-      password: process.env.DB_PASSWORD || 'postgres',
-      host: process.env.DB_HOSTNAME || '127.0.0.1',
-      port: process.env.DB_PORT || '5432'
+      database: process.env.MONGO_COLLECTION || 'showcase',
+      host: process.env.MONGO_HOST || '127.0.0.1',
+      user: process.env.MONGO_USER,
+      password: process.env.MONGO_PASSWORD,
     }
 
     this.keycloakConfigPath = process.env.KEYCLOAK_CONFIG || path.resolve(__dirname, './keycloak.json')

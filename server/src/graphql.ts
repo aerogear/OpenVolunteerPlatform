@@ -9,12 +9,13 @@ import { KeycloakSecurityService } from '@aerogear/voyager-keycloak';
 import { VoyagerServer } from '@aerogear/voyager-server'
 import { getPubSub } from './pubsub'
 import { createOffixMongoCRUDRuntimeContext } from './offix/MongoDbOffixDataProvider';
+import { Config } from './config/config';
 
 /**
  * Creates Apollo server
  */
-export const createApolloServer = async function(keycloakService: KeycloakSecurityService) {
-    const db = await connect();
+export const createApolloServer = async function(config: Config, keycloakService: KeycloakSecurityService) {
+    const db = await connect(config);
     const pubSub = getPubSub();
 
     const voyagerConfig = {

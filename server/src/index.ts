@@ -23,7 +23,7 @@ async function start() {
     keycloakService.applyAuthMiddleware(app)
   }
 
-  const apolloServer = await createApolloServer(keycloakService);
+  const apolloServer = await createApolloServer(config, keycloakService);
   apolloServer.applyMiddleware({ app });
 
   const server = app.listen(config.port, () => {
