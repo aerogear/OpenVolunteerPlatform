@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import { config } from './config/config'
-
+import http from 'http';
 import { createApolloServer } from './graphql';
 
 async function start() {
@@ -11,9 +11,11 @@ async function start() {
   app.use('/', express.static('website'))
   app.get('/health', (req, res) => res.sendStatus(200));
 
-  await createApolloServer(app, config);
+  const apolloServer = await createApolloServer(app, config);
+  const httpServer = http.createServer(app)
+  apolloServer.installSubscriptionHandlers(httpServer)
 
-  app.listen(config.port, () => {
+  httpServer.listen(config.port, () => {
     console.log(`\n    ***********************************************************
     🎮 Ionic PWA application available at http://localhost:${config.port}
     🚀 GraphQL Playground is available at http://localhost:${config.port}/graphql

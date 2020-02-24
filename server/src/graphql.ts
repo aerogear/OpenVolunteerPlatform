@@ -30,9 +30,12 @@ export const createApolloServer = async function (app: Express, config: Config) 
         context: context
     }
 
+  
     apolloConfig = buildKeycloakApolloConfig(app, apolloConfig)
 
     const apolloServer = new ApolloServer(apolloConfig)
     apolloServer.applyMiddleware({ app });
+    
+    return apolloServer;
 }
 
