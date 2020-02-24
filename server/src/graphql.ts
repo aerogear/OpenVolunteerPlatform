@@ -5,10 +5,11 @@ import { join } from 'path';
 import { connect } from './db';
 import resolvers from './resolvers/resolvers';
 import { models } from './resolvers/models'
-import { createMongoCRUDRuntimeContext } from "@graphback/runtime-mongo";
 import { KeycloakSecurityService } from '@aerogear/voyager-keycloak';
 import { VoyagerServer } from '@aerogear/voyager-server'
 import { getPubSub } from './pubsub'
+import { createOffixMongoCRUDRuntimeContext } from './offix/MongoDbOffixDataProvider';
+
 /**
  * Creates Apollo server
  */
@@ -22,7 +23,7 @@ export const createApolloServer = async function(keycloakService: KeycloakSecuri
 
     const typeDefs = loadSchemaFiles(join(__dirname, '/schema/')).join('\n');
     const schema = buildSchema(typeDefs);
-    const context = createMongoCRUDRuntimeContext(models, schema, db, pubSub);
+    const context = createOffixMongoCRUDRuntimeContext(models, schema, db, pubSub);
     const apolloServer = VoyagerServer({
         typeDefs: typeDefs,
         resolvers,
