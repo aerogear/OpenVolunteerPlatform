@@ -1,8 +1,8 @@
-const mqtt = require('mqtt')
-const { PubSub } = require('apollo-server')
-const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
+import mqtt from 'mqtt'
+import { PubSub } from 'apollo-server'
+import { MQTTPubSub } from '@aerogear/graphql-mqtt-subscriptions'
 
-function getPubSub() {
+export function getPubSub() {
   const mqttHost = process.env.MQTT_HOST
 
   if (mqttHost) {
@@ -11,20 +11,21 @@ function getPubSub() {
       host: mqttHost,
       servername: mqttHost, // needed to work in OpenShift. Lookup SNI.
       username: process.env.MQTT_USERNAME || '',
-      password: process.env.MQTT_PASSWORD || '' ,
+      password: process.env.MQTT_PASSWORD || '',
       port: process.env.MQTT_PORT || '1883',
       protocol: process.env.MQTT_PROTOCOL || 'mqtt',
       rejectUnauthorized: false
     }
-  
-    const client = mqtt.connect(mqttHost, mqttOptions)
-  
+
+    // Types are broken
+    const client = mqtt.connect(mqttHost, mqttOptions as any)
+
     console.log(`attempting to connect to messaging service ${mqttHost}`)
-  
+
     client.on('connect', () => {
       console.log('connected to messaging service')
     })
-  
+
     client.on('error', (error) => {
       console.log('error with mqtt connection')
       console.log(error)
@@ -34,8 +35,4 @@ function getPubSub() {
   }
   console.log('Using In Memory PubSub')
   return new PubSub()
-}
-
-module.exports = {
-  pubSub: getPubSub()
 }

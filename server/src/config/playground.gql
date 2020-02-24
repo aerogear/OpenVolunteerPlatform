@@ -1,0 +1,31 @@
+fragment TaskFields on Task {
+  id
+  version
+  title
+  description
+  status
+}
+
+mutation createTask {
+  createTask(input: { title: "Task1", description: "test", status: OPEN }) {
+    ...TaskFields
+  }
+}
+
+mutation updateTask {
+  updateTask(input: { id: "1", title: "Task2", version: 1 }) {
+    ...TaskFields
+  }
+}
+
+mutation deleteTask {
+ deleteTask(input: { id: "1" }){
+    id
+  }
+}
+
+query allTasks {
+  findAllTasks {
+    ...TaskFields
+  }
+}

@@ -4,27 +4,34 @@
   "private": true,
   "scripts": {
     "start": "ts-node src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "push": "docker build . -t aerogear/voyager-server-example-task && docker push aerogear/voyager-server-example-task",
+    "keycloak": "docker-compose -f ./scripts/keycloak/docker-compose.yml up",
+    "keycloak:init": "node ./scripts/keycloak/initKeycloak.js"
   },
   "license": "MIT",
   "devDependencies": {
+    "keycloak-request-token": "0.1.0",
     "@types/cors": "2.8.6",
     "@types/express": "4.17.2",
     "@types/node": "13.7.1",
-    "graphql": "14.6.0",
+    "graphql": "^14.6.0",
     "ts-node": "8.6.2",
     "ts-node-dev": "1.0.0-pre.44",
     "tslint": "5.20.1",
     "typescript": "3.7.5"
   },
   "dependencies": {
-    "@graphback/runtime": "0.11.0-dev2",
-    "@graphback/runtime-mongo": "0.11.0-dev2",
+    "@graphback/runtime-mongo": "0.11.0-dev3",
+    "@aerogear/graphql-mqtt-subscriptions": "1.1.3",
+    "@aerogear/voyager-conflicts": "0.8.0",
+    "@aerogear/voyager-keycloak": "0.8.0",
+    "@aerogear/voyager-server": "0.8.0",
+    "@aerogear/voyager-subscriptions": "0.8.0",
     "@types/react": "^16.9.21",
     "apollo-server-express": "2.10.1",
     "cors": "2.8.5",
     "express": "4.17.1",
-    "graphql": "14.6.0",
     "graphql-tag": "2.10.3"
   }
 }

@@ -1,8 +1,12 @@
-# Stage 1 - the build process
-FROM node:10 as compile-server
+FROM node:8
+
+# Create app directory
 WORKDIR /usr/src/app
+
 COPY . .
 RUN npm install
-RUN npm run build
 
+VOLUME ./files
+
+EXPOSE 4000
 CMD [ "npm", "start" ]

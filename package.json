@@ -6,11 +6,8 @@
   "main": "index.js",
   "devDependencies": {
     "del-cli": "3.0.0",
-    "@graphback/codegen-offix": "0.11.0-dev2",
-    "@graphback/codegen-resolvers": "0.11.0-dev2",
-    "graphback-cli": "0.11.0-dev2",
-    "graphback": "0.11.0-dev2",
-    "@graphback/core": "0.11.0-dev2"
+    "@graphback/codegen-offix": "0.11.0-dev3",
+    "graphback-cli": "0.11.0-dev3"
   },
   "scripts": {
     "start:server": "cd server/ && yarn start",
