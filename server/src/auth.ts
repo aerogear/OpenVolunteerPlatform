@@ -1,4 +1,4 @@
-import { KeycloakContext, KeycloakTypeDefs, KeycloakSchemaDirectives } from 'keycloak-connect-graphql';
+import { KeycloakContext, KeycloakTypeDefs, KeycloakSchemaDirectives, KeycloakSubscriptionContext, KeycloakSubscriptionHandler } from 'keycloak-connect-graphql';
 import { Express } from "express";
 import { config } from './config/config';
 
@@ -22,6 +22,8 @@ export function buildKeycloakApolloConfig(app: Express, apolloConfig: any) {
             store: memoryStore
         }, config.keycloakConfig);
 
+        const keycloakSubscriptionHandler = new KeycloakSubscriptionHandler({ keycloak })
+
         app.use(keycloak.middleware())
 
         app.use(graphqlPath, keycloak.protect());
@@ -37,7 +39,19 @@ export function buildKeycloakApolloConfig(app: Express, apolloConfig: any) {
                     ...apolloConfig.context,
                     kauth: new KeycloakContext({ req }) // 3. add the KeycloakContext to `kauth`
                 }
-            }
+            },
+            subscriptions: {
+                onConnect: async (connectionParams, websocket, connectionContext) => {
+                    const token = await keycloakSubscriptionHandler.onSubscriptionConnect(connectionParams, websocket, connectionContext) 
+                    if(!token){
+                        throw new Error("Cannot build keycloak token. Connection will be terminated")
+                    }
+                    return {
+                        ...apolloConfig.context,
+                        kauth: new KeycloakSubscriptionContext(token)
+                    }
+                }
+            },
         }
     } else {
         console.log("Keycloak not configured. Auth will be disabled");
