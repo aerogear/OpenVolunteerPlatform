@@ -7,6 +7,7 @@ import { Empty } from './Empty';
 import { mutationOptions } from '../helpers';
 import { updateTask } from '../graphql/mutations/updateTask';
 import { deleteTask } from '../graphql/mutations/deleteTask';
+import { createOptimisticResponse } from '../helpers/optimisticResponse';
 
 export const TaskList: React.FC<any> = ({ tasks }) => {
 
@@ -16,13 +17,27 @@ export const TaskList: React.FC<any> = ({ tasks }) => {
   const handleDelete = (task: ITask) => {
     const input = task;
     delete input.__typename;
-    deleteTaskMutation({ variables: { input } });
+    deleteTaskMutation({ 
+      variables: { input },
+      optimisticResponse: createOptimisticResponse({
+        ...mutationOptions.deleteTask, 
+        mutation: deleteTask,
+        variables: { input },
+      }), 
+    });
   };
 
   const handleUpdate = (task: ITask) => {
     const input = task;
     delete input.__typename;
-    updateTaskMutation({variables: { input }});
+    updateTaskMutation({
+      variables: { input },
+      optimisticResponse: createOptimisticResponse({
+        ...mutationOptions.updateTask, 
+        mutation: updateTask,
+        variables: { input },
+      }),
+    });
   }
   
   if(tasks.length < 1) {

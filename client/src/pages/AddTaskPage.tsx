@@ -11,6 +11,7 @@ import { useOfflineMutation } from 'react-offix-hooks';
 import { mutationOptions } from '../helpers';
 import { Header } from '../components/Header';
 import { createTask } from '../graphql/mutations/createTask';
+import { createOptimisticResponse } from '../helpers/optimisticResponse';
 
 export const AddTaskPage: React.FC<RouteComponentProps> = ({ history, match }) => {
 
@@ -21,15 +22,21 @@ export const AddTaskPage: React.FC<RouteComponentProps> = ({ history, match }) =
 
   const submit = (event: SyntheticEvent) => {
     event.preventDefault();
-    createTaskMutation({
-      variables: {
-        input: {
-          title,
-          description,
-          status: 'OPEN',
-          version: 1
-        },
+    const variables = {
+      input: {
+        title,
+        description,
+        status: 'OPEN',
+        version: 1
       },
+    };
+    createTaskMutation({
+      variables,
+      optimisticResponse: createOptimisticResponse({
+        ...mutationOptions.createTask, 
+        mutation: createTask,
+        variables,
+      }),
     });
     history.push('/tasks');
   };
