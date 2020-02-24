@@ -6,8 +6,6 @@ export class Config {
   public db: { database: string; user?: string; password?: string; host: string }
   public keycloakConfigPath: string
   public keycloakConfig: any
-  public pushConfigPath: string
-  public pushConfig: any
   public playgroundConfig: { tabs: { endpoint: string; variables: {}; query: string }[] }
 
   constructor() {
@@ -22,9 +20,6 @@ export class Config {
 
     this.keycloakConfigPath = process.env.KEYCLOAK_CONFIG || path.resolve(__dirname, './keycloak.json')
     this.keycloakConfig = readConfig(this.keycloakConfigPath)
-
-    this.pushConfigPath = process.env.PUSH_CONFIG || path.resolve(__dirname, './push-config.json')
-    this.pushConfig = readConfig(this.pushConfigPath)
 
     this.playgroundConfig = {
       tabs: [
@@ -42,7 +37,7 @@ function readConfig(path) {
   try {
     return JSON.parse(fs.readFileSync(path, 'utf8'))
   } catch (e) {
-    console.error(`Warning: couldn't find config at ${path}`)
+    console.error(`Warning: couldn't find keycloak config at ${path}`)
   }
 }
 

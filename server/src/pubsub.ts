@@ -1,5 +1,5 @@
 import mqtt from 'mqtt'
-import { PubSub } from 'apollo-server'
+import { PubSub } from 'apollo-server-express'
 import { MQTTPubSub } from '@aerogear/graphql-mqtt-subscriptions'
 
 export function getPubSub() {
