@@ -66,8 +66,7 @@ const cache =  new InMemoryCache({
   // to query the cache for individual Task item
   cacheRedirects: {
     Query: {
-      getTask: (_, args, { getCacheKey }) =>
-        getCacheKey({ __typename: 'Task', id: args.id })
+      findTasks: (_, { fields }, { getCacheKey }) => getCacheKey({ __typename: 'Task', id: fields.id }),
     },
   },
 });

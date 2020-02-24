@@ -19,17 +19,18 @@ import { Header } from '../components/Header';
 import { Empty } from '../components/Empty';
 import { mutationOptions } from '../helpers';
 import { IUpdateMatchParams } from '../declarations';
-import { findAllTasks } from '../graphql/queries/findAllTasks';
 import { updateTask } from '../graphql/mutations/updateTask';
+import { findTasks } from '../graphql/queries/findTasks';
+import { createOptimisticResponse } from '../helpers/optimisticResponse';
 
 export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ history, match }) => {
 
   const { id } = match.params;
-  
+
   const [title, setTitle] = useState<string>(null!);
   const [description, setDescription] = useState<string>(null!);
-  const { loading, error, data } = useQuery(findAllTasks, { 
-    variables: { id },
+  const { loading, error, data } = useQuery(findTasks, { 
+    variables: { fields: { id } },
     fetchPolicy: 'cache-only',
   });
 
@@ -37,14 +38,22 @@ export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
 
   const submit = (event: SyntheticEvent) => {
     event.preventDefault();
+    const task = data.findTasks;
+    delete task.__typename;
+    const variables = { 
+      input: {
+        ...task,
+        title: title || task.title,
+        description: description || task.description,
+      }
+    };
     updateTaskMutation({
-      variables: { 
-        input: {
-          ...data.getTask,
-          title: title || data.getTask.title,
-          description: description || data.getTask.description,
-        }
-      },
+      variables,
+      optimisticResponse: createOptimisticResponse({
+        ...mutationOptions.updateTask, 
+        mutation: updateTask,
+        variables,
+      }),
     });
     history.push('/tasks');
   }
@@ -56,41 +65,44 @@ export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
     message={'Loading...'}
   />;
 
-  if (data && data.getTask) return (
-    <>
-      <Header title="Update task" backHref="/tasks" match={match} />
-      <IonContent>
-        <IonCard>
-          <IonCardHeader>Task</IonCardHeader>
-          <IonCardContent>
-            <IonLabel>
-              <h2>Title: {data.getTask.title}</h2>
-              <IonNote>
-                Description: {data.getTask.description}
-              </IonNote>
-              <br />
-              <IonNote>
-                <IonBadge color="primary">
-                  Version: {data.getTask.version}
-                </IonBadge>
-              </IonNote>
-            </IonLabel>
-          </IonCardContent>
-        </IonCard>
-        <form onSubmit={submit} style={{ padding: '0 16px' }}>
-          <IonItem>
-            <IonLabel color="primary" position="floating">Title</IonLabel>
-            <IonInput type="text" name="title" onInput={(e: any) => setTitle(e.target.value)} value={data.getTask.title} />
-          </IonItem>
-          <IonItem>
-            <IonLabel color="primary" position="floating">Description</IonLabel>
-            <IonInput type="text" name="description" onInput={(e: any) => setDescription(e.target.value)} value={data.getTask.description} />
-          </IonItem>
-          <IonButton className="submit-btn" expand="block" type="submit">Update</IonButton>
-        </form>
-      </IonContent>
-    </>
-  );
+  if (data && data.findTasks) {
+    const task = data.findTasks;
+    return (
+      <>
+        <Header title="Update task" backHref="/tasks" match={match} />
+        <IonContent>
+          <IonCard>
+            <IonCardHeader>Task</IonCardHeader>
+            <IonCardContent>
+              <IonLabel>
+                <h2>Title: {task.title}</h2>
+                <IonNote>
+                  Description: {task.description}
+                </IonNote>
+                <br />
+                <IonNote>
+                  <IonBadge color="primary">
+                    Version: {task.version}
+                  </IonBadge>
+                </IonNote>
+              </IonLabel>
+            </IonCardContent>
+          </IonCard>
+          <form onSubmit={submit} style={{ padding: '0 16px' }}>
+            <IonItem>
+              <IonLabel color="primary" position="floating">Title</IonLabel>
+              <IonInput type="text" name="title" onInput={(e: any) => setTitle(e.target.value)} value={task.title} />
+            </IonItem>
+            <IonItem>
+              <IonLabel color="primary" position="floating">Description</IonLabel>
+              <IonInput type="text" name="description" onInput={(e: any) => setDescription(e.target.value)} value={task.description} />
+            </IonItem>
+            <IonButton className="submit-btn" expand="block" type="submit">Update</IonButton>
+          </form>
+        </IonContent>
+      </>
+    )
+  };
 
   return (
     <>
