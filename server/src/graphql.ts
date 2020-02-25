@@ -1,4 +1,4 @@
-
+import { createOffixMongoCRUDRuntimeContext } from '@graphback/runtime-mongo';
 import { loadSchemaFiles } from '@graphql-toolkit/file-loading';
 import { buildSchema } from 'graphql';
 import { join } from 'path';
@@ -6,7 +6,6 @@ import { connect } from './db';
 import resolvers from './resolvers/resolvers';
 import { models } from './resolvers/models'
 import { getPubSub } from './pubsub'
-import { createOffixMongoCRUDRuntimeContext } from './offix/MongoDbOffixDataProvider';
 import { Config } from './config/config';
 import { ApolloServer } from "apollo-server-express";
 import { Express } from "express";
@@ -30,12 +29,12 @@ export const createApolloServer = async function (app: Express, config: Config) 
         context: context
     }
 
-  
+
     apolloConfig = buildKeycloakApolloConfig(app, apolloConfig)
 
     const apolloServer = new ApolloServer(apolloConfig)
     apolloServer.applyMiddleware({ app });
-    
+
     return apolloServer;
 }
 
