@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonToast, IonButton, IonIcon } from '@ionic/react';
-import { person, exit } from 'ionicons/icons';
+import { IonHeader, IonToolbar, IonButtons, IonTitle, IonToast, IonButton, IonIcon } from '@ionic/react';
+import { person, exit, arrowBack } from 'ionicons/icons';
 import { AppContext } from '../AppContext';
 import { logout } from '../auth/keycloakAuth';
 import { useNetworkStatus, useApolloOfflineClient } from 'react-offix-hooks';
+import { Link } from 'react-router-dom';
 
 export const Header : React.FC<{ title: string, backHref?: string, match: any }> = ({ title, backHref, match }) => {
 
@@ -27,9 +28,11 @@ export const Header : React.FC<{ title: string, backHref?: string, match: any }>
   // screen
   const buttons = (!keycloak || url !== '/tasks') ? <></> : (
     <IonButtons slot="end">
-      <IonButton href="/profile">
-        <IonIcon slot="icon-only" icon={person}  />
-      </IonButton>
+      <Link to="/profile">
+        <IonButton>
+          <IonIcon slot="icon-only" icon={person}  />
+        </IonButton>
+      </Link>
       <IonButton onClick={handleLogout}>
         <IonIcon slot="icon-only" icon={exit} />
       </IonButton>
@@ -42,9 +45,17 @@ export const Header : React.FC<{ title: string, backHref?: string, match: any }>
         <IonToolbar>
           {
             url !== '/tasks' &&
-            <IonButtons slot="start">
-              <IonBackButton defaultHref={ backHref } />
-            </IonButtons>
+            <Link 
+              to={backHref as string} 
+              slot="start"
+              role="button"
+            >
+              <IonButtons>
+                <IonButton>
+                  <IonIcon icon={arrowBack}/>
+                </IonButton>
+              </IonButtons>
+            </Link>
           }
           <IonTitle>{ title }</IonTitle>
           {   buttons }

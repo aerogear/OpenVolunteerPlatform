@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { IonLabel, IonButton, IonBadge } from '@ionic/react';
 import { useApolloOfflineClient } from 'react-offix-hooks';
+import { Link } from 'react-router-dom';
 
 export const OfflineQueueBadge: React.FC<any> = () => {
 
@@ -14,9 +15,11 @@ export const OfflineQueueBadge: React.FC<any> = () => {
 
   return (
     <IonLabel>
-      <IonButton size="small" color="primary" fill="outline" href="/offlineQueue" className="offline-queue-button">
-        Offline changes
-            </IonButton>
+      <Link to="/offlineQueue">
+        <IonButton size="small" color="primary" fill="outline" className="offline-queue-button">
+          Offline changes
+        </IonButton>
+      </Link>
       <IonBadge color="primary" class="offline-queue-badge">
         { queue }
       </IonBadge>

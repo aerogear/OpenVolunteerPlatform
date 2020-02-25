@@ -18,6 +18,7 @@ import { useSubscribeToMore } from '../hooks';
 import { Empty, TaskList, NetworkBadge, OfflineQueueBadge, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { findAllTasks } from '../graphql/queries/findAllTasks';
+import { Link } from 'react-router-dom';
 
 export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
 
@@ -46,9 +47,11 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
         </IonSegment>
         { content }
         <IonFab vertical="bottom" horizontal="end" slot="fixed" style={{ 'marginBottom': '2em', 'marginRight': '1em' }}>
-          <IonFabButton href="/addTask">
-            <IonIcon icon={add} />
-          </IonFabButton>
+          <Link to="/addTask">
+            <IonFabButton>
+              <IonIcon icon={add} />
+            </IonFabButton>
+          </Link>
         </IonFab>
       </IonContent>
       <IonFooter>

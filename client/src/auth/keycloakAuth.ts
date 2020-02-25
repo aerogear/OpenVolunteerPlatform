@@ -11,7 +11,7 @@ export let keycloak: KeycloakInstance<'native'> | undefined;
  * 
  */
 export const getKeycloakInstance = async () => {
-  await init();
+  if (!keycloak) await init();
   return keycloak;
 } 
 
@@ -85,7 +85,5 @@ export const logout = async ({ keycloak, client: apolloClient } : ILogoutParams)
     await apolloClient.resetStore();
     // clear offix client cache
     await apolloClient.cache.reset();
-    // redirect to login page
-    keycloak.login();
   }
 }

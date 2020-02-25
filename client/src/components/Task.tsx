@@ -11,6 +11,7 @@ import {
 } from '@ionic/react';
 import { create, trash } from 'ionicons/icons';
 import { ITask } from '../declarations';
+import { Link } from 'react-router-dom';
 
 export const Task: React.FC<any> = ({ task, updateTask, deleteTask }) => {
  
@@ -51,9 +52,11 @@ export const Task: React.FC<any> = ({ task, updateTask, deleteTask }) => {
         </IonNote>
       </IonLabel>
       <IonButtons>
-        <IonButton item-start  color='primary' fill="outline" href={`updateTask/${task.id}`}>
-          <IonIcon icon={create}/>
-        </IonButton>
+        <Link to={`updateTask/${task.id}`}>
+          <IonButton item-start  color='primary' fill="outline">
+            <IonIcon icon={create}/>
+          </IonButton>
+        </Link>
         <IonButton onClick={onDeleteClick} item-start className='trash-button' color='primary' fill="outline">
           <IonIcon icon={trash}/>
         </IonButton>
