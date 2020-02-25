@@ -1,0 +1,80 @@
+## Codeready workspace configuration
+
+metadata:
+  name: datasync-showcase
+projects:
+  - name: ionic-showcase
+    source:
+      location: 'https://github.com/aerogear/ionic-showcase'
+      type: git
+components:
+  - id: che-incubator/typescript/latest
+    memoryLimit: 512Mi
+    type: chePlugin
+  - mountSources: true
+    endpoints:
+      - name: server
+        port: 4000
+      - name: client
+        port: 3333
+    memoryLimit: 1500Mi
+    type: dockerimage
+    alias: nodejs
+    image: 'registry.redhat.io/codeready-workspaces/stacks-node-rhel8:2.0'
+    env:
+      - value: 220fd770-c028-480d-8f95-f84353c7d55a
+        name: SECRET
+  - endpoints:
+      - name: mongodb-34-rhel7
+        port: 27017
+        attributes:
+          discoverable: 'true'
+          public: 'false'
+    memoryLimit: 512Mi
+    type: dockerimage
+    volumes:
+      - name: mongo-storage
+        containerPath: /var/lib/mongodb/data
+    alias: mongo
+    image: registry.redhat.io/rhscl/mongodb-34-rhel7
+    env:
+      - value: user
+        name: MONGODB_USER
+      - value: password
+        name: MONGODB_PASSWORD
+      - value: showcase
+        name: MONGODB_DATABASE
+      - value: password
+        name: MONGODB_ADMIN_PASSWORD
+apiVersion: 1.0.0
+commands:
+  - name: install dependencies
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/ionic-showcase'
+        type: exec
+        command: npm install -g yarn && yarn install
+        component: nodejs
+  - name: build server
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/ionic-showcase'
+        type: exec
+        command: yarn build:server
+        component: nodejs
+  - name: start server
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/ionic-showcase'
+        type: exec
+        command: MONGO_USER=user MONGO_PASSWORD=password MONGO_HOST=mongodb-34-rhel7 yarn start:server
+        component: nodejs
+  - name: build client
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/ionic-showcase'
+        type: exec
+        command: yarn build:client
+        component: nodejs
+  - name: start client
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/ionic-showcase'
+        type: exec
+        command: yarn start:client
+        component: nodejs
