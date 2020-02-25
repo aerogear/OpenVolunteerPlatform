@@ -1,6 +1,7 @@
-import { KeycloakContext, KeycloakTypeDefs, KeycloakSchemaDirectives, KeycloakSubscriptionContext, KeycloakSubscriptionHandler } from 'keycloak-connect-graphql';
 import { Express } from "express";
 import { config } from './config/config';
+
+const { KeycloakTypeDefs, KeycloakSchemaDirectives, KeycloakSubscriptionContext, KeycloakSubscriptionHandler, KeycloakContext } = require('keycloak-connect-graphql')
 
 const session = require('express-session')
 const Keycloak = require('keycloak-connect')
@@ -42,8 +43,8 @@ export function buildKeycloakApolloConfig(app: Express, apolloConfig: any) {
             },
             subscriptions: {
                 onConnect: async (connectionParams, websocket, connectionContext) => {
-                    const token = await keycloakSubscriptionHandler.onSubscriptionConnect(connectionParams, websocket, connectionContext) 
-                    if(!token){
+                    const token = await keycloakSubscriptionHandler.onSubscriptionConnect(connectionParams, websocket, connectionContext)
+                    if (!token) {
                         throw new Error("Cannot build keycloak token. Connection will be terminated")
                     }
                     return {
