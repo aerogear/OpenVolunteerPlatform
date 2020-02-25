@@ -7,13 +7,23 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { globalCacheUpdates, ConflictLogger } from '../helpers';
 import { getAuthHeader } from '../auth/keycloakAuth';
 
+const httpUri = process.env.REACT_APP_SERVER_URL || 'http://localhost:4000/graphql';
+const httpsEnabled = httpUri.startsWith('https://')
+const httpEnabled = httpUri.startsWith('http://')
+
+if (!httpsEnabled && !httpsEnabled) {
+  throw new Error(`invalid server url ${httpUri} must begin with https:// or http://`)
+}
+
+const wsUri = httpsEnabled ? httpUri.replace('https://', 'wss://') : httpUri.replace('http://', 'ws://')
+
 /**
  * Create websocket link and
  * define websocket link options
  * 
  */
 const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:4000/graphql',
+  uri: wsUri,
   options: {
     reconnect: true,
     lazy: true,
@@ -23,7 +33,7 @@ const wsLink = new WebSocketLink({
 });
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: httpUri,
 });
 
 /**
