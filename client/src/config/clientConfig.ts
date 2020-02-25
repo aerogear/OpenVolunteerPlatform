@@ -11,7 +11,7 @@ const httpUri = process.env.REACT_APP_SERVER_URL || 'http://localhost:4000/graph
 const httpsEnabled = httpUri.startsWith('https://')
 const httpEnabled = httpUri.startsWith('http://')
 
-if (!httpsEnabled && !httpsEnabled) {
+if (!httpEnabled && !httpsEnabled) {
   throw new Error(`invalid server url ${httpUri} must begin with https:// or http://`)
 }
 
