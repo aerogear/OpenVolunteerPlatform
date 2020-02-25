@@ -22,7 +22,6 @@ docker-compose up -d
 
 ```sh
 yarn graphback generate
-yarn graphback db
 ```
 
 - Start the server
