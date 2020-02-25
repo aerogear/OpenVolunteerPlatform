@@ -45,9 +45,3 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - publish_showcase_container:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              only: master
