@@ -12,7 +12,7 @@ This project has been created using Graphback. Run the project using the followi
 yarn install
 ```
 
-- Start the Postgress database
+- Start the Mongo database and MQTT client
 
 ```sh
 docker-compose up -d
