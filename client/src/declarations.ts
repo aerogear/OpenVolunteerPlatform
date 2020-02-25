@@ -7,6 +7,7 @@ export interface ITask {
   title: string;
   description: string;
   status: TaskStatus;
+  __typename?: string;
 };
 
 export enum TaskStatus {

@@ -8,26 +8,35 @@ import {
   IonInput,
 } from '@ionic/react';
 import { useOfflineMutation } from 'react-offix-hooks';
-import { ADD_TASK } from '../gql/queries';
 import { mutationOptions } from '../helpers';
 import { Header } from '../components/Header';
+import { createTask } from '../graphql/mutations/createTask';
+import { createOptimisticResponse } from '../helpers/optimisticResponse';
 
 export const AddTaskPage: React.FC<RouteComponentProps> = ({ history, match }) => {
 
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
-  const [addTask] = useOfflineMutation(ADD_TASK, mutationOptions.createTask);
+  const [createTaskMutation] = useOfflineMutation(createTask, mutationOptions.createTask);
 
   const submit = (event: SyntheticEvent) => {
     event.preventDefault();
-    addTask({
-      variables: {
+    const variables = {
+      input: {
         title,
         description,
         status: 'OPEN',
         version: 1
       },
+    };
+    createTaskMutation({
+      variables,
+      optimisticResponse: createOptimisticResponse({
+        ...mutationOptions.createTask, 
+        mutation: createTask,
+        variables,
+      }),
     });
     history.push('/tasks');
   };

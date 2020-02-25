@@ -50,7 +50,7 @@ export const init = async () => {
 export const getAuthHeader = async () => {
   if (!keycloak) return '';
   return {
-    'authorization': `Bearer ${getKeyCloakToken()}`
+    'authorization': `Bearer ${await getKeyCloakToken()}`
   };
 };
 

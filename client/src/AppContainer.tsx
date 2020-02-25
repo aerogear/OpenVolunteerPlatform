@@ -7,6 +7,7 @@ import { clientConfig } from './config';
 import { Loading } from './components/Loading';
 import { IContainerProps } from './declarations';
 import { getKeycloakInstance } from './auth/keycloakAuth';
+import { replaceClientGeneratedIDsInQueue, removeOptimisticResponse } from './helpers/optimisticResponse';
 
 let keycloak: any;
 const apolloClient = new ApolloOfflineClient(clientConfig);
@@ -20,6 +21,16 @@ export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
     const init = async () => {
       keycloak = await getKeycloakInstance();
       await apolloClient.init();
+
+      // register a custom listener to handle optimistic ids
+      // nested inside input object
+      apolloClient.registerOfflineEventListener({
+        onOperationSuccess: (operation, result) => {
+          replaceClientGeneratedIDsInQueue( apolloClient.queue.queue, operation, result );
+          removeOptimisticResponse(apolloClient, operation);
+        },
+      });
+
       setInitialized(true);
     }
     init();
