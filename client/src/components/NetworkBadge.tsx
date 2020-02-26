@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNetworkStatus } from 'react-offix-hooks';
+import { useNetworkStatus } from '../hooks/useNetworkStatus';
 import { IonBadge } from '@ionic/react';
 
 export const NetworkBadge: React.FC = () => {

@@ -3,7 +3,8 @@ import { IonHeader, IonToolbar, IonButtons, IonTitle, IonToast, IonButton, IonIc
 import { person, exit, arrowBack } from 'ionicons/icons';
 import { AppContext } from '../AppContext';
 import { logout } from '../auth/keycloakAuth';
-import { useNetworkStatus, useApolloOfflineClient } from 'react-offix-hooks';
+import { useApolloOfflineClient } from 'react-offix-hooks';
+import { useNetworkStatus } from '../hooks/useNetworkStatus';
 import { Link } from 'react-router-dom';
 
 export const Header : React.FC<{ title: string, backHref?: string, match: any }> = ({ title, backHref, match }) => {
