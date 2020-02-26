@@ -19,7 +19,7 @@ import { Empty, TaskList, NetworkBadge, OfflineQueueBadge, Header } from '../com
 import { RouteComponentProps } from 'react-router';
 import { findAllTasks } from '../graphql/queries/findAllTasks';
 import { Link } from 'react-router-dom';
-import { useNetworkStatus } from 'react-offix-hooks';
+import { useNetworkStatus } from '../hooks/useNetworkStatus';
 
 export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
 
@@ -32,7 +32,9 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
   
   useSubscribeToMore({ options: Object.values(subscriptionOptions), subscribeToMore});
 
-  if (error) return <pre>{ JSON.stringify(error) }</pre>;
+  if (error && !error.networkError) {
+    return <pre>{ JSON.stringify(error) }</pre>
+  };
 
   if (loading) return <IonLoading
     isOpen={loading}
