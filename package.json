@@ -18,7 +18,8 @@
     "build:client": "cd client/ && yarn build",
     "build": "yarn workspaces run build",
     "unlock": "yarn workspaces run del package-lock.json && del yarn.lock",
-    "clean": "yarn workspaces run del ./dist && del ./types"
+    "clean": "yarn workspaces run del ./dist && del ./types",
+    "walkthrough": "./scripts/create_walkthrough.sh"
   },
   "workspaces": [
     "client",
