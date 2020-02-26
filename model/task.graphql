@@ -1,6 +1,5 @@
 """ 
 @model
-@datasync
 """
 type Task {
   id: ID!

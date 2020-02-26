@@ -7,7 +7,7 @@
 :data-sync-documentation-url: https://access.redhat.com/documentation/en-us/red_hat_managed_integration/{rhmi-version}/html-single/developing_a_data_sync_app/index
 
 //attributes
-:title: 5 - Adding Data Sync to your application with GraphQL
+:title: Creating your Data Sync Application using Node.JS, MongoDB and GraphQL
 :integreatly-name: Managed Integration
 :data-sync-name: Data Sync
 :data-sync-showcase-app: Data Sync showcase application
@@ -23,18 +23,17 @@
 = {title}
 
 // word count that fits best is 15-22, with 20 really being the sweet spot. Character count for that space would be 100-125
-Learn how to build applications that can perform realtime data synchronization with GraphQL.
+Learn how to build applications that can perform realtime data synchronization with DataSync and GraphQL.
 
 This solution pattern will show you how to:
 
-* Configure and run the {data-sync-showcase-app} on OpenShift.
+* Build DataSync server based on your business model
 * Protect the application's frontend and backend using {customer-sso-name}.
 * Explore all the capabilities provided by {data-sync-name}.
 
 The following diagram shows the architecture of the {data-sync-showcase-app}:
 
 image::images/arch.png[architecture, role="integr8ly-img-responsive"]
-
 
 [type=walkthroughResource, serviceName=openshift]
 .Red Hat OpenShift
@@ -52,41 +51,98 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 
 :sectnums:
 
-[time=10]
-== Deploying the Data Sync showcase application
+[time=15]
+== Creating your {data-sync-name} project from DataSync Starter template
 
-//Home > Search > Select Templates from the drop down > Search for datasync and they should show up. Just make sure you're on the openshift namespace
+{data-sync-name} allows you to focus on your business model by giving you ability
+to generate fully functional GraphQL based API and Node.js Server and Client Side components.
 
-. Go to the link:{openshift-host}/topology/ns/{walkthrough-namespace}[project console, window="_blank"] in OpenShift.
-. Click the *From Catalog* button.
-. Search the developer catalog for 'Data Sync Showcase'.
-. Click on the 'Data Sync Showcase' entry to add it to your project.
-. Select "Instantiate Template"
-. Accept all the defaults of the provisioning form and click *Create*.
-. Go to link:{openshift-host}/k8s/ns/{walkthrough-namespace}/pods screen of your project and wait until three pods are running:
-+
-* `ionic-showcase-server` - a Node.js server and client application
-* `mosquitto-mqtt-broker` - a message broker
-* `postgresql` - a database
-+
-Once the pods are running, you can use the GraphQL playground to interact with the server API as described in the next step.
+DataSync will allow your application to recieve live updates thanks to GraphQL subscriptions and
+operate independently of network connection. Developers can create GrapQL types as model 
+and generate underlying backend that will work out of the box with the RHMI services like SSO or AMQ Online
 
-. Go to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and replace the text in the left pane of the screen with the following query and mutation:
+[time=30]
+=== Setting your DataSync project using DataSync Starter
+
+. Install yarn `npm install -g yarn`
+. Clone git repository: `git clone https://github.com/aerogear/datasync-starter`
+. Go to cloned repository: `cd datasync-starter`
+. Install dependencies `yarn install`
+
+=== Creating your DataSync model
+
+DataSync model offers capability to generate underlying GraphQL API and database infrastructure.
+Starter template by default will use MongoDB database as datasource for storing all your data.
+
+. In your project go to `./model/task.graphql` file. 
+This file contains GraphQL compatible schema 
+. Please add `@datasync` annotation to the model right bellow `@model` annotation
+Those annotations can be used to control various behaviour of datasync.
+`@model` will create standard data access methods, while `@datasync` is going to provide data synchronization capabilities.
+. Models can be changed by adding new types or fields. Please add new field by creating new line inside `Task` type
+and `address: String`
+. Your task model should look as follows
+----
+""" 
+@model
+@datasync
+"""
+type Task {
+  id: ID!
+  title: String!
+  description: String!
+  status: TaskStatus
+  address: String
+}
+----
+
+=== Generating your DataSync Node.JS server and React Client
+
+DataSync provides code generation capabilities that will transform your model to the fully 
+functional client and server application.
+DataSync-starter template contains folowing folders:
+
+- `./server` folder that contains Node.js server implementation
+- `./client` folder that contains React based application
+- `.graphqlrc.yml`
+
+. Review `.graphqlrc.yml` file. This file contains configuration for your data access methods
+and available plugins that will be used for source code generation
+. Please make sure that all fields in `crud` section are enabled 
+. Execute graphback cli command to generate source code:
+`yarn graphback generate`
+. Review `./server/src/schema/schema.qraphql`. 
+This file contains your model along with access methods that were enabled in configuration.
+. Review generated resolver files in `./server/src/resolvers/resolvers.ts`
+This file contains methods used to fetch data. Each individual method will use 
+preconfigured MongoDataProvider. Developers can point resolvers to any datasource.
+Currently Postres and MongoDB are supported.
+. Review your `./client/src/graphql/` folder containing client side queries for your data.
+
+=== Running and verifying your DataSync server
+
+. Open new terminal window
+. Execute `yarn start:server`
+. Open GraphQL Playground URL printed in console.
+You can use the GraphQL playground to interact with the server API as described in the next step.
+. Go to the Playground interface and replace the text in the left pane of the screen with the following query and mutation:
 
 ----
 query listTasks {
   allTasks {
     title,
     description,
+    address,
     id
   }
 }
 
 mutation createTask {
-  createTask(title: "complete the walkthrough", description: "complete the GraphQL walkthrough") {
+  createTask(title: "complete the walkthrough", description: "complete the GraphQL walkthrough", address: "NA") {
     title,
     description,
     version,
+    address,
     id
   }
 }
@@ -107,7 +163,8 @@ The system should create a task.
             {
                 "title": "complete the walkthrough",
                 "description": "complete the GraphQL walkthrough",
-                "id": "1"
+                "id": "1",
+                "address": "NA"
             }
         ]
     }
