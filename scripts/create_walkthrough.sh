@@ -14,6 +14,6 @@ rm -Rf ./server/src/resolvers
 rm -Rf ./server/src/schema
 git add --all
 git commit -m"Walktrough cleanup"
-git push origin +walkthrough
+git push origin +master:walkthrough
 
 echo "Successfully created branch"
