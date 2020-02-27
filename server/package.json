@@ -8,6 +8,7 @@
     "build": "tsc",
     "push": "docker build . -t aerogear/voyager-server-example-task && docker push aerogear/voyager-server-example-task",
     "keycloak": "docker-compose -f ./scripts/keycloak/docker-compose.yml up",
+    "mqtt": "docker-compose -f ./scripts/mqtt/docker-compose.yml up",
     "keycloak:init": "node ./scripts/keycloak/initKeycloak.js"
   },
   "license": "MIT",
