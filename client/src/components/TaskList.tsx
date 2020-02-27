@@ -9,10 +9,18 @@ import { updateTask } from '../graphql/mutations/updateTask';
 import { deleteTask } from '../graphql/mutations/deleteTask';
 import { createOptimisticResponse } from '../helpers/optimisticResponse';
 
-export const TaskList: React.FC<any> = ({ tasks }) => {
+export const TaskList: React.FC<any> = ({ tasks, onError }) => {
 
   const [updateTaskMutation] = useOfflineMutation(updateTask, mutationOptions.updateTask);
   const [deleteTaskMutation] = useOfflineMutation(deleteTask, mutationOptions.deleteTask);
+
+  const handleError = (error: any) => {
+    if (error.offline) {
+      error.watchOfflineChange();
+      return;
+    }
+    onError(error.message);
+  };
   
   const handleDelete = (task: ITask) => {
     const input = task;
@@ -24,7 +32,9 @@ export const TaskList: React.FC<any> = ({ tasks }) => {
         mutation: deleteTask,
         variables: { input },
       }), 
-    });
+    })
+    .catch(handleError);
+
   };
 
   const handleUpdate = (task: ITask) => {
@@ -37,7 +47,8 @@ export const TaskList: React.FC<any> = ({ tasks }) => {
         mutation: updateTask,
         variables: { input },
       }),
-    });
+    })
+    .catch(handleError);
   }
   
   if(tasks.length < 1) {
@@ -46,13 +57,15 @@ export const TaskList: React.FC<any> = ({ tasks }) => {
   };
 
   return (
-    <IonList>
-      {
-        tasks.map((task : ITask) => {
-          return <Task key={task.id} task={task} updateTask={handleUpdate} deleteTask={handleDelete} />;
-        })
-      }
-    </IonList>
+    <>
+      <IonList>
+        {
+          tasks.map((task : ITask) => {
+            return <Task key={task.id} task={task} updateTask={handleUpdate} deleteTask={handleDelete} />;
+          })
+        }
+      </IonList>
+    </>
   );
 
 };

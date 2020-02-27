@@ -6,6 +6,7 @@ import {
   IonItem,
   IonLabel,
   IonInput,
+  IonToast,
 } from '@ionic/react';
 import { useOfflineMutation } from 'react-offix-hooks';
 import { mutationOptions } from '../helpers';
@@ -17,8 +18,20 @@ export const AddTaskPage: React.FC<RouteComponentProps> = ({ history, match }) =
 
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [ showToast, setShowToast ] = useState<boolean>(false);
+  const [ errorMessage, setErrorMessage ] = useState<string>('');
 
   const [createTaskMutation] = useOfflineMutation(createTask, mutationOptions.createTask);
+
+  const handleError = (error: any) => {
+    if (error.offline) {
+      error.watchOfflineChange();
+      history.push('/');
+      return;
+    }
+    setErrorMessage(error.message);
+    setShowToast(true);
+  };
 
   const submit = (event: SyntheticEvent) => {
     event.preventDefault();
@@ -30,6 +43,7 @@ export const AddTaskPage: React.FC<RouteComponentProps> = ({ history, match }) =
         version: 1
       },
     };
+    
     createTaskMutation({
       variables,
       optimisticResponse: createOptimisticResponse({
@@ -37,8 +51,9 @@ export const AddTaskPage: React.FC<RouteComponentProps> = ({ history, match }) =
         mutation: createTask,
         variables,
       }),
-    });
-    history.push('/tasks');
+    })
+    .then(() => history.push('/'))
+    .catch(handleError);
   };
   
   return (
@@ -68,6 +83,14 @@ export const AddTaskPage: React.FC<RouteComponentProps> = ({ history, match }) =
           </IonItem>
           <IonButton className="submit-btn" expand="block" type="submit">Create</IonButton>
         </form>
+        <IonToast
+          isOpen={showToast}
+          onDidDismiss={() => setShowToast(false)}
+          message={errorMessage}
+          position="top"
+          color="danger"
+          duration={2000}
+        />
       </IonContent>
     </>
   )
