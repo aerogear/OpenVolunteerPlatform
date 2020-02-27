@@ -16,6 +16,8 @@
     "start:client": "cd client/ && yarn start",
     "build:server": "cd server/ && yarn build",
     "build:client": "cd client/ && yarn build",
+    "move:client": "mv ./client/build ./server/website",
+    "prepare:client": "yarn build:client && yarn move:client",
     "build": "yarn workspaces run build",
     "unlock": "yarn workspaces run del package-lock.json && del yarn.lock",
     "clean": "yarn workspaces run del ./dist && del ./types",
