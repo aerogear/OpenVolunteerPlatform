@@ -7,7 +7,7 @@ AeroGear DataSync GraphQL based server and React Client
 Starter includes:
 
 - Integration with Graphback (http://graphback.dev) that helps you to generate your backend and client side queries based on user provided business model
-- Example React Client that integrates with Offix (http://offix.dev) to give you fully featured offline experience.
+- Example React application that uses Offix client (http://offix.dev) to give you fully featured offline experience.
 - Integration with Keycloak (SSO) for server and client Authentication and User management.
 - GraphQL Subscriptions backed by an MQTT broker (AMQ)
 
@@ -24,13 +24,15 @@ The GraphQL server uses https://github.com/aerogear/graphback[Graphback] to prov
 Requirements:
 
 - Docker and docker-compose
-- Node.js 12.x or above to run server
+- Node.js 12.x or above
 - (optional) access to a running OpenShift instance
 
 === Running app and server
 
 Install dependencies 
+
 . Build client
+
 +
 ```shell
 yarn
@@ -42,7 +44,6 @@ yarn
 ```shell
 yarn
 yarn prepare:client
-yarn start:server
 ```
 +
 
@@ -54,6 +55,7 @@ docker-compose up -d
 yarn start
 ```
 +
+
 
 === Running the Server with the Keycloak Integration
 
@@ -122,11 +124,11 @@ The output will be in the form of a JSON object
 Copy the entire JSON object, then paste it into the HTTP Headers field in the playground. 
 The error message should disappear and it is now possible to use the playground.
 
-> NOTE: The GraphQL server is using a `public` Keycloak client to redirect browsers to the login page. This is useful for testing the server locally but **it is not recommended for production**. For production GraphQL server applications you should use a `bearer` client.
+NOTE: The GraphQL server is using a `public` Keycloak client to redirect browsers to the login page. This is useful for testing the server locally but **it is not recommended for production**. For production GraphQL server applications you should use a `bearer` client.
 
 [NOTE]
 ====
-If Keycloak integration is enabled on the server, and the Keycloak server is running using self-signed certificate, please make sure set this environment variable before running the server:
+If Keycloak integration is enabled on the server, and the Keycloak server is running using a self-signed certificate, please make sure set this environment variable before running the server:
 
 ```shell
 export NODE_TLS_REJECT_UNAUTHORIZED=0
@@ -144,15 +146,13 @@ Templates can be found in https://github.com/aerogear/datasync-deployment reposi
 ```shell
 git clone https://github.com/aerogear/datasync-deployment
 cd datasync-deployment
-oc new-app -f openshift/datasync-showcase.yml
+oc create -f openshift/datasync-showcase.yml
 ```
 
 . To deprovision all of the resources from the template, run
 +
 ```shell
-oc delete all -l app=ionic-showcase-server \
-&& oc delete secret -l app=ionic-showcase-server \
-&& oc delete pvc -l app=ionic-showcase-server
+oc delete -f openshift/datasync-showcase.yml
 ```
 
 === Running the Client
@@ -163,21 +163,31 @@ oc delete all -l app=ionic-showcase-server \
 npm install -g @ionic/cli
 ```
 
+. Change directory
+
++
+```shell
+cd client
+```
++
+
 . Install dependencies
 +
 ```shell
 npm install
 ```
-
++
 . Start the app
 +
 ```shell
 npm run start
 ```
++
+
 
 === Adding keycloak integration to the client
 
-Rename the `keycloak.example.json` to `keycloak.json`. Replace the contents of the file
+Rename `keycloak.example.json` file in the `public` directory to `keycloak.json`. Replace the contents of the file
 with the keycloak json object generated during the keycloak integration init script.
  
 [source,js]
