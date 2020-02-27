@@ -126,12 +126,12 @@ Currently Postres and MongoDB are supported.
 . Execute `yarn prepare:client` to build client side React application and include it in server runtime
 . Execute `yarn start:server`. Terminal should print similar output:
 
----
+----
     ***********************************************************
     🎮 Ionic PWA application available at http://localhost:4000
     🚀 GraphQL Playground is available at http://localhost:4000/graphql
     ***********************************************************
----
+----
 
 . Open `PWA application URL` printed in terminal
 
@@ -222,6 +222,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 == Running and verifying your DataSync server
 
 The {data-sync-starter} provides:
+  
   - offline operation support
   - out of the box live updates
   - conflict resolution
@@ -248,12 +249,133 @@ Verify that the status of the task is synced across all tabs in real-time.
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
 
+[time=10]
+== Exploring data sync features using the Data Sync showcase application
+
+To explore data sync features, you should run multiple instances of the {data-sync-starter} using different browsers.
+For example, use the browser on your mobile device as well as using the browser on your laptop.
+
+To get the url of your app:
+
+. Go to link:{route-ionic-showcase-server-host}[Data Sync].
+
+image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
+
+=== Exploring real-time sync
+
+. On your laptop:
+.. Select *Manage Tasks*.
+.. Create a new task using *+* icon.
+.. Enter some task text  and click *Create*.
+
+. On your mobile device:
+.. Check that the same task appears in the *Manage Tasks* page.
+.. Make some changes to the task.
+
+. On your laptop:
+.. Check that the task changes are appear.
+
+
+[type=verification]
+****
+Did the tasks appear as expected?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+
+=== Exploring offline support
+
+. On your mobile device:
+.. Log into the {data-sync-starter}.
+.. Activate airplane mode or disable network connectivity.
+.. Create a new task.
+The task should be created and the *Offline Changes* button in the footer should contain one change.
+.. Make a few more changes by either editing existing tasks, or creating new ones.
+.. Review all the changes by clicking the *Offline Changes* button.
+
+. On your laptop:
+.. Log into the {data-sync-starter}.
+.. Check *Manage Tasks* content.
+You do not see any of the changes from the mobile device.
+
+. On your mobile device:
+.. Restore connectivity or deactivate airplane modes.
+.. Watch the status of the tasks change.
+
+. On your laptop:
+.. Check *Manage Tasks* content.
+.. Check that all the tasks are synced.
+
+
+[type=verification]
+****
+Did the tasks appear as expected?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+=== Resolving conflicts
+
+. On your mobile device:
+.. Log into the {data-sync-starter}.
+.. Create a task `todo A`.
+.. Activate airplane mode or disable network connectivity.
+.. Edit the task description to add the text `edited on mobile`.
+
+. On your laptop:
+.. Log into the {data-sync-starter}.
+.. Simulate offline mode. For example, in Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
+.. Edit the `todo A` task, change the text to `todo B`.
+
+. Bring both of your devices back online, the tasks should sync without a conflict.
+
+. On your mobile device:
+.. Activate airplane mode or disable network connectivity.
+.. Edit task `todo B` change the description to:
++
+----
+Conflicting description from mobile
+----
+
+. On your laptop:
+.. Simulate offline mode. For example, in Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
+.. Edit task `todo B` change the description to:
++
+----
+Conflicting description from laptop
+----
+
+. Bring both of your devices back online, a popup window should appear warning you about conflicts.
+
+[type=verification]
+****
+Did the tasks sync as expected?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ BELLOW WIP
+
 [time=15]
 == Protecting the Data Sync showcase application using Red Hat SSO
 
 In this task, we will protect both the frontend and the backend of the {data-sync-starter} with the {customer-sso-name}.
 
-=== Configuring and protecting the Front-end App
+@hasRole(role: "rolename")
+
+=== Configuring Authentication using Keycloak (SSO)
+
+DataSync starter provides out of the box 
 
 Follow these steps to create a client.
 
@@ -397,118 +519,3 @@ Do you see SSO login screen when you go to the link:{route-ionic-showcase-server
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
 
-[time=10]
-== Exploring data sync features using the Data Sync showcase application
-
-To explore data sync features, you should run multiple instances of the {data-sync-starter} using different browsers.
-For example, use the browser on your mobile device as well as using the browser on your laptop.
-
-To get the url of your app:
-
-. Go to link:{route-ionic-showcase-server-host}[Data Sync].
-
-image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
-
-=== Exploring real-time sync
-
-. On your laptop:
-.. Select *Manage Tasks*.
-.. Create a new task using *+* icon.
-.. Enter some task text  and click *Create*.
-
-. On your mobile device:
-.. Check that the same task appears in the *Manage Tasks* page.
-.. Make some changes to the task.
-
-. On your laptop:
-.. Check that the task changes are appear.
-
-
-[type=verification]
-****
-Did the tasks appear as expected?
-****
-
-[type=verificationFail]
-****
-Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
-****
-
-
-=== Exploring offline support
-
-. On your mobile device:
-.. Log into the {data-sync-starter}.
-.. Activate airplane mode or disable network connectivity.
-.. Create a new task.
-The task should be created and the *Offline Changes* button in the footer should contain one change.
-.. Make a few more changes by either editing existing tasks, or creating new ones.
-.. Review all the changes by clicking the *Offline Changes* button.
-
-. On your laptop:
-.. Log into the {data-sync-starter}.
-.. Check *Manage Tasks* content.
-You do not see any of the changes from the mobile device.
-
-. On your mobile device:
-.. Restore connectivity or deactivate airplane modes.
-.. Watch the status of the tasks change.
-
-. On your laptop:
-.. Check *Manage Tasks* content.
-.. Check that all the tasks are synced.
-
-
-[type=verification]
-****
-Did the tasks appear as expected?
-****
-
-[type=verificationFail]
-****
-Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
-****
-
-=== Resolving conflicts
-
-. On your mobile device:
-.. Log into the {data-sync-starter}.
-.. Create a task `todo A`.
-.. Activate airplane mode or disable network connectivity.
-.. Edit the task description to add the text `edited on mobile`.
-
-. On your laptop:
-.. Log into the {data-sync-starter}.
-.. Simulate offline mode. For example, in Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
-.. Edit the `todo A` task, change the text to `todo B`.
-
-. Bring both of your devices back online, the tasks should sync without a conflict.
-
-. On your mobile device:
-.. Activate airplane mode or disable network connectivity.
-.. Edit task `todo B` change the description to:
-+
-----
-Conflicting description from mobile
-----
-
-. On your laptop:
-.. Simulate offline mode. For example, in Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
-.. Edit task `todo B` change the description to:
-+
-----
-Conflicting description from laptop
-----
-
-. Bring both of your devices back online, a popup window should appear warning you about conflicts.
-
-
-[type=verification]
-****
-Did the tasks sync as expected?
-****
-
-[type=verificationFail]
-****
-Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
-****
