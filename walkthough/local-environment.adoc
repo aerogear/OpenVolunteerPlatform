@@ -435,7 +435,3 @@ Please skip this if you have keycloak configured in previous step
 . Try to delete one of the created tasks
 . User will be permitted to delete task as it has admin role.
 
-[time=15]
-== Configure AMQ integration for GraphQL subscriptions
-
-TODO: Honestly I'm not sure if we will have enough time to do that.
