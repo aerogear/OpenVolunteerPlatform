@@ -1,16 +1,5 @@
 version: '3'
 services:
-  mongodb:
-        image: mongo:latest
-        container_name: "mongodb"
-        environment:
-          - MONGO_DATA_DIR=/data/db
-          - MONGO_LOG_DIR=/dev/null
-        volumes:
-          - ./data/db:/data/db
-        ports:
-            - 27017:27017
-        command: mongod
   # Mosca is a simple MQTT Broker
   # In OpenShift/Production we would use the Red Hat AMQ broker
   mosca:
