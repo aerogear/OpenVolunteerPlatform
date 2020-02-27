@@ -19,15 +19,11 @@ import { Empty, TaskList, NetworkBadge, OfflineQueueBadge, Header } from '../com
 import { RouteComponentProps } from 'react-router';
 import { findAllTasks } from '../graphql/queries/findAllTasks';
 import { Link } from 'react-router-dom';
-import { useNetworkStatus } from '../hooks/useNetworkStatus';
 
 export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
 
-  const isOnline = useNetworkStatus();
-  const fetchPolicy = (isOnline) ? 'cache-and-network' : 'cache-only';
-
   const { loading, error, data, subscribeToMore } = useQuery(findAllTasks, {
-    fetchPolicy
+    fetchPolicy: 'cache-and-network'
   });
   
   useSubscribeToMore({ options: Object.values(subscriptionOptions), subscribeToMore});
