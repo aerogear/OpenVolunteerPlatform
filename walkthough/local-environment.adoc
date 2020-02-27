@@ -298,7 +298,6 @@ The task should be created and the *Offline Changes* button in the footer should
 
 . On your laptop:
 .. Log into the {data-sync-starter}.
-.. Check *Manage Tasks* content.
 You do not see any of the changes from the mobile device.
 
 . On your mobile device:
@@ -306,7 +305,6 @@ You do not see any of the changes from the mobile device.
 .. Watch the status of the tasks change.
 
 . On your laptop:
-.. Check *Manage Tasks* content.
 .. Check that all the tasks are synced.
 
 
