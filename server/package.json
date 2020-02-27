@@ -32,6 +32,6 @@
     "express-session": "1.17.0",
     "graphql-tag": "2.10.3",
     "keycloak-connect": "9.0.0",
-    "keycloak-connect-graphql": "0.2.4"
+    "keycloak-connect-graphql": "0.3.1"
   }
 }
