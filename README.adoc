@@ -1,16 +1,15 @@
-= AeroGear Showcase Application
+= AeroGear DataSync Starter
 
-Example application using AeroGear Mobile Services.
+AeroGear DataSync GraphQL based server and React Client
 
-== Implementation
+== DataSync Starter
 
-Implementation includes:
+Starter includes:
 
-- Integration with AeroGear Data Sync
-- Ionic React frontend backed by Cordova
-- A Node.js GraphQL Server that implements a sample `Tasks` workflow
-- Authentication provided by Keycloak integration on the server and client side
-- GraphQL Subscriptions backed by an MQTT broker
+- Integration with Graphback (http://graphback.dev) that helps you to generate your backend and client side queries based on user provided business model
+- Example React Client that integrates with Offix (http://offix.dev) to give you fully featured offline experience.
+- Integration with Keycloak (SSO) for server and client Authentication and User management.
+- GraphQL Subscriptions backed by an MQTT broker (AMQ)
 
 === GraphQL Client
 
@@ -18,41 +17,43 @@ The mobile application uses https://github.com/aerogear/offix[Offix Client] to p
 
 === GraphQL Server
 
-The GraphQL server uses https://github.com/aerogear/voyager-server[Voyager Server] to provide GraphQL capabilities along with security, monitoring and tools to simplify GraphQL API development.
+The GraphQL server uses https://github.com/aerogear/graphback[Graphback] to provide GraphQL capabilities.
 
 == Getting Started
 
 Requirements:
 
-- Docker
+- Docker and docker-compose
 - Node.js 12.x or above to run server
 - (optional) access to a running OpenShift instance
-- (optional) Keycloack server
 
-=== Running the server
+=== Running app and server
 
-. Start the Postgres database and the MQTT broker
+Install dependencies 
+. Build client
 +
 ```shell
-cd ./server
-docker-compose up
+yarn
 ```
++
+
+. Build client
++
+```shell
+yarn
+yarn prepare:client
+yarn start:server
+```
++
 
 . Start the server
 +
 ```shell
-npm install
-npm run dev
+cd ./server
+docker-compose up -d
+yarn start
 ```
 +
-[NOTE]
-====
-If Keycloak integration is enabled on the server, and the Keycloak server is running using self-signed certificate, please make sure set this environment variable before running the server:
-
-```shell
-export NODE_TLS_REJECT_UNAUTHORIZED=0
-```
-====
 
 === Running the Server with the Keycloak Integration
 
@@ -122,6 +123,15 @@ Copy the entire JSON object, then paste it into the HTTP Headers field in the pl
 The error message should disappear and it is now possible to use the playground.
 
 > NOTE: The GraphQL server is using a `public` Keycloak client to redirect browsers to the login page. This is useful for testing the server locally but **it is not recommended for production**. For production GraphQL server applications you should use a `bearer` client.
+
+[NOTE]
+====
+If Keycloak integration is enabled on the server, and the Keycloak server is running using self-signed certificate, please make sure set this environment variable before running the server:
+
+```shell
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+```
+====
 
 === Running the Server on OpenShift 
 
