@@ -10,7 +10,7 @@
 :title: Creating your Data Sync Application using Node.JS, MongoDB and GraphQL
 :integreatly-name: Managed Integration
 :data-sync-name: Data Sync
-:data-sync-showcase-app: Data Sync showcase application
+:data-sync-starter: Data Sync Starter
 :customer-sso-name: Customer Application SSO
 :realm-name: solution-patterns
 :realm-display-name: Solution Patterns
@@ -31,7 +31,7 @@ This solution pattern will show you how to:
 * Protect the application's frontend and backend using {customer-sso-name}.
 * Explore all the capabilities provided by {data-sync-name}.
 
-The following diagram shows the architecture of the {data-sync-showcase-app}:
+The following diagram shows the architecture of the {data-sync-starter}:
 
 image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 
@@ -119,7 +119,44 @@ preconfigured MongoDataProvider. Developers can point resolvers to any datasourc
 Currently Postres and MongoDB are supported.
 . Review your `./client/src/graphql/` folder containing client side queries for your data.
 
-=== Running and verifying your DataSync server
+=== Running DataSync client and server applications
+
+. Open new terminal window
+. Execute `docker-compose up -d` to start MongoDB container
+. Execute `yarn prepare:client` to build client side React application and include it in server runtime
+. Execute `yarn start:server`. Terminal should print similar output:
+
+---
+    ***********************************************************
+    🎮 Ionic PWA application available at http://localhost:4000
+    🚀 GraphQL Playground is available at http://localhost:4000/graphql
+    ***********************************************************
+---
+
+. Open `PWA application URL` printed in terminal
+
+[type=verification]
+****
+. Check if website was loaded properly
+. Select + icon to create new item
+. On new screen put `name` and `description`
+The client should create a task and it should be 
+. New task should appear on the list
+----
+****
+
+[type=verificationFail]
+****
+Check the logs of the console
+Verify that you followed each step in the procedure above.  
+If you are still having issues, contact your administrator.
+****
+
+=== Interacting with embeeded GraphQL Playground
+
+GraphQL Playground acts as GraphQL API client that allows 
+you to interact with your types without implementing new views in your application.
+In this section we going to focus on learning who to use playground.
 
 . Open new terminal window
 . Execute `yarn start:server`
@@ -155,6 +192,7 @@ mutation createTask {
 The system should create a task.
 . Choose listTasks from the Run menu.
 . Check that the following is displayed in the right hand panel:
+. You should also see field that we have added in previous steps
 +
 ----
 {
@@ -181,14 +219,20 @@ Verify that you followed each step in the procedure above.  If you are still hav
 ****
 
 [time=5]
-== Accessing the client app in a browser
+== Running and verifying your DataSync server
 
-The {data-sync-showcase-app} demonstrates the key capabilities provided by the {data-sync-name} framework.
-It can be run either as a hybrid mobile application, or a Progressive Web App (PWA).
+The {data-sync-starter} provides:
+  - offline operation support
+  - out of the box live updates
+  - conflict resolution
 
-. Go to link:{route-ionic-showcase-server-host}[Data Sync, window="_blank"]
-. Select *Manage Tasks* from the left hand menu.
-. Create a task by clicking on the plus icon in the top right-hand side of the screen.
+In this guide we are going to explore capabilities of the datasync by using 
+sample application available as part of {data-sync-starter}.
+Application by default is designed to work with `Task` model but it can be extended 
+to use very Type automatically exposed by underlying server GraphQL API.
+
+. Go back to application opened in previous step.
+. Create a task by clicking on the plus icon in the bottom right-hand side of the screen.
 . Add a title and description, of your choosing, to the task and click *Create*.
 . Copy the current url without the '/tasks' endpoint and paste in a different tab, browser or mobile browser.
 . Change the status of the task by clicking/unclicking the text box beside the task.
@@ -207,7 +251,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 [time=15]
 == Protecting the Data Sync showcase application using Red Hat SSO
 
-In this task, we will protect both the frontend and the backend of the {data-sync-showcase-app} with the {customer-sso-name}.
+In this task, we will protect both the frontend and the backend of the {data-sync-starter} with the {customer-sso-name}.
 
 === Configuring and protecting the Front-end App
 
@@ -345,7 +389,7 @@ KEYCLOAK_CONFIG
 [type=verification]
 ****
 Has the deployment completed?
-Do you see SSO login screen when you go to the link:{route-ionic-showcase-server-host}[{data-sync-showcase-app}, window="_blank"]?
+Do you see SSO login screen when you go to the link:{route-ionic-showcase-server-host}[{data-sync-starter}, window="_blank"]?
 ****
 
 [type=verificationFail]
@@ -356,7 +400,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 [time=10]
 == Exploring data sync features using the Data Sync showcase application
 
-To explore data sync features, you should run multiple instances of the {data-sync-showcase-app} using different browsers.
+To explore data sync features, you should run multiple instances of the {data-sync-starter} using different browsers.
 For example, use the browser on your mobile device as well as using the browser on your laptop.
 
 To get the url of your app:
@@ -394,7 +438,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 === Exploring offline support
 
 . On your mobile device:
-.. Log into the {data-sync-showcase-app}.
+.. Log into the {data-sync-starter}.
 .. Activate airplane mode or disable network connectivity.
 .. Create a new task.
 The task should be created and the *Offline Changes* button in the footer should contain one change.
@@ -402,7 +446,7 @@ The task should be created and the *Offline Changes* button in the footer should
 .. Review all the changes by clicking the *Offline Changes* button.
 
 . On your laptop:
-.. Log into the {data-sync-showcase-app}.
+.. Log into the {data-sync-starter}.
 .. Check *Manage Tasks* content.
 You do not see any of the changes from the mobile device.
 
@@ -428,13 +472,13 @@ Verify that you followed each step in the procedure above.  If you are still hav
 === Resolving conflicts
 
 . On your mobile device:
-.. Log into the {data-sync-showcase-app}.
+.. Log into the {data-sync-starter}.
 .. Create a task `todo A`.
 .. Activate airplane mode or disable network connectivity.
 .. Edit the task description to add the text `edited on mobile`.
 
 . On your laptop:
-.. Log into the {data-sync-showcase-app}.
+.. Log into the {data-sync-starter}.
 .. Simulate offline mode. For example, in Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
 .. Edit the `todo A` task, change the text to `todo B`.
 
