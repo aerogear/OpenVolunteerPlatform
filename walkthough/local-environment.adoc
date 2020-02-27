@@ -264,7 +264,6 @@ image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 === Exploring real-time sync
 
 . On your laptop:
-.. Select *Manage Tasks*.
 .. Create a new task using *+* icon.
 .. Enter some task text  and click *Create*.
 
@@ -364,14 +363,24 @@ Did the tasks sync as expected?
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
 
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ BELLOW WIP
 
 [time=15]
-== Protecting the Data Sync showcase application using Red Hat SSO
+== Add authentication and authorization to the Data Sync application using Red Hat SSO
 
-In this task, we will protect both the frontend and the backend of the {data-sync-starter} with the {customer-sso-name}.
+In this task, we will configure both the frontend and the backend of the 
+{data-sync-starter} with the {customer-sso-name}.
 
-@hasRole(role: "rolename")
+DataSync starter has authentication and autorization enabled out of the box.
+Developers need to configure server and client application to use their keycloak instance
+and add required authorization rules to their model.
+
+
+== Add authorization to GraphQL route
+
+. 
+
+
+@hasRole(role: "admin")
 
 === Configuring Authentication using Keycloak (SSO)
 
