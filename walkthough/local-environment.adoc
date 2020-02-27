@@ -14,8 +14,8 @@
 :customer-sso-name: Customer Application SSO
 :realm-name: solution-patterns
 :realm-display-name: Solution Patterns
-:shared-realm-username: developer
-:realm-password: password
+:shared-realm-username: admin
+:realm-password: admin
 :standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact your administrator.
 
 //id syntax is used here for the custom IDs because that is how the Solution Explorer sorts these within groups
@@ -255,11 +255,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 To explore data sync features, you should run multiple instances of the {data-sync-starter} using different browsers.
 For example, use the browser on your mobile device as well as using the browser on your laptop.
 
-To get the url of your app:
-
-. Go to link:{route-ionic-showcase-server-host}[Data Sync].
-
-image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
+To get the url of your app
 
 === Exploring real-time sync
 
@@ -268,7 +264,7 @@ image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 .. Enter some task text  and click *Create*.
 
 . On your mobile device:
-.. Check that the same task appears in the *Manage Tasks* page.
+.. Check that the same task appears in the tasks page
 .. Make some changes to the task.
 
 . On your laptop:
@@ -285,11 +281,9 @@ Did the tasks appear as expected?
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
 
-
 === Exploring offline support
 
 . On your mobile device:
-.. Log into the {data-sync-starter}.
 .. Activate airplane mode or disable network connectivity.
 .. Create a new task.
 The task should be created and the *Offline Changes* button in the footer should contain one change.
@@ -297,7 +291,6 @@ The task should be created and the *Offline Changes* button in the footer should
 .. Review all the changes by clicking the *Offline Changes* button.
 
 . On your laptop:
-.. Log into the {data-sync-starter}.
 You do not see any of the changes from the mobile device.
 
 . On your mobile device:
@@ -361,6 +354,7 @@ Did the tasks sync as expected?
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
 
+. Close terminal window running server application
 
 [time=15]
 == Add authentication and authorization to the Data Sync application using Red Hat SSO
@@ -372,21 +366,39 @@ DataSync starter has authentication and autorization enabled out of the box.
 Developers need to configure server and client application to use their keycloak instance
 and add required authorization rules to their model.
 
+== Add authorization rule for Task deletion
 
-== Add authorization to GraphQL route
+. Go to your GraphQL Schema `./server/src/schema/schema.qraphql`. 
+Schema contains mutations section that is responsible for data modifications
+. In mutation section find `deleteTask(input: TaskInput): Task!`
+. Add GraphQL Directive on top of it `@hasRole(role: "admin")`
+This will only allow deletion for admin users.
+Roles can be also applied in generation process by utilizing graphback plugin
+. This directive is already defined in {data-sync-starter} and can be also applied 
+to any new mutation or query created by users.
+We going to verify this directive in next steps
 
-. 
+=== Configuring Authentication for Keycloak (SSO) (Local setup)
 
+DataSync starter provides out of the box support for keycloak
+when keycloak.json file is provided.
+Use this guide if you do not have kecloak instance running.
 
-@hasRole(role: "admin")
+Follow these steps to enable authentication
 
-=== Configuring Authentication using Keycloak (SSO)
+. Open new terminal and change directory to server `cd server`
+. Run keycloak instance `yarn keycloak`
+. Wait for server to start
+. Open new terminal and change directory to server `cd server`
+. Execute `yarn keycloak:init`
+. This command will initialize keycloak with sample roles and users.
+. Copy keycloak configuration file that was printed in terminal
 
-DataSync starter provides out of the box 
+=== Configuring Authentication for Keycloak (SSO) (Remote setup)
 
-Follow these steps to create a client.
+Please skip this if you have keycloak configured in previous step
 
-. Go to the link:{sso-realm-url}[{realm-display-name}, window="_blank"] realm, which is running on your {customer-sso-name} service.
+. Go to the keycloak realm, which is running on your {customer-sso-name}
 .. If prompted, enter the username `{shared-realm-username}` and password `{realm-password}`.
 . You will see the *{realm-name}* realm if the login is successful.
 . Select *Clients* from the vertical navigation menu on the left side of the screen.
@@ -396,7 +408,7 @@ Follow these steps to create a client.
 +
 [subs="attributes+"]
 ----
-{user-username}-frontend
+{user-username}-datasync
 ----
 .. Verify the *Client Protocol* is set to *openid-connect*.
 .. Click *Save*.
@@ -406,123 +418,24 @@ Follow these steps to create a client.
 .. Change `Web Origins` to `*`
 .. Click on the *Save* button
 .. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Copy the content displayed or use the `Download` button to save the configuration file.
-
-. Update the configuration of the frontend app to secure it:
-.. Go to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[OpenShift Config Maps] page.
-.. Select the config map that is called `webapp-config`, and edit it by selecting `Edit` under the `Actions` button.
-.. Add a new `auth` section to the config map by pasting the content that was copied in the previous step.
-.. Rename the `auth-server-url` attribute to `url` and the `resource` attribute to `clientId`.
-.. Save it
-
-[type=verification]
-****
-Does the content of the config map look as follows:
-[subs="attributes"]
-----
-   window.showcaseConfig = {
-     "backend": {
-       "serverUrl": "/graphql",
-       "wsServerUrl": ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.hostname + "/graphql"
-     },
-     "auth": {
-       "realm": "walkthroughs",
-    	 "url": " {user-sso-url}/auth",
-   	   "ssl-required": "none",
-   	   "clientId": "{user-username}-frontend",
-   	   "public-client": true,
-   	   "confidential-port": 0
-     }
-   };
-----
-****
-
-[type=verificationFail]
-****
-Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
-****
-[time=10]
-
-=== Configuring and protecting the Back-end App
-
-Follow these steps to create a client.
-
-. Go to the link:{sso-realm-url}[{realm-display-name}, window="_blank"] realm, which is running on your {customer-sso-name} service.
-.. If prompted, enter the username `{shared-realm-username}` and password `{realm-password}`.
-. You will see the *{realm-name}* realm if the login is successful.
-. Select *Clients* from the vertical navigation menu on the left side of the screen.
-. Click the *Create* button on the top right of the Clients screen.
-. On the *Add Client* screen:
-.. In the *Client ID* field, enter
-+
-[subs="attributes+"]
-----
-{user-username}-server
-----
-.. Verify the *Client Protocol* is set to *openid-connect*.
-.. Click *Save*.
-. You will see the *Settings* screen for the *{user-username}-server* client if the save is successful.
-. Change the *Access Type* to *bearer-only*.
-.. Click *Save*.
-.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the `keycloak.json` configuration file.
-
-. Create users for testing:
-
+. Create new users for testing:
 .. Select *Users* on the left menu, and click on *View all users*.
 .. Click on *Add user* to create a new user. Pick a username you like for the *Username* field and click *Save*.
 .. Select the *Credentials* tab and set a password for this user. Set *Temporary* option to *OFF*.
 .. Click *Reset Password*
 
-. Update the backend to use the downloaded configuration file:
-.. Go to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[OpenShift Config Maps] page.
-.. Click *Create Config Map*.
-.. When prompted for *Name*, enter:
-+
-----
-showcase-server-idm-config
-----
-.. When prompted for *Key*, enter:
-+
-----
-keycloak.json
-----
-.. For *Value*, click *Browse* and load the json file that you downloaded previously.
-.. Click *Create*. The config map object is created.
-.. Choose *Deployments* from the *Applications* menu.
-.. Select the deployment config for `ionic-showcase-server`.
-.. Click on the *Configuration* tab, and scroll to the *Volumes* section.
-.. Click on the *Add Config Files* option at the bottom of the section.
-.. Choose the `showcase-server-idm-config` config map as the *Source*.
-.. Set the value for *Mount Path* to:
-+
-----
-/tmp/keycloak
-----
+=== Testing Keycloak Authentication and Authorization
 
-.. Click *Add* to trigger a new deployment.
-.. Click the *Environment* tab and click *Add Value*.
-.. Set Name to:
-+
-----
-KEYCLOAK_CONFIG
-----
+. Start server `yarn start:server`
+. Login window should appear.
+. Login using `admin` username and `admin` password
+. Press User icon in the top right corner. 
+. You should see admin user profile with his roles
+. Go back to the task screen
+. Try to delete one of the created tasks
+. User will be permitted to delete task as it has admin role.
 
-.. Set Value to:
-+
-----
-/tmp/keycloak/keycloak.json
-----
+[time=15]
+== Configure AMQ integration for GraphQL subscriptions
 
-.. Click *Save*
-
-
-[type=verification]
-****
-Has the deployment completed?
-Do you see SSO login screen when you go to the link:{route-ionic-showcase-server-host}[{data-sync-starter}, window="_blank"]?
-****
-
-[type=verificationFail]
-****
-Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
-****
-
+TODO: Honestly I'm not sure if we will have enough time to do that.
