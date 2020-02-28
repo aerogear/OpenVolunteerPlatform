@@ -37,7 +37,7 @@ export function buildKeycloakApolloConfig(app: Express, apolloConfig: any) {
 
         return {
             typeDefs: [KeycloakTypeDefs, apolloConfig.typeDefs], // 1. Add the Keycloak Type Defs
-            schemaDirectives: KeycloakSchemaDirectives as any, // 2. Add the KeycloakSchemaDirectives
+            schemaDirectives: KeycloakSchemaDirectives, 
             resolvers: apolloConfig.resolvers,
             playground: apolloConfig.playground,
             path: graphqlPath,
@@ -49,7 +49,7 @@ export function buildKeycloakApolloConfig(app: Express, apolloConfig: any) {
             },
             subscriptions: {
                 onConnect: async (connectionParams, websocket, connectionContext) => {
-                    const token = await keycloakSubscriptionHandler.onSubscriptionConnect(connectionParams, websocket, connectionContext)
+                    const token = await keycloakSubscriptionHandler.onSubscriptionConnect(connectionParams)
                     if (!token) {
                         throw new Error("Cannot build keycloak token. Connection will be terminated")
                     }
