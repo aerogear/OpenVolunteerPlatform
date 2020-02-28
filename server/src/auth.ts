@@ -1,7 +1,13 @@
 import { Express } from "express";
 import { config } from './config/config';
 
-const { KeycloakTypeDefs, KeycloakSchemaDirectives, KeycloakSubscriptionContext, KeycloakSubscriptionHandler, KeycloakContext } = require('keycloak-connect-graphql')
+import { 
+    KeycloakTypeDefs,
+    KeycloakSchemaDirectives,
+    KeycloakSubscriptionContext,
+    KeycloakSubscriptionHandler,
+    KeycloakContext
+} from 'keycloak-connect-graphql'
 
 const session = require('express-session')
 const Keycloak = require('keycloak-connect')
