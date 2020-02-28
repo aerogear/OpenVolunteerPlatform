@@ -21,7 +21,7 @@
     "graphql-tag": "2.10.3",
     "ionicons": "4.6.3",
     "keycloak-js": "8.0.2",
-    "lodash": "^4.17.15",
+    "lodash": "4.17.15",
     "offix-cache": "0.13.2",
     "offix-client": "0.13.2",
     "react": "16.13.0",
