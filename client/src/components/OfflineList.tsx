@@ -19,7 +19,7 @@ export const OfflineList: React.FC<any> = ({ offlineStore }) => {
         { 
           offlineStore.map(({ operation }: any, index: any) => {
             const { context, variables } = operation.op;
-            const keys = Object.keys(variables);
+            const keys = Object.keys(variables.input);
             return (
               <IonItemGroup key={index}>
                 <IonItem>
@@ -31,7 +31,7 @@ export const OfflineList: React.FC<any> = ({ offlineStore }) => {
                       </IonBadge>
                     </h2>
                     <ul>
-                      {keys.map((key, i) => <li key={i}>{variables[key]}</li>)}
+                      { keys.map((key, i) => <li key={i}>{ variables.input[key] }</li>) }
                     </ul>
                   </IonLabel>
                 </IonItem>

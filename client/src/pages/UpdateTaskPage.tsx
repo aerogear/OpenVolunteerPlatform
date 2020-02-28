@@ -12,8 +12,9 @@ import {
   IonNote,
   IonBadge,
   IonLoading,
+  IonToast,
 } from '@ionic/react';
-import { useOfflineMutation } from 'react-offix-hooks';
+import { useOfflineMutation } from '../hooks/useOfflineMutation';
 import { useQuery } from '@apollo/react-hooks';
 import { Header } from '../components/Header';
 import { Empty } from '../components/Empty';
@@ -29,12 +30,26 @@ export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
 
   const [title, setTitle] = useState<string>(null!);
   const [description, setDescription] = useState<string>(null!);
+  const [ showToast, setShowToast ] = useState<boolean>(false);
+  const [ errorMessage, setErrorMessage ] = useState<string>('');
   const { loading, error, data } = useQuery(findTasks, { 
     variables: { fields: { id } },
     fetchPolicy: 'cache-only',
   });
 
-  const [updateTaskMutation] = useOfflineMutation(updateTask, mutationOptions.updateTask);
+  const [updateTaskMutation ] = useOfflineMutation(
+    updateTask, mutationOptions.updateTask,
+  );
+
+  const handleError = (error: any) => {
+    if (error.offline) {
+      error.watchOfflineChange();
+      history.push('/');
+      return;
+    }
+    setErrorMessage(error.message);
+    setShowToast(true);
+  }
 
   const submit = (event: SyntheticEvent) => {
     event.preventDefault();
@@ -47,6 +62,7 @@ export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
         description: description || task.description,
       }
     };
+
     updateTaskMutation({
       variables,
       optimisticResponse: createOptimisticResponse({
@@ -54,8 +70,9 @@ export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
         mutation: updateTask,
         variables,
       }),
-    });
-    history.push('/tasks');
+    })
+    .then(() => history.push('/'))
+    .catch(handleError);
   }
 
   if (error) return <pre>{JSON.stringify(error)}</pre>;
@@ -99,6 +116,14 @@ export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
             </IonItem>
             <IonButton className="submit-btn" expand="block" type="submit">Update</IonButton>
           </form>
+          <IonToast
+            isOpen={showToast}
+            onDidDismiss={() => setShowToast(false)}
+            message={errorMessage}
+            position="top"
+            color="danger"
+            duration={2000}
+          />
         </IonContent>
       </>
     )

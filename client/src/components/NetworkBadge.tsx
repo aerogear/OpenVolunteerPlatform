@@ -1,10 +1,7 @@
 import React from 'react';
-import { useNetworkStatus } from 'react-offix-hooks';
 import { IonBadge } from '@ionic/react';
 
-export const NetworkBadge: React.FC = () => {
-
-  const isOnline = useNetworkStatus();
+export const NetworkBadge: React.FC<{ isOnline: boolean}> = ({ isOnline }) => {
 
   return (isOnline) 
     ?<IonBadge class="network-badge" color="secondary">Online</IonBadge>

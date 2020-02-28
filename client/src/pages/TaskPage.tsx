@@ -19,13 +19,20 @@ import { Empty, TaskList, NetworkBadge, OfflineQueueBadge, Header } from '../com
 import { RouteComponentProps } from 'react-router';
 import { findAllTasks } from '../graphql/queries/findAllTasks';
 import { Link } from 'react-router-dom';
+import { useNetworkStatus } from '../hooks/useNetworkStatus';
 
 export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
 
-  const { loading, error, data, subscribeToMore } = useQuery(findAllTasks);
+  const { loading, error, data, subscribeToMore } = useQuery(findAllTasks, {
+    fetchPolicy: 'cache-and-network'
+  });
+  
+  const isOnline = useNetworkStatus();
   useSubscribeToMore({ options: Object.values(subscriptionOptions), subscribeToMore});
 
-  if (error) return <pre>{ JSON.stringify(error) }</pre>;
+  if (error && !error.networkError) {
+    return <pre>{ JSON.stringify(error) }</pre>
+  };
 
   if (loading) return <IonLoading
     isOpen={loading}
@@ -56,8 +63,8 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
       </IonContent>
       <IonFooter>
         <div>
-          <OfflineQueueBadge />
-          <NetworkBadge />
+          <OfflineQueueBadge isOnline={isOnline} />
+          <NetworkBadge isOnline={isOnline} />
         </div>
       </IonFooter>
     </IonPage>

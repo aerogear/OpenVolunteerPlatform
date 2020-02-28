@@ -1,4 +1,4 @@
-import { split } from 'apollo-link';
+import { ApolloLink } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { setContext } from 'apollo-link-context';
@@ -6,6 +6,7 @@ import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { globalCacheUpdates, ConflictLogger } from '../helpers';
 import { getAuthHeader } from '../auth/keycloakAuth';
+import { WebNetworkStatus } from './WebNetworkStatus';
 
 const httpUri = process.env.REACT_APP_SERVER_URL || 'http://localhost:4000/graphql';
 const httpsEnabled = httpUri.startsWith('https://')
@@ -57,7 +58,7 @@ const authLink = setContext(async (_, { headers }) => {
  * queries to http url
  * 
  */
-const link = split(
+const splitLink = ApolloLink.split(
   ({ query }) => {
     const { kind, operation} : any = getMainDefinition(query);
     return kind === 'OperationDefinition' && operation === 'subscription';
@@ -82,8 +83,9 @@ const cache =  new InMemoryCache({
 });
 
 export const clientConfig = {
-  link: authLink.concat(link),
+  link: authLink.concat(splitLink),
   cache: cache,
   conflictListener: new ConflictLogger(),
   mutationCacheUpdates: globalCacheUpdates,
+  networkStatus: new WebNetworkStatus()
 };

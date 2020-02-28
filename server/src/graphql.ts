@@ -1,4 +1,3 @@
-import { createOffixMongoCRUDRuntimeContext } from '@graphback/runtime-mongo';
 import { loadSchemaFiles } from '@graphql-toolkit/file-loading';
 import { buildSchema } from 'graphql';
 import { join } from 'path';
@@ -10,6 +9,7 @@ import { Config } from './config/config';
 import { ApolloServer } from "apollo-server-express";
 import { Express } from "express";
 import { buildKeycloakApolloConfig } from './auth';
+import { createOffixMongoCRUDRuntimeContext } from './data/MongoDBDataProvider';
 
 /**
  * Creates Apollo server
