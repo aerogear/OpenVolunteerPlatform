@@ -4,14 +4,12 @@ import { person, exit, arrowBack } from 'ionicons/icons';
 import { AppContext } from '../AppContext';
 import { logout } from '../auth/keycloakAuth';
 import { useApolloOfflineClient } from 'react-offix-hooks';
-import { useNetworkStatus } from '../hooks/useNetworkStatus';
 import { Link } from 'react-router-dom';
 
-export const Header : React.FC<{ title: string, backHref?: string, match: any }> = ({ title, backHref, match }) => {
+export const Header : React.FC<{ title: string, backHref?: string, match: any, isOnline?: boolean }> = ({ title, backHref, match, isOnline }) => {
 
   const { url } = match;
 
-  const isOnline = useNetworkStatus();
   const client = useApolloOfflineClient();
   const { keycloak } = useContext(AppContext);
   const [ showToast, setShowToast ] = useState(false);

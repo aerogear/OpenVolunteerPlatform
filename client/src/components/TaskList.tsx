@@ -13,6 +13,13 @@ export const TaskList: React.FC<any> = ({ tasks }) => {
 
   const [updateTaskMutation] = useOfflineMutation(updateTask, mutationOptions.updateTask);
   const [deleteTaskMutation] = useOfflineMutation(deleteTask, mutationOptions.deleteTask);
+
+  const handleError = (error: any) => {
+    if(error.offline) {
+      error.watchOfflineChange();
+    }
+    console.log(error.graphQLErrors);
+  }
   
   const handleDelete = (task: ITask) => {
     const input = task;
@@ -24,7 +31,8 @@ export const TaskList: React.FC<any> = ({ tasks }) => {
         mutation: deleteTask,
         variables: { input },
       }), 
-    });
+    })
+    .catch(handleError);
   };
 
   const handleUpdate = (task: ITask) => {
@@ -37,7 +45,8 @@ export const TaskList: React.FC<any> = ({ tasks }) => {
         mutation: updateTask,
         variables: { input },
       }),
-    });
+    })
+    .catch(handleError);
   }
   
   if(tasks.length < 1) {
