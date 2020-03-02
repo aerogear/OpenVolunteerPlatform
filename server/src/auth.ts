@@ -17,8 +17,17 @@ export function buildKeycloakApolloConfig(app: Express, apolloConfig: any) {
         const graphqlPath = `/graphql`;
         console.log("Using keycloak configuration")
         
-        const keycloak = new Keycloak({}, config.keycloakConfig);
+        const memoryStore = new session.MemoryStore()	      
+        app.use(session({	
+            secret: process.env.SESSION_SECRET_STRING || 'this should be a long secret',	
+            resave: false,	
+            saveUninitialized: true,	
+            store: memoryStore	
+        }))	
 
+        const keycloak = new Keycloak({	
+            store: memoryStore	
+        }, config.keycloakConfig);
         const keycloakSubscriptionHandler = new KeycloakSubscriptionHandler({ keycloak })
 
         app.use(keycloak.middleware())
