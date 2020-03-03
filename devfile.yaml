@@ -1,11 +1,11 @@
 ## Codeready workspace configuration
 
 metadata:
-  name: datasync-showcase
+  name: datasync-starter
 projects:
-  - name: ionic-showcase
+  - name: datasync-starter
     source:
-      location: 'https://github.com/aerogear/ionic-showcase'
+      location: 'https://github.com/aerogear/datasync-starter'
       type: git
 components:
   - id: che-incubator/typescript/latest
@@ -50,31 +50,31 @@ apiVersion: 1.0.0
 commands:
   - name: install dependencies
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/ionic-showcase'
+      - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
         type: exec
         command: npm install -g yarn && yarn install
         component: nodejs
   - name: build server
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/ionic-showcase'
+      - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
         type: exec
         command: yarn build:server
         component: nodejs
   - name: start server
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/ionic-showcase'
+      - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
         type: exec
         command: MONGO_USER=user MONGO_PASSWORD=password MONGO_HOST=mongodb-34-rhel7 yarn start:server
         component: nodejs
   - name: build client
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/ionic-showcase'
+      - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
         type: exec
         command: yarn build:client
         component: nodejs
   - name: start client
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/ionic-showcase'
+      - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
         type: exec
         command: yarn start:client
         component: nodejs
