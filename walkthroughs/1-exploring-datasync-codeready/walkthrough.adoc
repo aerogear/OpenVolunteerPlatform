@@ -64,9 +64,19 @@ and generate underlying backend that will work out of the box with the RHMI serv
 [time=30]
 === Setting your DataSync project using in CodeReady
 
-. In solution explorer please select 
-. Clone git repository: `git clone https://github.com/aerogear/datasync-starter`
-. Go to cloned repository: `cd datasync-starter`
+. In solution explorer please go to "All Services" tab 
+. Please go to "Online IDE" and select "Open Console"
+. Login to dashboard
+. Choose `NodeJS MongoDB Web Application` from stack
+. Put `https://github.com/aerogear/datasync-starter` into repository URL
+. In the right corner press down arrow and select `Create and Start Editing`
+. In the new window select `Dev File` tab and copy dev file from 
+https://raw.githubusercontent.com/aerogear/datasync-starter/master/devfile.yaml
+. Press `Create`
+. Wait for workspace to start
+. In active workspace select `Terminal`. 
+. Open Terminal in Node.js Container
+. In terminal install Yarn: `npm install -g yarn`
 . Install dependencies `yarn install`
 
 === Creating your DataSync model
