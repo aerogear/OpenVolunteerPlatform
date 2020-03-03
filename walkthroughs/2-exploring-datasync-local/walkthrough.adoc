@@ -65,7 +65,7 @@ and generate underlying backend that will work out of the box with the RHMI serv
 === Setting your DataSync project using DataSync Starter
 
 . Install yarn `npm install -g yarn`
-. Clone git repository: `git clone https://github.com/aerogear/datasync-starter`
+. Clone git repository: `git clone https://github.com/aerogear/datasync-starter#walkthrough`
 . Go to cloned repository: `cd datasync-starter`
 . Install dependencies `yarn install`
 

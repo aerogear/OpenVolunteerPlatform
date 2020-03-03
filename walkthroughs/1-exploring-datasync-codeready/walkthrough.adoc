@@ -68,7 +68,7 @@ and generate underlying backend that will work out of the box with the RHMI serv
 . Please go to "Online IDE" and select "Open Console"
 . Login to dashboard
 . Choose `NodeJS MongoDB Web Application` from stack
-. Put `https://github.com/aerogear/datasync-starter` into repository URL
+. Put `https://github.com/aerogear/datasync-starter#walkthrough` into repository URL
 . In the right corner press down arrow and select `Create and Start Editing`
 . In the new window select `Dev File` tab and copy dev file from 
 https://raw.githubusercontent.com/aerogear/datasync-starter/master/devfile.yaml
@@ -132,7 +132,6 @@ Currently Postres and MongoDB are supported.
 === Running DataSync client and server applications
 
 . Open new terminal window
-. Execute `docker-compose up -d` to start MongoDB container
 . Execute `yarn prepare:client` to build client side React application and include it in server runtime
 . Execute `yarn start:server`. Terminal should print similar output:
 
