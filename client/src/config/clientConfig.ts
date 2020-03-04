@@ -11,7 +11,7 @@ import { WebNetworkStatus } from './WebNetworkStatus';
 let httpUri = 'http://localhost:4000/graphql';
 let wsUri = 'ws://localhost:4000/graphql';
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.REACT_APP_URI_FORMAT === 'RELATIVEURI') {
   httpUri = "/graphql";
   wsUri = ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.hostname + "/graphql";
 }
