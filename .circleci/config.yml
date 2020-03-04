@@ -36,7 +36,7 @@ jobs:
           version: 17.05.0-ce
       - run: | 
           yarn
-          cd client && yarn prepare:client
+          yarn prepare:client
       - run: |
           cd server          
           TAG=$CIRCLE_TAG ../scripts/publish_container.sh
