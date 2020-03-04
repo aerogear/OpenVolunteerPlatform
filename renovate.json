@@ -3,5 +3,9 @@
     "config:base",
     ":pinVersions"
   ],
-  "groupName": "all"
+  "groupName": "all",
+  "automerge": true,
+  "major": {
+    "automerge": false
+  },
 }
