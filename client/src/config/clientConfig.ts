@@ -13,7 +13,9 @@ let wsUri = 'ws://localhost:4000/graphql';
 
 if (process.env.REACT_APP_URI_FORMAT === 'RELATIVEURI') {
   httpUri = "/graphql";
-  wsUri = ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.hostname + "/graphql";
+  const protocol = window.location.protocol === "https:" ? "wss://" : "ws://";
+  const port = window.location.port !== "" ? `:${window.location.port}` : "";
+  wsUri = `${protocol}${window.location.hostname}${port}${httpUri}`
 }
 
 /**
