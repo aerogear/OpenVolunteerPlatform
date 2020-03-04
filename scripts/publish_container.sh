@@ -10,8 +10,8 @@ docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
 TAG="${TAG:-latest}"
 
 NAMESPACE="aerogear"
-CONTAINER="$NAMESPACE/voyager-server-example-task:$TAG"
-CONTAINER_LATEST="$NAMESPACE/voyager-server-example-task:latest"
+CONTAINER="$NAMESPACE/datasync-starter:$TAG"
+CONTAINER_LATEST="$NAMESPACE/datasync-starter:latest"
 
 echo "Building docker container $CONTAINER"
 docker build -f Dockerfile -t "$CONTAINER" . && docker push "$CONTAINER" && \

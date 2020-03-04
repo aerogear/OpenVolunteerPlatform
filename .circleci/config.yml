@@ -22,21 +22,24 @@ jobs:
           name: run build
           command: "yarn build"
 
-  publish_showcase_container:
+  publish_container:
     docker:
       # image for building docker containers
       - image: circleci/node:lts
     steps:
       - checkout
+      - run:
+          name: install-dependencies
+          command: yarn
       # special workaround to allow running docker in docker https://circleci.com/docs/2.0/building-docker-images/
       - setup_remote_docker:
           version: 17.05.0-ce
       - run: | 
           yarn
-          cd client && yarn build:prod
+          cd client && yarn prepare:client
       - run: |
           cd server          
-          TAG=$CIRCLE_TAG ../scripts/publish_showcase_container.sh
+          TAG=$CIRCLE_TAG ../scripts/publish_container.sh
 workflows:
   version: 2
   build_and_release:
@@ -45,3 +48,11 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - publish_container:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only: master
+      
+            
