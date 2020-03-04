@@ -1,6 +1,6 @@
 {
-  "short_name": "AeroGear Showcase",
-  "name": "AeroGear Showcase",
+  "short_name": "AeroGear DataSync Starter",
+  "name": "AeroGear DataSync Starter",
   "icons": [
     {
       "src": "assets/icon/aerogear.png",

@@ -28,7 +28,7 @@ const ADMIN_USERNAME = 'admin'
 const ADMIN_PASSWORD = 'admin'
 let token = ''
 
-// The keycloak client used by the showcase app
+// The keycloak client used by the sample app
 const PUBLIC_CLIENT_NAME = 'voyager-testing-public'
 const BEARER_CLIENT_NAME = 'voyager-testing-bearer'
 let PUBLIC_CLIENT
@@ -125,8 +125,8 @@ async function prepareKeycloak() {
     console.log('Your keycloak server is set up for local usage and development')
     console.log()
     console.log('Copy the following app config into the following files:')
-    console.log('- ionic-showcase/client/public/keycloak.json')
-    console.log('- ionic-showcase/server/src/config/keycloak.json')
+    console.log('- client/public/keycloak.json')
+    console.log('- server/src/config/keycloak.json')
     console.log()
     console.log(JSON.stringify(publicInstallation, null, 2))
     console.log()

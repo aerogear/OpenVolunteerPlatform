@@ -1,8 +1,8 @@
 {
-  "name": "showcase",
+  "name": "datasync-starter",
   "version": "1.0.0",
   "private": true,
-  "description": "Mono repository for Ionic Showcase",
+  "description": "Mono repository for DataSync Starter",
   "main": "index.js",
   "devDependencies": {
     "del-cli": "3.0.0",
