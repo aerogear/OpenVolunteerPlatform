@@ -33,7 +33,7 @@ export const init = async () => {
     }
   } catch {
     keycloak = undefined;
-    console.error('Keycloak error: Unable to initialize keycloak');
+    console.warn('Auth: Unable to initialize keycloak. Client side will not be configured to use authentication');
   }
 }
 
