@@ -6,8 +6,8 @@
   "main": "index.js",
   "devDependencies": {
     "del-cli": "3.0.0",
-    "@graphback/codegen-offix": "0.11.0-rc4",
-    "graphback-cli": "0.11.0-rc3",
+    "@graphback/codegen-offix": "0.11.0-rc5",
+    "graphback-cli": "0.11.0-rc5",
     "yarn": "1.22.0"
   },
   "scripts": {
