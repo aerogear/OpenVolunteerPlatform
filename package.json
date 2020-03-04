@@ -11,13 +11,12 @@
     "yarn": "1.22.0"
   },
   "scripts": {
-    "postinstall": "cd server && yarn install && cd ../client && yarn install",
-    "start:server": "cd server/ && yarn start",
-    "start:client": "cd client/ && yarn start",
+    "start:server": "cd server/ & yarn start",
+    "start:client": "cd client/ & yarn start",
     "build:server": "cd server/ && yarn build",
     "build:client": "cd client/ && yarn build",
-    "move:client": "mv ./client/build ./server/website",
-    "prepare:client": "BUILD_TARGET=container yarn build:client && yarn move:client",
+    "build:clientProd": "cd client/ && yarn build:prod",
+    "prepare:client": "del ./client/build ./server/website ; yarn build:clientProd && mv ./client/build/ ./server/website",
     "build": "yarn workspaces run build",
     "unlock": "yarn workspaces run del package-lock.json && del yarn.lock",
     "clean": "yarn workspaces run del ./dist && del ./types",

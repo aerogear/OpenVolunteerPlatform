@@ -9,7 +9,7 @@ export class Config {
   public playgroundConfig: { tabs: { endpoint: string; variables: {}; query: string }[] }
 
   constructor() {
-    this.port = process.env.PORT || 4000
+    this.port = process.env.PORT || 4004
     
     this.db = {
       database: process.env.MONGO_COLLECTION || 'showcase',
