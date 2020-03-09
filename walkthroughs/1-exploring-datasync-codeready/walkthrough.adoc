@@ -7,7 +7,7 @@
 :data-sync-documentation-url: https://access.redhat.com/documentation/en-us/red_hat_managed_integration/{rhmi-version}/html-single/developing_a_data_sync_app/index
 
 //attributes
-:title: Creating your Data Sync Application using CodeReady, Node.JS, MongoDB and GraphQL
+:title: Creating your Data Sync Application in CodeReady
 :integreatly-name: Managed Integration
 :data-sync-name: Data Sync
 :data-sync-starter: Data Sync Starter

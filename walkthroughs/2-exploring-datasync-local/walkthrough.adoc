@@ -7,7 +7,7 @@
 :data-sync-documentation-url: https://access.redhat.com/documentation/en-us/red_hat_managed_integration/{rhmi-version}/html-single/developing_a_data_sync_app/index
 
 //attributes
-:title: Creating your Data Sync Application using Node.JS, MongoDB and GraphQL
+:title: Creating your Data Sync Application
 :integreatly-name: Managed Integration
 :data-sync-name: Data Sync
 :data-sync-starter: Data Sync Starter
@@ -366,7 +366,7 @@ DataSync starter has authentication and autorization enabled out of the box.
 Developers need to configure server and client application to use their keycloak instance
 and add required authorization rules to their model.
 
-== Add authorization rule for Task deletion
+=== Add authorization rule for Task deletion
 
 . Go to your GraphQL Schema `./server/src/schema/schema.qraphql`. 
 Schema contains mutations section that is responsible for data modifications
@@ -393,36 +393,6 @@ Follow these steps to enable authentication
 . Execute `yarn keycloak:init`
 . This command will initialize keycloak with sample roles and users.
 . Copy keycloak configuration file that was printed in terminal
-
-=== Configuring Authentication for Keycloak (SSO) (Remote setup)
-
-Please skip this if you have keycloak configured in previous step
-
-. Go to the keycloak realm, which is running on your {customer-sso-name}
-.. If prompted, enter the username `{shared-realm-username}` and password `{realm-password}`.
-. You will see the *{realm-name}* realm if the login is successful.
-. Select *Clients* from the vertical navigation menu on the left side of the screen.
-. Click the *Create* button on the top right of the Clients screen.
-. On the *Add Client* screen:
-.. In the *Client ID* field, enter
-+
-[subs="attributes+"]
-----
-{user-username}-datasync
-----
-.. Verify the *Client Protocol* is set to *openid-connect*.
-.. Click *Save*.
-. You will see the *Settings* screen for the *{client-name}* client if the save is successful.
-. on the *Settings* page:
-.. Change `Valid Redirect URIs` to `{route-ionic-showcase-server-host}*`
-.. Change `Web Origins` to `*`
-.. Click on the *Save* button
-.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Copy the content displayed or use the `Download` button to save the configuration file.
-. Create new users for testing:
-.. Select *Users* on the left menu, and click on *View all users*.
-.. Click on *Add user* to create a new user. Pick a username you like for the *Username* field and click *Save*.
-.. Select the *Credentials* tab and set a password for this user. Set *Temporary* option to *OFF*.
-.. Click *Reset Password*
 
 === Testing Keycloak Authentication and Authorization
 
