@@ -204,3 +204,21 @@ with the keycloak json object generated during the keycloak integration init scr
 ----
 
 > NOTE: When running in cloud, developers can swap this file dynamically using config-map or openshift secret
+
+=== Running native projects
+
+IOS:
+-----
+cd client
+yarn cap add ios
+yarn run:ios
+-----
+
+Android:
+-----
+cd client
+yarn cap add android
+yarn run:android
+-----
+
+Project should stard in IDE and can be launched as any other native application

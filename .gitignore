@@ -37,3 +37,6 @@ server/src/config/keycloak.json
 
 server/website
 yarn.lock
+
+client/ios/
+client/android/
