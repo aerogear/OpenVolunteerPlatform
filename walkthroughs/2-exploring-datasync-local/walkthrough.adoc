@@ -52,7 +52,7 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 :sectnums:
 
 [time=15]
-== Creating your {data-sync-name} project from DataSync Starter template
+== Creating your DataSync project from DataSync Starter template
 
 {data-sync-name} allows you to focus on your business model by giving you ability
 to generate fully functional GraphQL based API and Node.js Server and Client Side components.

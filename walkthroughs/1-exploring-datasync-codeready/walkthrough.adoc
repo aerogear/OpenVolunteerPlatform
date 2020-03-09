@@ -52,7 +52,7 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 :sectnums:
 
 [time=15]
-== Creating your {data-sync-name} project from DataSync Starter template
+== Creating your DataSync project from DataSync Starter template
 
 {data-sync-name} allows you to focus on your business model by giving you ability
 to generate fully functional GraphQL based API and Node.js Server and Client Side components.
@@ -72,12 +72,12 @@ and generate underlying backend that will work out of the box with the RHMI serv
 . In the right corner press down arrow and select `Create and Start Editing`
 . In the new window select `Dev File` tab and copy dev file from 
 https://raw.githubusercontent.com/aerogear/datasync-starter/master/devfile.yaml
-. Press `Create`
+. Press `Run`
 . Wait for workspace to start
 . In active workspace select `Terminal`. 
 . Open Terminal in Node.js Container
 . In terminal install Yarn: `npm install -g yarn`
-. Install dependencies `yarn install`
+. Install dependencies `cd datasync-starter && yarn install`
 
 === Creating your DataSync model
 
