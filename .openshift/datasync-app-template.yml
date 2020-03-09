@@ -57,7 +57,7 @@ objects:
               value: "${DATABASE_PASSWORD}"
             - name: MQTT_HOST
               value: mosquitto-mqtt-broker
-          image: docker.io/aerogear/datasync-starter:0.12.0
+          image: docker.io/aerogear/datasync-starter:latest
           name: datasync-starter-server
           ports:
           - containerPort: 4000
