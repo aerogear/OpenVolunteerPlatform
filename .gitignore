@@ -40,3 +40,4 @@ yarn.lock
 
 client/ios/
 client/android/
+client/.gradle/
