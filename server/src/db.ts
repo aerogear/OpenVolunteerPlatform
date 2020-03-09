@@ -8,9 +8,9 @@ export async function connect(config: Config) {
     let url: string;
 
     if (config.db.user && config.db.password) {
-      url = `mongodb://${config.db.user}:${config.db.password}@${config.db.host}:27017`;
+      url = `mongodb://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}`;
     } else {
-      url = `mongodb://${config.db.host}:27017`
+      url = `mongodb://${config.db.host}:${config.db.port}`
     }
 
     // Use connect method to connect to the server
