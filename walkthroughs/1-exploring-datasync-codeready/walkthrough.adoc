@@ -68,16 +68,13 @@ and generate underlying backend that will work out of the box with the RHMI serv
 . Please go to "Online IDE" and select "Open Console"
 . Login to dashboard
 . Choose `NodeJS MongoDB Web Application` from stack
-. Put `https://github.com/aerogear/datasync-starter#walkthrough` into repository URL
+. Put `https://github.com/aerogear/datasync-starter` into repository URL
 . In the right corner press down arrow and select `Create and Start Editing`
 . In the new window select `Dev File` tab and copy dev file from 
 https://raw.githubusercontent.com/aerogear/datasync-starter/master/devfile.yaml
 . Press `Run`
 . Wait for workspace to start
-. In active workspace select `Terminal`. 
-. Open Terminal in Node.js Container
-. In terminal install Yarn: `npm install -g yarn`
-. Install dependencies `cd datasync-starter && yarn install`
+. In active workspace run `Install dependencies` command
 
 === Creating your DataSync model
 
@@ -132,15 +129,9 @@ Currently Postres and MongoDB are supported.
 === Running DataSync client and server applications
 
 . Open new terminal window
-. Execute `yarn prepare:client` to build client side React application and include it in server runtime
-. Execute `yarn start:server`. Terminal should print similar output:
-
-----
-    ***********************************************************
-    🎮 Ionic PWA application available at http://localhost:4000
-    🚀 GraphQL Playground is available at http://localhost:4000/graphql
-    ***********************************************************
-----
+. Execute `start app` command in the new terminal
+. Client side application will be build and started
+. Open Application URL in the new window
 
 . Open `PWA application URL` printed in terminal
 

@@ -17,7 +17,7 @@ async function start() {
 
   httpServer.listen(config.port, () => {
     console.log(`\n    ***********************************************************
-    🎮 Ionic PWA application available at http://localhost:${config.port}
+    🎮 Ionic PWA application available at http://localhost:${config.port}/app
     🚀 GraphQL Playground is available at http://localhost:${config.port}/graphql
     ***********************************************************`)
   })

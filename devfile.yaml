@@ -66,6 +66,12 @@ commands:
         type: exec
         command: MONGO_USER=user MONGO_PASSWORD=password MONGO_HOST=mongodb-34-rhel7 yarn start:server
         component: nodejs
+  - name: start app
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
+        type: exec
+        command: yarn prepare:client && MONGO_USER=user MONGO_PASSWORD=password MONGO_HOST=mongodb-34-rhel7 yarn start:server
+        component: nodejs
   - name: build client
     actions:
       - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
