@@ -10,7 +10,7 @@ export const OfflineQueueBadge: React.FC<any> = () => {
 
   // eslint-disable-next-line
   useEffect(() => {
-    setQueue(client.queue.queue.length);
+    setQueue(client.queue.entries.length);
   });
 
   return (

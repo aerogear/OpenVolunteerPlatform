@@ -14,7 +14,7 @@ import {
   IonLoading,
   IonToast,
 } from '@ionic/react';
-import { useOfflineMutation } from '../hooks/useOfflineMutation';
+import { useOfflineMutation } from 'react-offix-hooks';
 import { useQuery } from '@apollo/react-hooks';
 import { Header } from '../components/Header';
 import { Empty } from '../components/Empty';
@@ -22,7 +22,6 @@ import { mutationOptions } from '../helpers';
 import { IUpdateMatchParams } from '../declarations';
 import { updateTask } from '../graphql/mutations/updateTask';
 import { findTasks } from '../graphql/queries/findTasks';
-import { createOptimisticResponse } from '../helpers/optimisticResponse';
 
 export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ history, match }) => {
 
@@ -64,12 +63,7 @@ export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
     };
 
     updateTaskMutation({
-      variables,
-      optimisticResponse: createOptimisticResponse({
-        ...mutationOptions.updateTask, 
-        mutation: updateTask,
-        variables,
-      }),
+      variables
     })
     .then(() => history.push('/'))
     .catch(handleError);

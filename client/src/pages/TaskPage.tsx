@@ -19,7 +19,7 @@ import { Empty, TaskList, NetworkBadge, OfflineQueueBadge, Header } from '../com
 import { RouteComponentProps } from 'react-router';
 import { findAllTasks } from '../graphql/queries/findAllTasks';
 import { Link } from 'react-router-dom';
-import { useNetworkStatus } from '../hooks/useNetworkStatus';
+import { useNetworkStatus } from 'react-offix-hooks';
 
 export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
 

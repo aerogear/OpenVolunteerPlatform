@@ -6,7 +6,7 @@ import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { globalCacheUpdates, ConflictLogger } from '../helpers';
 import { getAuthHeader } from '../auth/keycloakAuth';
-import { WebNetworkStatus } from './WebNetworkStatus';
+import { ApolloOfflineClientOptions } from 'offix-client';
 
 let httpUri = 'http://localhost:4000/graphql';
 let wsUri = 'ws://localhost:4000/graphql';
@@ -81,10 +81,17 @@ const cache = new InMemoryCache({
   },
 });
 
-export const clientConfig = {
+export const clientConfig: ApolloOfflineClientOptions = {
   link: authLink.concat(splitLink),
   cache: cache,
   conflictListener: new ConflictLogger(),
   mutationCacheUpdates: globalCacheUpdates,
-  networkStatus: new WebNetworkStatus()
+  inputMapper: {
+    deserialize: (variables: any) => {
+      return (variables && variables.input) ? variables.input : variables;
+    },
+    serialize: (variables: any) => {
+      return { input: variables }
+    }
+  }
 };

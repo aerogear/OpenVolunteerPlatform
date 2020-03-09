@@ -10,7 +10,7 @@ export const OfflineQueuePage: React.FC<RouteComponentProps> = ({ match }) => {
   return (
     <>
       <Header title="Offline Queue" backHref="/tasks" match={match} />
-      <OfflineList offlineStore={queue.queue} />
+      <OfflineList offlineStore={queue.entries} />
     </>
   );
 };

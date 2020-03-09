@@ -7,7 +7,6 @@ import { Empty } from './Empty';
 import { mutationOptions } from '../helpers';
 import { updateTask } from '../graphql/mutations/updateTask';
 import { deleteTask } from '../graphql/mutations/deleteTask';
-import { createOptimisticResponse } from '../helpers/optimisticResponse';
 
 export const TaskList: React.FC<any> = ({ tasks }) => {
 
@@ -18,19 +17,16 @@ export const TaskList: React.FC<any> = ({ tasks }) => {
     if(error.offline) {
       error.watchOfflineChange();
     }
-    console.log(error.graphQLErrors);
+    if (error.graphQLErrors) {
+      console.log(error.graphQLErrors);
+    }
   }
   
   const handleDelete = (task: ITask) => {
     const input = task;
     delete input.__typename;
     deleteTaskMutation({ 
-      variables: { input },
-      optimisticResponse: createOptimisticResponse({
-        ...mutationOptions.deleteTask, 
-        mutation: deleteTask,
-        variables: { input },
-      }), 
+      variables: { input }
     })
     .catch(handleError);
   };
@@ -39,12 +35,7 @@ export const TaskList: React.FC<any> = ({ tasks }) => {
     const input = task;
     delete input.__typename;
     updateTaskMutation({
-      variables: { input },
-      optimisticResponse: createOptimisticResponse({
-        ...mutationOptions.updateTask, 
-        mutation: updateTask,
-        variables: { input },
-      }),
+      variables: { input }
     })
     .catch(handleError);
   }
