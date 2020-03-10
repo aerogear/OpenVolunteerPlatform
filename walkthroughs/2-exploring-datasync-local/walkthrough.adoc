@@ -128,7 +128,7 @@ Currently Postres and MongoDB are supported.
 
 ----
     ***********************************************************
-    🎮 Ionic PWA application available at http://localhost:4000/
+    🎮 Ionic PWA application available at http://localhost:4000/app
     🚀 GraphQL Playground is available at http://localhost:4000/graphql
     ***********************************************************
 ----

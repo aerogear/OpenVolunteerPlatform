@@ -8,7 +8,7 @@ export async function connect(config: Config) {
     let url: string;
 
     if (config.db.user && config.db.password) {
-      url = `mongodb://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}`;
+      url = `mongodb://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.database}`;
     } else {
       url = `mongodb://${config.db.host}:${config.db.port}`
     }

@@ -129,11 +129,9 @@ Currently Postres and MongoDB are supported.
 === Running DataSync client and server applications
 
 . Open new terminal window
-. Execute `start app` command in the new terminal
-. Client side application will be build and started
-. Open Application URL in the new window
-
-. Open `PWA application URL` printed in terminal
+. Execute `prepare client` command in the new terminal. Client side application will be build and started. This can take up to couple minutes
+. Execute `start server`. This command with start GraphQL server with embedded client.
+. Application should be opened in preview window after build is finished
 
 [type=verification]
 ****

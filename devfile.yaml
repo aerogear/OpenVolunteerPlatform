@@ -1,5 +1,3 @@
-## Codeready workspace configuration
-
 metadata:
   name: datasync-starter
 projects:
@@ -15,7 +13,7 @@ components:
     endpoints:
       - name: server
         port: 4000
-      - name: client
+      - name: devclient
         port: 3333
     memoryLimit: 1500Mi
     type: dockerimage
@@ -54,33 +52,23 @@ commands:
         type: exec
         command: npm install -g yarn && yarn install
         component: nodejs
-  - name: build server
+  - name: prepare client
     actions:
       - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
         type: exec
-        command: yarn build:server
+        command: 'yarn prepare:client'
         component: nodejs
   - name: start server
     actions:
       - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
         type: exec
-        command: MONGO_USER=user MONGO_PASSWORD=password MONGO_HOST=mongodb-34-rhel7 yarn start:server
+        command: >-
+          MONGO_USER=user MONGO_PASSWORD=password MONGO_HOST=mongodb-34-rhel7
+          yarn start:server
         component: nodejs
-  - name: start app
+  - name: live reload client
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
+      - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter/client'
         type: exec
-        command: yarn prepare:client && MONGO_USER=user MONGO_PASSWORD=password MONGO_HOST=mongodb-34-rhel7 yarn start:server
-        component: nodejs
-  - name: build client
-    actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
-        type: exec
-        command: yarn build:client
-        component: nodejs
-  - name: start client
-    actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
-        type: exec
-        command: yarn start:client
+        command: 'yarn start:client'
         component: nodejs
