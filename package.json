@@ -8,7 +8,7 @@
     "del-cli": "3.0.0",
     "@graphback/codegen-offix": "0.11.0",
     "graphback-cli": "0.11.0",
-    "yarn": "1.22.1"
+    "yarn": "1.22.4"
   },
   "scripts": {
     "start:server": "cd server && yarn start",
