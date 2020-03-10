@@ -1,7 +1,11 @@
+import { config as setupEnv} from 'dotenv';
+// Setup environment variables
+setupEnv()
+
 import cors from 'cors';
 import express from 'express';
+import http from 'http'
 import { config } from './config/config'
-import http from 'http';
 import { createApolloServer } from './graphql';
 
 async function start() {

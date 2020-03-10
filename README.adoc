@@ -222,3 +222,11 @@ yarn run:android
 -----
 
 Project should stard in IDE and can be launched as any other native application
+
+== Using MQTT for GraphQL subscriptions
+
+1. Go to scripts ./mqtt
+2. Execute docker-compose up
+3. Set MQTT_HOST environment variable in .env file
+
+MQTT_HOST=127.0.0.1:1883
