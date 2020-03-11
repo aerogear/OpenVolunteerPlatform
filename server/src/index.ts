@@ -1,6 +1,6 @@
-import { config as setupEnv} from 'dotenv';
-// Setup environment variables
-setupEnv()
+import dotenv from 'dotenv';
+// Setup env variables
+dotenv.config()
 
 import cors from 'cors';
 import express from 'express';
