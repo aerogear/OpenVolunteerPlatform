@@ -376,29 +376,17 @@ Roles can be also applied in generation process by utilizing graphback plugin
 to any new mutation or query created by users.
 We going to verify this directive in next steps
 
-=== Configuring Authentication for Keycloak (SSO) (Local setup)
+=== Configuring Authentication for Keycloak (SSO) 
 
-DataSync starter provides out of the box support for keycloak
-when keycloak.json file is provided.
-Use this guide if you do not have kecloak instance running.
-
-Follow these steps to enable authentication
-
-. Open new terminal and change directory to server `cd server`
-. Run keycloak instance `yarn keycloak`
-. Wait for server to start
-. Open new terminal and change directory to server `cd server`
-. Execute `yarn keycloak:init`
-. This command will initialize keycloak with sample roles and users.
-. Copy keycloak configuration file that was printed in terminal
-
-=== Configuring Authentication for Keycloak (SSO) (Remote setup)
+> NOTE: instructions here might be updated after next release of the RHMI
 
 Please skip this if you have keycloak configured in previous step
 
-. Go to the keycloak realm, which is running on your {customer-sso-name}
-.. If prompted, enter the username `{shared-realm-username}` and password `{realm-password}`.
-. You will see the *{realm-name}* realm if the login is successful.
+. In solution explorer open the User SSO service.
+. Login using your own credentials (You might need to open this tab in incognito mode).
+. In menu on the left over over realm name.
+. Select `Add new realm`
+. Put `DataSync Example` as name and press `Create`
 . Select *Clients* from the vertical navigation menu on the left side of the screen.
 . Click the *Create* button on the top right of the Clients screen.
 . On the *Add Client* screen:
@@ -406,7 +394,7 @@ Please skip this if you have keycloak configured in previous step
 +
 [subs="attributes+"]
 ----
-{user-username}-datasync
+public-datasync
 ----
 .. Verify the *Client Protocol* is set to *openid-connect*.
 .. Click *Save*.
@@ -424,7 +412,12 @@ Please skip this if you have keycloak configured in previous step
 
 === Testing Keycloak Authentication and Authorization
 
-. Start server `yarn start:server`
+. Close all opened terminals in Code Ready environment
+. Copy `Keycloak OIDC JSON` file into:
+.. `server/website/keycloak.json`
+.. `server/src/config/keycloak.json`
+. Execute `start server`. This command with start GraphQL server with embedded client.
+. Open Preview URL in the new window
 . Login window should appear.
 . Login using `admin` username and `admin` password
 . Press User icon in the top right corner. 
