@@ -207,19 +207,22 @@ with the keycloak json object generated during the keycloak integration init scr
 
 === Running native projects
 
-IOS:
+==== IOS
 -----
 cd client
 yarn cap add ios
 yarn run:ios
 -----
 
-Android:
+==== Android:
 -----
 cd client
 yarn cap add android
 yarn run:android
 -----
+
+When running locally you will need to also enable http traffic. 
+For example for android add `android:usesCleartextTraffic="true"` to AndroidManifest.xml
 
 Project should stard in IDE and can be launched as any other native application
 
