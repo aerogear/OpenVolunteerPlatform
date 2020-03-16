@@ -6,8 +6,8 @@
   "dependencies": {
     "@apollo/react-hooks": "3.1.3",
     "@capacitor/core": "1.5.1",
-    "@ionic/react": "5.0.4",
-    "@ionic/react-router": "5.0.4",
+    "@ionic/react": "5.0.5",
+    "@ionic/react-router": "5.0.5",
     "@testing-library/jest-dom": "5.1.1",
     "@testing-library/react": "10.0.1",
     "@testing-library/user-event": "10.0.0",
