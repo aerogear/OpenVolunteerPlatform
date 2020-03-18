@@ -7,20 +7,14 @@
 :data-sync-documentation-url: https://access.redhat.com/documentation/en-us/red_hat_managed_integration/{rhmi-version}/html-single/developing_a_data_sync_app/index
 
 //attributes
-:title: Creating your Data Sync Application in CodeReady
 :integreatly-name: Managed Integration
 :data-sync-name: Data Sync
 :data-sync-starter: Data Sync Starter
-:customer-sso-name: Customer Application SSO
-:realm-name: solution-patterns
-:realm-display-name: Solution Patterns
-:shared-realm-username: admin
-:realm-password: admin
 :standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact your administrator.
 
 //id syntax is used here for the custom IDs because that is how the Solution Explorer sorts these within groups
 [id='5-adding-data-sync-graphql']
-= {title}
+= Creating your Data Sync Application in CodeReady
 
 // word count that fits best is 15-22, with 20 really being the sweet spot. Character count for that space would be 100-125
 Learn how to build applications that can perform realtime data synchronization with DataSync and GraphQL.
@@ -52,7 +46,7 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 :sectnums:
 
 [time=15]
-== Creating your DataSync project from DataSync Starter template
+== Creating your DataSync project using DataSync Starter template
 
 {data-sync-name} allows you to focus on your business model by giving you ability
 to generate fully functional GraphQL based API and Node.js Server and Client Side components.
@@ -61,20 +55,27 @@ DataSync will allow your application to recieve live updates thanks to GraphQL s
 operate independently of network connection. Developers can create GrapQL types as model 
 and generate underlying backend that will work out of the box with the RHMI services like SSO or AMQ Online
 
+DataSync-Starter is an application template that gives developers 
+opiniated implementation for React Ionic PWA and Mobile application backend by Node.js Server.
+
+DataSync as framework consist of the two major components:
+- DataSync client (upstream https://offix.dev) that can be added to any web or mobile application
+to provide DataSynchronization capabilities
+
+- Node.js Server with code generation capabilties (upstream https://graphback.dev) 
+Server is providing ability to dynamically generate Node.js GraphQL server with DataSynchronization and Conflict resolution capabilties 
+
 [time=30]
 === Setting your DataSync project using in CodeReady
 
 . In solution explorer please go to "All Services" tab 
 . Please go to "Online IDE" and select "Open Console"
 . Login to dashboard
-. Choose `NodeJS MongoDB Web Application` from stack
-. Put `https://github.com/aerogear/datasync-starter` into repository URL
-. In the right corner press down arrow and select `Create and Start Editing`
-. In the new window select `Dev File` tab and copy dev file from 
-https://raw.githubusercontent.com/aerogear/datasync-starter/master/devfile.yaml
-. Press `Run`
+. Edit URL in browser and append following path to che hostname `/f?url=https://github.com/aerogear/datasync-starter/tree/walkthrough`
+For example `https://che.openshift.io/f?url=https://github.com/aerogear/datasync-starter/tree/walkthrough`
 . Wait for workspace to start
 . In active workspace run `Install dependencies` command
+All possible commands are listed in the `MyWorkspace` view available by selecting box icon in the right top corner of the screen
 
 === Creating your DataSync model
 
@@ -123,7 +124,7 @@ This file contains your model along with access methods that were enabled in con
 . Review generated resolver files in `./server/src/resolvers/resolvers.ts`
 This file contains methods used to fetch data. Each individual method will use 
 preconfigured MongoDataProvider. Developers can point resolvers to any datasource.
-Currently Postres and MongoDB are supported.
+Currently PostreSQL and MongoDB are supported.
 . Review your `./client/src/graphql/` folder containing client side queries for your data.
 
 === Running DataSync client and server applications
@@ -226,11 +227,11 @@ The {data-sync-starter} provides:
   - conflict resolution
 
 In this guide we are going to explore capabilities of the datasync by using 
-sample application available as part of {data-sync-starter}.
+generated server side and sample client application available as part of {data-sync-starter}.
 Application by default is designed to work with `Task` model but it can be extended 
 to use very Type automatically exposed by underlying server GraphQL API.
 
-. Go back to application opened in previous step.
+. Go back to client app used in previous step.
 . Create a task by clicking on the plus icon in the bottom right-hand side of the screen.
 . Add a title and description, of your choosing, to the task and click *Create*.
 . Copy the current url without the '/tasks' endpoint and paste in a different tab, browser or mobile browser.
@@ -253,7 +254,6 @@ Verify that you followed each step in the procedure above.  If you are still hav
 To explore data sync features, you should run multiple instances of the {data-sync-starter} using different browsers.
 For example, use the browser on your mobile device as well as using the browser on your laptop.
 
-To get the url of your app
 
 === Exploring real-time sync
 
@@ -261,7 +261,7 @@ To get the url of your app
 .. Create a new task using *+* icon.
 .. Enter some task text  and click *Create*.
 
-. On your mobile device:
+. On your second device:
 .. Check that the same task appears in the tasks page
 .. Make some changes to the task.
 
@@ -281,6 +281,11 @@ Verify that you followed each step in the procedure above.  If you are still hav
 
 === Exploring offline support
 
+DataSync provides offline and conflict resolution for client side applications
+like React, Angular or Vue. Sample application implements `Task` model 
+generated from server and utilizes Offix (http://offix.dev) client to enable
+offline and conflict capabilities.
+
 . On your mobile device:
 .. Activate airplane mode or disable network connectivity.
 .. Create a new task.
@@ -291,7 +296,7 @@ The task should be created and the *Offline Changes* button in the footer should
 . On your laptop:
 You do not see any of the changes from the mobile device.
 
-. On your mobile device:
+. On your second device:
 .. Restore connectivity or deactivate airplane mode.
 .. Watch the status of the tasks change.
 
@@ -311,14 +316,12 @@ Verify that you followed each step in the procedure above.  If you are still hav
 
 === Resolving conflicts
 
-. On your mobile device:
-.. Log into the {data-sync-starter}.
+. On your second device:
 .. Create a task `todo A`.
 .. Activate airplane mode or disable network connectivity.
 .. Edit the task description to add the text `edited on mobile`.
 
 . On your laptop:
-.. Log into the {data-sync-starter}.
 .. Simulate offline mode. For example, in Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
 .. Edit the `todo A` task, change the text to `todo B`.
 
