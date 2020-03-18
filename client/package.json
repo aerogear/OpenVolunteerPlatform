@@ -2,7 +2,6 @@
   "name": "datasync-starter-client",
   "version": "0.0.1",
   "private": true,
-  "homepage": ".",
   "dependencies": {
     "@apollo/react-hooks": "3.1.3",
     "@capacitor/core": "1.5.1",
