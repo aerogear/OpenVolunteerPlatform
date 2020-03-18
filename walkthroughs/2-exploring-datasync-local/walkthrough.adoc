@@ -156,7 +156,7 @@ If you are still having issues, contact your administrator.
 
 GraphQL Playground acts as GraphQL API client that allows 
 you to interact with your types without implementing new views in your application.
-In this section we going to focus on learning who to use playground.
+In this section we are going to focus on learning who to use playground.
 
 . Open new terminal window
 . Execute `yarn start:server`
@@ -268,7 +268,7 @@ To get the url of your app
 .. Make some changes to the task.
 
 . On your laptop:
-.. Check that the task changes are appear.
+.. Check that the task changes are synchronized.
 
 
 [type=verification]
@@ -294,11 +294,11 @@ The task should be created and the *Offline Changes* button in the footer should
 You do not see any of the changes from the mobile device.
 
 . On your mobile device:
-.. Restore connectivity or deactivate airplane modes.
+.. Restore connectivity or deactivate airplane mode.
 .. Watch the status of the tasks change.
 
 . On your laptop:
-.. Check that all the tasks are synced.
+.. Check that all the tasks are synchronized.
 
 
 [type=verification]

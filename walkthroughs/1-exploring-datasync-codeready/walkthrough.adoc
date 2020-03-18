@@ -154,7 +154,7 @@ If you are still having issues, contact your administrator.
 
 GraphQL Playground acts as GraphQL API client that allows 
 you to interact with your types without implementing new views in your application.
-In this section we going to focus on learning who to use playground.
+In this section we are going to focus on learning who to use playground.
 
 . Open new terminal window
 . Execute `yarn start:server`
@@ -266,7 +266,7 @@ To get the url of your app
 .. Make some changes to the task.
 
 . On your laptop:
-.. Check that the task changes are appear.
+.. Check that the task changes are synchronized.
 
 
 [type=verification]
@@ -292,11 +292,11 @@ The task should be created and the *Offline Changes* button in the footer should
 You do not see any of the changes from the mobile device.
 
 . On your mobile device:
-.. Restore connectivity or deactivate airplane modes.
+.. Restore connectivity or deactivate airplane mode.
 .. Watch the status of the tasks change.
 
 . On your laptop:
-.. Check that all the tasks are synced.
+.. Check that all the tasks are synchronized.
 
 
 [type=verification]
@@ -384,7 +384,7 @@ Please skip this if you have keycloak configured in previous step
 
 . In solution explorer open the User SSO service.
 . Login using your own credentials (You might need to open this tab in incognito mode).
-. In menu on the left over over realm name.
+. In menu on the left hover over realm name.
 . Select `Add new realm`
 . Put `DataSync Example` as name and press `Create`
 . Select *Clients* from the vertical navigation menu on the left side of the screen.
@@ -416,7 +416,7 @@ public-datasync
 . Copy `Keycloak OIDC JSON` file into:
 .. `server/website/keycloak.json`
 .. `server/src/config/keycloak.json`
-. Execute `start server`. This command with start GraphQL server with embedded client.
+. Execute `start server`. This command will start GraphQL server with embedded client.
 . Open Preview URL in the new window
 . Login window should appear.
 . Login using `admin` username and `admin` password
