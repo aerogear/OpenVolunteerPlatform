@@ -10,6 +10,7 @@
 :integreatly-name: Managed Integration
 :data-sync-name: Data Sync
 :data-sync-starter: Data Sync Starter
+:customer-sso-name: SSO
 :standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact your administrator.
 
 //id syntax is used here for the custom IDs because that is how the Solution Explorer sorts these within groups
