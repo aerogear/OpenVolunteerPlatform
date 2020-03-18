@@ -59,6 +59,7 @@ DataSync-Starter is an application template that gives developers
 opiniated implementation for React Ionic PWA and Mobile application backend by Node.js Server.
 
 DataSync as framework consist of the two major components:
+
 - DataSync client (upstream https://offix.dev) that can be added to any web or mobile application
 to provide DataSynchronization capabilities
 
