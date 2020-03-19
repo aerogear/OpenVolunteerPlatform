@@ -89,7 +89,7 @@ Based on a user defined **Model** DataSync generates the underlying GraphQL API 
 The Starter template uses MongoDB as the default datasource for storing application data.
 
 . In your project go to the `./model/task.graphql` file. 
-This file contains a partial link:https://graphql.org/learn/schema/#object-types-and-fields[GraphQL Schema, window="_blank"]. Here you can define the data your application will deal with.
+This file contains an link:https://graphql.org/learn/schema/#object-types-and-fields[GraphQL Schema, window="_blank"]. Here you can define types of the data your application will work with. Graphback will use your model and generate underlying data access methods in the form of GraphQL Queries and Mutations
 . Please add a `@datasync` annotation under the `@model` annotation on the `Task` type.
 Those annotations control various behaviour of DataSync.
 `@model` will create standard data access methods, while `@datasync` will provide data synchronization capabilities.
@@ -433,4 +433,3 @@ public-datasync
 . Go back to the task screen
 . Try to delete one of the created tasks
 . User will be permitted to delete task as it has admin role.
-
