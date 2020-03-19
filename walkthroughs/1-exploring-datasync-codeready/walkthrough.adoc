@@ -22,7 +22,7 @@ Learn how to build applications that can perform realtime data synchronization w
 
 This solution pattern will show you how to:
 
-* Build DataSync server based on your business model
+* Build a DataSync server based on your business model
 * Protect the application's frontend and backend using {customer-sso-name}.
 * Explore all the capabilities provided by {data-sync-name}.
 
@@ -49,12 +49,13 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 [time=15]
 == Creating your DataSync project using DataSync Starter template
 
-{data-sync-name} allows you to focus on your business model by giving you ability
-to generate fully functional GraphQL based API and Node.js Server and Client Side components.
+{data-sync-name} allows you to focus on your business model by giving you the ability
+to generate a fully functional GraphQL based API and Node.js Server and Client Side components.
 
-DataSync will allow your application to recieve live updates thanks to GraphQL subscriptions and
-operate independently of network connection. Developers can create GrapQL types as model 
-and generate underlying backend that will work out of the box with the RHMI services like SSO or AMQ Online
+Developers can use GraphQL types to define the models their application deals with
+and generate the underlying backend that works out of the box with the RHMI services like SSO or AMQ Online.
+
+Using GraphQL subscriptions, your application can receive live updates thanks to GraphQL and the DataSync client allows your application to operate independently of the network connection. 
 
 DataSync-Starter is an application template that gives developers 
 opiniated implementation for React Ionic PWA and Mobile application backend by Node.js Server.
@@ -70,28 +71,30 @@ Server is providing ability to dynamically generate Node.js GraphQL server with 
 [time=30]
 === Setting your DataSync project using in CodeReady
 
-. In solution explorer please go to "All Services" tab 
-. Please go to "Online IDE" and select "Open Console"
-. Login to dashboard
-. Edit URL in browser and append following path to che hostname `/f?url=https://github.com/aerogear/datasync-starter/tree/walkthrough`
+In this section we will use CodeReady Workspaces as a development environment to work with the DataSync Starter project.
+
+. Navigate to the solution explorer
+. Go to the "All Services" tab 
+. Go to "Online IDE" and select "Open Console"
+. Login to the CodeReady Workspaces dashboard
+. Edit the URL in your browser and append following path to the CodeReady hostname `/f?url=https://github.com/aerogear/datasync-starter/tree/walkthrough`
 For example `https://che.openshift.io/f?url=https://github.com/aerogear/datasync-starter/tree/walkthrough`
-. Wait for workspace to start
-. In active workspace run `Install dependencies` command
-All possible commands are listed in the `MyWorkspace` view available by selecting box icon in the right top corner of the screen
+. Wait for the workspace to start
+. In the active workspace, run the `Install dependencies` command
+The commands are listed in the `MyWorkspace` view available by selecting the box icon in the right top corner of the screen.
 
 === Creating your DataSync model
 
-DataSync model offers capability to generate underlying GraphQL API and database infrastructure.
-Starter template by default will use MongoDB database as datasource for storing all your data.
+Based on a user defined **Model** DataSync generates the underlying GraphQL API and database resources.
+The Starter template uses MongoDB as the default datasource for storing application data.
 
-. In your project go to `./model/task.graphql` file. 
-This file contains GraphQL compatible schema 
-. Please add `@datasync` annotation to the model right bellow `@model` annotation
-Those annotations can be used to control various behaviour of datasync.
-`@model` will create standard data access methods, while `@datasync` is going to provide data synchronization capabilities.
-. Models can be changed by adding new types or fields. Please add new field by creating new line inside `Task` type
-and `address: String`
-. Your task model should look as follows
+. In your project go to the `./model/task.graphql` file. 
+This file contains a partial link:https://graphql.org/learn/schema/#object-types-and-fields[GraphQL Schema, window="_blank"]. Here you can define the data your application will deal with.
+. Please add a `@datasync` annotation under the `@model` annotation on the `Task` type.
+Those annotations control various behaviour of DataSync.
+`@model` will create standard data access methods, while `@datasync` will provide data synchronization capabilities.
+. Models can be changed by adding new types or fields. Add a new field to the `Task` type by adding `address: String`
+. Your task model should be as follows
 ----
 """ 
 @model
@@ -108,41 +111,41 @@ type Task {
 
 === Generating your DataSync Node.JS server and React Client
 
-DataSync provides code generation capabilities that will transform your model to the fully 
+DataSync provides code generation capabilities that transform your model into a fully 
 functional client and server application.
-DataSync-starter template contains folowing folders:
+The datasync-starter template contains the following folders:
 
-- `./server` folder that contains Node.js server implementation
-- `./client` folder that contains React based application
-- `.graphqlrc.yml`
+* `./server`- contains a Node.js server application written in TypeScript. `server/src/index.ts` is the entrypoint to the server application.
+* `./client` - contains a React application written in TypeScript. `client/src/index.tsx` is the entrypoint to the client application.
+* `.graphqlrc.yml` - 
 
-. Review `.graphqlrc.yml` file. This file contains configuration for your data access methods
-and available plugins that will be used for source code generation
-. Please make sure that all fields in `crud` section are enabled 
+. Review the `.graphqlrc.yml` file. This is a config file that
+** determines what types of CRUD operations will be generated into GraphQL Queries and Mutations in your application.
+** enables and configures various plugins that are used during the code generation process.
+. Make sure that all fields in the `crud` section are enabled 
 . Execute graphback cli command to generate source code:
 `yarn graphback generate`
 . Review `./server/src/schema/schema.qraphql`. 
-This file contains your model along with access methods that were enabled in configuration.
-. Review generated resolver files in `./server/src/resolvers/resolvers.ts`
-This file contains methods used to fetch data. Each individual method will use 
-preconfigured MongoDataProvider. Developers can point resolvers to any datasource.
-Currently PostreSQL and MongoDB are supported.
-. Review your `./client/src/graphql/` folder containing client side queries for your data.
+This file has the original model and it also contains generated Queries and Mutations. The types of queries and mutations included are based on the `crud` fields in `.graphqlrc.yml`.
+. Review the generated resolver files in `./server/src/resolvers/resolvers.ts`
+This file contains methods used to fetch and modify data. Each individual method uses a 
+preconfigured `MongoDataProvider` which is an abstraction over a MongoDB client. Developers can point resolvers to any datasource.
+Currently Postgres and MongoDB are supported.
+. Review your `./client/src/graphql/` folder containing client side queries for your data. These queries are automatically generated based on the server schema, and are used within the client application. Generating the client side queries helps developers get their client apps up and running quicker and helps them stay up to date as the server schema evolves.
 
 === Running DataSync client and server applications
 
-. Open new terminal window
-. Execute `prepare client` command in the new terminal. Client side application will be build and started. This can take up to couple minutes
-. Execute `start server`. This command with start GraphQL server with embedded client.
-. Application should be opened in preview window after build is finished
+. Open a new terminal window
+. Execute the `prepare client` command in the new terminal. Client side application will be build and started. This can take a couple of minutes.
+. Execute the `start server` command. This command starts the GraphQL server which also serves the client application for simplicity.
+. The application should be opened in a preview window after build is finished.
 
 [type=verification]
 ****
-. Check if website was loaded properly
-. Select + icon to create new item
-. On new screen put `name` and `description`
-The client should create a task and it should be 
-. New task should appear on the list
+. Check if the website was loaded properly
+. Select the + icon to create a new item
+. On the new screen enter a `name` and `description` and create the task.
+. New task should appear in the task list.
 ----
 ****
 
@@ -153,15 +156,16 @@ Verify that you followed each step in the procedure above.
 If you are still having issues, contact your administrator.
 ****
 
-=== Interacting with embeeded GraphQL Playground
+=== Interacting with the GraphQL Playground
 
-GraphQL Playground acts as GraphQL API client that allows 
-you to interact with your types without implementing new views in your application.
-In this section we are going to focus on learning who to use playground.
+The GraphQL Playground is an in browser GraphQL IDE that lets you directly perform queries and mutations against your GraphQL API.
+It's a convenient way to interact with your GraphQL API without using a client application.
+It is served directly by your server application as a developer tool and can be disabled in production.
+In this section we will focus on using the playground.
 
-. Open new terminal window
+. Open a new terminal window
 . Execute `yarn start:server`
-. Open GraphQL Playground URL printed in console.
+. Open the GraphQL Playground URL printed in console.
 You can use the GraphQL playground to interact with the server API as described in the next step.
 . Go to the Playground interface and replace the text in the left pane of the screen with the following query and mutation:
 
@@ -189,11 +193,11 @@ mutation createTask {
 [type=verification]
 ****
 . Click the Run icon in the middle of the playground screen.
-. Choose createTask from the menu.
-The system should create a task.
-. Choose listTasks from the Run menu.
+. Choose `createTask` from the menu.
+The system should create a task and the result is displayed in the panel on the right side.
+. Choose `listTasks` from the Run menu.
 . Check that the following is displayed in the right hand panel:
-. You should also see field that we have added in previous steps
+. You should also see the `address` field that we have added in previous steps.
 +
 ----
 {
@@ -224,19 +228,18 @@ Verify that you followed each step in the procedure above.  If you are still hav
 
 The {data-sync-starter} provides:
   
-  - offline operation support
-  - out of the box live updates
-  - conflict resolution
+  - Offline operation support
+  - Realtime updates through GraphQL Subscriptions
+  - Conflict detection and resolution
 
-In this guide we are going to explore capabilities of the datasync by using 
-generated server side and sample client application available as part of {data-sync-starter}.
-Application by default is designed to work with `Task` model but it can be extended 
-to use very Type automatically exposed by underlying server GraphQL API.
+In this guide we will explore the capabilities of DataSync by using the
+generated server application and the sample frontend application available as part of {data-sync-starter}.
+The frontend application is a Todo style app that uses the `Task` model.
 
-. Go back to client app used in previous step.
+. Go back to the application opened in the previous step.
 . Create a task by clicking on the plus icon in the bottom right-hand side of the screen.
 . Add a title and description, of your choosing, to the task and click *Create*.
-. Copy the current url without the '/tasks' endpoint and paste in a different tab, browser or mobile browser.
+. Copy the current url and paste it in a different tab, browser or mobile browser.
 . Change the status of the task by clicking/unclicking the text box beside the task.
 
 
@@ -362,7 +365,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 [time=15]
 == Add authentication and authorization to the Data Sync application using Red Hat SSO
 
-In this task, we will configure both the frontend and the backend of the 
+In this section, we will configure both the frontend and the backend of the 
 {data-sync-starter} with the {customer-sso-name}.
 
 DataSync starter has authentication and autorization enabled out of the box.
