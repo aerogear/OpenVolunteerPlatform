@@ -416,7 +416,8 @@ public-datasync
 .. Click *Save*.
 . You will see the *Settings* screen for the *{client-name}* client if the save is successful.
 . on the *Settings* page:
-.. Change `Valid Redirect URIs` to `{route-ionic-showcase-server-host}*`
+.. Change `Valid Redirect URIs` to hostname used to run your server application with `*` at the end.
+For example `https://routex9wvywuq-codeready-workspaces.apps.openshift.io*`
 .. Change `Web Origins` to `*`
 .. Click on the *Save* button
 .. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Copy the content displayed or use the `Download` button to save the configuration file.
