@@ -132,7 +132,7 @@ The datasync-starter template contains the following folders:
 ** enables and configures various plugins that are used during the code generation process.
 . Make sure that all fields in the `crud` section are enabled 
 . Execute graphback cli command to generate source code:
-`yarn graphback generate`
+`yarn graphback generate`. You can also execute it as predefined `generate source code` command in CodeReady
 . Review `./server/src/schema/schema.qraphql`. 
 This file has the original model and it also contains generated Queries and Mutations. The types of queries and mutations included are based on the `crud` fields in `.graphqlrc.yml`.
 . Review the generated resolver files in `./server/src/resolvers/resolvers.ts`

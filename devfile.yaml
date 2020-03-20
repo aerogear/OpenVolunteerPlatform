@@ -52,6 +52,12 @@ commands:
         type: exec
         command: git checkout walkthrough && npm install -g yarn && yarn install
         component: nodejs
+  - name: generate source code
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
+        type: exec
+        command: 'yarn graphback generate'
+        component: nodejs
   - name: prepare client
     actions:
       - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter'
