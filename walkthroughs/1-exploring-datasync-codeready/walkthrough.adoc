@@ -87,6 +87,7 @@ In this section we will use CodeReady Workspaces as a development environment to
 https://raw.githubusercontent.com/aerogear/datasync-starter/master/devfile.yaml
 . Press `Create`
 . Wait for the workspace to start
+. Press `Open` to open CodeReady editor
 . In the active workspace, run the `Install dependencies` command.
 +
 The commands are listed in the `MyWorkspace` view available by selecting the box icon in the right top corner of the screen.
