@@ -66,9 +66,3 @@ commands:
           MONGO_USER=user MONGO_PASSWORD=password MONGO_HOST=mongodb-34-rhel7
           yarn start:server
         component: nodejs
-  - name: live reload client
-    actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/datasync-starter/client'
-        type: exec
-        command: 'yarn start:client'
-        component: nodejs
