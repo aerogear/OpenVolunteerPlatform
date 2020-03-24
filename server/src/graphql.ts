@@ -19,7 +19,7 @@ export const createApolloServer = async function (app: Express, config: Config) 
     const pubSub = getPubSub();
 
     const typeDefs = loadSchemaFiles(join(__dirname, '/schema/')).join('\n');
-    const schema = buildSchema(typeDefs);
+    const schema = buildSchema(typeDefs, { assumeValid: true });
     const context = createOffixMongoCRUDRuntimeContext(models, schema, db, pubSub);
 
     let apolloConfig = {
@@ -28,7 +28,6 @@ export const createApolloServer = async function (app: Express, config: Config) 
         playground: true,
         context: context
     }
-
 
     apolloConfig = buildKeycloakApolloConfig(app, apolloConfig)
 
