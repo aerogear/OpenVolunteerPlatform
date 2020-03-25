@@ -1,7 +1,7 @@
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
 import { ILogoutParams } from '../declarations';
 
-export let keycloak: KeycloakInstance<'native'> | undefined;
+export let keycloak: KeycloakInstance | undefined;
 
 /**
  * Get keycloak instance
@@ -27,8 +27,7 @@ export const init = async () => {
     keycloak = new (Keycloak as any )();
     if (keycloak) {
       await keycloak.init({
-        promiseType: 'native',
-        onLoad: 'login-required',
+        onLoad: 'login-required'
       });
     }
   } catch {

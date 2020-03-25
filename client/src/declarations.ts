@@ -61,7 +61,7 @@ export interface IUpdateMatchParams {
 }
 
 export interface IAppContext {
-  keycloak: KeycloakInstance<'native'> | undefined
+  keycloak: KeycloakInstance | undefined
 }
 
 export interface IAuthHeaders {
@@ -71,6 +71,6 @@ export interface IAuthHeaders {
 }
 
 export interface ILogoutParams {
-  keycloak: Keycloak.KeycloakInstance<'native'> | undefined,
+  keycloak: Keycloak.KeycloakInstance | undefined,
   client: ApolloOfflineClient
 }
