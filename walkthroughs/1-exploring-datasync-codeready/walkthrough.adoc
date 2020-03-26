@@ -436,9 +436,9 @@ For example `https://routex9wvywuq-codeready-workspaces.apps.openshift.io*`
 . Execute `start server`. This command will start GraphQL server with embedded client.
 . Open Preview URL in the new window
 . Login window should appear.
-. Login using `admin` username and `admin` password
+. Login using credentials you have choosen in keycloak
 . Press User icon in the top right corner. 
 . You should see admin user profile with his roles
 . Go back to the task screen
 . Try to delete one of the created tasks
-. User will be permitted to delete task as it has admin role.
+. User will not be permitted to delete task as it does not have admin role.
