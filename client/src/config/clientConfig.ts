@@ -8,6 +8,7 @@ import { globalCacheUpdates, ConflictLogger } from '../helpers';
 import { getAuthHeader } from '../auth/keycloakAuth';
 import { ApolloOfflineClientOptions } from 'offix-client';
 import { Capacitor } from '@capacitor/core';
+import { CapacitorNetworkStatus } from '../helpers/CapacitorNetworkStatus';
 
 
 let httpUri = 'http://localhost:4000/graphql';
@@ -93,6 +94,7 @@ export const clientConfig: ApolloOfflineClientOptions = {
   cache: cache,
   conflictListener: new ConflictLogger(),
   mutationCacheUpdates: globalCacheUpdates,
+  networkStatus: new CapacitorNetworkStatus(),
   inputMapper: {
     deserialize: (variables: any) => {
       return (variables && variables.input) ? variables.input : variables;

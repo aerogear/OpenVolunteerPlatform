@@ -24,5 +24,8 @@
   "workspaces": [
     "client",
     "server"
-  ]
+  ],
+  "resolutions": {
+    "@types/react": "^16.9.27"
+  }
 }
