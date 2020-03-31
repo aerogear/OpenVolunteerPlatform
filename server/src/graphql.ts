@@ -9,7 +9,7 @@ import { Config } from './config/config';
 import { ApolloServer } from "apollo-server-express";
 import { Express } from "express";
 import { buildKeycloakApolloConfig } from './auth';
-import { createOffixMongoCRUDRuntimeContext } from "@graphback/runtime-mongo"
+import { createOffixMongoCRUDRuntimeContext } from './createContext';
 
 /**
  * Creates Apollo server

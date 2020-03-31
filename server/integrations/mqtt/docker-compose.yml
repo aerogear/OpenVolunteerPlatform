@@ -3,7 +3,6 @@ services:
   # Mosca is a simple MQTT Broker
   # In OpenShift/Production we would use the Red Hat AMQ broker
   mosca:
-    image: matteocollina/mosca
+    image: eclipse-mosquitto:latest
     ports:
       - "1883:1883" # MQTT
-      - "80:80" # web interface
