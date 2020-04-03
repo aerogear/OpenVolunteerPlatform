@@ -179,7 +179,7 @@ You can use the GraphQL playground to interact with the server API as described 
 
 ----
 query listTasks {
-  allTasks {
+  findAllTasks {
     title,
     description,
     address,
@@ -188,7 +188,7 @@ query listTasks {
 }
 
 mutation createTask {
-  createTask(title: "complete the walkthrough", description: "complete the GraphQL walkthrough", address: "NA") {
+  createTask(input: {title: "complete the walkthrough", description: "complete the GraphQL walkthrough", address: "NA"}) {
     title,
     description,
     version,
