@@ -4,3 +4,5 @@ types
 yarn.lock
 yarn-error.log
 data/*
+admin
+website
