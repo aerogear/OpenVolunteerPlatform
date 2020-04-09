@@ -13,6 +13,7 @@ async function start() {
 
   app.use(cors());
   app.use('/', express.static('website'))
+  app.use('/admin', express.static('admin'))
   app.get('/health', (req, res) => res.sendStatus(200));
 
   const apolloServer = await createApolloServer(app, config);
@@ -22,6 +23,7 @@ async function start() {
   httpServer.listen(config.port, () => {
     console.log(`\n    ***********************************************************
     🎮 Ionic PWA application available at http://localhost:${config.port}
+    🎮 Admin PWA application available at http://localhost:${config.port}/admin
     🚀 GraphQL Playground is available at http://localhost:${config.port}/graphql
     ***********************************************************`)
   })
