@@ -1,6 +1,7 @@
 """ @model """
 type DistributionCentre {
   id: ID!
+  name: String
   address: String
   lat: String
   long: String
@@ -36,6 +37,8 @@ type Reciever {
   name: String!
   phone: String
   address: String
+  """ @oneToMany field: 'reciever' """
+  actions: [Action]
 }
 
 """ @model """
@@ -43,10 +46,6 @@ type Action {
   id: ID!
   title: String!
   description: String
-  """ @oneToOne """
-  reciever: Reciever!
-  """ @oneToOne """
-  volounteer: Volunteer!
   """ @oneToMany field: 'action' """
   products: [Product]!
   status: TaskStatus
