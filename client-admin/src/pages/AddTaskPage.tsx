@@ -17,8 +17,8 @@ export const AddTaskPage: React.FC<RouteComponentProps> = ({ history, match }) =
 
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [ showToast, setShowToast ] = useState<boolean>(false);
-  const [ errorMessage, setErrorMessage ] = useState<string>('');
+  const [showToast, setShowToast] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const [createTaskMutation] = useOfflineMutation(createTask, mutationOptions.createTask);
 
@@ -42,14 +42,14 @@ export const AddTaskPage: React.FC<RouteComponentProps> = ({ history, match }) =
         version: 1
       },
     };
-    
+
     createTaskMutation({
       variables
     })
-    .then(() => history.push('/'))
-    .catch(handleError);
+      .then(() => history.push('/'))
+      .catch(handleError);
   };
-  
+
   return (
     <>
       <Header title="Add task" backHref="/tasks" match={match} />
@@ -57,22 +57,22 @@ export const AddTaskPage: React.FC<RouteComponentProps> = ({ history, match }) =
         <form onSubmit={submit} style={{ padding: '0 16px' }}>
           <IonItem>
             <IonLabel color="primary" position="floating">Title</IonLabel>
-            <IonInput 
-              type="text" 
-              required 
-              name="title" 
-              value={title} 
-              onInput={(e:any) => setTitle(e.target.value)} 
+            <IonInput
+              type="text"
+              required
+              name="title"
+              value={title}
+              onInput={(e: any) => setTitle(e.target.value)}
             />
           </IonItem>
           <IonItem>
             <IonLabel color="primary" position="floating">Description</IonLabel>
-            <IonInput 
-              type="text" 
-              required 
-              name="description" 
-              value={description} 
-              onInput={(e:any) => setDescription(e.target.value)}
+            <IonInput
+              type="text"
+              required
+              name="description"
+              value={description}
+              onInput={(e: any) => setDescription(e.target.value)}
             />
           </IonItem>
           <IonButton className="submit-btn" expand="block" type="submit">Create</IonButton>

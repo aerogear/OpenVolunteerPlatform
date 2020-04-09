@@ -1,29 +1,24 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { add } from 'ionicons/icons';
 import { 
   IonPage, 
   IonSegment, 
   IonSegmentButton, 
-  IonLabel, 
-  IonIcon, 
+  IonLabel,  
   IonFooter,
   IonLoading,
-  IonFab,
-  IonFabButton,
   IonContent,
 } from '@ionic/react';
 import { subscriptionOptions,  } from '../helpers';
 import { useSubscribeToMore } from '../hooks';
 import { Empty, TaskList, NetworkBadge, OfflineQueueBadge, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { findAllTasks } from '../graphql/queries/findAllTasks';
-import { Link } from 'react-router-dom';
+import { findAllVolounteerActions } from '../graphql/queries/findAllVolounteerActions';
 import { useNetworkStatus } from 'react-offix-hooks';
 
 export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
 
-  const { loading, error, data, subscribeToMore } = useQuery(findAllTasks, {
+  const { loading, error, data, subscribeToMore } = useQuery(findAllVolounteerActions, {
     fetchPolicy: 'cache-and-network'
   });
   
@@ -39,8 +34,8 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
     message={'Loading...'}
   />;
 
-  const content = (data && data.findAllTasks) 
-    ? <TaskList tasks={data.findAllTasks} />
+  const content = (data && data.findAllVolounteerActions) 
+    ? <TaskList tasks={data.findAllVolounteerActions} />
     : <Empty message={<p>No tasks available</p>} />;
 
   return (
@@ -48,18 +43,14 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
       <Header title="CrisisCommunity Volounteer"  match={match}  />
       <IonContent className="ion-padding" >
         <IonSegment>
-          <IonSegmentButton value="all">
-            <IonLabel>All my tasks</IonLabel>
+          <IonSegmentButton value="Open">
+            <IonLabel>Open Tasks</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value="closed">
+            <IonLabel>Finished Tasks</IonLabel>
           </IonSegmentButton>
         </IonSegment>
         { content }
-        <IonFab vertical="bottom" horizontal="end" slot="fixed" style={{ 'marginBottom': '2em', 'marginRight': '1em' }}>
-          <Link to="/addTask">
-            <IonFabButton>
-              <IonIcon icon={add} />
-            </IonFabButton>
-          </Link>
-        </IonFab>
       </IonContent>
       <IonFooter>
         <div>

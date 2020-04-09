@@ -1,6 +1,5 @@
 export { TaskPage } from './TaskPage';
 export { ProfilePage } from './ProfilePage';
-export { AddTaskPage } from './AddTaskPage';
-export { UpdateTaskPage } from './UpdateTaskPage';
+export { ViewTaskPage } from './ViewTaskPage';
 export { OfflineQueuePage } from './OfflineQueuePage';
 

@@ -10,7 +10,6 @@ import {
   IonCardHeader,
   IonCardContent,
   IonNote,
-  IonBadge,
   IonLoading,
   IonToast,
 } from '@ionic/react';
@@ -23,7 +22,7 @@ import { IUpdateMatchParams } from '../declarations';
 import { updateTask } from '../graphql/mutations/updateTask';
 import { findTasks } from '../graphql/queries/findTasks';
 
-export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ history, match }) => {
+export const ViewTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ history, match }) => {
 
   const { id } = match.params;
 
@@ -91,11 +90,6 @@ export const UpdateTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                   Description: {task.description}
                 </IonNote>
                 <br />
-                <IonNote>
-                  <IonBadge color="primary">
-                    Version: {task.version}
-                  </IonBadge>
-                </IonNote>
               </IonLabel>
             </IonCardContent>
           </IonCard>

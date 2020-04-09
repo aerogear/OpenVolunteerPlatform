@@ -1,0 +1,33 @@
+# Write your query or mutation here
+query findAllVolunteers {
+  findAllVolunteers {
+    id
+    name
+  }
+}
+
+query findAllRecievers {
+  findAllRecievers {
+    id
+    name
+  }
+}
+
+mutation createVolounteerAction {
+  createVolounteerAction(
+    input: {
+      id: ""
+      title: "Call Mr Boris"
+      description: "Phone Number: +473020323"
+      actionType: DELIVERY,
+      products: "Bread, Pasta, ToiletPaper",
+      recieverId: "5e8f3eda92787169c1e7cd87"
+      volounteerId: "5e8f3e0a92787169c1e7cd7d",
+      status: ASSIGNED
+    }
+  ) {
+    id
+    title
+    description
+  }
+}
