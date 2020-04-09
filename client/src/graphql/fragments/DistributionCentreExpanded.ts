@@ -7,11 +7,7 @@ export const DistributionCentreExpandedFragment = gql`
    address
    lat
    long
-   stock {
-      id
-      amount
-      version
-   }   version
+   version
 
 } 
 `

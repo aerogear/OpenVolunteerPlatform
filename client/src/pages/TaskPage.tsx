@@ -49,7 +49,7 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
       <IonContent className="ion-padding" >
         <IonSegment>
           <IonSegmentButton value="all">
-            <IonLabel>All Tasks</IonLabel>
+            <IonLabel>All my tasks</IonLabel>
           </IonSegmentButton>
         </IonSegment>
         { content }

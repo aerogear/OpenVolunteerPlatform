@@ -8,6 +8,7 @@ export const VolunteerExpandedFragment = gql`
       id
       title
       description
+      products
       status
       actionType
       version

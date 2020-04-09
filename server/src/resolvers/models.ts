@@ -8,31 +8,15 @@ export const models = [
     },
   },
   {
-    name: "ProductStock",
-    pubSub: {
-      publishCreate: true,
-      publishUpdate: true,
-      publishDelete: true,
-    },
-  },
-  {
-    name: "Product",
-    pubSub: {
-      publishCreate: true,
-      publishUpdate: true,
-      publishDelete: true,
-    },
-  },
-  {
-    name: "Action",
-    pubSub: {
-      publishCreate: true,
-      publishUpdate: true,
-      publishDelete: true,
-    },
-  },
-  {
     name: "Volunteer",
+    pubSub: {
+      publishCreate: true,
+      publishUpdate: true,
+      publishDelete: true,
+    },
+  },
+  {
+    name: "VolounteerAction",
     pubSub: {
       publishCreate: true,
       publishUpdate: true,

@@ -6,41 +6,17 @@
  */
 
 export default {
-  DistributionCentre: {
-    stock: (parent, args, context) => {
-      return context.ProductStock.batchLoadData(
-        "distributionCentreId",
+  Volunteer: {
+    actions: (parent, args, context) => {
+      return context.VolounteerAction.batchLoadData(
+        "volounteerId",
         parent.id,
         context
       )
     },
   },
 
-  ProductStock: {
-    distributionCentre: (parent, args, context) => {
-      return context.DistributionCentre.findBy({
-        id: parent.distributionCentreId,
-      }).then((results) => results[0])
-    },
-    product: (parent, args, context) => {
-      return context.Product.findBy({ id: parent.productId }).then(
-        (results) => results[0]
-      )
-    },
-  },
-
-  Product: {
-    action: (parent, args, context) => {
-      return context.Action.findBy({ id: parent.actionId }).then(
-        (results) => results[0]
-      )
-    },
-  },
-
-  Action: {
-    products: (parent, args, context) => {
-      return context.Product.batchLoadData("actionId", parent.id, context)
-    },
+  VolounteerAction: {
     volounteer: (parent, args, context) => {
       return context.Volunteer.findBy({ id: parent.volounteerId }).then(
         (results) => results[0]
@@ -53,15 +29,13 @@ export default {
     },
   },
 
-  Volunteer: {
-    actions: (parent, args, context) => {
-      return context.Action.batchLoadData("volounteerId", parent.id, context)
-    },
-  },
-
   Reciever: {
     actions: (parent, args, context) => {
-      return context.Action.batchLoadData("recieverId", parent.id, context)
+      return context.VolounteerAction.batchLoadData(
+        "recieverId",
+        parent.id,
+        context
+      )
     },
   },
 
@@ -73,33 +47,19 @@ export default {
     findAllDistributionCentres: (parent, args, context) => {
       return context.DistributionCentre.findAll(args)
     },
-    findProductStocks: (parent, args, context) => {
-      const { fields, ...page } = args
-      return context.ProductStock.findBy(fields, page)
-    },
-    findAllProductStocks: (parent, args, context) => {
-      return context.ProductStock.findAll(args)
-    },
-    findProducts: (parent, args, context) => {
-      const { fields, ...page } = args
-      return context.Product.findBy(fields, page)
-    },
-    findAllProducts: (parent, args, context) => {
-      return context.Product.findAll(args)
-    },
-    findActions: (parent, args, context) => {
-      const { fields, ...page } = args
-      return context.Action.findBy(fields, page)
-    },
-    findAllActions: (parent, args, context) => {
-      return context.Action.findAll(args)
-    },
     findVolunteers: (parent, args, context) => {
       const { fields, ...page } = args
       return context.Volunteer.findBy(fields, page)
     },
     findAllVolunteers: (parent, args, context) => {
       return context.Volunteer.findAll(args)
+    },
+    findVolounteerActions: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.VolounteerAction.findBy(fields, page)
+    },
+    findAllVolounteerActions: (parent, args, context) => {
+      return context.VolounteerAction.findAll(args)
     },
     findRecievers: (parent, args, context) => {
       const { fields, ...page } = args
@@ -127,33 +87,6 @@ export default {
     deleteDistributionCentre: (parent, args, context) => {
       return context.DistributionCentre.delete(args.input, context)
     },
-    createProductStock: (parent, args, context) => {
-      return context.ProductStock.create(args.input, context)
-    },
-    updateProductStock: (parent, args, context) => {
-      return context.ProductStock.update(args.input, context)
-    },
-    deleteProductStock: (parent, args, context) => {
-      return context.ProductStock.delete(args.input, context)
-    },
-    createProduct: (parent, args, context) => {
-      return context.Product.create(args.input, context)
-    },
-    updateProduct: (parent, args, context) => {
-      return context.Product.update(args.input, context)
-    },
-    deleteProduct: (parent, args, context) => {
-      return context.Product.delete(args.input, context)
-    },
-    createAction: (parent, args, context) => {
-      return context.Action.create(args.input, context)
-    },
-    updateAction: (parent, args, context) => {
-      return context.Action.update(args.input, context)
-    },
-    deleteAction: (parent, args, context) => {
-      return context.Action.delete(args.input, context)
-    },
     createVolunteer: (parent, args, context) => {
       return context.Volunteer.create(args.input, context)
     },
@@ -162,6 +95,15 @@ export default {
     },
     deleteVolunteer: (parent, args, context) => {
       return context.Volunteer.delete(args.input, context)
+    },
+    createVolounteerAction: (parent, args, context) => {
+      return context.VolounteerAction.create(args.input, context)
+    },
+    updateVolounteerAction: (parent, args, context) => {
+      return context.VolounteerAction.update(args.input, context)
+    },
+    deleteVolounteerAction: (parent, args, context) => {
+      return context.VolounteerAction.delete(args.input, context)
     },
     createReciever: (parent, args, context) => {
       return context.Reciever.create(args.input, context)
@@ -199,51 +141,6 @@ export default {
         return context.DistributionCentre.subscribeToDelete(args, context)
       },
     },
-    newProductStock: {
-      subscribe: (parent, args, context) => {
-        return context.ProductStock.subscribeToCreate(args, context)
-      },
-    },
-    updatedProductStock: {
-      subscribe: (parent, args, context) => {
-        return context.ProductStock.subscribeToUpdate(args, context)
-      },
-    },
-    deletedProductStock: {
-      subscribe: (parent, args, context) => {
-        return context.ProductStock.subscribeToDelete(args, context)
-      },
-    },
-    newProduct: {
-      subscribe: (parent, args, context) => {
-        return context.Product.subscribeToCreate(args, context)
-      },
-    },
-    updatedProduct: {
-      subscribe: (parent, args, context) => {
-        return context.Product.subscribeToUpdate(args, context)
-      },
-    },
-    deletedProduct: {
-      subscribe: (parent, args, context) => {
-        return context.Product.subscribeToDelete(args, context)
-      },
-    },
-    newAction: {
-      subscribe: (parent, args, context) => {
-        return context.Action.subscribeToCreate(args, context)
-      },
-    },
-    updatedAction: {
-      subscribe: (parent, args, context) => {
-        return context.Action.subscribeToUpdate(args, context)
-      },
-    },
-    deletedAction: {
-      subscribe: (parent, args, context) => {
-        return context.Action.subscribeToDelete(args, context)
-      },
-    },
     newVolunteer: {
       subscribe: (parent, args, context) => {
         return context.Volunteer.subscribeToCreate(args, context)
@@ -257,6 +154,21 @@ export default {
     deletedVolunteer: {
       subscribe: (parent, args, context) => {
         return context.Volunteer.subscribeToDelete(args, context)
+      },
+    },
+    newVolounteerAction: {
+      subscribe: (parent, args, context) => {
+        return context.VolounteerAction.subscribeToCreate(args, context)
+      },
+    },
+    updatedVolounteerAction: {
+      subscribe: (parent, args, context) => {
+        return context.VolounteerAction.subscribeToUpdate(args, context)
+      },
+    },
+    deletedVolounteerAction: {
+      subscribe: (parent, args, context) => {
+        return context.VolounteerAction.subscribeToDelete(args, context)
       },
     },
     newReciever: {

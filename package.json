@@ -14,6 +14,7 @@
     "start:client": "cd client && yarn start",
     "build:server": "cd server && yarn build",
     "build:client": "cd client && yarn build",
+    "removeQueries": "del ./client/src/graphql ; del ./client-admin/src/graphql",
     "build:clientGeneric": "cd client/ && yarn build:generic",
     "build:adminGeneric": "cd client-admin/ && yarn build:generic",
     "prepare:client": "del ./client/build ./server/website ; yarn build:clientGeneric && mv ./client/build/ ./server/website",

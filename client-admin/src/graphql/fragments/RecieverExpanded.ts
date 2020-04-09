@@ -6,10 +6,12 @@ export const RecieverExpandedFragment = gql`
    name
    phone
    address
+   prefferedProducts
    actions {
       id
       title
       description
+      products
       status
       actionType
       version

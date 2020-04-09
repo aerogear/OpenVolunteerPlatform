@@ -1,0 +1,66 @@
+""" @model """
+type DistributionCentre {
+  id: ID!
+  name: String
+  address: String
+  lat: String
+  long: String
+}
+
+""" @model """
+type Volunteer {
+  id: ID!
+  name: String!
+ """ @oneToMany field: 'volounteer' """
+  actions: [VolounteerAction]
+}
+
+""" @model """
+type Reciever {
+  id: ID!
+  name: String!
+  phone: String
+  address: String
+  prefferedProducts: [String]
+  """ @oneToMany field: 'reciever' """
+  actions: [VolounteerAction]
+}
+
+""" @model """
+type VolounteerAction {
+  id: ID!
+  title: String!
+  description: String
+  products: [String!]!
+  status: ActionStatus
+  actionType: ActionType
+}
+
+enum ActionType {
+  PHONE_CALL
+  DELIVERY
+}
+
+enum ActionStatus {
+  ASSIGNED
+  INPROGRESS
+  COMPLETED
+}
+
+
+## Outdated - keeping for UI compatibility
+"""
+@model
+"""
+type Task {
+  id: ID!
+  title: String!
+  description: String!
+  status: TaskStatus
+}
+
+enum TaskStatus {
+  OPEN
+  ASSIGNED
+  COMPLETE
+}
