@@ -7,7 +7,8 @@ affected by events that require strict quarantine at home. In many cases people 
 
 === How this works
 
-Volounteers distributing leaflets in communities that can be scanned using phone (google forms) to answer couple basic questions about their current situation and any personal or medical neeeds. The same leaflet can be used to gather posible volounteers. Form is dynamically processed using Data aqusition dechniques to match people that might need help, 
+Volounteers distributing leaflets in communities that can be scanned using phone (google forms) to answer couple basic questions about their current situation and any personal or medical neeeds. The same leaflet can be used to gather posible volounteers. 
+Form is dynamically processed using Data aqusition techniques to match people that might need help, 
 seeking someone to talk or need critical resources to survive. 
  
 AtHomeCrisisCommunity is an Mobile Application (PWA) that can be used by volounteers to collaborate work and connect
@@ -56,7 +57,7 @@ yarn
 ```shell
 yarn
 yarn prepare:client
-yarn prepare:client-admin
+yarn prepare:admin
 ```
 +
 

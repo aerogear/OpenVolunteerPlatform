@@ -17,7 +17,7 @@
     "build:clientGeneric": "cd client/ && yarn build:generic",
     "build:adminGeneric": "cd client-admin/ && yarn build:generic",
     "prepare:client": "del ./client/build ./server/website ; yarn build:clientGeneric && mv ./client/build/ ./server/website",
-    "prepare:client-admin": "del ./client/build ./server/website ; yarn build:clientGeneric && mv ./client/build/ ./server/admin",
+    "prepare:admin": "del ./client-admin/build ./server/admin ; yarn build:adminGeneric && mv ./client-admin/build/ ./server/admin",
     "build": "yarn workspaces run build",
     "unlock": "yarn workspaces run del package-lock.json && del yarn.lock",
     "clean": "yarn workspaces run del ./dist && del ./types",
