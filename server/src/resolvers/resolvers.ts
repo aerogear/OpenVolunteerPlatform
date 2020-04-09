@@ -6,17 +6,172 @@
  */
 
 export default {
+  DistributionCentre: {
+    stock: (parent, args, context) => {
+      return context.ProductStock.batchLoadData(
+        "distributionCentreId",
+        parent.id,
+        context
+      )
+    },
+  },
+
+  ProductStock: {
+    distributionCentre: (parent, args, context) => {
+      return context.DistributionCentre.findBy({
+        id: parent.distributionCentreId,
+      }).then((results) => results[0])
+    },
+    product: (parent, args, context) => {
+      return context.Product.findBy({ id: parent.productId }).then(
+        (results) => results[0]
+      )
+    },
+  },
+
+  Product: {
+    action: (parent, args, context) => {
+      return context.Action.findBy({ id: parent.actionId }).then(
+        (results) => results[0]
+      )
+    },
+  },
+
+  Action: {
+    products: (parent, args, context) => {
+      return context.Product.batchLoadData("actionId", parent.id, context)
+    },
+    volounteer: (parent, args, context) => {
+      return context.Volunteer.findBy({ id: parent.volounteerId }).then(
+        (results) => results[0]
+      )
+    },
+    reciever: (parent, args, context) => {
+      return context.Reciever.findBy({ id: parent.recieverId }).then(
+        (results) => results[0]
+      )
+    },
+  },
+
+  Volunteer: {
+    actions: (parent, args, context) => {
+      return context.Action.batchLoadData("volounteerId", parent.id, context)
+    },
+  },
+
+  Reciever: {
+    actions: (parent, args, context) => {
+      return context.Action.batchLoadData("recieverId", parent.id, context)
+    },
+  },
+
   Query: {
+    findDistributionCentres: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.DistributionCentre.findBy(fields, page)
+    },
+    findAllDistributionCentres: (parent, args, context) => {
+      return context.DistributionCentre.findAll(args)
+    },
+    findProductStocks: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.ProductStock.findBy(fields, page)
+    },
+    findAllProductStocks: (parent, args, context) => {
+      return context.ProductStock.findAll(args)
+    },
+    findProducts: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.Product.findBy(fields, page)
+    },
+    findAllProducts: (parent, args, context) => {
+      return context.Product.findAll(args)
+    },
+    findActions: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.Action.findBy(fields, page)
+    },
+    findAllActions: (parent, args, context) => {
+      return context.Action.findAll(args)
+    },
+    findVolunteers: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.Volunteer.findBy(fields, page)
+    },
+    findAllVolunteers: (parent, args, context) => {
+      return context.Volunteer.findAll(args)
+    },
+    findRecievers: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.Reciever.findBy(fields, page)
+    },
+    findAllRecievers: (parent, args, context) => {
+      return context.Reciever.findAll(args)
+    },
     findTasks: (parent, args, context) => {
       const { fields, ...page } = args
       return context.Task.findBy(fields, page)
     },
     findAllTasks: (parent, args, context) => {
       return context.Task.findAll(args)
-    }
+    },
   },
 
   Mutation: {
+    createDistributionCentre: (parent, args, context) => {
+      return context.DistributionCentre.create(args.input, context)
+    },
+    updateDistributionCentre: (parent, args, context) => {
+      return context.DistributionCentre.update(args.input, context)
+    },
+    deleteDistributionCentre: (parent, args, context) => {
+      return context.DistributionCentre.delete(args.input, context)
+    },
+    createProductStock: (parent, args, context) => {
+      return context.ProductStock.create(args.input, context)
+    },
+    updateProductStock: (parent, args, context) => {
+      return context.ProductStock.update(args.input, context)
+    },
+    deleteProductStock: (parent, args, context) => {
+      return context.ProductStock.delete(args.input, context)
+    },
+    createProduct: (parent, args, context) => {
+      return context.Product.create(args.input, context)
+    },
+    updateProduct: (parent, args, context) => {
+      return context.Product.update(args.input, context)
+    },
+    deleteProduct: (parent, args, context) => {
+      return context.Product.delete(args.input, context)
+    },
+    createAction: (parent, args, context) => {
+      return context.Action.create(args.input, context)
+    },
+    updateAction: (parent, args, context) => {
+      return context.Action.update(args.input, context)
+    },
+    deleteAction: (parent, args, context) => {
+      return context.Action.delete(args.input, context)
+    },
+    createVolunteer: (parent, args, context) => {
+      return context.Volunteer.create(args.input, context)
+    },
+    updateVolunteer: (parent, args, context) => {
+      return context.Volunteer.update(args.input, context)
+    },
+    deleteVolunteer: (parent, args, context) => {
+      return context.Volunteer.delete(args.input, context)
+    },
+    createReciever: (parent, args, context) => {
+      return context.Reciever.create(args.input, context)
+    },
+    updateReciever: (parent, args, context) => {
+      return context.Reciever.update(args.input, context)
+    },
+    deleteReciever: (parent, args, context) => {
+      return context.Reciever.delete(args.input, context)
+    },
     createTask: (parent, args, context) => {
       return context.Task.create(args.input, context)
     },
@@ -25,24 +180,114 @@ export default {
     },
     deleteTask: (parent, args, context) => {
       return context.Task.delete(args.input, context)
-    }
+    },
   },
 
   Subscription: {
+    newDistributionCentre: {
+      subscribe: (parent, args, context) => {
+        return context.DistributionCentre.subscribeToCreate(args, context)
+      },
+    },
+    updatedDistributionCentre: {
+      subscribe: (parent, args, context) => {
+        return context.DistributionCentre.subscribeToUpdate(args, context)
+      },
+    },
+    deletedDistributionCentre: {
+      subscribe: (parent, args, context) => {
+        return context.DistributionCentre.subscribeToDelete(args, context)
+      },
+    },
+    newProductStock: {
+      subscribe: (parent, args, context) => {
+        return context.ProductStock.subscribeToCreate(args, context)
+      },
+    },
+    updatedProductStock: {
+      subscribe: (parent, args, context) => {
+        return context.ProductStock.subscribeToUpdate(args, context)
+      },
+    },
+    deletedProductStock: {
+      subscribe: (parent, args, context) => {
+        return context.ProductStock.subscribeToDelete(args, context)
+      },
+    },
+    newProduct: {
+      subscribe: (parent, args, context) => {
+        return context.Product.subscribeToCreate(args, context)
+      },
+    },
+    updatedProduct: {
+      subscribe: (parent, args, context) => {
+        return context.Product.subscribeToUpdate(args, context)
+      },
+    },
+    deletedProduct: {
+      subscribe: (parent, args, context) => {
+        return context.Product.subscribeToDelete(args, context)
+      },
+    },
+    newAction: {
+      subscribe: (parent, args, context) => {
+        return context.Action.subscribeToCreate(args, context)
+      },
+    },
+    updatedAction: {
+      subscribe: (parent, args, context) => {
+        return context.Action.subscribeToUpdate(args, context)
+      },
+    },
+    deletedAction: {
+      subscribe: (parent, args, context) => {
+        return context.Action.subscribeToDelete(args, context)
+      },
+    },
+    newVolunteer: {
+      subscribe: (parent, args, context) => {
+        return context.Volunteer.subscribeToCreate(args, context)
+      },
+    },
+    updatedVolunteer: {
+      subscribe: (parent, args, context) => {
+        return context.Volunteer.subscribeToUpdate(args, context)
+      },
+    },
+    deletedVolunteer: {
+      subscribe: (parent, args, context) => {
+        return context.Volunteer.subscribeToDelete(args, context)
+      },
+    },
+    newReciever: {
+      subscribe: (parent, args, context) => {
+        return context.Reciever.subscribeToCreate(args, context)
+      },
+    },
+    updatedReciever: {
+      subscribe: (parent, args, context) => {
+        return context.Reciever.subscribeToUpdate(args, context)
+      },
+    },
+    deletedReciever: {
+      subscribe: (parent, args, context) => {
+        return context.Reciever.subscribeToDelete(args, context)
+      },
+    },
     newTask: {
       subscribe: (parent, args, context) => {
         return context.Task.subscribeToCreate(args, context)
-      }
+      },
     },
     updatedTask: {
       subscribe: (parent, args, context) => {
         return context.Task.subscribeToUpdate(args, context)
-      }
+      },
     },
     deletedTask: {
       subscribe: (parent, args, context) => {
         return context.Task.subscribeToDelete(args, context)
-      }
-    }
-  }
+      },
+    },
+  },
 }
