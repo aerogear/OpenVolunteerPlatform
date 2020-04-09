@@ -1,4 +1,71 @@
-""" 
+""" @model """
+type DistributionCentre {
+  id: ID!
+  address: String
+  lat: String
+  long: String
+  """ @oneToMany field: 'distributionCentre' """
+  stock: [ProductStock]
+}
+
+""" @model """
+type ProductStock {
+  id: ID!
+  """ @oneToOne """
+  product: Product!
+  amount: String!
+}
+
+""" @model """
+type Product{
+  id: ID
+  name: String!
+}
+
+""" @model """
+type Volunteer {
+  id: ID!
+  name: String!
+ """ @oneToMany field: 'volounteer' """
+  actions: [Action]
+}
+
+""" @model """
+type Reciever {
+  id: ID!
+  name: String!
+  phone: String
+  address: String
+}
+
+""" @model """
+type Action {
+  id: ID!
+  title: String!
+  description: String
+  """ @oneToOne """
+  reciever: Reciever!
+  """ @oneToOne """
+  volounteer: Volunteer!
+  """ @oneToMany field: 'action' """
+  products: [Product]!
+  status: TaskStatus
+  actionType: ActionType
+}
+
+enum ActionType {
+  PHONE_CALL
+  DELIVERY
+}
+
+enum TaskStatus {
+  OPEN
+  ASSIGNED
+  COMPLETE
+}
+
+## Outdated - keeping for UI compatibility
+"""
 @model
 """
 type Task {
@@ -6,10 +73,4 @@ type Task {
   title: String!
   description: String!
   status: TaskStatus
-}
-
-enum TaskStatus {
-  OPEN
-  ASSIGNED
-  COMPLETE
 }
