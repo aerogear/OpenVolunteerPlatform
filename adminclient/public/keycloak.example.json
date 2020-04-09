@@ -1,0 +1,9 @@
+{
+  "realm": "<your realm>",
+  "auth-server-url": "https://your-server/auth",
+  "ssl-required": "none",
+  "resource": "<your-client>",
+  "public-client": true,
+  "use-resource-role-mappings": true,
+  "confidential-port": 0
+}
