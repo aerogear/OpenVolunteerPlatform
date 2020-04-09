@@ -34,7 +34,7 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
     return <pre>{ JSON.stringify(error) }</pre>
   };
 
-  if (loading) return <IonLoading
+if (loading) return <IonLoading
     isOpen={loading}
     message={'Loading...'}
   />;
@@ -45,7 +45,7 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
 
   return (
     <IonPage>
-      <Header title="Manage Tasks"  match={match}  />
+      <Header title="CrisisCommunity Admin"  match={match}  />
       <IonContent className="ion-padding" >
         <IonSegment>
           <IonSegmentButton value="all">
