@@ -15,7 +15,9 @@
     "build:server": "cd server && yarn build",
     "build:client": "cd client && yarn build",
     "build:clientGeneric": "cd client/ && yarn build:generic",
+    "build:adminGeneric": "cd client-admin/ && yarn build:generic",
     "prepare:client": "del ./client/build ./server/website ; yarn build:clientGeneric && mv ./client/build/ ./server/website",
+    "prepare:client-admin": "del ./client/build ./server/website ; yarn build:clientGeneric && mv ./client/build/ ./server/admin",
     "build": "yarn workspaces run build",
     "unlock": "yarn workspaces run del package-lock.json && del yarn.lock",
     "clean": "yarn workspaces run del ./dist && del ./types",
@@ -23,6 +25,7 @@
   },
   "workspaces": [
     "client",
+    "client-admin",
     "server"
   ],
   "resolutions": {
