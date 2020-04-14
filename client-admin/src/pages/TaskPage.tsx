@@ -15,7 +15,7 @@ import {
 } from '@ionic/react';
 import { subscriptionOptions,  } from '../helpers';
 import { useSubscribeToMore } from '../hooks';
-import { Empty, TaskList, NetworkBadge, OfflineQueueBadge, Header } from '../components';
+import { Empty, TaskList, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { findAllTasks } from '../graphql/queries/findAllTasks';
 import { Link } from 'react-router-dom';
@@ -63,8 +63,7 @@ if (loading) return <IonLoading
       </IonContent>
       <IonFooter>
         <div>
-          <OfflineQueueBadge isOnline={isOnline} />
-          <NetworkBadge isOnline={isOnline} />
+          CrisisCommunity 
         </div>
       </IonFooter>
     </IonPage>
