@@ -45,7 +45,7 @@ if (loading) return <IonLoading
 
   return (
     <IonPage>
-      <Header title="CrisisCommunity Admin"  match={match}  />
+      <Header title="CrisisCommunity Admin"  match={match} isOnline={isOnline} />
       <IonContent className="ion-padding" >
         <IonSegment>
           <IonSegmentButton value="all">
