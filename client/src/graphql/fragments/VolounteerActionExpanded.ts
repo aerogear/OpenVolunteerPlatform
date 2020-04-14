@@ -10,7 +10,10 @@ export const VolounteerActionExpandedFragment = gql`
    actionType
    volounteer {
       id
-      name
+      firstName
+      lastName
+      email
+      username
       version
    }
    reciever {
@@ -19,6 +22,12 @@ export const VolounteerActionExpandedFragment = gql`
       phone
       address
       prefferedProducts
+      address1
+      address2
+      city
+      dateOfBirth
+      canPhoneCall
+      canDeliver
       version
    }   version
 

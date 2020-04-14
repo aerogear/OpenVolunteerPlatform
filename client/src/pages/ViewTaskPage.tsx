@@ -79,7 +79,7 @@ export const ViewTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = (
     const task = data.findTasks;
     return (
       <>
-        <Header title="Update task" backHref="/tasks" match={match} />
+        <Header title="Work on task" backHref="/tasks" match={match} />
         <IonContent>
           <IonCard>
             <IonCardHeader>Task</IonCardHeader>

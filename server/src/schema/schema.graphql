@@ -43,9 +43,6 @@ type Mutation {
   createReciever(input: RecieverInput): Reciever!
   updateReciever(input: RecieverInput): Reciever!
   deleteReciever(input: RecieverInput): Reciever!
-  createTask(input: TaskInput): Task!
-  updateTask(input: TaskInput): Task!
-  deleteTask(input: TaskInput): Task!
 }
 
 type Query {
@@ -57,8 +54,6 @@ type Query {
   findVolounteerActions(fields: VolounteerActionInput, limit: Int, offset: Int): [VolounteerAction]!
   findAllRecievers(limit: Int, offset: Int): [Reciever]!
   findRecievers(fields: RecieverInput, limit: Int, offset: Int): [Reciever]!
-  findAllTasks(limit: Int, offset: Int): [Task]!
-  findTasks(fields: TaskInput, limit: Int, offset: Int): [Task]!
 }
 
 """ @model """
@@ -68,6 +63,12 @@ type Reciever {
   phone: String
   address: String
   prefferedProducts: [String]
+  address1: String
+  address2: String
+  city: String
+  dateOfBirth: String!
+  canPhoneCall: Boolean!
+  canDeliver: Boolean!
 
   """@oneToMany field: 'reciever', key: 'recieverId'"""
   actions: [VolounteerAction]
@@ -80,6 +81,12 @@ input RecieverInput {
   phone: String
   address: String
   prefferedProducts: String
+  address1: String
+  address2: String
+  city: String
+  dateOfBirth: String
+  canPhoneCall: Boolean
+  canDeliver: Boolean
   version: Int
 }
 
@@ -96,35 +103,12 @@ type Subscription {
   newReciever(input: RecieverInput): Reciever!
   updatedReciever(input: RecieverInput): Reciever!
   deletedReciever(input: RecieverInput): Reciever!
-  newTask(input: TaskInput): Task!
-  updatedTask(input: TaskInput): Task!
-  deletedTask(input: TaskInput): Task!
 }
 
-"""@model"""
-type Task {
-  id: ID!
-  title: String!
-  description: String!
-  status: TaskStatus
-  version: Int
-}
-
-input TaskInput {
-  id: ID
-  title: String
-  description: String
-  status: TaskStatus
-  version: Int
-}
-
-enum TaskStatus {
-  OPEN
-  ASSIGNED
-  COMPLETE
-}
-
-""" @model """
+"""
+Represents action that is assigned to volounteer
+@model 
+"""
 type VolounteerAction {
   id: ID!
   title: String!
@@ -156,7 +140,10 @@ input VolounteerActionInput {
 """ @model """
 type Volunteer {
   id: ID!
-  name: String!
+  firstName: String
+  lastName: String
+  email: String
+  username: String!
 
   """@oneToMany field: 'volounteer', key: 'volounteerId'"""
   actions: [VolounteerAction]
@@ -165,6 +152,9 @@ type Volunteer {
 
 input VolunteerInput {
   id: ID
-  name: String
+  firstName: String
+  lastName: String
+  email: String
+  username: String
   version: Int
 }

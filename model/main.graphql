@@ -10,7 +10,10 @@ type DistributionCentre {
 """ @model """
 type Volunteer {
   id: ID!
-  name: String!
+  firstName: String
+  lastName: String
+  email: String
+  username: String!
  """ @oneToMany field: 'volounteer' """
   actions: [VolounteerAction]
 }
@@ -22,11 +25,20 @@ type Reciever {
   phone: String
   address: String
   prefferedProducts: [String]
+  address1: String
+  address2: String
+  city: String
+  dateOfBirth: String!
+  canPhoneCall: Boolean!
+  canDeliver: Boolean!
   """ @oneToMany field: 'reciever' """
   actions: [VolounteerAction]
 }
 
-""" @model """
+""" 
+Represents action that is assigned to volounteer
+@model 
+"""
 type VolounteerAction {
   id: ID!
   title: String!
@@ -45,22 +57,4 @@ enum ActionStatus {
   ASSIGNED
   INPROGRESS
   COMPLETED
-}
-
-
-## Outdated - keeping for UI compatibility
-"""
-@model
-"""
-type Task {
-  id: ID!
-  title: String!
-  description: String!
-  status: TaskStatus
-}
-
-enum TaskStatus {
-  OPEN
-  ASSIGNED
-  COMPLETE
 }

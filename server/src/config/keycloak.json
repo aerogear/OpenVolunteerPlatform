@@ -1,5 +1,5 @@
 {
-  "realm": "voyager-testing",
+  "realm": "AtHomeCrisisCommunity",
   "auth-server-url": "http://localhost:8080/auth",
   "ssl-required": "none",
   "resource": "voyager-testing-public",
