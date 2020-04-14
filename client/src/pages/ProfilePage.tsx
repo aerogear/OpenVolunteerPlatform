@@ -53,7 +53,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
   );
 
   const fullName = (user.firstName !== 'unknown' && user.lastName !== 'unknown') 
-    ? `${user.firstName} ${user.firstName}` 
+    ? `${user.firstName} ${user.lastName}` 
     : 'unknown';
 
   const roles = keycloak.realmAccess?.roles.map((role, index) => {

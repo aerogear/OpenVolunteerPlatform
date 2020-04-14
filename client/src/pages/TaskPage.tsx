@@ -40,7 +40,7 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
 
   return (
     <IonPage>
-      <Header title="CrisisCommunity Volounteer"  match={match}  />
+      <Header title="CrisisCommunity Volounteer"  match={match}  isOnline={isOnline} />
       <IonContent className="ion-padding" >
         <IonSegment>
           <IonSegmentButton value="Open">
