@@ -17,7 +17,7 @@ export const Router: React.FC = () => {
           <Route path="/viewTask/:id" component={ViewTaskPage} exact />
           <Route path="/offlineQueue" component={OfflineQueuePage} exact={true} />
           <Route path="/tasks" component={TaskPage} exact={true} />
-          <Route path="/profile" component={ProfilePage} exact={true} />
+          <Route path="/profile" component={ProfilePage} exact={true}  />
           <Route exact path="/" render={() => <Redirect to="tasks" />} />
         </Switch>
       </AppRouter>

@@ -31,12 +31,4 @@ export const models = [
       publishDelete: true,
     },
   },
-  {
-    name: "Task",
-    pubSub: {
-      publishCreate: true,
-      publishUpdate: true,
-      publishDelete: true,
-    },
-  },
 ]

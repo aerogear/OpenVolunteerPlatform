@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { 
+import React, { useEffect, useState, useContext, SyntheticEvent } from 'react';
+import {
   IonContent,
-  IonCard, 
+  IonCard,
   IonCardHeader,
   IonCardTitle,
   IonCardSubtitle,
@@ -10,11 +10,17 @@ import {
   IonItemDivider,
   IonList,
   IonItem,
-  IonLabel
+  IonLabel,
+  IonInput,
+  IonButton,
+  IonCheckbox
 } from '@ionic/react';
 import { Header } from '../components';
 import { AppContext } from '../AppContext';
 import { RouteComponentProps } from 'react-router';
+import { findVolunteers } from '../graphql/queries/findVolunteers';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { createVolunteer } from '../graphql/mutations/createVolunteer';
 
 const userInit = {
   username: 'unknown',
@@ -24,7 +30,7 @@ const userInit = {
   emailVerified: false,
 }
 
-export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
+export const ProfilePage: React.FC<RouteComponentProps> = ({ history, match }) => {
   const { keycloak } = useContext(AppContext);
   const [user, setUser] = useState<Keycloak.KeycloakProfile>(userInit);
 
@@ -39,6 +45,19 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
     if (keycloak) loadProfile()
   }, [keycloak]);
 
+
+  const { loading, error, data } = useQuery(findVolunteers, {
+    variables: { fields: { username: user.username } },
+    fetchPolicy: 'cache-and-network'
+  });
+
+  // TODO use GraphQL-Code-Generator
+  const [createVolunteerMutation] = useMutation(createVolunteer);
+
+  if (loading) {
+    return <p>Loading</p>
+  }
+
   if (!keycloak) return (
     <IonCard>
       <IonCardHeader>
@@ -52,45 +71,104 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
     </IonCard>
   );
 
-  const fullName = (user.firstName !== 'unknown' && user.lastName !== 'unknown') 
-    ? `${user.firstName} ${user.firstName}` 
+  const fullName = (user.firstName !== 'unknown' && user.lastName !== 'unknown')
+    ? `${user.firstName} ${user.lastName}`
     : 'unknown';
 
-  const roles = keycloak.realmAccess?.roles.map((role, index) => {
-    return <IonItem key={index}>{ role }</IonItem>
-  });
+  // TODO pass to component
+  let volounteer = data.findVolunteers && data.findVolunteers[0]
+  if (!volounteer) {
+    volounteer = {};
+  }
+  console.log(volounteer);
+  let shouldCreate = true;
+
+  const submit = (event: SyntheticEvent) => {
+    event.preventDefault();
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    createVolunteerMutation({
+      variables: {
+        input: {
+          firstName: "test",
+          lastName: "test",
+          email: "test",
+          username: user.username,
+          address1: "String",
+          address2: "String",
+          city: "String",
+          dateOfBirth: "String!",
+          canPhoneCall: true,
+          canDeliver: true
+        }
+      }
+    }).then(() => {
+      history.push('/');
+    }).catch((e) => {
+      console.log(e);
+    })
+  }
 
   return (
     <>
-      <Header title="Profile" backHref="/tasks" match={match} />
+      {shouldCreate ?
+        <Header title="Create Profile" backHref='/profile' match={match} /> :
+        <Header title="Profile" backHref="/tasks" match={match} />
+      }
       <IonContent>
         <IonList>
           <IonCard>
             <IonItemDivider color="light">
-              <h2>Provider</h2>
+              <h2>Volounteer profile</h2>
             </IonItemDivider>
             <IonItem>
-              <div className="identity-header">Full Name: { fullName }</div>
+              <div className="identity-header">Full Name: {fullName}</div>
               <div id="e2e-profile-full-name" className="identity-text"></div>
             </IonItem>
             <IonItem>
-              <div className="identity-header">Email: { user.email }</div>
+              <div className="identity-header">Email: {user.email}</div>
               <div id="e2e-profile-email" className="identity-text"></div>
             </IonItem>
             <IonItem>
-              <div className="identity-header"> Username: { user.username }</div>
+              <div className="identity-header"> Username: {user.username}</div>
               <div id="e2e-profile-username" className="identity-text"></div>
             </IonItem>
             <IonItem>
-              <IonLabel>Email Verified: { user.emailVerified ? 'Yes' : 'No'}</IonLabel>
+              <IonLabel>Email Verified: {user.emailVerified ? 'Yes' : 'No'}</IonLabel>
             </IonItem>
           </IonCard>
           <IonCard>
             <IonItemGroup>
               <IonItemDivider color="light">
-                <h2>Assigned Roles</h2>
+                <h2>Volounteer information</h2>
               </IonItemDivider>
-              { roles }
+              <form onSubmit={submit} style={{ padding: '0 16px' }}>
+                <IonItem>
+                  <IonLabel color="primary" position="floating">Date of Birth</IonLabel>
+                  <IonInput type="date" name="dateOfBirth" value={volounteer.dateOfBirth} />
+                </IonItem>
+                <IonItem>
+                  <IonLabel color="primary" position="floating">Address</IonLabel>
+                  <IonInput type="text" name="address1" value={volounteer.address1} />
+                </IonItem>
+                <IonItem>
+                  <IonLabel color="primary" position="floating">Address 2 </IonLabel>
+                  <IonInput type="text" name="address2" value={volounteer.address2} />
+                </IonItem>
+                <IonItem>
+                  <IonLabel color="primary" position="floating">City</IonLabel>
+                  <IonInput type="text" name="city" value={volounteer.city} />
+                </IonItem>
+                <IonItem>
+                  <IonLabel color="primary" position="floating">I volounteer to make phone calls to recipients</IonLabel>
+                  <IonCheckbox name="canPhoneCall" checked={volounteer.canPhoneCall} />
+                </IonItem>
+                <IonItem>
+                  <IonLabel color="primary" position="floating">I volounteer to deliver basic goods to recipients</IonLabel>
+                  <IonCheckbox name="canDeliver" checked={volounteer.canDeliver} />
+                </IonItem>
+
+                <IonButton className="submit-btn" expand="block" type="submit">Submit your details</IonButton>
+              </form>
             </IonItemGroup>
           </IonCard>
         </IonList>

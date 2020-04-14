@@ -9,8 +9,6 @@ import {
   IonLoading,
   IonContent,
 } from '@ionic/react';
-import { subscriptionOptions,  } from '../helpers';
-import { useSubscribeToMore } from '../hooks';
 import { Empty, TaskList, NetworkBadge, OfflineQueueBadge, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { findAllVolounteerActions } from '../graphql/queries/findAllVolounteerActions';
@@ -23,7 +21,6 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
   });
   
   const isOnline = useNetworkStatus();
-  useSubscribeToMore({ options: Object.values(subscriptionOptions), subscribeToMore});
 
   if (error && !error.networkError) {
     return <pre>{ JSON.stringify(error) }</pre>
@@ -40,7 +37,7 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
 
   return (
     <IonPage>
-      <Header title="CrisisCommunity Volounteer"  match={match}  />
+      <Header title="CrisisCommunity Volounteer"  match={match}  isOnline={isOnline} />
       <IonContent className="ion-padding" >
         <IonSegment>
           <IonSegmentButton value="Open">

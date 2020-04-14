@@ -68,13 +68,6 @@ export default {
     findAllRecievers: (parent, args, context) => {
       return context.Reciever.findAll(args)
     },
-    findTasks: (parent, args, context) => {
-      const { fields, ...page } = args
-      return context.Task.findBy(fields, page)
-    },
-    findAllTasks: (parent, args, context) => {
-      return context.Task.findAll(args)
-    },
   },
 
   Mutation: {
@@ -113,15 +106,6 @@ export default {
     },
     deleteReciever: (parent, args, context) => {
       return context.Reciever.delete(args.input, context)
-    },
-    createTask: (parent, args, context) => {
-      return context.Task.create(args.input, context)
-    },
-    updateTask: (parent, args, context) => {
-      return context.Task.update(args.input, context)
-    },
-    deleteTask: (parent, args, context) => {
-      return context.Task.delete(args.input, context)
     },
   },
 
@@ -184,21 +168,6 @@ export default {
     deletedReciever: {
       subscribe: (parent, args, context) => {
         return context.Reciever.subscribeToDelete(args, context)
-      },
-    },
-    newTask: {
-      subscribe: (parent, args, context) => {
-        return context.Task.subscribeToCreate(args, context)
-      },
-    },
-    updatedTask: {
-      subscribe: (parent, args, context) => {
-        return context.Task.subscribeToUpdate(args, context)
-      },
-    },
-    deletedTask: {
-      subscribe: (parent, args, context) => {
-        return context.Task.subscribeToDelete(args, context)
       },
     },
   },
