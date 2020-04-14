@@ -18,6 +18,9 @@ import {
 import { Header } from '../components';
 import { AppContext } from '../AppContext';
 import { RouteComponentProps } from 'react-router';
+import { findVolunteers } from '../graphql/queries/findVolunteers';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { createVolunteer } from '../graphql/mutations/createVolunteer';
 
 const userInit = {
   username: 'unknown',
@@ -42,6 +45,19 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ history, match }) =
     if (keycloak) loadProfile()
   }, [keycloak]);
 
+
+  const { loading, error, data } = useQuery(findVolunteers, {
+    variables: { fields: { username: user.username } },
+    fetchPolicy: 'cache-and-network'
+  });
+
+  // TODO use GraphQL-Code-Generator
+  const [createVolunteerMutation] = useMutation(createVolunteer);
+
+  if (loading) {
+    return <p>Loading</p>
+  }
+
   if (!keycloak) return (
     <IonCard>
       <IonCardHeader>
@@ -59,27 +75,45 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ history, match }) =
     ? `${user.firstName} ${user.lastName}`
     : 'unknown';
 
+  // TODO pass to component
+  let volounteer = data.findVolunteers && data.findVolunteers[0]
+  if (!volounteer) {
+    volounteer = {};
+  }
+  console.log(volounteer);
+  let shouldCreate = true;
+
   const submit = (event: SyntheticEvent) => {
     event.preventDefault();
-
-    // updateTaskMutation({
-    //   variables
-    // })
-    //   .then(() => history.push('/'))
-    //   .catch(handleError);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    createVolunteerMutation({
+      variables: {
+        input: {
+          firstName: "test",
+          lastName: "test",
+          email: "test",
+          username: user.username,
+          address1: "String",
+          address2: "String",
+          city: "String",
+          dateOfBirth: "String!",
+          canPhoneCall: true,
+          canDeliver: true
+        }
+      }
+    }).then(() => {
+      history.push('/');
+    }).catch((e) => {
+      console.log(e);
+    })
   }
-
-
-  let shouldCreate = true;
-  let header;
-
 
   return (
     <>
       {shouldCreate ?
         <Header title="Create Profile" backHref='/profile' match={match} /> :
         <Header title="Profile" backHref="/tasks" match={match} />
-      }}
+      }
       <IonContent>
         <IonList>
           <IonCard>
@@ -110,27 +144,27 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ history, match }) =
               <form onSubmit={submit} style={{ padding: '0 16px' }}>
                 <IonItem>
                   <IonLabel color="primary" position="floating">Date of Birth</IonLabel>
-                  <IonInput type="date" name="dateOfBirth" />
+                  <IonInput type="date" name="dateOfBirth" value={volounteer.dateOfBirth} />
                 </IonItem>
                 <IonItem>
                   <IonLabel color="primary" position="floating">Address</IonLabel>
-                  <IonInput type="text" name="address1" />
+                  <IonInput type="text" name="address1" value={volounteer.address1} />
                 </IonItem>
                 <IonItem>
                   <IonLabel color="primary" position="floating">Address 2 </IonLabel>
-                  <IonInput type="text" name="address2" />
+                  <IonInput type="text" name="address2" value={volounteer.address2} />
                 </IonItem>
                 <IonItem>
                   <IonLabel color="primary" position="floating">City</IonLabel>
-                  <IonInput type="text" name="city" />
+                  <IonInput type="text" name="city" value={volounteer.city} />
                 </IonItem>
                 <IonItem>
                   <IonLabel color="primary" position="floating">I volounteer to make phone calls to recipients</IonLabel>
-                  <IonCheckbox name="canPhoneCall" />
+                  <IonCheckbox name="canPhoneCall" checked={volounteer.canPhoneCall} />
                 </IonItem>
                 <IonItem>
                   <IonLabel color="primary" position="floating">I volounteer to deliver basic goods to recipients</IonLabel>
-                  <IonCheckbox name="canDeliver" />
+                  <IonCheckbox name="canDeliver" checked={volounteer.canDeliver} />
                 </IonItem>
 
                 <IonButton className="submit-btn" expand="block" type="submit">Submit your details</IonButton>

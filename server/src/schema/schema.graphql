@@ -63,12 +63,6 @@ type Reciever {
   phone: String
   address: String
   prefferedProducts: [String]
-  address1: String
-  address2: String
-  city: String
-  dateOfBirth: String!
-  canPhoneCall: Boolean!
-  canDeliver: Boolean!
 
   """@oneToMany field: 'reciever', key: 'recieverId'"""
   actions: [VolounteerAction]
@@ -81,12 +75,6 @@ input RecieverInput {
   phone: String
   address: String
   prefferedProducts: String
-  address1: String
-  address2: String
-  city: String
-  dateOfBirth: String
-  canPhoneCall: Boolean
-  canDeliver: Boolean
   version: Int
 }
 
@@ -144,6 +132,12 @@ type Volunteer {
   lastName: String
   email: String
   username: String!
+  address1: String
+  address2: String
+  city: String
+  dateOfBirth: String!
+  canPhoneCall: Boolean!
+  canDeliver: Boolean!
 
   """@oneToMany field: 'volounteer', key: 'volounteerId'"""
   actions: [VolounteerAction]
@@ -156,5 +150,11 @@ input VolunteerInput {
   lastName: String
   email: String
   username: String
+  address1: String
+  address2: String
+  city: String
+  dateOfBirth: String
+  canPhoneCall: Boolean
+  canDeliver: Boolean
   version: Int
 }

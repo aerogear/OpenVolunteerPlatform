@@ -7,12 +7,6 @@ export const RecieverFragment = gql`
    phone
    address
    prefferedProducts
-   address1
-   address2
-   city
-   dateOfBirth
-   canPhoneCall
-   canDeliver
    version
 
 } 

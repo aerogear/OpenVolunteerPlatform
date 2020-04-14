@@ -7,6 +7,12 @@ export const VolunteerExpandedFragment = gql`
    lastName
    email
    username
+   address1
+   address2
+   city
+   dateOfBirth
+   canPhoneCall
+   canDeliver
    actions {
       id
       title

@@ -14,6 +14,12 @@ export const VolounteerActionExpandedFragment = gql`
       lastName
       email
       username
+      address1
+      address2
+      city
+      dateOfBirth
+      canPhoneCall
+      canDeliver
       version
    }
    reciever {
@@ -22,12 +28,6 @@ export const VolounteerActionExpandedFragment = gql`
       phone
       address
       prefferedProducts
-      address1
-      address2
-      city
-      dateOfBirth
-      canPhoneCall
-      canDeliver
       version
    }   version
 

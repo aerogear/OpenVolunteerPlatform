@@ -13,8 +13,6 @@ import {
   IonFabButton,
   IonContent,
 } from '@ionic/react';
-import { subscriptionOptions,  } from '../helpers';
-import { useSubscribeToMore } from '../hooks';
 import { Empty, TaskList, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { findAllTasks } from '../graphql/queries/findAllTasks';
@@ -23,13 +21,12 @@ import { useNetworkStatus } from 'react-offix-hooks';
 
 export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
 
-  const { loading, error, data, subscribeToMore } = useQuery(findAllTasks, {
+  const { loading, error, data } = useQuery(findAllTasks, {
     fetchPolicy: 'cache-and-network'
   });
   
   const isOnline = useNetworkStatus();
-  useSubscribeToMore({ options: Object.values(subscriptionOptions), subscribeToMore});
-
+ 
   if (error && !error.networkError) {
     return <pre>{ JSON.stringify(error) }</pre>
   };

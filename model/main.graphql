@@ -14,6 +14,12 @@ type Volunteer {
   lastName: String
   email: String
   username: String!
+  address1: String
+  address2: String
+  city: String
+  dateOfBirth: String!
+  canPhoneCall: Boolean!
+  canDeliver: Boolean!
  """ @oneToMany field: 'volounteer' """
   actions: [VolounteerAction]
 }
@@ -25,12 +31,6 @@ type Reciever {
   phone: String
   address: String
   prefferedProducts: [String]
-  address1: String
-  address2: String
-  city: String
-  dateOfBirth: String!
-  canPhoneCall: Boolean!
-  canDeliver: Boolean!
   """ @oneToMany field: 'reciever' """
   actions: [VolounteerAction]
 }
