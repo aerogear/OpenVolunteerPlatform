@@ -10,3 +10,11 @@ services:
           - MONGODB_DATABASE=showcase
         ports:
             - 27017:27017
+  keycloak:
+    image: jboss/keycloak:3.4.3.Final
+    ports:
+      - "8080:8080"
+    environment:
+      DB_VENDOR: h2
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
