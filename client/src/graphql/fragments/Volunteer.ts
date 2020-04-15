@@ -13,7 +13,6 @@ export const VolunteerFragment = gql`
    dateOfBirth
    canPhoneCall
    canDeliver
-   version
 
 } 
 `

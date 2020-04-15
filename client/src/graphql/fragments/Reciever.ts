@@ -7,7 +7,6 @@ export const RecieverFragment = gql`
    phone
    address
    prefferedProducts
-   version
 
 } 
 `

@@ -8,28 +8,6 @@ export const VolounteerActionExpandedFragment = gql`
    products
    status
    actionType
-   volounteer {
-      id
-      firstName
-      lastName
-      email
-      username
-      address1
-      address2
-      city
-      dateOfBirth
-      canPhoneCall
-      canDeliver
-      version
-   }
-   reciever {
-      id
-      name
-      phone
-      address
-      prefferedProducts
-      version
-   }   version
 
 } 
 `

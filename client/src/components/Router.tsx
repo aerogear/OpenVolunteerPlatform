@@ -6,7 +6,7 @@ import {
   Route, 
 } from 'react-router-dom';
 import { IonApp } from '@ionic/react';
-import { TaskPage, OfflineQueuePage, ProfilePage } from '../pages';
+import { TaskPage, ProfilePage } from '../pages';
 import { ViewTaskPage } from '../pages/ViewTaskPage';
 
 export const Router: React.FC = () => {
@@ -15,7 +15,6 @@ export const Router: React.FC = () => {
       <AppRouter>
         <Switch>
           <Route path="/viewTask/:id" component={ViewTaskPage} exact />
-          <Route path="/offlineQueue" component={OfflineQueuePage} exact={true} />
           <Route path="/tasks" component={TaskPage} exact={true} />
           <Route path="/profile" component={ProfilePage} exact={true}  />
           <Route exact path="/" render={() => <Redirect to="tasks" />} />

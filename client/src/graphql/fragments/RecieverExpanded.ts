@@ -14,8 +14,6 @@ export const RecieverExpandedFragment = gql`
       products
       status
       actionType
-      version
-   }   version
-
+   }
 } 
 `

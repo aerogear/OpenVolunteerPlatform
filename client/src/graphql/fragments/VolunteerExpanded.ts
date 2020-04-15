@@ -20,8 +20,6 @@ export const VolunteerExpandedFragment = gql`
       products
       status
       actionType
-      version
-   }   version
-
+   }
 } 
 `

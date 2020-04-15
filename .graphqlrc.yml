@@ -21,9 +21,5 @@ extensions:
       graphback-resolvers:
         format: 'ts'
         outputPath: ./server/src/resolvers
-      graphback-client:
-        format: 'ts'
-        ## format: 'gqlwithfragment'
-        outputPath: ./client/src/graphql
       graphback-offix:
         outputPath: ./server/src/resolvers

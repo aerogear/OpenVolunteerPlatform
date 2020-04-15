@@ -7,7 +7,6 @@ export const DistributionCentreExpandedFragment = gql`
    address
    lat
    long
-   version
 
 } 
 `
