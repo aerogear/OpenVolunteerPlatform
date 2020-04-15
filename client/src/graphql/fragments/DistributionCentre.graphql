@@ -1,0 +1,8 @@
+fragment DistributionCentreFields on DistributionCentre {
+   id
+   name
+   address
+   lat
+   long
+
+} 

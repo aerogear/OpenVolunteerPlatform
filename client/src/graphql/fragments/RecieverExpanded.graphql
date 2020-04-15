@@ -1,7 +1,4 @@
-import gql from "graphql-tag"
-
-export const RecieverExpandedFragment = gql`
-  fragment RecieverExpandedFields on Reciever {
+fragment RecieverExpandedFields on Reciever {
    id
    name
    phone
@@ -16,4 +13,3 @@ export const RecieverExpandedFragment = gql`
       actionType
    }
 } 
-`

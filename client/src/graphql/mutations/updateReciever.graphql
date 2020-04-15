@@ -1,0 +1,5 @@
+mutation updateReciever($input: RecieverInput!) {
+  updateReciever(input: $input) {
+      ...RecieverFields
+  }
+}

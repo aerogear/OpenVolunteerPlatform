@@ -1,7 +1,4 @@
-import gql from "graphql-tag"
-
-export const VolunteerExpandedFragment = gql`
-  fragment VolunteerExpandedFields on Volunteer {
+fragment VolunteerExpandedFields on Volunteer {
    id
    firstName
    lastName
@@ -22,4 +19,3 @@ export const VolunteerExpandedFragment = gql`
       actionType
    }
 } 
-`

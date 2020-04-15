@@ -1,0 +1,8 @@
+fragment RecieverFields on Reciever {
+   id
+   name
+   phone
+   address
+   prefferedProducts
+
+} 

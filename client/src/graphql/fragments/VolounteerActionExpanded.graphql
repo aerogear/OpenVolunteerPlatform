@@ -1,0 +1,9 @@
+fragment VolounteerActionExpandedFields on VolounteerAction {
+   id
+   title
+   description
+   products
+   status
+   actionType
+
+} 
