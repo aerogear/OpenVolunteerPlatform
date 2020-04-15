@@ -1,0 +1,5 @@
+mutation createVolunteer($input: VolunteerInput!) {
+  createVolunteer(input: $input) {
+      ...VolunteerFields
+  }
+}
