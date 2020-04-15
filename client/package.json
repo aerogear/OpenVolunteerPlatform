@@ -58,7 +58,13 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "1.5.2"
+    "@capacitor/cli": "1.5.2",
+    "graphql-cli": "4.0.1-beta.3",
+    "@test-graphql-cli/codegen": "4.0.1-beta.3",
+    "@graphql-codegen/add": "1.13.1",
+    "@graphql-codegen/typescript": "1.13.1",
+    "@graphql-codegen/typescript-operations": "1.13.1",
+    "@graphql-codegen/typescript-react-apollo": "1.13.1"
   },
   "description": "An Ionic project"
 }

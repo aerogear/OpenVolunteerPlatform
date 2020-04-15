@@ -16,6 +16,18 @@ extensions:
       subDelete: false
     plugins:
       graphback-client:
-        format: 'ts'
-        ## format: 'gqlwithfragment'
+        format: 'graphql'
         outputPath: ./src/graphql
+  codegen:
+    generates:
+      ./src/dataFacade.tsx:
+        config:
+          withComponent: false
+          withHOC: false
+          withHooks: true
+          skipDocumentsValidation: true
+        plugins:
+          - add: '/* tslint:disable */'
+          - typescript
+          - typescript-operations
+          - typescript-react-apollo

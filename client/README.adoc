@@ -9,7 +9,16 @@ Requirements:
 - Node.js 12.x or above to run server
 - (optional) Keycloack server
 
+== Development
+
+. Generate client side queries
+```shell
+yarn graphback generate
+yarn graphql codegen
+```
+
 === Running the Client
+
 
 . Install Ionic
 +

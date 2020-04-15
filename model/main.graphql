@@ -1,4 +1,9 @@
-""" @model """
+"""
+@model
+@crud.create: false 
+@crud.update: false
+@crud.delete: false
+"""
 type DistributionCentre {
   id: ID!
   name: String
@@ -7,7 +12,10 @@ type DistributionCentre {
   long: String
 }
 
-""" @model """
+"""
+ @model
+ @crud.delete: false
+"""
 type Volunteer {
   id: ID!
   firstName: String
@@ -20,24 +28,31 @@ type Volunteer {
   dateOfBirth: String!
   canPhoneCall: Boolean!
   canDeliver: Boolean!
- """ @oneToMany field: 'volounteer' """
+  """
+   @oneToMany field: 'volounteer'
+  """
   actions: [VolounteerAction]
 }
 
-""" @model """
+"""
+ @model
+ @crud.delete: false
+"""
 type Reciever {
   id: ID!
   name: String!
   phone: String
   address: String
   prefferedProducts: [String]
-  """ @oneToMany field: 'reciever' """
+  """
+   @oneToMany field: 'reciever'
+  """
   actions: [VolounteerAction]
 }
 
-""" 
+"""
 Represents action that is assigned to volounteer
-@model 
+@model
 """
 type VolounteerAction {
   id: ID!
