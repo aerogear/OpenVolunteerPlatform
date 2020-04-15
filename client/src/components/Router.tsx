@@ -13,7 +13,7 @@ export const Router: React.FC = () => {
   return (
     <IonApp>
       <AppRouter>
-        <Switch>a
+        <Switch>
           <Route path="/viewTask/:id" component={ViewTaskPage} exact />
           <Route path="/offlineQueue" component={OfflineQueuePage} exact={true} />
           <Route path="/tasks" component={TaskPage} exact={true} />
