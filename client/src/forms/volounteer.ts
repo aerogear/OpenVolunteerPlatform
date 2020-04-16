@@ -4,11 +4,22 @@ import SimpleSchema from 'simpl-schema';
 const volounteerForm = new SimpleSchema({
     dateOfBirth: {
         type: Date,
-        defaultValue: new Date(),
         uniforms: {
             label: "Date Of Birth"
         },
         optional: true
+    },
+    address1: {
+        type: String,
+        max: 400
+    },
+    address2: {
+        type: String,
+        max: 400
+    },
+    city: {
+        type: String,
+        max: 100
     },
     canPhoneCall: {
         type: Boolean,
@@ -23,18 +34,6 @@ const volounteerForm = new SimpleSchema({
         uniforms: {
             label: "I volounteer to make phone calls to recipients"
         }
-    },
-    address1: {
-        type: String,
-        max: 400
-    },
-    address2: {
-        type: String,
-        max: 400
-    },
-    city: {
-        type: String,
-        max: 100
     }
 } as any);
 
