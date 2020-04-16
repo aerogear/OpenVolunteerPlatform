@@ -9,7 +9,7 @@ As communities across the world experience the outbreak of the novel coronavirus
 *AtHomeCrisisCommunity* is an progressive web application (PWA) that can be used by volunteers to collaborate and connect
 with vulnerable people. 
 
-* Volounteers distribute forms (Google Forms) in a community. The form can be scanned using a phone.
+* Volunteers distribute leaflets in a community. The form can be scanned using a phone.
 * Participants answer a few basic questions related to an individual's:
 ** Current situation - 
 ** Personal needs - 
