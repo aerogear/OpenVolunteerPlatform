@@ -32,7 +32,8 @@ export function buildKeycloakApolloConfig(app: Express, apolloConfig: any) {
 
         app.use(keycloak.middleware())
 
-        app.use(graphqlPath, keycloak.protect());
+        // Temporary disabled for development and access to /graphql
+        // app.use(graphqlPath, keycloak.protect());
 
         return {
             typeDefs: [KeycloakTypeDefs, apolloConfig.typeDefs], // 1. Add the Keycloak Type Defs

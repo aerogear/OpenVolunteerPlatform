@@ -6,10 +6,10 @@ import resolvers from './resolvers/resolvers';
 import { models } from './resolvers/models'
 import { getPubSub } from './pubsub'
 import { Config } from './config/config';
-import { ApolloServer } from "apollo-server-express";
+import { ApolloServer, ApolloServerExpressConfig } from "apollo-server-express";
 import { Express } from "express";
 import { buildKeycloakApolloConfig } from './auth';
-import { createOffixMongoCRUDRuntimeContext } from './createContext';
+import { createMongoCRUDRuntimeContext } from './mongo/createMongoServices';
 
 /**
  * Creates Apollo server
@@ -20,9 +20,9 @@ export const createApolloServer = async function (app: Express, config: Config) 
 
     const typeDefs = loadSchemaFiles(join(__dirname, '/schema/')).join('\n');
     const schema = buildSchema(typeDefs, { assumeValid: true });
-    const context = createOffixMongoCRUDRuntimeContext(models, schema, db, pubSub);
+    const context = createMongoCRUDRuntimeContext(models, schema, db, pubSub);
 
-    let apolloConfig = {
+    let apolloConfig: ApolloServerExpressConfig = {
         typeDefs: typeDefs,
         resolvers,
         playground: true,
