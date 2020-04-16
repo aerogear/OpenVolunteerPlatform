@@ -74,38 +74,14 @@ export default {
     createDistributionCentre: (parent, args, context) => {
       return context.DistributionCentre.create(args.input, context)
     },
-    updateDistributionCentre: (parent, args, context) => {
-      return context.DistributionCentre.update(args.input, context)
-    },
-    deleteDistributionCentre: (parent, args, context) => {
-      return context.DistributionCentre.delete(args.input, context)
-    },
     createVolunteer: (parent, args, context) => {
       return context.Volunteer.create(args.input, context)
-    },
-    updateVolunteer: (parent, args, context) => {
-      return context.Volunteer.update(args.input, context)
-    },
-    deleteVolunteer: (parent, args, context) => {
-      return context.Volunteer.delete(args.input, context)
     },
     createVolounteerAction: (parent, args, context) => {
       return context.VolounteerAction.create(args.input, context)
     },
-    updateVolounteerAction: (parent, args, context) => {
-      return context.VolounteerAction.update(args.input, context)
-    },
-    deleteVolounteerAction: (parent, args, context) => {
-      return context.VolounteerAction.delete(args.input, context)
-    },
     createReciever: (parent, args, context) => {
       return context.Reciever.create(args.input, context)
-    },
-    updateReciever: (parent, args, context) => {
-      return context.Reciever.update(args.input, context)
-    },
-    deleteReciever: (parent, args, context) => {
-      return context.Reciever.delete(args.input, context)
     },
   },
 
@@ -115,29 +91,9 @@ export default {
         return context.DistributionCentre.subscribeToCreate(args, context)
       },
     },
-    updatedDistributionCentre: {
-      subscribe: (parent, args, context) => {
-        return context.DistributionCentre.subscribeToUpdate(args, context)
-      },
-    },
-    deletedDistributionCentre: {
-      subscribe: (parent, args, context) => {
-        return context.DistributionCentre.subscribeToDelete(args, context)
-      },
-    },
     newVolunteer: {
       subscribe: (parent, args, context) => {
         return context.Volunteer.subscribeToCreate(args, context)
-      },
-    },
-    updatedVolunteer: {
-      subscribe: (parent, args, context) => {
-        return context.Volunteer.subscribeToUpdate(args, context)
-      },
-    },
-    deletedVolunteer: {
-      subscribe: (parent, args, context) => {
-        return context.Volunteer.subscribeToDelete(args, context)
       },
     },
     newVolounteerAction: {
@@ -145,29 +101,9 @@ export default {
         return context.VolounteerAction.subscribeToCreate(args, context)
       },
     },
-    updatedVolounteerAction: {
-      subscribe: (parent, args, context) => {
-        return context.VolounteerAction.subscribeToUpdate(args, context)
-      },
-    },
-    deletedVolounteerAction: {
-      subscribe: (parent, args, context) => {
-        return context.VolounteerAction.subscribeToDelete(args, context)
-      },
-    },
     newReciever: {
       subscribe: (parent, args, context) => {
         return context.Reciever.subscribeToCreate(args, context)
-      },
-    },
-    updatedReciever: {
-      subscribe: (parent, args, context) => {
-        return context.Reciever.subscribeToUpdate(args, context)
-      },
-    },
-    deletedReciever: {
-      subscribe: (parent, args, context) => {
-        return context.Reciever.subscribeToDelete(args, context)
       },
     },
   },

@@ -5,7 +5,7 @@ import { setContext } from 'apollo-link-context';
 import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ConflictLogger } from '../helpers';
-import { getAuthHeader } from '../auth/keycloakAuth';
+import { getAuthHeader } from '../keycloakAuth';
 import { ApolloOfflineClientOptions } from 'offix-client';
 import { Capacitor } from '@capacitor/core';
 import { CapacitorNetworkStatus } from '../helpers/CapacitorNetworkStatus';

@@ -16,6 +16,7 @@
     "@types/react-dom": "16.9.5",
     "@types/react-router": "5.1.4",
     "@types/react-router-dom": "5.1.3",
+    "@types/simpl-schema": "^0.2.6",
     "apollo-link-context": "1.0.19",
     "apollo-link-ws": "1.0.19",
     "graphql": "14.6.0",
@@ -30,8 +31,12 @@
     "react-router": "5.1.2",
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.1",
+    "simpl-schema": "^1.5.7",
     "subscriptions-transport-ws": "0.9.16",
-    "typescript": "3.8.3"
+    "typescript": "3.8.3",
+    "uniforms-bridge-simple-schema-2": "v3.0.0-alpha.2",
+    "uniforms": "v3.0.0-alpha.2",
+    "uniforms-ionic": "0.0.3"
   },
   "scripts": {
     "start": "npm run build && cap serve",
@@ -59,12 +64,12 @@
   },
   "devDependencies": {
     "@capacitor/cli": "1.5.2",
-    "graphql-cli": "4.0.1-beta.3",
-    "@test-graphql-cli/codegen": "4.0.1-beta.3",
     "@graphql-codegen/add": "1.13.1",
     "@graphql-codegen/typescript": "1.13.1",
     "@graphql-codegen/typescript-operations": "1.13.1",
-    "@graphql-codegen/typescript-react-apollo": "1.13.1"
+    "@graphql-codegen/typescript-react-apollo": "1.13.1",
+    "@test-graphql-cli/codegen": "4.0.1-beta.3",
+    "graphql-cli": "4.0.1-beta.3"
   },
   "description": "An Ionic project"
 }

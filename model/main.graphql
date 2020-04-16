@@ -1,6 +1,5 @@
 """
 @model
-@crud.create: false 
 @crud.update: false
 @crud.delete: false
 """
@@ -8,6 +7,8 @@ type DistributionCentre {
   id: ID!
   name: String
   address: String
+  address2: String
+  city: String
   lat: String
   long: String
 }
@@ -43,7 +44,7 @@ type Reciever {
   name: String!
   phone: String
   address: String
-  prefferedProducts: [String]
+  prefferedProducts: String
   """
    @oneToMany field: 'reciever'
   """
@@ -58,7 +59,7 @@ type VolounteerAction {
   id: ID!
   title: String!
   description: String
-  products: [String!]!
+  products: String!
   status: ActionStatus
   actionType: ActionType
 }

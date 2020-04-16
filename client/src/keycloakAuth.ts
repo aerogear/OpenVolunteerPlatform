@@ -1,5 +1,5 @@
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
-import { ILogoutParams } from '../declarations';
+import { ILogoutParams } from './declarations';
 
 export let keycloak: KeycloakInstance | undefined;
 

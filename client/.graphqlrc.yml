@@ -6,7 +6,7 @@ extensions:
   graphback:
     model: ../model
     crud:
-      create: false
+      create: true
       update: true
       findAll: false
       find: true

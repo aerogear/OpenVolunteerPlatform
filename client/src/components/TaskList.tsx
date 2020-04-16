@@ -1,7 +1,6 @@
 import React from 'react';
 import { Task } from './Task';
 import { IonList } from '@ionic/react';
-import { ITask } from '../declarations';
 import { Empty } from './Empty';
 
 export const TaskList: React.FC<any> = ({ tasks }) => {
@@ -14,7 +13,7 @@ export const TaskList: React.FC<any> = ({ tasks }) => {
     <>
       <IonList>
         {
-          tasks.map((task : ITask) => {
+          tasks.map((task : any) => {
             return <Task key={task.id} task={task} />;
           })
         }

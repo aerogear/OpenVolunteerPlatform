@@ -1,43 +1,54 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { 
-  IonPage, 
-  IonSegment, 
-  IonSegmentButton, 
-  IonLabel,  
+import React, { useContext } from 'react';
+import {
+  IonPage,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel,
   IonFooter,
   IonLoading,
   IonContent,
 } from '@ionic/react';
-import { Empty, TaskList, NetworkBadge, OfflineQueueBadge, Header } from '../components';
+import { Empty, TaskList, NetworkBadge, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { findAllVolounteerActions } from '../graphql/queries/findAllVolounteerActions';
+import { useFindVolunteersQuery } from '../dataFacade';
 import { useNetworkStatus } from 'react-offix-hooks';
+import { AuthContext } from '../AuthContext';
 
-export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
+export const TaskPage: React.FC<RouteComponentProps> = ({ match, history }) => {
+  const { profile } = useContext(AuthContext);
 
-  const { loading, error, data, subscribeToMore } = useQuery(findAllVolounteerActions, {
-    fetchPolicy: 'cache-and-network'
+  let { loading, error, data } = useFindVolunteersQuery({
+    variables: { fields: { username: profile?.username } },
+    fetchPolicy: 'network-only'
   });
-  
+
   const isOnline = useNetworkStatus();
 
   if (error && !error.networkError) {
-    return <pre>{ JSON.stringify(error) }</pre>
-  };
+    console.log(JSON.stringify(error))
+  }
 
   if (loading) return <IonLoading
     isOpen={loading}
     message={'Loading...'}
   />;
 
-  const content = (data && data.findAllVolounteerActions) 
-    ? <TaskList tasks={data.findAllVolounteerActions} />
-    : <Empty message={<p>No tasks available</p>} />;
+  if (!data || !data.findVolunteers || data.findVolunteers.length === 0) {
+    history.push("./profile")
+    return <div></div>;
+  }
+
+  let content;
+  const volounteer = data.findVolunteers[0]
+  if (volounteer?.actions?.length !== 0) {
+    content = <TaskList tasks={volounteer?.actions} />
+  } else {
+    content = <Empty message={<p>No tasks assigned!</p>} />;
+  }
 
   return (
     <IonPage>
-      <Header title="CrisisCommunity Volounteer"  match={match}  isOnline={isOnline} />
+      <Header title="CrisisCommunity Volounteer" match={match} isOnline={isOnline} />
       <IonContent className="ion-padding" >
         <IonSegment>
           <IonSegmentButton value="Open">
@@ -47,15 +58,15 @@ export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
             <IonLabel>Finished Tasks</IonLabel>
           </IonSegmentButton>
         </IonSegment>
-        { content }
+        {content}
       </IonContent>
       <IonFooter>
         <div>
-          <OfflineQueueBadge isOnline={isOnline} />
+          AtCrisisCommunity
           <NetworkBadge isOnline={isOnline} />
         </div>
       </IonFooter>
     </IonPage>
   );
-  
+
 };

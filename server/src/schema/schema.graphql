@@ -11,11 +11,17 @@ enum ActionType {
   DELIVERY
 }
 
-""" @model """
+"""
+@model
+@crud.update: false
+@crud.delete: false
+"""
 type DistributionCentre {
   id: ID!
   name: String
   address: String
+  address2: String
+  city: String
   lat: String
   long: String
   version: Int
@@ -25,6 +31,8 @@ input DistributionCentreInput {
   id: ID
   name: String
   address: String
+  address2: String
+  city: String
   lat: String
   long: String
   version: Int
@@ -32,17 +40,9 @@ input DistributionCentreInput {
 
 type Mutation {
   createDistributionCentre(input: DistributionCentreInput): DistributionCentre!
-  updateDistributionCentre(input: DistributionCentreInput): DistributionCentre!
-  deleteDistributionCentre(input: DistributionCentreInput): DistributionCentre!
   createVolunteer(input: VolunteerInput): Volunteer!
-  updateVolunteer(input: VolunteerInput): Volunteer!
-  deleteVolunteer(input: VolunteerInput): Volunteer!
   createVolounteerAction(input: VolounteerActionInput): VolounteerAction!
-  updateVolounteerAction(input: VolounteerActionInput): VolounteerAction!
-  deleteVolounteerAction(input: VolounteerActionInput): VolounteerAction!
   createReciever(input: RecieverInput): Reciever!
-  updateReciever(input: RecieverInput): Reciever!
-  deleteReciever(input: RecieverInput): Reciever!
 }
 
 type Query {
@@ -56,13 +56,16 @@ type Query {
   findRecievers(fields: RecieverInput, limit: Int, offset: Int): [Reciever]!
 }
 
-""" @model """
+"""
+@model
+@crud.delete: false
+"""
 type Reciever {
   id: ID!
   name: String!
   phone: String
   address: String
-  prefferedProducts: [String]
+  prefferedProducts: String
 
   """@oneToMany field: 'reciever', key: 'recieverId'"""
   actions: [VolounteerAction]
@@ -80,28 +83,20 @@ input RecieverInput {
 
 type Subscription {
   newDistributionCentre(input: DistributionCentreInput): DistributionCentre!
-  updatedDistributionCentre(input: DistributionCentreInput): DistributionCentre!
-  deletedDistributionCentre(input: DistributionCentreInput): DistributionCentre!
   newVolunteer(input: VolunteerInput): Volunteer!
-  updatedVolunteer(input: VolunteerInput): Volunteer!
-  deletedVolunteer(input: VolunteerInput): Volunteer!
   newVolounteerAction(input: VolounteerActionInput): VolounteerAction!
-  updatedVolounteerAction(input: VolounteerActionInput): VolounteerAction!
-  deletedVolounteerAction(input: VolounteerActionInput): VolounteerAction!
   newReciever(input: RecieverInput): Reciever!
-  updatedReciever(input: RecieverInput): Reciever!
-  deletedReciever(input: RecieverInput): Reciever!
 }
 
 """
 Represents action that is assigned to volounteer
-@model 
+@model
 """
 type VolounteerAction {
   id: ID!
   title: String!
   description: String
-  products: [String!]!
+  products: String!
   status: ActionStatus
   actionType: ActionType
 
@@ -125,7 +120,10 @@ input VolounteerActionInput {
   version: Int
 }
 
-""" @model """
+"""
+@model
+@crud.delete: false
+"""
 type Volunteer {
   id: ID!
   firstName: String

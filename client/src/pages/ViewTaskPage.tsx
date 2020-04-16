@@ -10,11 +10,9 @@ import {
   IonCardHeader,
   IonCardContent,
   IonNote,
-  IonLoading,
   IonToast,
 } from '@ionic/react';
-import { useOfflineMutation } from 'react-offix-hooks';
-import { useQuery } from '@apollo/react-hooks';
+
 import { Header } from '../components/Header';
 import { Empty } from '../components/Empty';
 import { IUpdateMatchParams } from '../declarations';

@@ -2,7 +2,7 @@
 query findAllVolunteers {
   findAllVolunteers {
     id
-    name
+    username
   }
 }
 
@@ -17,12 +17,12 @@ mutation createVolounteerAction {
   createVolounteerAction(
     input: {
       id: ""
-      title: "Call Mr Boris"
+      title: "Deliver to Mr Boris"
       description: "Phone Number: +473020323"
       actionType: DELIVERY,
       products: "Bread, Pasta, ToiletPaper",
       recieverId: "5e8f3eda92787169c1e7cd87"
-      volounteerId: "5e8f3e0a92787169c1e7cd7d",
+      volounteerId: "5e9782e94b8d743f02b84e79",
       status: ASSIGNED
     }
   ) {
