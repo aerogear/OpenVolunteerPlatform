@@ -1,28 +1,34 @@
 = AtHomeCrisisCommunity
 
-== AtHomeCrisisCommunity
+As communities across the world experience the outbreak of the novel coronavirus (COVID-19) many are quarantined and are required to stay at home. While this practice will help curtail the spread of COVID-19, it comes with some uncomfortable effects. In many cases people are isolated and are struggling to find help while adhering to social distancing rules. 
 
-Open Source project that builds mobile application that organize distribution of food and mental health for people
-affected by events that require strict quarantine at home. In many cases people are isolated and strugling to find help without phisical contact.
+*AtHomeCrisisCommunity* is an open source project that builds a relief management mobile application using GraphQL. The app helps users organize distribution of food and mental health services for people affected by the quarantine restrictions.
 
-=== How this works
+== How the app works
 
-Volounteers distributing leaflets in communities that can be scanned using phone (google forms) to answer couple basic questions about their current situation and any personal or medical neeeds. The same leaflet can be used to gather posible volounteers. 
-Form is dynamically processed using Data aqusition techniques to match people that might need help, 
-seeking someone to talk or need critical resources to survive. 
+*AtHomeCrisisCommunity* is an progressive web application (PWA) that can be used by volunteers to collaborate and connect
+with vulnerable people. 
+
+* Volunteers distribute leaflets in a community. The form can be scanned using a phone.
+* Participants answer a few basic questions related to an individual's:
+** Current situation - 
+** Personal needs - 
+** Medical neeeds-  
+
+NOTE: The same leaflet can be used to gather posible volounteers. 
+
+* The form is dynamically processed using data acqusition techniques to match people that are seeking assistance with those who are able to provide support. 
  
-AtHomeCrisisCommunity is an Mobile Application (PWA) that can be used by volounteers to collaborate work and connect
-with vulnerable people.
 
 
-== Technical details
+== Technical Details
 
-Application includes:
+The application includes:
 
-- Integration with Graphback (http://graphback.dev) that helps you to generate your backend and client side queries based on user provided business model
-- Example React application that uses Offix client (http://offix.dev) to give you fully featured offline experience.
-- Integration with Keycloak (SSO) for server and client Authentication and User management.
-- GraphQL Subscriptions backed by an MQTT broker (AMQ)
+* Integration with http://graphback.dev[Graphback] helps you generate your backend and client side queries based on user provided business models
+- An example React application which uses the http://offix.dev[Offix client] to give you a fully featured offline experience
+- Integration with Keycloak (SSO) for server and client authentication and user management
+- GraphQL subscriptions backed by an MQTT broker(AMQ)
 
 === GraphQL Client
 
@@ -32,17 +38,19 @@ The mobile application uses https://github.com/aerogear/offix[Offix Client] to p
 
 The GraphQL server uses https://github.com/aerogear/graphback[Graphback] to provide GraphQL capabilities.
 
+
 == Getting Started
 
 Requirements:
 
 - Docker and docker-compose
-- Node.js 12.x or above
+- https://nodejs.org/en/download/ (Node.js 12.x or above)
 - (optional) access to a running OpenShift instance
 
-=== Running app and server
 
-Install dependencies 
+=== Running App and Server
+
+==== Install dependencies 
 
 . Build client
 
