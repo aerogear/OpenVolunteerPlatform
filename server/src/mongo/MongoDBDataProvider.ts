@@ -130,26 +130,28 @@ export class MongoDBDataProvider<Type = any, GraphbackContext = any> implements 
       const array = ids.map((value) => {
         return value.toString();
       });
-      query[relationField] = { $in: array };
       result = await this.db.collection(this.collectionName).find(query).toArray();
     }
 
     if (result) {
-      const resultsById = ids.map((id: string) => result.filter((data: any) => {
-        if (data[relationField].toString() === id.toString()) {
-          return {
-            ...data,
-            id: data._id
+      const resultsById = ids.map((objId: string) => {
+        const objectsForId: any = [];
+        for (const data of result) {
+          if (data[relationField].toString() === objId.toString()) {
+            objectsForId.push({
+              id: data._id.toString(),
+              ...data,
+            });
           }
         }
-      }));
+
+        return objectsForId;
+      });
 
       return resultsById as [Type[]];
     }
 
     throw new NoDataError(`No results for ${this.collectionName} query and batch read`);
-
-
 
   }
 
