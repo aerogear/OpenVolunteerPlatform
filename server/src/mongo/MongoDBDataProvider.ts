@@ -127,9 +127,10 @@ export class MongoDBDataProvider<Type = any, GraphbackContext = any> implements 
       result = await this.db.collection(this.collectionName).find({ _id: { $in: array } }).toArray();
     } else {
       const query: any = {};
-      const array = ids.map((value) => {
+      const array = ids.map((value: any) => {
         return value.toString();
       });
+      query[relationField] = { $in: array };
       result = await this.db.collection(this.collectionName).find(query).toArray();
     }
 
@@ -153,7 +154,10 @@ export class MongoDBDataProvider<Type = any, GraphbackContext = any> implements 
 
     throw new NoDataError(`No results for ${this.collectionName} query and batch read`);
 
+
+
   }
+
 
   private usePage(query: Cursor<any>, page?: GraphbackPage, defaultLimit: number = 10, defaultOffset: number = 0) {
     if (page) {
