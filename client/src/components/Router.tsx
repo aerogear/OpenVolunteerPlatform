@@ -16,7 +16,7 @@ export const Router: React.FC = () => {
   const { profile } = useContext(AuthContext);
 
   let [findVolunteerQuery, { data, loading, error, called }] = useFindActiveVolunteerLazyQuery({
-    fetchPolicy: "cache-first"
+    fetchPolicy: "network-only"
   });
 
   if (loading) {
@@ -32,7 +32,7 @@ export const Router: React.FC = () => {
     findVolunteerQuery({ variables: { username: profile?.username } });
   }
 
-  let user: VolunteerFieldsFragment | null | undefined;
+  let user: VolunteerFieldsFragment | undefined;
   if (data?.findVolunteers?.length === 1 && data?.findVolunteers[0]) {
     user = data.findVolunteers[0];
   }
