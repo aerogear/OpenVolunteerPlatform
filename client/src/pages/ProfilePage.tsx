@@ -1,4 +1,4 @@
-import React, { useContext, SyntheticEvent } from 'react';
+import React, { useContext } from 'react';
 import {
   IonContent,
   IonCard,
@@ -9,25 +9,20 @@ import {
   IonItemGroup,
   IonItemDivider,
   IonList,
-  IonItem,
-  IonLabel,
-  IonInput,
-  IonButton,
-  IonCheckbox
 } from '@ionic/react';
 import { Header } from '../components';
 import { AuthContext } from '../AuthContext';
 import { RouteComponentProps } from 'react-router';
-import { useCreateVolunteerMutation } from "../dataFacade"
+import { useCreateVolunteerMutation, VolunteerFieldsFragment } from "../dataFacade"
 
 import volounteerForm from '../forms/volounteer';
 
 import { AutoForm } from 'uniforms-ionic'
 
-export const ProfilePage: React.FC<RouteComponentProps> = ({ history, match }) => {
+export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerFieldsFragment }> = ({ history, match, user }) => {
   const { keycloak, profile } = useContext(AuthContext);
 
-  const [createVolunteerMutation] = useCreateVolunteerMutation({})
+  const [createVolunteerMutation] = useCreateVolunteerMutation()
 
 
   if (!keycloak || !profile) return (
@@ -43,12 +38,6 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ history, match }) =
     </IonCard>
   );
 
-  const fullName = (profile.firstName !== 'unknown' && profile.lastName !== 'unknown')
-    ? `${profile.firstName} ${profile.lastName}`
-    : 'unknown';
-
-
-  let shouldCreate = true;
 
   const submit = (model: any) => {
     createVolunteerMutation({
@@ -58,13 +47,12 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ history, match }) =
           lastName: profile?.lastName,
           email: profile?.email,
           username: profile?.username,
-          address1: "TMP",
-          address2: "TMP",
-          city: "TMP",
-          dateOfBirth: "TMP",
-          canPhoneCall: true,
-          canDeliver: true,
-          ...model
+          address1: model.address1,
+          address2: model.address2,
+          city: model.city,
+          dateOfBirth: model.dateOfBirth,
+          canPhoneCall: model.canPhoneCall,
+          canDeliver: model.canDeliver
         }
       }
     }).then(() => {
@@ -72,38 +60,14 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ history, match }) =
     }).catch((e) => {
       console.log(e);
     })
-
   }
 
- 
   return (
     <>
-      {shouldCreate ?
-        <Header title="Create Profile" backHref='/tasks' match={match} /> :
-        <Header title="Profile" backHref="/tasks" match={match} />
-      }
+
+      <Header title="Profile" backHref="/tasks" match={match} />
       <IonContent>
         <IonList>
-          <IonCard>
-            <IonItemDivider color="light">
-              <h2>Volounteer profile</h2>
-            </IonItemDivider>
-            <IonItem>
-              <div className="identity-header">Full Name: {fullName}</div>
-              <div id="e2e-profile-full-name" className="identity-text"></div>
-            </IonItem>
-            <IonItem>
-              <div className="identity-header">Email: {profile.email}</div>
-              <div id="e2e-profile-email" className="identity-text"></div>
-            </IonItem>
-            <IonItem>
-              <div className="identity-header"> Username: {profile.username}</div>
-              <div id="e2e-profile-username" className="identity-text"></div>
-            </IonItem>
-            <IonItem>
-              <IonLabel>Email Verified: {profile.emailVerified ? 'Yes' : 'No'}</IonLabel>
-            </IonItem>
-          </IonCard>
           <IonCard>
             <IonItemGroup>
               <IonItemDivider color="light">
@@ -111,6 +75,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ history, match }) =
               </IonItemDivider>
               <AutoForm
                 placeholder
+                state={user}
                 schema={volounteerForm}
                 onSubmit={(model: any) => submit(model)}
                 showInlineError

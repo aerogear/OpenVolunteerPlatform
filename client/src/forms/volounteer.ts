@@ -2,12 +2,25 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 
 const volounteerForm = new SimpleSchema({
-    dateOfBirth: {
-        type: Date,
-        uniforms: {
-            label: "Date Of Birth"
-        },
-        optional: true
+    firstName: {
+        type: String,
+        max: 120,
+        readonly: true
+    },
+    lastName: {
+        type: String,
+        max: 120,
+        readonly: true
+    },
+    email: {
+        type: String,
+        max: 220,
+        readonly: true
+    },
+    username: {
+        type: String,
+        max: 220,
+        readonly: true
     },
     address1: {
         type: String,
@@ -20,6 +33,13 @@ const volounteerForm = new SimpleSchema({
     city: {
         type: String,
         max: 100
+    },
+    dateOfBirth: {
+        type: Date,
+        uniforms: {
+            label: "Date Of Birth"
+        },
+        optional: true
     },
     canPhoneCall: {
         type: Boolean,

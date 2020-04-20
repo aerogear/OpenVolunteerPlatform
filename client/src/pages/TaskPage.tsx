@@ -10,22 +10,21 @@ import {
 } from '@ionic/react';
 import { Empty, TaskList, NetworkBadge, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindVolunteersQuery } from '../dataFacade';
+import { useFindActiveVolunteerLazyQuery, useFindMyVolounteerActionsLazyQuery, useFindMyVolounteerActionsQuery, VolunteerFieldsFragment } from '../dataFacade';
 import { useNetworkStatus } from 'react-offix-hooks';
 import { AuthContext } from '../AuthContext';
 
-export const TaskPage: React.FC<RouteComponentProps> = ({ match, history }) => {
-  const { profile } = useContext(AuthContext);
-
-  let { loading, error, data } = useFindVolunteersQuery({
-    variables: { fields: { username: profile?.username } },
-    fetchPolicy: 'network-only'
-  });
-
+export const TaskPage: React.FC<RouteComponentProps & { user?: VolunteerFieldsFragment }> = ({ match, history, user }) => {
+  let [findActions, { data, loading, error }] = useFindMyVolounteerActionsLazyQuery({ fetchPolicy: "cache-and-network" })
   const isOnline = useNetworkStatus();
 
-  if (error && !error.networkError) {
-    console.log(JSON.stringify(error))
+  if (user) {
+    findActions({ variables: { volounteerId: user.id } })
+  }
+
+
+  if (error) {
+    console.log(error);
   }
 
   if (loading) return <IonLoading
@@ -33,15 +32,10 @@ export const TaskPage: React.FC<RouteComponentProps> = ({ match, history }) => {
     message={'Loading...'}
   />;
 
-  if (!data || !data.findVolunteers || data.findVolunteers.length === 0) {
-    history.push("./profile")
-    return <div></div>;
-  }
 
   let content;
-  const volounteer = data.findVolunteers[0]
-  if (volounteer?.actions?.length !== 0) {
-    content = <TaskList tasks={volounteer?.actions} />
+  if (data?.findVolounteerActions?.length !== 0) {
+    content = <TaskList tasks={data?.findVolounteerActions} />
   } else {
     content = <Empty message={<p>No tasks assigned!</p>} />;
   }
