@@ -2,7 +2,6 @@
 
 enum ActionStatus {
   ASSIGNED
-  INPROGRESS
   COMPLETED
 }
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import {
   IonPage,
   IonSegment,
@@ -10,18 +10,23 @@ import {
 } from '@ionic/react';
 import { Empty, TaskList, NetworkBadge, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindActiveVolunteerLazyQuery, useFindMyVolounteerActionsLazyQuery, useFindMyVolounteerActionsQuery, VolunteerFieldsFragment } from '../dataFacade';
+import { useFindMyVolounteerActionsLazyQuery, VolunteerFieldsFragment, ActionStatus } from '../dataFacade';
 import { useNetworkStatus } from 'react-offix-hooks';
-import { AuthContext } from '../AuthContext';
 
-export const TaskPage: React.FC<RouteComponentProps & { user?: VolunteerFieldsFragment }> = ({ match, history, user }) => {
-  let [findActions, { data, loading, error }] = useFindMyVolounteerActionsLazyQuery({ fetchPolicy: "cache-and-network" })
+interface UserState {
+  location: {
+    state: { user: VolunteerFieldsFragment }
+  }
+}
+
+export const TaskPage: React.FC<RouteComponentProps & UserState> = ({ match, location: { state } }) => {
+  const [segmentFilter, setSegmentFilter] = useState(ActionStatus.Assigned.toString())
+  let [findActions, { data, loading, error, called }] = useFindMyVolounteerActionsLazyQuery({ fetchPolicy: "cache-and-network" })
   const isOnline = useNetworkStatus();
 
-  if (user) {
-    findActions({ variables: { volounteerId: user.id } })
+  if (state && state.user && !called) {
+    findActions({ variables: { volounteerId: state.user.id, status: segmentFilter as ActionStatus } })
   }
-
 
   if (error) {
     console.log(error);
@@ -31,7 +36,6 @@ export const TaskPage: React.FC<RouteComponentProps & { user?: VolunteerFieldsFr
     isOpen={loading}
     message={'Loading...'}
   />;
-
 
   let content;
   if (data?.findVolounteerActions?.length !== 0) {
@@ -44,11 +48,15 @@ export const TaskPage: React.FC<RouteComponentProps & { user?: VolunteerFieldsFr
     <IonPage>
       <Header title="CrisisCommunity Volounteer" match={match} isOnline={isOnline} />
       <IonContent className="ion-padding" >
-        <IonSegment>
-          <IonSegmentButton value="Open">
+        <IonSegment onIonChange={e => {
+          setSegmentFilter("est")
+          console.log('Segment selected', e.detail.value);
+          called = false;
+        }}>
+          <IonSegmentButton value={ActionStatus.Assigned}>
             <IonLabel>Open Tasks</IonLabel>
           </IonSegmentButton>
-          <IonSegmentButton value="closed">
+          <IonSegmentButton value={ActionStatus.Completed}>
             <IonLabel>Finished Tasks</IonLabel>
           </IonSegmentButton>
         </IonSegment>

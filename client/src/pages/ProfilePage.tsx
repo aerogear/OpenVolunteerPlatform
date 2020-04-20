@@ -19,11 +19,10 @@ import volounteerForm from '../forms/volounteer';
 
 import { AutoForm } from 'uniforms-ionic'
 
-export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerFieldsFragment }> = ({ history, match, user }) => {
+export const ProfilePage: React.FC<RouteComponentProps & {user: VolunteerFieldsFragment}> = ({ history, match, user }) => {
   const { keycloak, profile } = useContext(AuthContext);
 
   const [createVolunteerMutation] = useCreateVolunteerMutation()
-
 
   if (!keycloak || !profile) return (
     <IonCard>
@@ -37,7 +36,6 @@ export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerField
       </IonCardContent>
     </IonCard>
   );
-
 
   const submit = (model: any) => {
     createVolunteerMutation({
@@ -64,7 +62,6 @@ export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerField
 
   return (
     <>
-
       <Header title="Profile" backHref="/tasks" match={match} />
       <IonContent>
         <IonList>
@@ -75,7 +72,7 @@ export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerField
               </IonItemDivider>
               <AutoForm
                 placeholder
-                state={user}
+                model={user}
                 schema={volounteerForm}
                 onSubmit={(model: any) => submit(model)}
                 showInlineError

@@ -1,0 +1,7 @@
+query findMyVolounteerActions($volounteerId: ID!, $status: ActionStatus) {
+  findVolounteerActions(
+    fields: { volounteerId: $volounteerId, status: $status }
+  ) {
+    ...VolounteerActionExpandedFields
+  }
+}
