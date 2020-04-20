@@ -3,8 +3,8 @@ import { Router } from './components';
 
 // load all styles
 import './theme';
+export const App: React.FC= () => {
 
-export const App: React.FC = () => {
   return (
     <>
       <Router />

@@ -6,15 +6,14 @@ import { clientConfig } from './config';
 import { Loading } from './components/Loading';
 import { IContainerProps } from './declarations';
 import { getKeycloakInstance } from './keycloakAuth';
-import { useFindVolunteersQuery } from './dataFacade';
 import { AuthContext } from './AuthContext';
 
 let keycloak: any;
 const apolloClient = new ApolloOfflineClient(clientConfig);
 
 export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
+  const [keycloakInitialized, setKeycloakInitialized] = useState(false);
 
-  const [initialized, setInitialized] = useState(false);
 
   // Initialize the client
   useEffect(() => {
@@ -24,28 +23,21 @@ export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
       if (keycloak) {
         await keycloak?.loadUserProfile();
       }
-      setInitialized(true);
+      setKeycloakInitialized(true);
     }
     init();
   }, []);
 
-  //const { data, loading } = useFindVolunteersQuery({ variables: { fields: { username: keycloak?.profile?.username } } });
-  // if (loading) {
-  //   return <Loading loading={loading} />;
-  // }
-
-  if (!initialized) return <Loading loading={!initialized} />;
+  if (!keycloakInitialized || !keycloak.profile ) return <Loading loading={true} />;
 
   // return container with keycloak provider
   return (
-    <AuthContext.Provider value={{ keycloak, profile: keycloak?.profile }}>
+    <AuthContext.Provider value={{ keycloak, profile: keycloak.profile }}>
       <ApolloOfflineProvider client={apolloClient}>
         <ApolloProvider client={apolloClient}>
-          <App />
+          <App/>
         </ApolloProvider>
       </ApolloOfflineProvider>
     </AuthContext.Provider>
   );
-
-
 };

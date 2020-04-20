@@ -408,6 +408,32 @@ export type FindDistributionCentresQuery = (
   )>> }
 );
 
+export type FindActiveVolunteerQueryVariables = {
+  username: Scalars['String'];
+};
+
+
+export type FindActiveVolunteerQuery = (
+  { __typename?: 'Query' }
+  & { findVolunteers: Array<Maybe<(
+    { __typename?: 'Volunteer' }
+    & VolunteerFieldsFragment
+  )>> }
+);
+
+export type FindMyVolounteerActionsQueryVariables = {
+  volounteerId: Scalars['String'];
+};
+
+
+export type FindMyVolounteerActionsQuery = (
+  { __typename?: 'Query' }
+  & { findVolounteerActions: Array<Maybe<(
+    { __typename?: 'VolounteerAction' }
+    & VolounteerActionExpandedFieldsFragment
+  )>> }
+);
+
 export type FindRecieversQueryVariables = {
   fields: RecieverInput;
   limit?: Maybe<Scalars['Int']>;
@@ -420,36 +446,6 @@ export type FindRecieversQuery = (
   & { findRecievers: Array<Maybe<(
     { __typename?: 'Reciever' }
     & RecieverExpandedFieldsFragment
-  )>> }
-);
-
-export type FindVolounteerActionsQueryVariables = {
-  fields: VolounteerActionInput;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type FindVolounteerActionsQuery = (
-  { __typename?: 'Query' }
-  & { findVolounteerActions: Array<Maybe<(
-    { __typename?: 'VolounteerAction' }
-    & VolounteerActionExpandedFieldsFragment
-  )>> }
-);
-
-export type FindVolunteersQueryVariables = {
-  fields: VolunteerInput;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type FindVolunteersQuery = (
-  { __typename?: 'Query' }
-  & { findVolunteers: Array<Maybe<(
-    { __typename?: 'Volunteer' }
-    & VolunteerExpandedFieldsFragment
   )>> }
 );
 
@@ -845,6 +841,72 @@ export function useFindDistributionCentresLazyQuery(baseOptions?: ApolloReactHoo
 export type FindDistributionCentresQueryHookResult = ReturnType<typeof useFindDistributionCentresQuery>;
 export type FindDistributionCentresLazyQueryHookResult = ReturnType<typeof useFindDistributionCentresLazyQuery>;
 export type FindDistributionCentresQueryResult = ApolloReactCommon.QueryResult<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>;
+export const FindActiveVolunteerDocument = gql`
+    query findActiveVolunteer($username: String!) {
+  findVolunteers(fields: {username: $username}, limit: 1) {
+    ...VolunteerFields
+  }
+}
+    ${VolunteerFieldsFragmentDoc}`;
+
+/**
+ * __useFindActiveVolunteerQuery__
+ *
+ * To run a query within a React component, call `useFindActiveVolunteerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindActiveVolunteerQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindActiveVolunteerQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useFindActiveVolunteerQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>(FindActiveVolunteerDocument, baseOptions);
+      }
+export function useFindActiveVolunteerLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>(FindActiveVolunteerDocument, baseOptions);
+        }
+export type FindActiveVolunteerQueryHookResult = ReturnType<typeof useFindActiveVolunteerQuery>;
+export type FindActiveVolunteerLazyQueryHookResult = ReturnType<typeof useFindActiveVolunteerLazyQuery>;
+export type FindActiveVolunteerQueryResult = ApolloReactCommon.QueryResult<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>;
+export const FindMyVolounteerActionsDocument = gql`
+    query findMyVolounteerActions($volounteerId: String!) {
+  findVolounteerActions(fields: {volounteerId: $volounteerId}, limit: $limit, offset: $offset) {
+    ...VolounteerActionExpandedFields
+  }
+}
+    ${VolounteerActionExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useFindMyVolounteerActionsQuery__
+ *
+ * To run a query within a React component, call `useFindMyVolounteerActionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindMyVolounteerActionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindMyVolounteerActionsQuery({
+ *   variables: {
+ *      volounteerId: // value for 'volounteerId'
+ *   },
+ * });
+ */
+export function useFindMyVolounteerActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindMyVolounteerActionsQuery, FindMyVolounteerActionsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindMyVolounteerActionsQuery, FindMyVolounteerActionsQueryVariables>(FindMyVolounteerActionsDocument, baseOptions);
+      }
+export function useFindMyVolounteerActionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindMyVolounteerActionsQuery, FindMyVolounteerActionsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindMyVolounteerActionsQuery, FindMyVolounteerActionsQueryVariables>(FindMyVolounteerActionsDocument, baseOptions);
+        }
+export type FindMyVolounteerActionsQueryHookResult = ReturnType<typeof useFindMyVolounteerActionsQuery>;
+export type FindMyVolounteerActionsLazyQueryHookResult = ReturnType<typeof useFindMyVolounteerActionsLazyQuery>;
+export type FindMyVolounteerActionsQueryResult = ApolloReactCommon.QueryResult<FindMyVolounteerActionsQuery, FindMyVolounteerActionsQueryVariables>;
 export const FindRecieversDocument = gql`
     query findRecievers($fields: RecieverInput!, $limit: Int, $offset: Int) {
   findRecievers(fields: $fields, limit: $limit, offset: $offset) {
@@ -880,73 +942,3 @@ export function useFindRecieversLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type FindRecieversQueryHookResult = ReturnType<typeof useFindRecieversQuery>;
 export type FindRecieversLazyQueryHookResult = ReturnType<typeof useFindRecieversLazyQuery>;
 export type FindRecieversQueryResult = ApolloReactCommon.QueryResult<FindRecieversQuery, FindRecieversQueryVariables>;
-export const FindVolounteerActionsDocument = gql`
-    query findVolounteerActions($fields: VolounteerActionInput!, $limit: Int, $offset: Int) {
-  findVolounteerActions(fields: $fields, limit: $limit, offset: $offset) {
-    ...VolounteerActionExpandedFields
-  }
-}
-    ${VolounteerActionExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindVolounteerActionsQuery__
- *
- * To run a query within a React component, call `useFindVolounteerActionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindVolounteerActionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindVolounteerActionsQuery({
- *   variables: {
- *      fields: // value for 'fields'
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
- *   },
- * });
- */
-export function useFindVolounteerActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindVolounteerActionsQuery, FindVolounteerActionsQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindVolounteerActionsQuery, FindVolounteerActionsQueryVariables>(FindVolounteerActionsDocument, baseOptions);
-      }
-export function useFindVolounteerActionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindVolounteerActionsQuery, FindVolounteerActionsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindVolounteerActionsQuery, FindVolounteerActionsQueryVariables>(FindVolounteerActionsDocument, baseOptions);
-        }
-export type FindVolounteerActionsQueryHookResult = ReturnType<typeof useFindVolounteerActionsQuery>;
-export type FindVolounteerActionsLazyQueryHookResult = ReturnType<typeof useFindVolounteerActionsLazyQuery>;
-export type FindVolounteerActionsQueryResult = ApolloReactCommon.QueryResult<FindVolounteerActionsQuery, FindVolounteerActionsQueryVariables>;
-export const FindVolunteersDocument = gql`
-    query findVolunteers($fields: VolunteerInput!, $limit: Int, $offset: Int) {
-  findVolunteers(fields: $fields, limit: $limit, offset: $offset) {
-    ...VolunteerExpandedFields
-  }
-}
-    ${VolunteerExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindVolunteersQuery__
- *
- * To run a query within a React component, call `useFindVolunteersQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindVolunteersQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindVolunteersQuery({
- *   variables: {
- *      fields: // value for 'fields'
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
- *   },
- * });
- */
-export function useFindVolunteersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindVolunteersQuery, FindVolunteersQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindVolunteersQuery, FindVolunteersQueryVariables>(FindVolunteersDocument, baseOptions);
-      }
-export function useFindVolunteersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindVolunteersQuery, FindVolunteersQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindVolunteersQuery, FindVolunteersQueryVariables>(FindVolunteersDocument, baseOptions);
-        }
-export type FindVolunteersQueryHookResult = ReturnType<typeof useFindVolunteersQuery>;
-export type FindVolunteersLazyQueryHookResult = ReturnType<typeof useFindVolunteersLazyQuery>;
-export type FindVolunteersQueryResult = ApolloReactCommon.QueryResult<FindVolunteersQuery, FindVolunteersQueryVariables>;
