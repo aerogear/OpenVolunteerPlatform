@@ -1,5 +1,0 @@
-query findDistributionCentres($fields: DistributionCentreInput!, $limit: Int, $offset: Int) {
-    findDistributionCentres(fields: $fields, limit: $limit, offset: $offset) {
-      ...DistributionCentreExpandedFields
-    }
-  }

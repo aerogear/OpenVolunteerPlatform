@@ -1,5 +1,0 @@
-query findRecievers($fields: RecieverInput!, $limit: Int, $offset: Int) {
-    findRecievers(fields: $fields, limit: $limit, offset: $offset) {
-      ...RecieverExpandedFields
-    }
-  }
