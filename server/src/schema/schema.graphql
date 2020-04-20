@@ -41,8 +41,12 @@ input DistributionCentreInput {
 type Mutation {
   createDistributionCentre(input: DistributionCentreInput): DistributionCentre!
   createVolunteer(input: VolunteerInput): Volunteer!
+  updateVolunteer(input: VolunteerInput): Volunteer!
   createVolounteerAction(input: VolounteerActionInput): VolounteerAction!
+  updateVolounteerAction(input: VolounteerActionInput): VolounteerAction!
+  deleteVolounteerAction(input: VolounteerActionInput): VolounteerAction!
   createReciever(input: RecieverInput): Reciever!
+  updateReciever(input: RecieverInput): Reciever!
 }
 
 type Query {
@@ -84,8 +88,12 @@ input RecieverInput {
 type Subscription {
   newDistributionCentre(input: DistributionCentreInput): DistributionCentre!
   newVolunteer(input: VolunteerInput): Volunteer!
+  updatedVolunteer(input: VolunteerInput): Volunteer!
   newVolounteerAction(input: VolounteerActionInput): VolounteerAction!
+  updatedVolounteerAction(input: VolounteerActionInput): VolounteerAction!
+  deletedVolounteerAction(input: VolounteerActionInput): VolounteerAction!
   newReciever(input: RecieverInput): Reciever!
+  updatedReciever(input: RecieverInput): Reciever!
 }
 
 """
