@@ -11,6 +11,7 @@ fragment VolunteerExpandedFields on Volunteer {
    canPhoneCall
    canDeliver
    actions {
+      id
       title
       description
       products
