@@ -18,6 +18,7 @@ extensions:
       graphback-client:
         format: 'graphql'
         outputPath: ./src/graphql
+        fragmentOnly: true
   codegen:
     generates:
       ./src/dataFacade.tsx:
