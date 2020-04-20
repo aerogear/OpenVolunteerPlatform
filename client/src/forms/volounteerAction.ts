@@ -5,22 +5,30 @@ const volounteerActionForm = new SimpleSchema({
     title: {
         type: String,
         max: 120,
-        readonly: true
+        uniforms: {
+            readonly: true
+        }
     },
     description: {
         type: String,
         max: 120,
-        readonly: true
+        uniforms: {
+            readonly: true
+        }
     },
     products: {
         type: String,
         max: 220,
-        readonly: true
+        uniforms: {
+            readonly: true
+        }
     },
     status: {
         type: String,
         max: 220,
-        readonly: true
+        uniforms: {
+            readonly: true
+        }
     },
     actionType: {
         type: String,
@@ -30,29 +38,39 @@ const volounteerActionForm = new SimpleSchema({
         name: {
             type: String,
             max: 220,
-            readonly: true
+            uniforms: {
+                readonly: true
+            }
         },
         phone: {
             type: String,
             max: 220,
-            readonly: true
+            uniforms: {
+                readonly: true
+            }
         },
         address1: {
             type: String,
             max: 220,
-            readonly: true
+            uniforms: {
+                readonly: true
+            }
         },
         address2: {
             type: String,
             max: 220,
-            readonly: true
+            uniforms: {
+                readonly: true
+            }
         },
         prefferedProducts: {
             type: String,
             max: 220,
-            readonly: true
+            uniforms: {
+                readonly: true
+            }
         }
     }
 } as any);
 
-export default new SimpleSchema2Bridge(volounteerActionForm);
+// export default new SimpleSchema2Bridge(volounteerActionForm);

@@ -5,22 +5,30 @@ const volounteerForm = new SimpleSchema({
     firstName: {
         type: String,
         max: 120,
-        readonly: true
+        uniforms: {
+            readonly: true
+        }
     },
     lastName: {
         type: String,
         max: 120,
-        readonly: true
+        uniforms: {
+            readonly: true
+        }
     },
     email: {
         type: String,
         max: 220,
-        readonly: true
+        uniforms: {
+            readonly: true
+        }
     },
     username: {
         type: String,
         max: 220,
-        readonly: true
+        uniforms: {
+            readonly: true
+        }
     },
     address1: {
         type: String,
