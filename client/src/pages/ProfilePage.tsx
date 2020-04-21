@@ -19,7 +19,7 @@ import volounteerForm from '../forms/volounteer';
 
 import { AutoForm } from 'uniforms-ionic'
 
-export const ProfilePage: React.FC<RouteComponentProps & {user?: VolunteerFieldsFragment}> = ({ history, match, user }) => {
+export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerFieldsFragment }> = ({ history, match, user }) => {
   const { keycloak, profile } = useContext(AuthContext);
 
   const [createVolunteerMutation] = useCreateVolunteerMutation()

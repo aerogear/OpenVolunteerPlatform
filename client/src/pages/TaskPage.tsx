@@ -44,15 +44,17 @@ export const TaskPage: React.FC<RouteComponentProps & UserState> = ({ match, loc
     content = <Empty message={<p>No tasks assigned!</p>} />;
   }
 
+  const updateFilter = (e: CustomEvent) => {
+    setSegmentFilter(e.detail.value as ActionStatus)
+    console.log('Segment selected', e.detail.value);
+    called = false;
+  }
+  
   return (
     <IonPage>
       <Header title="CrisisCommunity Volounteer" match={match} isOnline={isOnline} />
       <IonContent className="ion-padding" >
-        <IonSegment onIonChange={e => {
-          setSegmentFilter("est")
-          console.log('Segment selected', e.detail.value);
-          called = false;
-        }}>
+        <IonSegment onIonChange={updateFilter}>
           <IonSegmentButton value={ActionStatus.Assigned}>
             <IonLabel>Open Tasks</IonLabel>
           </IonSegmentButton>

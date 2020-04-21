@@ -6,28 +6,28 @@ const volounteerForm = new SimpleSchema({
         type: String,
         max: 120,
         uniforms: {
-            readonly: true
+            disabled: true
         }
     },
     lastName: {
         type: String,
         max: 120,
         uniforms: {
-            readonly: true
+            disabled: true
         }
     },
     email: {
         type: String,
         max: 220,
         uniforms: {
-            readonly: true
+            disabled: true
         }
     },
     username: {
         type: String,
         max: 220,
         uniforms: {
-            readonly: true
+            disabled: true
         }
     },
     address1: {
@@ -47,18 +47,15 @@ const volounteerForm = new SimpleSchema({
         uniforms: {
             label: "Date Of Birth"
         },
-        optional: true
     },
     canPhoneCall: {
         type: Boolean,
-        optional: true,
         uniforms: {
             label: "I volounteer to deliver basic goods to recipients"
         }
     },
     canDeliver: {
         type: Boolean,
-        optional: true,
         uniforms: {
             label: "I volounteer to make phone calls to recipients"
         }
