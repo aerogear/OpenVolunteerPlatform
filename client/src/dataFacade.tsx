@@ -11,6 +11,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
 };
 
 export enum ActionStatus {
@@ -22,6 +23,7 @@ export enum ActionType {
   PhoneCall = 'PHONE_CALL',
   Delivery = 'DELIVERY'
 }
+
 
 /**
  * @model
@@ -177,6 +179,7 @@ export type Reciever = {
   name: Scalars['String'];
   phone?: Maybe<Scalars['String']>;
   address?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   prefferedProducts?: Maybe<Scalars['String']>;
   /** @oneToMany field: 'reciever', key: 'recieverId' */
   actions?: Maybe<Array<Maybe<VolounteerAction>>>;
@@ -188,6 +191,7 @@ export type RecieverInput = {
   name?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
   address?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   prefferedProducts?: Maybe<Scalars['String']>;
   version?: Maybe<Scalars['Int']>;
 };
@@ -256,6 +260,7 @@ export type VolounteerAction = {
   products: Scalars['String'];
   status?: Maybe<ActionStatus>;
   actionType?: Maybe<ActionType>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   /** @manyToOne field: 'actions', key: 'volounteerId' */
   volounteer?: Maybe<Volunteer>;
   /** @manyToOne field: 'actions', key: 'recieverId' */
@@ -270,6 +275,7 @@ export type VolounteerActionInput = {
   products?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
   actionType?: Maybe<ActionType>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   volounteerId?: Maybe<Scalars['ID']>;
   recieverId?: Maybe<Scalars['ID']>;
   version?: Maybe<Scalars['Int']>;
@@ -289,7 +295,7 @@ export type Volunteer = {
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
-  dateOfBirth: Scalars['String'];
+  dateOfBirth?: Maybe<Scalars['DateTime']>;
   canPhoneCall: Scalars['Boolean'];
   canDeliver: Scalars['Boolean'];
   /** @oneToMany field: 'volounteer', key: 'volounteerId' */
@@ -306,7 +312,7 @@ export type VolunteerInput = {
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
-  dateOfBirth?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['DateTime']>;
   canPhoneCall?: Maybe<Scalars['Boolean']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
   version?: Maybe<Scalars['Int']>;
@@ -324,26 +330,26 @@ export type DistributionCentreExpandedFieldsFragment = (
 
 export type RecieverFieldsFragment = (
   { __typename?: 'Reciever' }
-  & Pick<Reciever, 'id' | 'name' | 'phone' | 'address' | 'prefferedProducts'>
+  & Pick<Reciever, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
 );
 
 export type RecieverExpandedFieldsFragment = (
   { __typename?: 'Reciever' }
-  & Pick<Reciever, 'id' | 'name' | 'phone' | 'address' | 'prefferedProducts'>
+  & Pick<Reciever, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolounteerAction' }
-    & Pick<VolounteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType'>
+    & Pick<VolounteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
   )>>> }
 );
 
 export type VolounteerActionFieldsFragment = (
   { __typename?: 'VolounteerAction' }
-  & Pick<VolounteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType'>
+  & Pick<VolounteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
 );
 
 export type VolounteerActionExpandedFieldsFragment = (
   { __typename?: 'VolounteerAction' }
-  & Pick<VolounteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType'>
+  & Pick<VolounteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
 );
 
 export type VolunteerFieldsFragment = (
@@ -356,7 +362,7 @@ export type VolunteerExpandedFieldsFragment = (
   & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolounteerAction' }
-    & Pick<VolounteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType'>
+    & Pick<VolounteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
   )>>> }
 );
 
@@ -513,6 +519,7 @@ export const RecieverFieldsFragmentDoc = gql`
   name
   phone
   address
+  createdAt
   prefferedProducts
 }
     `;
@@ -522,6 +529,7 @@ export const RecieverExpandedFieldsFragmentDoc = gql`
   name
   phone
   address
+  createdAt
   prefferedProducts
   actions {
     id
@@ -530,6 +538,7 @@ export const RecieverExpandedFieldsFragmentDoc = gql`
     products
     status
     actionType
+    createdAt
   }
 }
     `;
@@ -541,6 +550,7 @@ export const VolounteerActionFieldsFragmentDoc = gql`
   products
   status
   actionType
+  createdAt
 }
     `;
 export const VolounteerActionExpandedFieldsFragmentDoc = gql`
@@ -551,6 +561,7 @@ export const VolounteerActionExpandedFieldsFragmentDoc = gql`
   products
   status
   actionType
+  createdAt
 }
     `;
 export const VolunteerFieldsFragmentDoc = gql`
@@ -588,6 +599,7 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
     products
     status
     actionType
+    createdAt
   }
 }
     `;

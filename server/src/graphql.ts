@@ -3,18 +3,18 @@ import { buildSchema } from 'graphql';
 import { join } from 'path';
 import { connect } from './db';
 import resolvers from './resolvers/resolvers';
+import scalars from './resolvers/scalars';
 import { models } from './resolvers/models'
 import { getPubSub } from './pubsub'
 import { Config } from './config/config';
 import { ApolloServer, ApolloServerExpressConfig } from "apollo-server-express";
-import { Express } from "express";
 import { buildKeycloakApolloConfig } from './auth';
 import { createMongoCRUDRuntimeContext } from './mongo/createMongoServices';
 
 /**
  * Creates Apollo server
  */
-export const createApolloServer = async function (app: Express, config: Config) {
+export const createApolloServer = async function (app: any, config: Config) {
     const db = await connect(config);
     const pubSub = getPubSub();
 
@@ -24,7 +24,7 @@ export const createApolloServer = async function (app: Express, config: Config) 
 
     let apolloConfig: ApolloServerExpressConfig = {
         typeDefs: typeDefs,
-        resolvers,
+        resolvers: { ...resolvers, ...scalars },
         playground: true,
         context: context
     }

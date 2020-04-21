@@ -11,11 +11,12 @@ type DistributionCentre {
   city: String
   lat: String
   long: String
+  stockInformation: JSON
 }
 
 """
- @model
- @crud.delete: false
+@model
+@crud.delete: false
 """
 type Volunteer {
   id: ID!
@@ -26,27 +27,28 @@ type Volunteer {
   address1: String
   address2: String
   city: String
-  dateOfBirth: String!
+  dateOfBirth: DateTime
   canPhoneCall: Boolean!
   canDeliver: Boolean!
   """
-   @oneToMany field: 'volounteer'
+  @oneToMany field: 'volounteer'
   """
   actions: [VolounteerAction]
 }
 
 """
- @model
- @crud.delete: false
+@model
+@crud.delete: false
 """
 type Reciever {
   id: ID!
   name: String!
   phone: String
   address: String
+  createdAt: DateTime
   prefferedProducts: String
   """
-   @oneToMany field: 'reciever'
+  @oneToMany field: 'reciever'
   """
   actions: [VolounteerAction]
 }
@@ -62,6 +64,7 @@ type VolounteerAction {
   products: String!
   status: ActionStatus
   actionType: ActionType
+  createdAt: DateTime
 }
 
 enum ActionType {
@@ -73,3 +76,7 @@ enum ActionStatus {
   ASSIGNED
   COMPLETED
 }
+
+scalar DateTime
+scalar JSON
+scalar ID

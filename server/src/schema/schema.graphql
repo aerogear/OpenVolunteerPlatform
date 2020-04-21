@@ -10,6 +10,8 @@ enum ActionType {
   DELIVERY
 }
 
+scalar DateTime
+
 """
 @model
 @crud.update: false
@@ -23,6 +25,7 @@ type DistributionCentre {
   city: String
   lat: String
   long: String
+  stockInformation: JSON
   version: Int
 }
 
@@ -34,8 +37,11 @@ input DistributionCentreInput {
   city: String
   lat: String
   long: String
+  stockInformation: JSON
   version: Int
 }
+
+scalar JSON
 
 type Mutation {
   createDistributionCentre(input: DistributionCentreInput): DistributionCentre!
@@ -68,6 +74,7 @@ type Reciever {
   name: String!
   phone: String
   address: String
+  createdAt: DateTime
   prefferedProducts: String
 
   """@oneToMany field: 'reciever', key: 'recieverId'"""
@@ -80,6 +87,7 @@ input RecieverInput {
   name: String
   phone: String
   address: String
+  createdAt: DateTime
   prefferedProducts: String
   version: Int
 }
@@ -106,6 +114,7 @@ type VolounteerAction {
   products: String!
   status: ActionStatus
   actionType: ActionType
+  createdAt: DateTime
 
   """@manyToOne field: 'actions', key: 'volounteerId'"""
   volounteer: Volunteer
@@ -122,6 +131,7 @@ input VolounteerActionInput {
   products: String
   status: ActionStatus
   actionType: ActionType
+  createdAt: DateTime
   volounteerId: ID
   recieverId: ID
   version: Int
@@ -140,7 +150,7 @@ type Volunteer {
   address1: String
   address2: String
   city: String
-  dateOfBirth: String!
+  dateOfBirth: DateTime
   canPhoneCall: Boolean!
   canDeliver: Boolean!
 
@@ -158,7 +168,7 @@ input VolunteerInput {
   address1: String
   address2: String
   city: String
-  dateOfBirth: String
+  dateOfBirth: DateTime
   canPhoneCall: Boolean
   canDeliver: Boolean
   version: Int
