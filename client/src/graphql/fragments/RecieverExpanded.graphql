@@ -3,6 +3,7 @@ fragment RecieverExpandedFields on Reciever {
    name
    phone
    address
+   createdAt
    prefferedProducts
    actions {
       id
@@ -11,5 +12,6 @@ fragment RecieverExpandedFields on Reciever {
       products
       status
       actionType
+      createdAt
    }
 } 

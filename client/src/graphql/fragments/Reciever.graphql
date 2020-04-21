@@ -3,6 +3,7 @@ fragment RecieverFields on Reciever {
    name
    phone
    address
+   createdAt
    prefferedProducts
 
 } 

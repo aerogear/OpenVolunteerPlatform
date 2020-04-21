@@ -17,5 +17,6 @@ fragment VolunteerExpandedFields on Volunteer {
       products
       status
       actionType
+      createdAt
    }
 } 
