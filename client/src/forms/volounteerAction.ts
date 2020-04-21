@@ -73,4 +73,4 @@ const volounteerActionForm = new SimpleSchema({
     }
 } as any);
 
-// export default new SimpleSchema2Bridge(volounteerActionForm);
+export default new SimpleSchema2Bridge(volounteerActionForm);

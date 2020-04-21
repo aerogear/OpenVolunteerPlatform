@@ -20,12 +20,12 @@ interface UserState {
 }
 
 export const TaskPage: React.FC<RouteComponentProps & UserState> = ({ match, location: { state } }) => {
-  const [segmentFilter, setSegmentFilter] = useState(ActionStatus.Assigned.toString())
-  let [findActions, { data, loading, error, called }] = useFindMyVolounteerActionsLazyQuery({ fetchPolicy: "cache-and-network" })
+
+  let [findActions, { data, loading, error, called, refetch }] = useFindMyVolounteerActionsLazyQuery({ fetchPolicy: "network-only" })
   const isOnline = useNetworkStatus();
 
   if (state && state.user && !called) {
-    findActions({ variables: { volounteerId: state.user.id, status: segmentFilter as ActionStatus } })
+    findActions({ variables: { volounteerId: state.user.id, status: ActionStatus.Assigned } })
   }
 
   if (error) {
@@ -41,15 +41,13 @@ export const TaskPage: React.FC<RouteComponentProps & UserState> = ({ match, loc
   if (data?.findVolounteerActions?.length !== 0) {
     content = <TaskList tasks={data?.findVolounteerActions} />
   } else {
-    content = <Empty message={<p>No tasks assigned!</p>} />;
+    content = <Empty message={<p>No tasks!</p>} />;
   }
 
   const updateFilter = (e: CustomEvent) => {
-    setSegmentFilter(e.detail.value as ActionStatus)
-    console.log('Segment selected', e.detail.value);
-    called = false;
+    refetch({ volounteerId: state.user.id, status: e.detail.value })
   }
-  
+
   return (
     <IonPage>
       <Header title="CrisisCommunity Volounteer" match={match} isOnline={isOnline} />
