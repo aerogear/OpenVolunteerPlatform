@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   IonContent,
   IonCard,
@@ -9,20 +9,23 @@ import {
   IonItemGroup,
   IonItemDivider,
   IonList,
+  IonToast,
 } from '@ionic/react';
 import { Header } from '../components';
 import { AuthContext } from '../AuthContext';
-import { RouteComponentProps } from 'react-router';
-import { useCreateVolunteerMutation, VolunteerFieldsFragment } from "../dataFacade"
+import { RouteComponentProps, useHistory } from 'react-router';
+import { useCreateVolunteerMutation, VolunteerFieldsFragment, useUpdateVolunteerMutation } from "../dataFacade"
 
 import volounteerForm from '../forms/volounteer';
 
 import { AutoForm } from 'uniforms-ionic'
 
-export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerFieldsFragment }> = ({ history, match, user }) => {
+export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerFieldsFragment }> = ({ match, user }) => {
   const { keycloak, profile } = useContext(AuthContext);
-
+  const [showDialog, setShowDialog] = useState(false)
   const [createVolunteerMutation] = useCreateVolunteerMutation()
+  const [updateVolunteerMutation] = useUpdateVolunteerMutation()
+  const history = useHistory()
 
   if (!keycloak || !profile) return (
     <IonCard>
@@ -38,31 +41,33 @@ export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerField
   );
 
   const submit = (model: any) => {
-    createVolunteerMutation({
-      variables: {
-        input: {
-          firstName: profile?.firstName,
-          lastName: profile?.lastName,
-          email: profile?.email,
-          username: profile?.username,
-          address1: model.address1,
-          address2: model.address2,
-          city: model.city,
-          dateOfBirth: model.dateOfBirth,
-          canPhoneCall: model.canPhoneCall,
-          canDeliver: model.canDeliver
-        }
-      }
-    }).then(() => {
-      history.push("/tasks")
-    }).catch((e) => {
-      console.log(e);
-    })
+    if (user) {
+      updateVolunteerMutation({
+        variables: { input: model }
+      }).then((e: any) => {
+        history.push("/tasks", { user })
+      }).catch((e: any) => {
+        console.log(e);
+      })
+    } else {
+      createVolunteerMutation({
+        variables: { input: model }
+      }).then(() => {
+        history.push("/tasks", { user })
+      }).catch((e: any) => {
+        console.log(e);
+      })
+    }
+  }
+
+  if (user) {
+    user.dateOfBirth = new Date(user.dateOfBirth);
+    delete user.__typename;
   }
 
   return (
     <>
-      <Header title="Profile" backHref="/tasks" match={match} />
+      <Header title="Profile" match={match} />
       <IonContent>
         <IonList>
           <IonCard>
@@ -72,7 +77,7 @@ export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerField
               </IonItemDivider>
               <AutoForm
                 placeholder
-                model={user}
+                model={{ ...user }}
                 schema={volounteerForm}
                 onSubmit={(model: any) => submit(model)}
                 showInlineError

@@ -40,10 +40,12 @@ const volounteerForm = new SimpleSchema({
     },
     city: {
         type: String,
+        required: false,
         max: 100
     },
     dateOfBirth: {
         type: Date,
+        required: false,
         uniforms: {
             label: "Date Of Birth"
         },
