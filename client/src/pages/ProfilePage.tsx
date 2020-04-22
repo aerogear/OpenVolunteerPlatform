@@ -16,12 +16,10 @@ import { RouteComponentProps, useHistory } from 'react-router';
 import { useCreateVolunteerMutation, useUpdateVolunteerMutation } from "../dataFacade"
 
 import volunteerForm from '../forms/volunteer';
-
 import { AutoForm } from 'uniforms-ionic'
-import { volunteerTransformer } from '../transformer/volunteerTransformer';
 
 export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
-  const { keycloak, profile, volunteer } = useContext(AuthContext);
+  let { keycloak, profile, volunteer } = useContext(AuthContext);
   const [createVolunteerMutation] = useCreateVolunteerMutation()
   const [updateVolunteerMutation] = useUpdateVolunteerMutation()
   const history = useHistory()
@@ -60,6 +58,10 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
     }
   }
 
+  if (!volunteer) {
+    volunteer = profile as any;
+  }
+
   return (
     <>
       <Header title="Profile" backHref="/tasks" match={match} />
@@ -72,7 +74,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
               </IonItemDivider>
               <AutoForm
                 placeholder
-                model={{ ...volunteer }}
+                model={{ ...volunteer, ...profile }}
                 schema={volunteerForm}
                 onSubmit={(model: any) => submit(model)}
                 showInlineError
