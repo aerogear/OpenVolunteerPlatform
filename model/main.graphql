@@ -65,6 +65,11 @@ type VolunteerAction {
   status: ActionStatus
   actionType: ActionType
   createdAt: DateTime
+  """
+  Workaround for https://github.com/aerogear/graphback/issues/1167
+  @manyToOne field: 'actions', key: 'recieverId'
+  """
+  reciever: Reciever
 }
 
 enum ActionType {

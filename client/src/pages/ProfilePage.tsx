@@ -62,7 +62,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
 
   return (
     <>
-      <Header title="Profile" match={match} />
+      <Header title="Profile" backHref="/tasks" match={match} />
       <IonContent>
         <IonList>
           <IonCard>
