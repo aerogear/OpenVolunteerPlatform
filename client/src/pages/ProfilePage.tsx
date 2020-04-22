@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   IonContent,
   IonCard,
@@ -9,20 +9,19 @@ import {
   IonItemGroup,
   IonItemDivider,
   IonList,
-  IonToast,
 } from '@ionic/react';
 import { Header } from '../components';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import { RouteComponentProps, useHistory } from 'react-router';
-import { useCreateVolunteerMutation, VolunteerFieldsFragment, useUpdateVolunteerMutation } from "../dataFacade"
+import { useCreateVolunteerMutation, useUpdateVolunteerMutation } from "../dataFacade"
 
-import volounteerForm from '../forms/volounteer';
+import volunteerForm from '../forms/volunteer';
 
 import { AutoForm } from 'uniforms-ionic'
+import { volunteerTransformer } from '../transformer/volunteerTransformer';
 
-export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerFieldsFragment }> = ({ match, user }) => {
-  const { keycloak, profile } = useContext(AuthContext);
-  const [showDialog, setShowDialog] = useState(false)
+export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
+  const { keycloak, profile, volunteer } = useContext(AuthContext);
   const [createVolunteerMutation] = useCreateVolunteerMutation()
   const [updateVolunteerMutation] = useUpdateVolunteerMutation()
   const history = useHistory()
@@ -41,11 +40,12 @@ export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerField
   );
 
   const submit = (model: any) => {
-    if (user) {
+
+    if (volunteer) {
       updateVolunteerMutation({
         variables: { input: model }
-      }).then((e: any) => {
-        history.push("/tasks", { user })
+      }).then(() => {
+        history.push("/tasks")
       }).catch((e: any) => {
         console.log(e);
       })
@@ -53,16 +53,11 @@ export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerField
       createVolunteerMutation({
         variables: { input: model }
       }).then(() => {
-        history.push("/tasks", { user })
+        history.push("/tasks")
       }).catch((e: any) => {
         console.log(e);
       })
     }
-  }
-
-  if (user) {
-    user.dateOfBirth = new Date(user.dateOfBirth);
-    delete user.__typename;
   }
 
   return (
@@ -73,12 +68,12 @@ export const ProfilePage: React.FC<RouteComponentProps & { user?: VolunteerField
           <IonCard>
             <IonItemGroup>
               <IonItemDivider color="light">
-                <h2>Volounteer information</h2>
+                <h2>Volunteer information</h2>
               </IonItemDivider>
               <AutoForm
                 placeholder
-                model={{ ...user }}
-                schema={volounteerForm}
+                model={{ ...volunteer }}
+                schema={volunteerForm}
                 onSubmit={(model: any) => submit(model)}
                 showInlineError
               />

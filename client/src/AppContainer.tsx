@@ -6,14 +6,13 @@ import { clientConfig } from './config';
 import { Loading } from './components/Loading';
 import { IContainerProps } from './declarations';
 import { getKeycloakInstance } from './keycloakAuth';
-import { AuthContext } from './AuthContext';
+import { AuthContext } from './context/AuthContext';
 
 let keycloak: any;
 const apolloClient = new ApolloOfflineClient(clientConfig);
 
 export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
   const [keycloakInitialized, setKeycloakInitialized] = useState(false);
-
 
   // Initialize the client
   useEffect(() => {
@@ -28,14 +27,14 @@ export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
     init();
   }, []);
 
-  if (!keycloakInitialized || !keycloak.profile ) return <Loading loading={true} />;
+  if (!keycloakInitialized || !keycloak.profile) return <Loading loading={true} />;
 
   // return container with keycloak provider
   return (
     <AuthContext.Provider value={{ keycloak, profile: keycloak.profile }}>
       <ApolloOfflineProvider client={apolloClient}>
         <ApolloProvider client={apolloClient}>
-          <App/>
+          <App />
         </ApolloProvider>
       </ApolloOfflineProvider>
     </AuthContext.Provider>

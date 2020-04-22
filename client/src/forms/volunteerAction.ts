@@ -1,7 +1,7 @@
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 
-const volounteerActionForm = new SimpleSchema({
+const volunteerActionForm = new SimpleSchema({
     title: {
         type: String,
         max: 120,
@@ -73,4 +73,4 @@ const volounteerActionForm = new SimpleSchema({
     }
 } as any);
 
-export default new SimpleSchema2Bridge(volounteerActionForm);
+export default new SimpleSchema2Bridge(volunteerActionForm);

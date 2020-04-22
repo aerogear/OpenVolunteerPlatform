@@ -8,12 +8,13 @@ import {
 import { IonApp } from '@ionic/react';
 import { TaskPage, ProfilePage } from '../pages';
 import { ViewTaskPage } from '../pages/ViewTaskPage';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import { useFindActiveVolunteerLazyQuery, VolunteerFieldsFragment } from '../dataFacade';
 import { Loading } from './Loading';
+import { volunteerTransformer } from '../transformer/volunteerTransformer';
 
 export const Router: React.FC = () => {
-  const { profile } = useContext(AuthContext);
+  const { profile, keycloak } = useContext(AuthContext);
 
   let [findVolunteerQuery, { data, loading, error, called }] = useFindActiveVolunteerLazyQuery({
     fetchPolicy: "network-only"
@@ -32,22 +33,24 @@ export const Router: React.FC = () => {
     findVolunteerQuery({ variables: { username: profile?.username } });
   }
 
-  let user: VolunteerFieldsFragment | undefined;
+  let volunteer: VolunteerFieldsFragment | undefined;
   if (data?.findVolunteers?.length === 1 && data?.findVolunteers[0]) {
-    user = data.findVolunteers[0];
+    volunteer = volunteerTransformer(data.findVolunteers[0]);
   }
 
   return (
     <IonApp>
       <AppRouter>
-        <Switch>
-          <Route path="/viewTask/:id" component={ViewTaskPage} exact />
-          <Route path="/tasks" state={user} component={TaskPage} exact />
-          <Route path="/profile" render={(props) => <ProfilePage {...props} user={user}/>} exact />
-          <Route exact path="/" render={() => user ?
-            <Redirect to={{ pathname: "tasks", state: { user } }} /> :
-            <Redirect to="profile" />} />
-        </Switch>
+        <AuthContext.Provider value={{ profile, keycloak, volunteer }}>
+          <Switch>
+            <Route path="/viewTask/:id" component={ViewTaskPage} exact />
+            <Route path="/tasks" component={TaskPage} exact />
+            <Route path="/profile" component={ProfilePage} exact />
+            <Route exact path="/" render={() => volunteer ?
+              <Redirect to={{ pathname: "tasks" }} /> :
+              <Redirect to="profile" />} />
+          </Switch>
+        </AuthContext.Provider>
       </AppRouter>
     </IonApp>
   );

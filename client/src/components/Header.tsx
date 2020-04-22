@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { IonHeader, IonToolbar, IonButtons, IonTitle, IonToast, IonButton, IonIcon } from '@ionic/react';
 import { person, exit, arrowBack } from 'ionicons/icons';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import { logout } from '../keycloakAuth';
 import { useApolloOfflineClient } from 'react-offix-hooks';
 import { Link } from 'react-router-dom';

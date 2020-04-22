@@ -1,7 +1,7 @@
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 
-const volounteerForm = new SimpleSchema({
+const volunteerForm = new SimpleSchema({
     firstName: {
         type: String,
         max: 120,
@@ -53,15 +53,15 @@ const volounteerForm = new SimpleSchema({
     canPhoneCall: {
         type: Boolean,
         uniforms: {
-            label: "I volounteer to deliver basic goods to recipients"
+            label: "I volunteer to deliver basic goods to recipients"
         }
     },
     canDeliver: {
         type: Boolean,
         uniforms: {
-            label: "I volounteer to make phone calls to recipients"
+            label: "I volunteer to make phone calls to recipients"
         }
     }
 } as any);
 
-export default new SimpleSchema2Bridge(volounteerForm);
+export default new SimpleSchema2Bridge(volunteerForm);

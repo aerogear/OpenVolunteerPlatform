@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   IonPage,
   IonSegment,
@@ -10,24 +10,19 @@ import {
 } from '@ionic/react';
 import { Empty, TaskList, NetworkBadge, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindMyVolounteerActionsLazyQuery, VolunteerFieldsFragment, ActionStatus } from '../dataFacade';
+import { useFindMyVolunteerActionsLazyQuery, ActionStatus } from '../dataFacade';
 import { useNetworkStatus } from 'react-offix-hooks';
+import { AuthContext } from '../context/AuthContext';
 
-interface UserState {
-  location: {
-    state: { user: VolunteerFieldsFragment }
-  }
-}
 
-export const TaskPage: React.FC<RouteComponentProps & UserState> = ({ match, location: { state } }) => {
-
-  let [findActions, { data, loading, error, called, refetch }] = useFindMyVolounteerActionsLazyQuery({ fetchPolicy: "network-only" })
+export const TaskPage: React.FC<RouteComponentProps> = ({ match }) => {
+  const { volunteer } = useContext(AuthContext);
+  let [findActions, { data, loading, error, called, refetch }] = useFindMyVolunteerActionsLazyQuery({ fetchPolicy: "network-only" })
   const isOnline = useNetworkStatus();
 
-  if (state && state.user && !called) {
-    findActions({ variables: { volounteerId: state.user.id, status: ActionStatus.Assigned } })
+  if (volunteer && !called) {
+    findActions({ variables: { volunteerId: volunteer.id, status: ActionStatus.Assigned } })
   }
-
   if (error) {
     console.log(error);
   }
@@ -38,19 +33,21 @@ export const TaskPage: React.FC<RouteComponentProps & UserState> = ({ match, loc
   />;
 
   let content;
-  if (data?.findVolounteerActions?.length !== 0) {
-    content = <TaskList tasks={data?.findVolounteerActions} />
+  if (data?.findVolunteerActions?.length !== 0) {
+    content = <TaskList tasks={data?.findVolunteerActions} />
   } else {
     content = <Empty message={<p>No tasks!</p>} />;
   }
 
   const updateFilter = (e: CustomEvent) => {
-    refetch({ volounteerId: state.user.id, status: e.detail.value })
+    if (volunteer) {
+      refetch({ volunteerId: volunteer.id, status: e.detail.value })
+    }
   }
 
   return (
     <IonPage>
-      <Header title="CrisisCommunity Volounteer" match={match} isOnline={isOnline} />
+      <Header title="CrisisCommunity Volunteer" match={match} isOnline={isOnline} />
       <IonContent className="ion-padding" >
         <IonSegment onIonChange={updateFilter}>
           <IonSegmentButton value={ActionStatus.Assigned}>

@@ -461,7 +461,13 @@ export type FindMyVolunteerActionsQueryVariables = {
 };
 
 
-export type FindMyVolunteerActionsQuery = { __typename?: 'Query' };
+export type FindMyVolunteerActionsQuery = (
+  { __typename?: 'Query' }
+  & { findVolunteerActions: Array<Maybe<(
+    { __typename?: 'VolunteerAction' }
+    & VolunteerActionExpandedFieldsFragment
+  )>> }
+);
 
 export const DistributionCentreFieldsFragmentDoc = gql`
     fragment DistributionCentreFields on DistributionCentre {
