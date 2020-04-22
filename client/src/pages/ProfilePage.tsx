@@ -59,7 +59,12 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
   }
 
   if (!volunteer) {
-    volunteer = profile as any;
+    volunteer = {
+      email: profile.email,
+      firstName: profile.firstName,
+      lastName: profile.lastName,
+      username: profile.username
+    } as any;
   }
 
   return (
@@ -74,7 +79,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
               </IonItemDivider>
               <AutoForm
                 placeholder
-                model={{ ...volunteer, ...profile }}
+                model={{ ...volunteer }}
                 schema={volunteerForm}
                 onSubmit={(model: any) => submit(model)}
                 showInlineError
