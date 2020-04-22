@@ -9,7 +9,7 @@ export default {
   Volunteer: {
     actions: (parent, args, context) => {
       return context.VolunteerAction.batchLoadData(
-        "volounteerId",
+        "volunteerId",
         parent.id,
         context
       )
@@ -17,8 +17,8 @@ export default {
   },
 
   VolunteerAction: {
-    volounteer: (parent, args, context) => {
-      return context.Volunteer.findBy({ id: parent.volounteerId }).then(
+    volunteer: (parent, args, context) => {
+      return context.Volunteer.findBy({ id: parent.volunteerId }).then(
         (results) => results[0]
       )
     },

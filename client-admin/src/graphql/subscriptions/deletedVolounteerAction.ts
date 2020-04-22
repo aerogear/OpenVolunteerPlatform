@@ -1,12 +1,12 @@
 import gql from "graphql-tag"
-import { VolounteerActionFragment } from "../fragments/VolounteerAction"
+import { VolunteerActionFragment } from "../fragments/VolunteerAction"
 
-export const deletedVolounteerAction = gql`
-  subscription deletedVolounteerAction {
-  deletedVolounteerAction {
-      ...VolounteerActionFields
+export const deletedVolunteerAction = gql`
+  subscription deletedVolunteerAction {
+  deletedVolunteerAction {
+      ...VolunteerActionFields
   }
 } 
 
-  ${VolounteerActionFragment}
+  ${VolunteerActionFragment}
 `

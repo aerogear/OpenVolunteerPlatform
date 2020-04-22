@@ -15,7 +15,7 @@ with vulnerable people.
 ** Personal needs - 
 ** Medical neeeds-  
 
-NOTE: The same leaflet can be used to gather posible volounteers. 
+NOTE: The same leaflet can be used to gather posible volunteers. 
 
 * The form is dynamically processed using data acqusition techniques to match people that are seeking assistance with those who are able to provide support. 
  

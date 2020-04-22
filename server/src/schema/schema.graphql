@@ -120,13 +120,13 @@ type Volunteer {
   canPhoneCall: Boolean!
   canDeliver: Boolean!
 
-  """@oneToMany field: 'volounteer', key: 'volounteerId'"""
+  """@oneToMany field: 'volunteer', key: 'volunteerId'"""
   actions: [VolunteerAction]
   version: Int
 }
 
 """
-Represents action that is assigned to volounteer
+Represents action that is assigned to volunteer
 @model
 """
 type VolunteerAction {
@@ -138,8 +138,8 @@ type VolunteerAction {
   actionType: ActionType
   createdAt: DateTime
 
-  """@manyToOne field: 'actions', key: 'volounteerId'"""
-  volounteer: Volunteer
+  """@manyToOne field: 'actions', key: 'volunteerId'"""
+  volunteer: Volunteer
 
   """@manyToOne field: 'actions', key: 'recieverId'"""
   reciever: Reciever
@@ -154,7 +154,7 @@ input VolunteerActionInput {
   status: ActionStatus
   actionType: ActionType
   createdAt: DateTime
-  volounteerId: ID
+  volunteerId: ID
   recieverId: ID
   version: Int
 }

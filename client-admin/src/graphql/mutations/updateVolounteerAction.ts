@@ -1,13 +1,13 @@
 import gql from "graphql-tag"
-import { VolounteerActionFragment } from "../fragments/VolounteerAction"
+import { VolunteerActionFragment } from "../fragments/VolunteerAction"
 
-export const updateVolounteerAction = gql`
-  mutation updateVolounteerAction($input: VolounteerActionInput!) {
-  updateVolounteerAction(input: $input) {
-      ...VolounteerActionFields
+export const updateVolunteerAction = gql`
+  mutation updateVolunteerAction($input: VolunteerActionInput!) {
+  updateVolunteerAction(input: $input) {
+      ...VolunteerActionFields
   }
 }
 
 
-  ${VolounteerActionFragment}
+  ${VolunteerActionFragment}
 `

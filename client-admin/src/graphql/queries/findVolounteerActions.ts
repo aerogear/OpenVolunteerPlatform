@@ -1,12 +1,12 @@
 import gql from "graphql-tag"
-import { VolounteerActionExpandedFragment } from "../fragments/VolounteerActionExpanded"
+import { VolunteerActionExpandedFragment } from "../fragments/VolunteerActionExpanded"
 
-export const findVolounteerActions = gql`
-  query findVolounteerActions($fields: VolounteerActionInput!, $limit: Int, $offset: Int) {
-    findVolounteerActions(fields: $fields, limit: $limit, offset: $offset) {
-      ...VolounteerActionExpandedFields
+export const findVolunteerActions = gql`
+  query findVolunteerActions($fields: VolunteerActionInput!, $limit: Int, $offset: Int) {
+    findVolunteerActions(fields: $fields, limit: $limit, offset: $offset) {
+      ...VolunteerActionExpandedFields
     }
   }
 
-  ${VolounteerActionExpandedFragment}
+  ${VolunteerActionExpandedFragment}
 `

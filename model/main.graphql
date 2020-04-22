@@ -31,7 +31,7 @@ type Volunteer {
   canPhoneCall: Boolean!
   canDeliver: Boolean!
   """
-  @oneToMany field: 'volounteer'
+  @oneToMany field: 'volunteer'
   """
   actions: [VolunteerAction]
 }
@@ -54,7 +54,7 @@ type Reciever {
 }
 
 """
-Represents action that is assigned to volounteer
+Represents action that is assigned to volunteer
 @model
 """
 type VolunteerAction {

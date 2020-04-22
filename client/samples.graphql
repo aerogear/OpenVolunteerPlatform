@@ -13,8 +13,8 @@ query findAllRecievers {
   }
 }
 
-mutation createVolounteerAction {
-  createVolounteerAction(
+mutation createVolunteerAction {
+  createVolunteerAction(
     input: {
       id: ""
       title: "Deliver to Mr Boris"
@@ -22,7 +22,7 @@ mutation createVolounteerAction {
       actionType: DELIVERY,
       products: "Bread, Pasta, ToiletPaper",
       recieverId: "5e8f3eda92787169c1e7cd87"
-      volounteerId: "5e9782e94b8d743f02b84e79",
+      volunteerId: "5e9782e94b8d743f02b84e79",
       status: ASSIGNED
     }
   ) {

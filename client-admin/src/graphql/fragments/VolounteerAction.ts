@@ -1,7 +1,7 @@
 import gql from "graphql-tag"
 
-export const VolounteerActionFragment = gql`
-  fragment VolounteerActionFields on VolounteerAction {
+export const VolunteerActionFragment = gql`
+  fragment VolunteerActionFields on VolunteerAction {
    id
    title
    description
