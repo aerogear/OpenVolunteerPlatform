@@ -1,6 +1,44 @@
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 
+const recieverSchema = new SimpleSchema({
+    name: {
+        type: String,
+        max: 220,
+        uniforms: {
+            readonly: true
+        }
+    },
+    phone: {
+        type: String,
+        max: 220,
+        uniforms: {
+            readonly: true
+        }
+    },
+    address1: {
+        type: String,
+        max: 220,
+        uniforms: {
+            readonly: true
+        }
+    },
+    address2: {
+        type: String,
+        max: 220,
+        uniforms: {
+            readonly: true
+        }
+    },
+    prefferedProducts: {
+        type: String,
+        max: 220,
+        uniforms: {
+            readonly: true
+        }
+    }
+} as any);
+
 const volunteerActionForm = new SimpleSchema({
     title: {
         type: String,
@@ -27,49 +65,17 @@ const volunteerActionForm = new SimpleSchema({
         type: String,
         max: 220,
         uniforms: {
-            readonly: true
+            readonly: false
         }
     },
     actionType: {
         type: String,
         max: 400
     },
+
     reciever: {
-        name: {
-            type: String,
-            max: 220,
-            uniforms: {
-                readonly: true
-            }
-        },
-        phone: {
-            type: String,
-            max: 220,
-            uniforms: {
-                readonly: true
-            }
-        },
-        address1: {
-            type: String,
-            max: 220,
-            uniforms: {
-                readonly: true
-            }
-        },
-        address2: {
-            type: String,
-            max: 220,
-            uniforms: {
-                readonly: true
-            }
-        },
-        prefferedProducts: {
-            type: String,
-            max: 220,
-            uniforms: {
-                readonly: true
-            }
-        }
+        type: recieverSchema,
+        optional: true,
     }
 } as any);
 

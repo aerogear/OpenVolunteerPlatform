@@ -474,7 +474,6 @@ export type FindMyVolunteerActionsQuery = (
 );
 
 export type FindVolunteerActionQueryVariables = {
-  volunteerId: Scalars['ID'];
   id: Scalars['ID'];
 };
 
@@ -869,8 +868,8 @@ export type FindMyVolunteerActionsQueryHookResult = ReturnType<typeof useFindMyV
 export type FindMyVolunteerActionsLazyQueryHookResult = ReturnType<typeof useFindMyVolunteerActionsLazyQuery>;
 export type FindMyVolunteerActionsQueryResult = ApolloReactCommon.QueryResult<FindMyVolunteerActionsQuery, FindMyVolunteerActionsQueryVariables>;
 export const FindVolunteerActionDocument = gql`
-    query findVolunteerAction($volunteerId: ID!, $id: ID!) {
-  findVolunteerActions(fields: {volunteerId: $volunteerId, id: $id}) {
+    query findVolunteerAction($id: ID!) {
+  findVolunteerActions(fields: {id: $id}) {
     ...VolunteerActionExpandedFields
   }
 }
@@ -888,7 +887,6 @@ export const FindVolunteerActionDocument = gql`
  * @example
  * const { data, loading, error } = useFindVolunteerActionQuery({
  *   variables: {
- *      volunteerId: // value for 'volunteerId'
  *      id: // value for 'id'
  *   },
  * });
