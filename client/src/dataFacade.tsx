@@ -269,13 +269,13 @@ export type Volunteer = {
   dateOfBirth?: Maybe<Scalars['DateTime']>;
   canPhoneCall: Scalars['Boolean'];
   canDeliver: Scalars['Boolean'];
-  /** @oneToMany field: 'volounteer', key: 'volounteerId' */
+  /** @oneToMany field: 'volunteer', key: 'volunteerId' */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   version?: Maybe<Scalars['Int']>;
 };
 
 /**
- * Represents action that is assigned to volounteer
+ * Represents action that is assigned to volunteer
  * @model
  */
 export type VolunteerAction = {
@@ -287,8 +287,8 @@ export type VolunteerAction = {
   status?: Maybe<ActionStatus>;
   actionType?: Maybe<ActionType>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  /** @manyToOne field: 'actions', key: 'volounteerId' */
-  volounteer?: Maybe<Volunteer>;
+  /** @manyToOne field: 'actions', key: 'volunteerId' */
+  volunteer?: Maybe<Volunteer>;
   /** @manyToOne field: 'actions', key: 'recieverId' */
   reciever?: Maybe<Reciever>;
   version?: Maybe<Scalars['Int']>;
@@ -302,7 +302,7 @@ export type VolunteerActionInput = {
   status?: Maybe<ActionStatus>;
   actionType?: Maybe<ActionType>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  volounteerId?: Maybe<Scalars['ID']>;
+  volunteerId?: Maybe<Scalars['ID']>;
   recieverId?: Maybe<Scalars['ID']>;
   version?: Maybe<Scalars['Int']>;
 };
@@ -455,13 +455,13 @@ export type FindActiveVolunteerQuery = (
   )>> }
 );
 
-export type FindMyVolounteerActionsQueryVariables = {
-  volounteerId: Scalars['ID'];
+export type FindMyVolunteerActionsQueryVariables = {
+  volunteerId: Scalars['ID'];
   status?: Maybe<ActionStatus>;
 };
 
 
-export type FindMyVolounteerActionsQuery = { __typename?: 'Query' };
+export type FindMyVolunteerActionsQuery = { __typename?: 'Query' };
 
 export const DistributionCentreFieldsFragmentDoc = gql`
     fragment DistributionCentreFields on DistributionCentre {
@@ -802,37 +802,37 @@ export function useFindActiveVolunteerLazyQuery(baseOptions?: ApolloReactHooks.L
 export type FindActiveVolunteerQueryHookResult = ReturnType<typeof useFindActiveVolunteerQuery>;
 export type FindActiveVolunteerLazyQueryHookResult = ReturnType<typeof useFindActiveVolunteerLazyQuery>;
 export type FindActiveVolunteerQueryResult = ApolloReactCommon.QueryResult<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>;
-export const FindMyVolounteerActionsDocument = gql`
-    query findMyVolounteerActions($volounteerId: ID!, $status: ActionStatus) {
-  findVolounteerActions(fields: {volounteerId: $volounteerId, status: $status}) {
-    ...VolounteerActionExpandedFields
+export const FindMyVolunteerActionsDocument = gql`
+    query findMyVolunteerActions($volunteerId: ID!, $status: ActionStatus) {
+  findVolunteerActions(fields: {volunteerId: $volunteerId, status: $status}) {
+    ...VolunteerActionExpandedFields
   }
 }
-    ${VolounteerActionExpandedFieldsFragmentDoc}`;
+    ${VolunteerActionExpandedFieldsFragmentDoc}`;
 
 /**
- * __useFindMyVolounteerActionsQuery__
+ * __useFindMyVolunteerActionsQuery__
  *
- * To run a query within a React component, call `useFindMyVolounteerActionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindMyVolounteerActionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * To run a query within a React component, call `useFindMyVolunteerActionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindMyVolunteerActionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useFindMyVolounteerActionsQuery({
+ * const { data, loading, error } = useFindMyVolunteerActionsQuery({
  *   variables: {
- *      volounteerId: // value for 'volounteerId'
+ *      volunteerId: // value for 'volunteerId'
  *      status: // value for 'status'
  *   },
  * });
  */
-export function useFindMyVolounteerActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindMyVolounteerActionsQuery, FindMyVolounteerActionsQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindMyVolounteerActionsQuery, FindMyVolounteerActionsQueryVariables>(FindMyVolounteerActionsDocument, baseOptions);
+export function useFindMyVolunteerActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindMyVolunteerActionsQuery, FindMyVolunteerActionsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindMyVolunteerActionsQuery, FindMyVolunteerActionsQueryVariables>(FindMyVolunteerActionsDocument, baseOptions);
       }
-export function useFindMyVolounteerActionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindMyVolounteerActionsQuery, FindMyVolounteerActionsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindMyVolounteerActionsQuery, FindMyVolounteerActionsQueryVariables>(FindMyVolounteerActionsDocument, baseOptions);
+export function useFindMyVolunteerActionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindMyVolunteerActionsQuery, FindMyVolunteerActionsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindMyVolunteerActionsQuery, FindMyVolunteerActionsQueryVariables>(FindMyVolunteerActionsDocument, baseOptions);
         }
-export type FindMyVolounteerActionsQueryHookResult = ReturnType<typeof useFindMyVolounteerActionsQuery>;
-export type FindMyVolounteerActionsLazyQueryHookResult = ReturnType<typeof useFindMyVolounteerActionsLazyQuery>;
-export type FindMyVolounteerActionsQueryResult = ApolloReactCommon.QueryResult<FindMyVolounteerActionsQuery, FindMyVolounteerActionsQueryVariables>;
+export type FindMyVolunteerActionsQueryHookResult = ReturnType<typeof useFindMyVolunteerActionsQuery>;
+export type FindMyVolunteerActionsLazyQueryHookResult = ReturnType<typeof useFindMyVolunteerActionsLazyQuery>;
+export type FindMyVolunteerActionsQueryResult = ApolloReactCommon.QueryResult<FindMyVolunteerActionsQuery, FindMyVolunteerActionsQueryVariables>;
