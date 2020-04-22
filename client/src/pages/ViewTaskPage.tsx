@@ -4,10 +4,9 @@ import { Header } from '../components/Header';
 import { Map } from '../components/Map';
 import { IUpdateMatchParams } from '../declarations';
 import { useFindVolunteerActionQuery } from '../dataFacade'
-import { AutoForm } from 'uniforms';
+import { AutoForm, SelectField } from 'uniforms-ionic'
 import volunteerAction from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
-import volunteer from '../forms/volunteer';
 
 export const ViewTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const { data, loading, error } = useFindVolunteerActionQuery({ fetchPolicy: "cache-first", variables: { id: match.params.id } });
@@ -21,8 +20,8 @@ export const ViewTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = (
   }
 
   if (loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
-
-  console.log(data.findVolunteerActions[0])
+  const model = data.findVolunteerActions[0];
+  console.log(model)
 
   return (
     <>
@@ -36,12 +35,15 @@ export const ViewTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = (
               </IonItemDivider>
               <AutoForm
                 placeholder
-                model={data.findVolunteerActions[0]}
+                model={model}
                 schema={volunteerAction}
                 onSubmit={(model: any) => { }}
                 showInlineError
                 submitField={undefined}
-              />
+              >
+                {/* <SelectField name="status" value={model.status} /> */}
+
+              </AutoForm>
             </IonItemGroup>
           </IonCard>
         </IonList>
