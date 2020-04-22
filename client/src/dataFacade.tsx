@@ -11,6 +11,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  JSON: any;
   DateTime: any;
 };
 
@@ -39,6 +40,7 @@ export type DistributionCentre = {
   city?: Maybe<Scalars['String']>;
   lat?: Maybe<Scalars['String']>;
   long?: Maybe<Scalars['String']>;
+  stockInformation?: Maybe<Scalars['JSON']>;
   version?: Maybe<Scalars['Int']>;
 };
 
@@ -50,17 +52,19 @@ export type DistributionCentreInput = {
   city?: Maybe<Scalars['String']>;
   lat?: Maybe<Scalars['String']>;
   long?: Maybe<Scalars['String']>;
+  stockInformation?: Maybe<Scalars['JSON']>;
   version?: Maybe<Scalars['Int']>;
 };
+
 
 export type Mutation = {
    __typename?: 'Mutation';
   createDistributionCentre: DistributionCentre;
   createVolunteer: Volunteer;
   updateVolunteer: Volunteer;
-  createVolounteerAction: VolounteerAction;
-  updateVolounteerAction: VolounteerAction;
-  deleteVolounteerAction: VolounteerAction;
+  createVolunteerAction: VolunteerAction;
+  updateVolunteerAction: VolunteerAction;
+  deleteVolunteerAction: VolunteerAction;
   createReciever: Reciever;
   updateReciever: Reciever;
 };
@@ -81,18 +85,18 @@ export type MutationUpdateVolunteerArgs = {
 };
 
 
-export type MutationCreateVolounteerActionArgs = {
-  input?: Maybe<VolounteerActionInput>;
+export type MutationCreateVolunteerActionArgs = {
+  input?: Maybe<VolunteerActionInput>;
 };
 
 
-export type MutationUpdateVolounteerActionArgs = {
-  input?: Maybe<VolounteerActionInput>;
+export type MutationUpdateVolunteerActionArgs = {
+  input?: Maybe<VolunteerActionInput>;
 };
 
 
-export type MutationDeleteVolounteerActionArgs = {
-  input?: Maybe<VolounteerActionInput>;
+export type MutationDeleteVolunteerActionArgs = {
+  input?: Maybe<VolunteerActionInput>;
 };
 
 
@@ -111,8 +115,8 @@ export type Query = {
   findDistributionCentres: Array<Maybe<DistributionCentre>>;
   findAllVolunteers: Array<Maybe<Volunteer>>;
   findVolunteers: Array<Maybe<Volunteer>>;
-  findAllVolounteerActions: Array<Maybe<VolounteerAction>>;
-  findVolounteerActions: Array<Maybe<VolounteerAction>>;
+  findAllVolunteerActions: Array<Maybe<VolunteerAction>>;
+  findVolunteerActions: Array<Maybe<VolunteerAction>>;
   findAllRecievers: Array<Maybe<Reciever>>;
   findRecievers: Array<Maybe<Reciever>>;
 };
@@ -144,14 +148,14 @@ export type QueryFindVolunteersArgs = {
 };
 
 
-export type QueryFindAllVolounteerActionsArgs = {
+export type QueryFindAllVolunteerActionsArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
 
 
-export type QueryFindVolounteerActionsArgs = {
-  fields?: Maybe<VolounteerActionInput>;
+export type QueryFindVolunteerActionsArgs = {
+  fields?: Maybe<VolunteerActionInput>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
@@ -182,7 +186,7 @@ export type Reciever = {
   createdAt?: Maybe<Scalars['DateTime']>;
   prefferedProducts?: Maybe<Scalars['String']>;
   /** @oneToMany field: 'reciever', key: 'recieverId' */
-  actions?: Maybe<Array<Maybe<VolounteerAction>>>;
+  actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   version?: Maybe<Scalars['Int']>;
 };
 
@@ -201,9 +205,9 @@ export type Subscription = {
   newDistributionCentre: DistributionCentre;
   newVolunteer: Volunteer;
   updatedVolunteer: Volunteer;
-  newVolounteerAction: VolounteerAction;
-  updatedVolounteerAction: VolounteerAction;
-  deletedVolounteerAction: VolounteerAction;
+  newVolunteerAction: VolunteerAction;
+  updatedVolunteerAction: VolunteerAction;
+  deletedVolunteerAction: VolunteerAction;
   newReciever: Reciever;
   updatedReciever: Reciever;
 };
@@ -224,18 +228,18 @@ export type SubscriptionUpdatedVolunteerArgs = {
 };
 
 
-export type SubscriptionNewVolounteerActionArgs = {
-  input?: Maybe<VolounteerActionInput>;
+export type SubscriptionNewVolunteerActionArgs = {
+  input?: Maybe<VolunteerActionInput>;
 };
 
 
-export type SubscriptionUpdatedVolounteerActionArgs = {
-  input?: Maybe<VolounteerActionInput>;
+export type SubscriptionUpdatedVolunteerActionArgs = {
+  input?: Maybe<VolunteerActionInput>;
 };
 
 
-export type SubscriptionDeletedVolounteerActionArgs = {
-  input?: Maybe<VolounteerActionInput>;
+export type SubscriptionDeletedVolunteerActionArgs = {
+  input?: Maybe<VolunteerActionInput>;
 };
 
 
@@ -246,39 +250,6 @@ export type SubscriptionNewRecieverArgs = {
 
 export type SubscriptionUpdatedRecieverArgs = {
   input?: Maybe<RecieverInput>;
-};
-
-/**
- * Represents action that is assigned to volounteer
- * @model
- */
-export type VolounteerAction = {
-   __typename?: 'VolounteerAction';
-  id: Scalars['ID'];
-  title: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-  products: Scalars['String'];
-  status?: Maybe<ActionStatus>;
-  actionType?: Maybe<ActionType>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  /** @manyToOne field: 'actions', key: 'volounteerId' */
-  volounteer?: Maybe<Volunteer>;
-  /** @manyToOne field: 'actions', key: 'recieverId' */
-  reciever?: Maybe<Reciever>;
-  version?: Maybe<Scalars['Int']>;
-};
-
-export type VolounteerActionInput = {
-  id?: Maybe<Scalars['ID']>;
-  title?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  products?: Maybe<Scalars['String']>;
-  status?: Maybe<ActionStatus>;
-  actionType?: Maybe<ActionType>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  volounteerId?: Maybe<Scalars['ID']>;
-  recieverId?: Maybe<Scalars['ID']>;
-  version?: Maybe<Scalars['Int']>;
 };
 
 /**
@@ -299,7 +270,40 @@ export type Volunteer = {
   canPhoneCall: Scalars['Boolean'];
   canDeliver: Scalars['Boolean'];
   /** @oneToMany field: 'volounteer', key: 'volounteerId' */
-  actions?: Maybe<Array<Maybe<VolounteerAction>>>;
+  actions?: Maybe<Array<Maybe<VolunteerAction>>>;
+  version?: Maybe<Scalars['Int']>;
+};
+
+/**
+ * Represents action that is assigned to volounteer
+ * @model
+ */
+export type VolunteerAction = {
+   __typename?: 'VolunteerAction';
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  products: Scalars['String'];
+  status?: Maybe<ActionStatus>;
+  actionType?: Maybe<ActionType>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  /** @manyToOne field: 'actions', key: 'volounteerId' */
+  volounteer?: Maybe<Volunteer>;
+  /** @manyToOne field: 'actions', key: 'recieverId' */
+  reciever?: Maybe<Reciever>;
+  version?: Maybe<Scalars['Int']>;
+};
+
+export type VolunteerActionInput = {
+  id?: Maybe<Scalars['ID']>;
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  products?: Maybe<Scalars['String']>;
+  status?: Maybe<ActionStatus>;
+  actionType?: Maybe<ActionType>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  volounteerId?: Maybe<Scalars['ID']>;
+  recieverId?: Maybe<Scalars['ID']>;
   version?: Maybe<Scalars['Int']>;
 };
 
@@ -320,12 +324,12 @@ export type VolunteerInput = {
 
 export type DistributionCentreFieldsFragment = (
   { __typename?: 'DistributionCentre' }
-  & Pick<DistributionCentre, 'id' | 'name' | 'address' | 'address2' | 'city' | 'lat' | 'long'>
+  & Pick<DistributionCentre, 'id' | 'name' | 'address' | 'address2' | 'city' | 'lat' | 'long' | 'stockInformation'>
 );
 
 export type DistributionCentreExpandedFieldsFragment = (
   { __typename?: 'DistributionCentre' }
-  & Pick<DistributionCentre, 'id' | 'name' | 'address' | 'address2' | 'city' | 'lat' | 'long'>
+  & Pick<DistributionCentre, 'id' | 'name' | 'address' | 'address2' | 'city' | 'lat' | 'long' | 'stockInformation'>
 );
 
 export type RecieverFieldsFragment = (
@@ -337,19 +341,9 @@ export type RecieverExpandedFieldsFragment = (
   { __typename?: 'Reciever' }
   & Pick<Reciever, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
   & { actions?: Maybe<Array<Maybe<(
-    { __typename?: 'VolounteerAction' }
-    & Pick<VolounteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
+    { __typename?: 'VolunteerAction' }
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
   )>>> }
-);
-
-export type VolounteerActionFieldsFragment = (
-  { __typename?: 'VolounteerAction' }
-  & Pick<VolounteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
-);
-
-export type VolounteerActionExpandedFieldsFragment = (
-  { __typename?: 'VolounteerAction' }
-  & Pick<VolounteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
 );
 
 export type VolunteerFieldsFragment = (
@@ -357,12 +351,22 @@ export type VolunteerFieldsFragment = (
   & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
 );
 
+export type VolunteerActionFieldsFragment = (
+  { __typename?: 'VolunteerAction' }
+  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
+);
+
+export type VolunteerActionExpandedFieldsFragment = (
+  { __typename?: 'VolunteerAction' }
+  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
+);
+
 export type VolunteerExpandedFieldsFragment = (
   { __typename?: 'Volunteer' }
   & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
   & { actions?: Maybe<Array<Maybe<(
-    { __typename?: 'VolounteerAction' }
-    & Pick<VolounteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
+    { __typename?: 'VolunteerAction' }
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
   )>>> }
 );
 
@@ -389,19 +393,6 @@ export type CreateRecieverMutation = (
   & { createReciever: (
     { __typename?: 'Reciever' }
     & RecieverFieldsFragment
-  ) }
-);
-
-export type CreateVolounteerActionMutationVariables = {
-  input: VolounteerActionInput;
-};
-
-
-export type CreateVolounteerActionMutation = (
-  { __typename?: 'Mutation' }
-  & { createVolounteerAction: (
-    { __typename?: 'VolounteerAction' }
-    & VolounteerActionFieldsFragment
   ) }
 );
 
@@ -438,19 +429,6 @@ export type UpdateRecieverMutation = (
   ) }
 );
 
-export type UpdateVolounteerActionMutationVariables = {
-  input: VolounteerActionInput;
-};
-
-
-export type UpdateVolounteerActionMutation = (
-  { __typename?: 'Mutation' }
-  & { updateVolounteerAction: (
-    { __typename?: 'VolounteerAction' }
-    & VolounteerActionFieldsFragment
-  ) }
-);
-
 export type UpdateVolunteerMutationVariables = {
   input: VolunteerInput;
 };
@@ -483,13 +461,7 @@ export type FindMyVolounteerActionsQueryVariables = {
 };
 
 
-export type FindMyVolounteerActionsQuery = (
-  { __typename?: 'Query' }
-  & { findVolounteerActions: Array<Maybe<(
-    { __typename?: 'VolounteerAction' }
-    & VolounteerActionExpandedFieldsFragment
-  )>> }
-);
+export type FindMyVolounteerActionsQuery = { __typename?: 'Query' };
 
 export const DistributionCentreFieldsFragmentDoc = gql`
     fragment DistributionCentreFields on DistributionCentre {
@@ -500,6 +472,7 @@ export const DistributionCentreFieldsFragmentDoc = gql`
   city
   lat
   long
+  stockInformation
 }
     `;
 export const DistributionCentreExpandedFieldsFragmentDoc = gql`
@@ -511,6 +484,7 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
   city
   lat
   long
+  stockInformation
 }
     `;
 export const RecieverFieldsFragmentDoc = gql`
@@ -542,28 +516,6 @@ export const RecieverExpandedFieldsFragmentDoc = gql`
   }
 }
     `;
-export const VolounteerActionFieldsFragmentDoc = gql`
-    fragment VolounteerActionFields on VolounteerAction {
-  id
-  title
-  description
-  products
-  status
-  actionType
-  createdAt
-}
-    `;
-export const VolounteerActionExpandedFieldsFragmentDoc = gql`
-    fragment VolounteerActionExpandedFields on VolounteerAction {
-  id
-  title
-  description
-  products
-  status
-  actionType
-  createdAt
-}
-    `;
 export const VolunteerFieldsFragmentDoc = gql`
     fragment VolunteerFields on Volunteer {
   id
@@ -577,6 +529,28 @@ export const VolunteerFieldsFragmentDoc = gql`
   dateOfBirth
   canPhoneCall
   canDeliver
+}
+    `;
+export const VolunteerActionFieldsFragmentDoc = gql`
+    fragment VolunteerActionFields on VolunteerAction {
+  id
+  title
+  description
+  products
+  status
+  actionType
+  createdAt
+}
+    `;
+export const VolunteerActionExpandedFieldsFragmentDoc = gql`
+    fragment VolunteerActionExpandedFields on VolunteerAction {
+  id
+  title
+  description
+  products
+  status
+  actionType
+  createdAt
 }
     `;
 export const VolunteerExpandedFieldsFragmentDoc = gql`
@@ -667,38 +641,6 @@ export function useCreateRecieverMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type CreateRecieverMutationHookResult = ReturnType<typeof useCreateRecieverMutation>;
 export type CreateRecieverMutationResult = ApolloReactCommon.MutationResult<CreateRecieverMutation>;
 export type CreateRecieverMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateRecieverMutation, CreateRecieverMutationVariables>;
-export const CreateVolounteerActionDocument = gql`
-    mutation createVolounteerAction($input: VolounteerActionInput!) {
-  createVolounteerAction(input: $input) {
-    ...VolounteerActionFields
-  }
-}
-    ${VolounteerActionFieldsFragmentDoc}`;
-export type CreateVolounteerActionMutationFn = ApolloReactCommon.MutationFunction<CreateVolounteerActionMutation, CreateVolounteerActionMutationVariables>;
-
-/**
- * __useCreateVolounteerActionMutation__
- *
- * To run a mutation, you first call `useCreateVolounteerActionMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateVolounteerActionMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createVolounteerActionMutation, { data, loading, error }] = useCreateVolounteerActionMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useCreateVolounteerActionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateVolounteerActionMutation, CreateVolounteerActionMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreateVolounteerActionMutation, CreateVolounteerActionMutationVariables>(CreateVolounteerActionDocument, baseOptions);
-      }
-export type CreateVolounteerActionMutationHookResult = ReturnType<typeof useCreateVolounteerActionMutation>;
-export type CreateVolounteerActionMutationResult = ApolloReactCommon.MutationResult<CreateVolounteerActionMutation>;
-export type CreateVolounteerActionMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolounteerActionMutation, CreateVolounteerActionMutationVariables>;
 export const CreateVolunteerDocument = gql`
     mutation createVolunteer($input: VolunteerInput!) {
   createVolunteer(input: $input) {
@@ -795,38 +737,6 @@ export function useUpdateRecieverMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type UpdateRecieverMutationHookResult = ReturnType<typeof useUpdateRecieverMutation>;
 export type UpdateRecieverMutationResult = ApolloReactCommon.MutationResult<UpdateRecieverMutation>;
 export type UpdateRecieverMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateRecieverMutation, UpdateRecieverMutationVariables>;
-export const UpdateVolounteerActionDocument = gql`
-    mutation updateVolounteerAction($input: VolounteerActionInput!) {
-  updateVolounteerAction(input: $input) {
-    ...VolounteerActionFields
-  }
-}
-    ${VolounteerActionFieldsFragmentDoc}`;
-export type UpdateVolounteerActionMutationFn = ApolloReactCommon.MutationFunction<UpdateVolounteerActionMutation, UpdateVolounteerActionMutationVariables>;
-
-/**
- * __useUpdateVolounteerActionMutation__
- *
- * To run a mutation, you first call `useUpdateVolounteerActionMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateVolounteerActionMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateVolounteerActionMutation, { data, loading, error }] = useUpdateVolounteerActionMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateVolounteerActionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateVolounteerActionMutation, UpdateVolounteerActionMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateVolounteerActionMutation, UpdateVolounteerActionMutationVariables>(UpdateVolounteerActionDocument, baseOptions);
-      }
-export type UpdateVolounteerActionMutationHookResult = ReturnType<typeof useUpdateVolounteerActionMutation>;
-export type UpdateVolounteerActionMutationResult = ApolloReactCommon.MutationResult<UpdateVolounteerActionMutation>;
-export type UpdateVolounteerActionMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateVolounteerActionMutation, UpdateVolounteerActionMutationVariables>;
 export const UpdateVolunteerDocument = gql`
     mutation updateVolunteer($input: VolunteerInput!) {
   updateVolunteer(input: $input) {

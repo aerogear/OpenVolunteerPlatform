@@ -1,4 +1,4 @@
-fragment VolounteerActionExpandedFields on VolounteerAction {
+fragment VolunteerActionFields on VolunteerAction {
    id
    title
    description

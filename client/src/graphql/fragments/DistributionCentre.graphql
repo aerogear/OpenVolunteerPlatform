@@ -6,5 +6,6 @@ fragment DistributionCentreFields on DistributionCentre {
    city
    lat
    long
+   stockInformation
 
 } 

@@ -16,7 +16,7 @@ export const models = [
     },
   },
   {
-    name: "VolounteerAction",
+    name: "VolunteerAction",
     pubSub: {
       publishCreate: true,
       publishUpdate: true,

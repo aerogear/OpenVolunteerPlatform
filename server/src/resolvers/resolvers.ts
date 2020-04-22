@@ -8,7 +8,7 @@
 export default {
   Volunteer: {
     actions: (parent, args, context) => {
-      return context.VolounteerAction.batchLoadData(
+      return context.VolunteerAction.batchLoadData(
         "volounteerId",
         parent.id,
         context
@@ -16,7 +16,7 @@ export default {
     },
   },
 
-  VolounteerAction: {
+  VolunteerAction: {
     volounteer: (parent, args, context) => {
       return context.Volunteer.findBy({ id: parent.volounteerId }).then(
         (results) => results[0]
@@ -31,7 +31,7 @@ export default {
 
   Reciever: {
     actions: (parent, args, context) => {
-      return context.VolounteerAction.batchLoadData(
+      return context.VolunteerAction.batchLoadData(
         "recieverId",
         parent.id,
         context
@@ -54,12 +54,12 @@ export default {
     findAllVolunteers: (parent, args, context) => {
       return context.Volunteer.findAll(args)
     },
-    findVolounteerActions: (parent, args, context) => {
+    findVolunteerActions: (parent, args, context) => {
       const { fields, ...page } = args
-      return context.VolounteerAction.findBy(fields, page)
+      return context.VolunteerAction.findBy(fields, page)
     },
-    findAllVolounteerActions: (parent, args, context) => {
-      return context.VolounteerAction.findAll(args)
+    findAllVolunteerActions: (parent, args, context) => {
+      return context.VolunteerAction.findAll(args)
     },
     findRecievers: (parent, args, context) => {
       const { fields, ...page } = args
@@ -80,14 +80,14 @@ export default {
     updateVolunteer: (parent, args, context) => {
       return context.Volunteer.update(args.input, context)
     },
-    createVolounteerAction: (parent, args, context) => {
-      return context.VolounteerAction.create(args.input, context)
+    createVolunteerAction: (parent, args, context) => {
+      return context.VolunteerAction.create(args.input, context)
     },
-    updateVolounteerAction: (parent, args, context) => {
-      return context.VolounteerAction.update(args.input, context)
+    updateVolunteerAction: (parent, args, context) => {
+      return context.VolunteerAction.update(args.input, context)
     },
-    deleteVolounteerAction: (parent, args, context) => {
-      return context.VolounteerAction.delete(args.input, context)
+    deleteVolunteerAction: (parent, args, context) => {
+      return context.VolunteerAction.delete(args.input, context)
     },
     createReciever: (parent, args, context) => {
       return context.Reciever.create(args.input, context)
@@ -113,19 +113,19 @@ export default {
         return context.Volunteer.subscribeToUpdate(args, context)
       },
     },
-    newVolounteerAction: {
+    newVolunteerAction: {
       subscribe: (parent, args, context) => {
-        return context.VolounteerAction.subscribeToCreate(args, context)
+        return context.VolunteerAction.subscribeToCreate(args, context)
       },
     },
-    updatedVolounteerAction: {
+    updatedVolunteerAction: {
       subscribe: (parent, args, context) => {
-        return context.VolounteerAction.subscribeToUpdate(args, context)
+        return context.VolunteerAction.subscribeToUpdate(args, context)
       },
     },
-    deletedVolounteerAction: {
+    deletedVolunteerAction: {
       subscribe: (parent, args, context) => {
-        return context.VolounteerAction.subscribeToDelete(args, context)
+        return context.VolunteerAction.subscribeToDelete(args, context)
       },
     },
     newReciever: {

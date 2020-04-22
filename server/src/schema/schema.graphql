@@ -47,9 +47,9 @@ type Mutation {
   createDistributionCentre(input: DistributionCentreInput): DistributionCentre!
   createVolunteer(input: VolunteerInput): Volunteer!
   updateVolunteer(input: VolunteerInput): Volunteer!
-  createVolounteerAction(input: VolounteerActionInput): VolounteerAction!
-  updateVolounteerAction(input: VolounteerActionInput): VolounteerAction!
-  deleteVolounteerAction(input: VolounteerActionInput): VolounteerAction!
+  createVolunteerAction(input: VolunteerActionInput): VolunteerAction!
+  updateVolunteerAction(input: VolunteerActionInput): VolunteerAction!
+  deleteVolunteerAction(input: VolunteerActionInput): VolunteerAction!
   createReciever(input: RecieverInput): Reciever!
   updateReciever(input: RecieverInput): Reciever!
 }
@@ -59,8 +59,8 @@ type Query {
   findDistributionCentres(fields: DistributionCentreInput, limit: Int, offset: Int): [DistributionCentre]!
   findAllVolunteers(limit: Int, offset: Int): [Volunteer]!
   findVolunteers(fields: VolunteerInput, limit: Int, offset: Int): [Volunteer]!
-  findAllVolounteerActions(limit: Int, offset: Int): [VolounteerAction]!
-  findVolounteerActions(fields: VolounteerActionInput, limit: Int, offset: Int): [VolounteerAction]!
+  findAllVolunteerActions(limit: Int, offset: Int): [VolunteerAction]!
+  findVolunteerActions(fields: VolunteerActionInput, limit: Int, offset: Int): [VolunteerAction]!
   findAllRecievers(limit: Int, offset: Int): [Reciever]!
   findRecievers(fields: RecieverInput, limit: Int, offset: Int): [Reciever]!
 }
@@ -78,7 +78,7 @@ type Reciever {
   prefferedProducts: String
 
   """@oneToMany field: 'reciever', key: 'recieverId'"""
-  actions: [VolounteerAction]
+  actions: [VolunteerAction]
   version: Int
 }
 
@@ -96,45 +96,11 @@ type Subscription {
   newDistributionCentre(input: DistributionCentreInput): DistributionCentre!
   newVolunteer(input: VolunteerInput): Volunteer!
   updatedVolunteer(input: VolunteerInput): Volunteer!
-  newVolounteerAction(input: VolounteerActionInput): VolounteerAction!
-  updatedVolounteerAction(input: VolounteerActionInput): VolounteerAction!
-  deletedVolounteerAction(input: VolounteerActionInput): VolounteerAction!
+  newVolunteerAction(input: VolunteerActionInput): VolunteerAction!
+  updatedVolunteerAction(input: VolunteerActionInput): VolunteerAction!
+  deletedVolunteerAction(input: VolunteerActionInput): VolunteerAction!
   newReciever(input: RecieverInput): Reciever!
   updatedReciever(input: RecieverInput): Reciever!
-}
-
-"""
-Represents action that is assigned to volounteer
-@model
-"""
-type VolounteerAction {
-  id: ID!
-  title: String!
-  description: String
-  products: String!
-  status: ActionStatus
-  actionType: ActionType
-  createdAt: DateTime
-
-  """@manyToOne field: 'actions', key: 'volounteerId'"""
-  volounteer: Volunteer
-
-  """@manyToOne field: 'actions', key: 'recieverId'"""
-  reciever: Reciever
-  version: Int
-}
-
-input VolounteerActionInput {
-  id: ID
-  title: String
-  description: String
-  products: String
-  status: ActionStatus
-  actionType: ActionType
-  createdAt: DateTime
-  volounteerId: ID
-  recieverId: ID
-  version: Int
 }
 
 """
@@ -155,7 +121,41 @@ type Volunteer {
   canDeliver: Boolean!
 
   """@oneToMany field: 'volounteer', key: 'volounteerId'"""
-  actions: [VolounteerAction]
+  actions: [VolunteerAction]
+  version: Int
+}
+
+"""
+Represents action that is assigned to volounteer
+@model
+"""
+type VolunteerAction {
+  id: ID!
+  title: String!
+  description: String
+  products: String!
+  status: ActionStatus
+  actionType: ActionType
+  createdAt: DateTime
+
+  """@manyToOne field: 'actions', key: 'volounteerId'"""
+  volounteer: Volunteer
+
+  """@manyToOne field: 'actions', key: 'recieverId'"""
+  reciever: Reciever
+  version: Int
+}
+
+input VolunteerActionInput {
+  id: ID
+  title: String
+  description: String
+  products: String
+  status: ActionStatus
+  actionType: ActionType
+  createdAt: DateTime
+  volounteerId: ID
+  recieverId: ID
   version: Int
 }
 

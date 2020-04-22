@@ -33,7 +33,7 @@ type Volunteer {
   """
   @oneToMany field: 'volounteer'
   """
-  actions: [VolounteerAction]
+  actions: [VolunteerAction]
 }
 
 """
@@ -50,14 +50,14 @@ type Reciever {
   """
   @oneToMany field: 'reciever'
   """
-  actions: [VolounteerAction]
+  actions: [VolunteerAction]
 }
 
 """
 Represents action that is assigned to volounteer
 @model
 """
-type VolounteerAction {
+type VolunteerAction {
   id: ID!
   title: String!
   description: String
