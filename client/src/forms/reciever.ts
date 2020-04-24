@@ -6,35 +6,35 @@ const recieverSchema = new SimpleSchema({
         type: String,
         max: 220,
         uniforms: {
-            readonly: true
+            disabled: true
         }
     },
     phone: {
         type: String,
         max: 220,
         uniforms: {
-            readonly: true
+            disabled: true
         }
     },
     address1: {
         type: String,
         max: 220,
         uniforms: {
-            readonly: true
+            disabled: true
         }
     },
     address2: {
         type: String,
         max: 220,
         uniforms: {
-            readonly: true
+            disabled: true
         }
     },
     prefferedProducts: {
         type: String,
         max: 220,
         uniforms: {
-            readonly: true
+            disabled: true
         }
     }
 } as any);
