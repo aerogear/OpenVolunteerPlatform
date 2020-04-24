@@ -1,6 +1,6 @@
 {
   "id": "voyager-testing",
-  "realm": "AtHomeCrisisCommunity",
+  "realm": "OpenVolunteerPlatform",
   "notBefore": 0,
   "revokeRefreshToken": false,
   "refreshTokenMaxReuse": 0,
@@ -620,13 +620,13 @@
       "id": "9eee3554-e5e0-432a-ab74-e01474a0c4d7",
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
-      "baseUrl": "/auth/admin/AtHomeCrisisCommunity/console/index.html",
+      "baseUrl": "/auth/admin/OpenVolunteerPlatform/console/index.html",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "/auth/admin/AtHomeCrisisCommunity/console/*"
+        "/auth/admin/OpenVolunteerPlatform/console/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -939,7 +939,7 @@
       "id": "516e481b-27b5-4e24-9960-8fddc3b02f67",
       "clientId": "account",
       "name": "${client_account}",
-      "baseUrl": "/auth/realms/AtHomeCrisisCommunity/account",
+      "baseUrl": "/auth/realms/OpenVolunteerPlatform/account",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
@@ -949,7 +949,7 @@
         "view-profile"
       ],
       "redirectUris": [
-        "/auth/realms/AtHomeCrisisCommunity/account/*"
+        "/auth/realms/OpenVolunteerPlatform/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,

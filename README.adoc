@@ -1,12 +1,12 @@
-= AtHomeCrisisCommunity
+= OpenVolunteerPlatform
 
 As communities across the world experience the outbreak of the novel coronavirus (COVID-19) many are quarantined and are required to stay at home. While this practice will help curtail the spread of COVID-19, it comes with some uncomfortable effects. In many cases people are isolated and are struggling to find help while adhering to social distancing rules. 
 
-*AtHomeCrisisCommunity* is an open source project that builds a relief management mobile application using GraphQL. The app helps users organize distribution of food and mental health services for people affected by the quarantine restrictions.
+*OpenVolunteerPlatform* is an open source project that builds a relief management mobile application using GraphQL. The app helps users organize distribution of food and mental health services for people affected by the quarantine restrictions.
 
 == How the app works
 
-*AtHomeCrisisCommunity* is an progressive web application (PWA) that can be used by volunteers to collaborate and connect
+*OpenVolunteerPlatform* is an progressive web application (PWA) that can be used by volunteers to collaborate and connect
 with vulnerable people. 
 
 * Volunteers distribute leaflets in a community. The form can be scanned using a phone.
@@ -81,14 +81,6 @@ yarn start
 === Running the Server with the Keycloak integration
 
 Follow these instructions to set up Keycloak for Authentication/Authorization.
-
-
-. Start Keycloak Server
-+
-```shell
-cd server
-npm run keycloak
-```
 
 . Configure the Keycloak Server
 +
