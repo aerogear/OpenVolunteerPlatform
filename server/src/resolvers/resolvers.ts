@@ -6,10 +6,10 @@
  */
 
 export default {
-  Volunteer: {
+  DistributionCentre: {
     actions: (parent, args, context) => {
       return context.VolunteerAction.batchLoadData(
-        "volunteerId",
+        "distributionCentreId",
         parent.id,
         context
       )
@@ -17,6 +17,11 @@ export default {
   },
 
   VolunteerAction: {
+    distributionCentre: (parent, args, context) => {
+      return context.DistributionCentre.findBy({
+        id: parent.distributionCentreId,
+      }).then((results) => results[0])
+    },
     volunteer: (parent, args, context) => {
       return context.Volunteer.findBy({ id: parent.volunteerId }).then(
         (results) => results[0]
@@ -25,6 +30,16 @@ export default {
     reciever: (parent, args, context) => {
       return context.Reciever.findBy({ id: parent.recieverId }).then(
         (results) => results[0]
+      )
+    },
+  },
+
+  Volunteer: {
+    actions: (parent, args, context) => {
+      return context.VolunteerAction.batchLoadData(
+        "volunteerId",
+        parent.id,
+        context
       )
     },
   },
@@ -47,19 +62,19 @@ export default {
     findAllDistributionCentres: (parent, args, context) => {
       return context.DistributionCentre.findAll(args)
     },
-    findVolunteers: (parent, args, context) => {
-      const { fields, ...page } = args
-      return context.Volunteer.findBy(fields, page)
-    },
-    findAllVolunteers: (parent, args, context) => {
-      return context.Volunteer.findAll(args)
-    },
     findVolunteerActions: (parent, args, context) => {
       const { fields, ...page } = args
       return context.VolunteerAction.findBy(fields, page)
     },
     findAllVolunteerActions: (parent, args, context) => {
       return context.VolunteerAction.findAll(args)
+    },
+    findVolunteers: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.Volunteer.findBy(fields, page)
+    },
+    findAllVolunteers: (parent, args, context) => {
+      return context.Volunteer.findAll(args)
     },
     findRecievers: (parent, args, context) => {
       const { fields, ...page } = args
@@ -74,12 +89,6 @@ export default {
     createDistributionCentre: (parent, args, context) => {
       return context.DistributionCentre.create(args.input, context)
     },
-    createVolunteer: (parent, args, context) => {
-      return context.Volunteer.create(args.input, context)
-    },
-    updateVolunteer: (parent, args, context) => {
-      return context.Volunteer.update(args.input, context)
-    },
     createVolunteerAction: (parent, args, context) => {
       return context.VolunteerAction.create(args.input, context)
     },
@@ -88,6 +97,12 @@ export default {
     },
     deleteVolunteerAction: (parent, args, context) => {
       return context.VolunteerAction.delete(args.input, context)
+    },
+    createVolunteer: (parent, args, context) => {
+      return context.Volunteer.create(args.input, context)
+    },
+    updateVolunteer: (parent, args, context) => {
+      return context.Volunteer.update(args.input, context)
     },
     createReciever: (parent, args, context) => {
       return context.Reciever.create(args.input, context)
@@ -103,16 +118,6 @@ export default {
         return context.DistributionCentre.subscribeToCreate(args, context)
       },
     },
-    newVolunteer: {
-      subscribe: (parent, args, context) => {
-        return context.Volunteer.subscribeToCreate(args, context)
-      },
-    },
-    updatedVolunteer: {
-      subscribe: (parent, args, context) => {
-        return context.Volunteer.subscribeToUpdate(args, context)
-      },
-    },
     newVolunteerAction: {
       subscribe: (parent, args, context) => {
         return context.VolunteerAction.subscribeToCreate(args, context)
@@ -126,6 +131,16 @@ export default {
     deletedVolunteerAction: {
       subscribe: (parent, args, context) => {
         return context.VolunteerAction.subscribeToDelete(args, context)
+      },
+    },
+    newVolunteer: {
+      subscribe: (parent, args, context) => {
+        return context.Volunteer.subscribeToCreate(args, context)
+      },
+    },
+    updatedVolunteer: {
+      subscribe: (parent, args, context) => {
+        return context.Volunteer.subscribeToUpdate(args, context)
       },
     },
     newReciever: {

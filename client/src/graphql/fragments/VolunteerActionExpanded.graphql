@@ -14,4 +14,27 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       createdAt
       prefferedProducts
    }
+   volunteer {
+      id
+      firstName
+      lastName
+      email
+      username
+      address1
+      address2
+      city
+      dateOfBirth
+      canPhoneCall
+      canDeliver
+   }
+   distributionCentre {
+      id
+      name
+      address
+      address2
+      city
+      lat
+      long
+      stockInformation
+   }
 } 

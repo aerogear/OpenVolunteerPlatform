@@ -26,6 +26,9 @@ type DistributionCentre {
   lat: String
   long: String
   stockInformation: JSON
+
+  """@oneToMany field: 'distributionCentre', key: 'distributionCentreId'"""
+  actions: [VolunteerAction]!
   version: Int
 }
 
@@ -141,8 +144,14 @@ type VolunteerAction {
   """@manyToOne field: 'actions', key: 'volunteerId'"""
   volunteer: Volunteer
 
-  """@manyToOne field: 'actions', key: 'recieverId'"""
+  """
+  Workaround for https://github.com/aerogear/graphback/issues/1167
+  @manyToOne field: 'actions', key: 'recieverId'
+  """
   reciever: Reciever
+
+  """@manyToOne field: 'actions', key: 'distributionCentreId'"""
+  distributionCentre: DistributionCentre
   version: Int
 }
 
@@ -154,8 +163,9 @@ input VolunteerActionInput {
   status: ActionStatus
   actionType: ActionType
   createdAt: DateTime
-  volunteerId: ID
   recieverId: ID
+  volunteerId: ID
+  distributionCentreId: ID
   version: Int
 }
 

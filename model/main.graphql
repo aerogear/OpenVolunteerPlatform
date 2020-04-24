@@ -70,6 +70,15 @@ type VolunteerAction {
   @manyToOne field: 'actions', key: 'recieverId'
   """
   reciever: Reciever
+  """
+  @manyToOne field: 'actions', key: 'volunteerId'
+  """
+  volunteer: Volunteer
+
+  """
+  @manyToOne field: 'actions', key: 'distributionCentreId'
+  """
+  distributionCentre: DistributionCentre
 }
 
 enum ActionType {

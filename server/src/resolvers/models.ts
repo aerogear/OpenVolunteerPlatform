@@ -8,7 +8,7 @@ export const models = [
     },
   },
   {
-    name: "Volunteer",
+    name: "VolunteerAction",
     pubSub: {
       publishCreate: true,
       publishUpdate: true,
@@ -16,7 +16,7 @@ export const models = [
     },
   },
   {
-    name: "VolunteerAction",
+    name: "Volunteer",
     pubSub: {
       publishCreate: true,
       publishUpdate: true,
