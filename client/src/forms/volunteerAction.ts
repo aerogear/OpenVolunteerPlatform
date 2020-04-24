@@ -23,6 +23,13 @@ const volunteerActionForm = new SimpleSchema({
             disabled: true
         }
     },
+    actionType: {
+        type: String,
+        max: 400,
+        uniforms: {
+            disabled: true
+        }
+    },
     status: {
         type: String,
         max: 220,
@@ -34,10 +41,7 @@ const volunteerActionForm = new SimpleSchema({
             ]
         }
     },
-    actionType: {
-        type: String,
-        max: 400
-    }
+
 } as any);
 
 export default new SimpleSchema2Bridge(volunteerActionForm);
