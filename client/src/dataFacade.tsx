@@ -41,6 +41,8 @@ export type DistributionCentre = {
   lat?: Maybe<Scalars['String']>;
   long?: Maybe<Scalars['String']>;
   stockInformation?: Maybe<Scalars['JSON']>;
+  /** @oneToMany field: 'distributionCentre', key: 'distributionCentreId' */
+  actions: Array<Maybe<VolunteerAction>>;
   version?: Maybe<Scalars['Int']>;
 };
 
@@ -289,8 +291,13 @@ export type VolunteerAction = {
   createdAt?: Maybe<Scalars['DateTime']>;
   /** @manyToOne field: 'actions', key: 'volunteerId' */
   volunteer?: Maybe<Volunteer>;
-  /** @manyToOne field: 'actions', key: 'recieverId' */
+  /**
+   * Workaround for https://github.com/aerogear/graphback/issues/1167
+   * @manyToOne field: 'actions', key: 'recieverId'
+   */
   reciever?: Maybe<Reciever>;
+  /** @manyToOne field: 'actions', key: 'distributionCentreId' */
+  distributionCentre?: Maybe<DistributionCentre>;
   version?: Maybe<Scalars['Int']>;
 };
 
@@ -302,8 +309,9 @@ export type VolunteerActionInput = {
   status?: Maybe<ActionStatus>;
   actionType?: Maybe<ActionType>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  volunteerId?: Maybe<Scalars['ID']>;
   recieverId?: Maybe<Scalars['ID']>;
+  volunteerId?: Maybe<Scalars['ID']>;
+  distributionCentreId?: Maybe<Scalars['ID']>;
   version?: Maybe<Scalars['Int']>;
 };
 
@@ -362,6 +370,12 @@ export type VolunteerActionExpandedFieldsFragment = (
   & { reciever?: Maybe<(
     { __typename?: 'Reciever' }
     & Pick<Reciever, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
+  )>, volunteer?: Maybe<(
+    { __typename?: 'Volunteer' }
+    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
+  )>, distributionCentre?: Maybe<(
+    { __typename?: 'DistributionCentre' }
+    & Pick<DistributionCentre, 'id' | 'name' | 'address' | 'address2' | 'city' | 'lat' | 'long' | 'stockInformation'>
   )> }
 );
 
@@ -372,32 +386,6 @@ export type VolunteerExpandedFieldsFragment = (
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
   )>>> }
-);
-
-export type CreateDistributionCentreMutationVariables = {
-  input: DistributionCentreInput;
-};
-
-
-export type CreateDistributionCentreMutation = (
-  { __typename?: 'Mutation' }
-  & { createDistributionCentre: (
-    { __typename?: 'DistributionCentre' }
-    & DistributionCentreFieldsFragment
-  ) }
-);
-
-export type CreateRecieverMutationVariables = {
-  input: RecieverInput;
-};
-
-
-export type CreateRecieverMutation = (
-  { __typename?: 'Mutation' }
-  & { createReciever: (
-    { __typename?: 'Reciever' }
-    & RecieverFieldsFragment
-  ) }
 );
 
 export type CreateVolunteerMutationVariables = {
@@ -413,26 +401,6 @@ export type CreateVolunteerMutation = (
   ) }
 );
 
-export type UpdateDistributionCentreMutationVariables = {
-  input: DistributionCentreInput;
-};
-
-
-export type UpdateDistributionCentreMutation = { __typename?: 'Mutation' };
-
-export type UpdateRecieverMutationVariables = {
-  input: RecieverInput;
-};
-
-
-export type UpdateRecieverMutation = (
-  { __typename?: 'Mutation' }
-  & { updateReciever: (
-    { __typename?: 'Reciever' }
-    & RecieverFieldsFragment
-  ) }
-);
-
 export type UpdateVolunteerMutationVariables = {
   input: VolunteerInput;
 };
@@ -443,6 +411,19 @@ export type UpdateVolunteerMutation = (
   & { updateVolunteer: (
     { __typename?: 'Volunteer' }
     & VolunteerFieldsFragment
+  ) }
+);
+
+export type UpdateVolunteerActionMutationVariables = {
+  input: VolunteerActionInput;
+};
+
+
+export type UpdateVolunteerActionMutation = (
+  { __typename?: 'Mutation' }
+  & { updateVolunteerAction: (
+    { __typename?: 'VolunteerAction' }
+    & VolunteerActionFieldsFragment
   ) }
 );
 
@@ -582,6 +563,29 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     createdAt
     prefferedProducts
   }
+  volunteer {
+    id
+    firstName
+    lastName
+    email
+    username
+    address1
+    address2
+    city
+    dateOfBirth
+    canPhoneCall
+    canDeliver
+  }
+  distributionCentre {
+    id
+    name
+    address
+    address2
+    city
+    lat
+    long
+    stockInformation
+  }
 }
     `;
 export const VolunteerExpandedFieldsFragmentDoc = gql`
@@ -608,70 +612,6 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
   }
 }
     `;
-export const CreateDistributionCentreDocument = gql`
-    mutation createDistributionCentre($input: DistributionCentreInput!) {
-  createDistributionCentre(input: $input) {
-    ...DistributionCentreFields
-  }
-}
-    ${DistributionCentreFieldsFragmentDoc}`;
-export type CreateDistributionCentreMutationFn = ApolloReactCommon.MutationFunction<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>;
-
-/**
- * __useCreateDistributionCentreMutation__
- *
- * To run a mutation, you first call `useCreateDistributionCentreMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateDistributionCentreMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createDistributionCentreMutation, { data, loading, error }] = useCreateDistributionCentreMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useCreateDistributionCentreMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>(CreateDistributionCentreDocument, baseOptions);
-      }
-export type CreateDistributionCentreMutationHookResult = ReturnType<typeof useCreateDistributionCentreMutation>;
-export type CreateDistributionCentreMutationResult = ApolloReactCommon.MutationResult<CreateDistributionCentreMutation>;
-export type CreateDistributionCentreMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>;
-export const CreateRecieverDocument = gql`
-    mutation createReciever($input: RecieverInput!) {
-  createReciever(input: $input) {
-    ...RecieverFields
-  }
-}
-    ${RecieverFieldsFragmentDoc}`;
-export type CreateRecieverMutationFn = ApolloReactCommon.MutationFunction<CreateRecieverMutation, CreateRecieverMutationVariables>;
-
-/**
- * __useCreateRecieverMutation__
- *
- * To run a mutation, you first call `useCreateRecieverMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateRecieverMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createRecieverMutation, { data, loading, error }] = useCreateRecieverMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useCreateRecieverMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateRecieverMutation, CreateRecieverMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreateRecieverMutation, CreateRecieverMutationVariables>(CreateRecieverDocument, baseOptions);
-      }
-export type CreateRecieverMutationHookResult = ReturnType<typeof useCreateRecieverMutation>;
-export type CreateRecieverMutationResult = ApolloReactCommon.MutationResult<CreateRecieverMutation>;
-export type CreateRecieverMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateRecieverMutation, CreateRecieverMutationVariables>;
 export const CreateVolunteerDocument = gql`
     mutation createVolunteer($input: VolunteerInput!) {
   createVolunteer(input: $input) {
@@ -704,70 +644,6 @@ export function useCreateVolunteerMutation(baseOptions?: ApolloReactHooks.Mutati
 export type CreateVolunteerMutationHookResult = ReturnType<typeof useCreateVolunteerMutation>;
 export type CreateVolunteerMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerMutation>;
 export type CreateVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerMutation, CreateVolunteerMutationVariables>;
-export const UpdateDistributionCentreDocument = gql`
-    mutation updateDistributionCentre($input: DistributionCentreInput!) {
-  updateDistributionCentre(input: $input) {
-    ...DistributionCentreFields
-  }
-}
-    ${DistributionCentreFieldsFragmentDoc}`;
-export type UpdateDistributionCentreMutationFn = ApolloReactCommon.MutationFunction<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>;
-
-/**
- * __useUpdateDistributionCentreMutation__
- *
- * To run a mutation, you first call `useUpdateDistributionCentreMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateDistributionCentreMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateDistributionCentreMutation, { data, loading, error }] = useUpdateDistributionCentreMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateDistributionCentreMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>(UpdateDistributionCentreDocument, baseOptions);
-      }
-export type UpdateDistributionCentreMutationHookResult = ReturnType<typeof useUpdateDistributionCentreMutation>;
-export type UpdateDistributionCentreMutationResult = ApolloReactCommon.MutationResult<UpdateDistributionCentreMutation>;
-export type UpdateDistributionCentreMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>;
-export const UpdateRecieverDocument = gql`
-    mutation updateReciever($input: RecieverInput!) {
-  updateReciever(input: $input) {
-    ...RecieverFields
-  }
-}
-    ${RecieverFieldsFragmentDoc}`;
-export type UpdateRecieverMutationFn = ApolloReactCommon.MutationFunction<UpdateRecieverMutation, UpdateRecieverMutationVariables>;
-
-/**
- * __useUpdateRecieverMutation__
- *
- * To run a mutation, you first call `useUpdateRecieverMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateRecieverMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateRecieverMutation, { data, loading, error }] = useUpdateRecieverMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateRecieverMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateRecieverMutation, UpdateRecieverMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateRecieverMutation, UpdateRecieverMutationVariables>(UpdateRecieverDocument, baseOptions);
-      }
-export type UpdateRecieverMutationHookResult = ReturnType<typeof useUpdateRecieverMutation>;
-export type UpdateRecieverMutationResult = ApolloReactCommon.MutationResult<UpdateRecieverMutation>;
-export type UpdateRecieverMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateRecieverMutation, UpdateRecieverMutationVariables>;
 export const UpdateVolunteerDocument = gql`
     mutation updateVolunteer($input: VolunteerInput!) {
   updateVolunteer(input: $input) {
@@ -800,6 +676,38 @@ export function useUpdateVolunteerMutation(baseOptions?: ApolloReactHooks.Mutati
 export type UpdateVolunteerMutationHookResult = ReturnType<typeof useUpdateVolunteerMutation>;
 export type UpdateVolunteerMutationResult = ApolloReactCommon.MutationResult<UpdateVolunteerMutation>;
 export type UpdateVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateVolunteerMutation, UpdateVolunteerMutationVariables>;
+export const UpdateVolunteerActionDocument = gql`
+    mutation updateVolunteerAction($input: VolunteerActionInput!) {
+  updateVolunteerAction(input: $input) {
+    ...VolunteerActionFields
+  }
+}
+    ${VolunteerActionFieldsFragmentDoc}`;
+export type UpdateVolunteerActionMutationFn = ApolloReactCommon.MutationFunction<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>;
+
+/**
+ * __useUpdateVolunteerActionMutation__
+ *
+ * To run a mutation, you first call `useUpdateVolunteerActionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateVolunteerActionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateVolunteerActionMutation, { data, loading, error }] = useUpdateVolunteerActionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateVolunteerActionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>(UpdateVolunteerActionDocument, baseOptions);
+      }
+export type UpdateVolunteerActionMutationHookResult = ReturnType<typeof useUpdateVolunteerActionMutation>;
+export type UpdateVolunteerActionMutationResult = ApolloReactCommon.MutationResult<UpdateVolunteerActionMutation>;
+export type UpdateVolunteerActionMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>;
 export const FindActiveVolunteerDocument = gql`
     query findActiveVolunteer($username: String!) {
   findVolunteers(fields: {username: $username}, limit: 1) {

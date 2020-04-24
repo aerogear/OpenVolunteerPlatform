@@ -1,43 +1,42 @@
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 
-const volunteerActionForm = new SimpleSchema({
-    title: {
-        type: String,
-        max: 120,
-        uniforms: {
-            readonly: true
-        }
-    },
-    description: {
-        type: String,
-        max: 120,
-        uniforms: {
-            readonly: true
-        }
-    },
-    products: {
+const recieverSchema = new SimpleSchema({
+    name: {
         type: String,
         max: 220,
         uniforms: {
             readonly: true
         }
     },
-    status: {
+    phone: {
         type: String,
         max: 220,
         uniforms: {
-            readonly: false,
-            defaultValue: 'ASSIGNED',
-            allowedValues: [
-                'ASSIGNED', 'COMPLETED'
-            ]
+            readonly: true
         }
     },
-    actionType: {
+    address1: {
         type: String,
-        max: 400
+        max: 220,
+        uniforms: {
+            readonly: true
+        }
+    },
+    address2: {
+        type: String,
+        max: 220,
+        uniforms: {
+            readonly: true
+        }
+    },
+    prefferedProducts: {
+        type: String,
+        max: 220,
+        uniforms: {
+            readonly: true
+        }
     }
 } as any);
 
-export default new SimpleSchema2Bridge(volunteerActionForm);
+export default new SimpleSchema2Bridge(recieverSchema);
