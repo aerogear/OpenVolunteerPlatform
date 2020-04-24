@@ -1,12 +1,12 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { add } from 'ionicons/icons';
-import { 
-  IonPage, 
-  IonSegment, 
-  IonSegmentButton, 
-  IonLabel, 
-  IonIcon, 
+import {
+  IonPage,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel,
+  IonIcon,
   IonFooter,
   IonLoading,
   IonFab,
@@ -19,37 +19,37 @@ import { findAllTasks } from '../graphql/queries/findAllTasks';
 import { Link } from 'react-router-dom';
 import { useNetworkStatus } from 'react-offix-hooks';
 
-export const TaskPage: React.FC<RouteComponentProps> = ({match}) => {
+export const TaskPage: React.FC<RouteComponentProps> = ({ match }) => {
 
   const { loading, error, data } = useQuery(findAllTasks, {
     fetchPolicy: 'cache-and-network'
   });
-  
+
   const isOnline = useNetworkStatus();
- 
+
   if (error && !error.networkError) {
-    return <pre>{ JSON.stringify(error) }</pre>
+    return <pre>{JSON.stringify(error)}</pre>
   };
 
-if (loading) return <IonLoading
+  if (loading) return <IonLoading
     isOpen={loading}
     message={'Loading...'}
   />;
 
-  const content = (data && data.findAllTasks) 
+  const content = (data && data.findAllTasks)
     ? <TaskList tasks={data.findAllTasks} />
     : <Empty message={<p>No tasks available</p>} />;
 
   return (
     <IonPage>
-      <Header title="CrisisCommunity Admin"  match={match} isOnline={isOnline} />
+      <Header title="OpenVolunteer Platform Reference App" match={match} isOnline={isOnline} />
       <IonContent className="ion-padding" >
         <IonSegment>
           <IonSegmentButton value="all">
             <IonLabel>All Tasks</IonLabel>
           </IonSegmentButton>
         </IonSegment>
-        { content }
+        {content}
         <IonFab vertical="bottom" horizontal="end" slot="fixed" style={{ 'marginBottom': '2em', 'marginRight': '1em' }}>
           <Link to="/addTask">
             <IonFabButton>
@@ -60,10 +60,10 @@ if (loading) return <IonLoading
       </IonContent>
       <IonFooter>
         <div>
-          CrisisCommunity 
+          OpenVolunteer Platform Reference App
         </div>
       </IonFooter>
     </IonPage>
   );
-  
+
 };

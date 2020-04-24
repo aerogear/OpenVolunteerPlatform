@@ -3,14 +3,15 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Header } from '../components/Header';
 import { Map } from '../components/Map';
 import { IUpdateMatchParams } from '../declarations';
-import { useFindVolunteerActionQuery } from '../dataFacade'
-import { AutoForm, SelectField } from 'uniforms-ionic'
+import { useFindVolunteerActionQuery, useUpdateVolunteerActionMutation } from '../dataFacade'
+import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic'
 import volunteerAction from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
+import reciever from '../forms/reciever';
 
 export const ViewTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const { data, loading, error } = useFindVolunteerActionQuery({ fetchPolicy: "cache-first", variables: { id: match.params.id } });
-
+  const [updateAction] = useUpdateVolunteerActionMutation();
   if (error) {
     console.log(error);
   }
@@ -37,19 +38,61 @@ export const ViewTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = (
                 placeholder
                 model={model}
                 schema={volunteerAction}
-                onSubmit={(model: any) => { }}
+                onSubmit={(model: any) => {
+                  updateAction({
+                    variables: {
+                      input: {
+                        id: model.id,
+                        status: model.status
+                      }
+                    }
+                  }).then(() => {
+                    // TODO dialog
+                  }).catch((err) => {
+                    console.error(err);
+                  });
+                }}
                 showInlineError
                 submitField={undefined}
               >
-                {/* <SelectField name="status" value={model.status} /> */}
-
               </AutoForm>
             </IonItemGroup>
           </IonCard>
+          <IonCard>
+            <IonItemGroup>
+              <IonItemDivider color="light">
+                <h2>Recipient information</h2>
+              </IonItemDivider>
+              <AutoForm
+                model={model.reciever}
+                schema={reciever}
+              >
+                <AutoFields />
+                <ErrorsField />
+              </AutoForm>
+              <Map></Map>
+            </IonItemGroup>
+          </IonCard>
+          <IonCard>
+            <IonItemGroup>
+              <IonItemDivider color="light">
+                <h2>Distribution Centre Details</h2>
+              </IonItemDivider>
+              <AutoForm
+                model={model.distributionCentre}
+                schema={reciever}
+              >
+                <AutoFields />
+                <ErrorsField />
+              </AutoForm>
+              <Map></Map>
+            </IonItemGroup>
+          </IonCard>
+
         </IonList>
       </IonContent>
 
-      {/* <Map></Map> */}
+
     </>
   );
 
