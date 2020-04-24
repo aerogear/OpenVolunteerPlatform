@@ -31,3 +31,21 @@ mutation createVolunteerAction {
     description
   }
 }
+
+
+mutation createDistributionCentre {
+  createDistributionCentre(
+    input: {
+      name: "NY Plaza Charity Chain"
+      address: "Plaza Key"
+      address2: "Brooklyn"
+      city: "New York"
+      lat: "0"
+      long: "0"
+      stockInformation: {}
+    }
+  ) {
+    id
+  }
+}
+

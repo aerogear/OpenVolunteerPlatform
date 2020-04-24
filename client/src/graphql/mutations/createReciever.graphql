@@ -1,5 +1,0 @@
-mutation createReciever($input: RecieverInput!) {
-  createReciever(input: $input) {
-      ...RecieverFields
-  }
-}
