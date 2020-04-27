@@ -1,19 +1,10 @@
 = OpenVolunteerPlatform
 
-As communities across the world experience the outbreak of the novel coronavirus (COVID-19) many are quarantined and are required to stay at home. While this practice will help curtail the spread of COVID-19, it comes with some uncomfortable effects. In many cases people are isolated and are struggling to find help while adhering to social distancing rules. 
-
 *OpenVolunteerPlatform* is an open source project that builds a relief management mobile application using GraphQL. The app helps users organize distribution of food and mental health services for people affected by the quarantine restrictions.
 
 == How the app works
 
-*OpenVolunteerPlatform* is an progressive web application (PWA) that can be used by volunteers to collaborate and connect
-with vulnerable people. 
-
-* Volunteers distribute leaflets in a community. The form can be scanned using a phone.
-* Participants answer a few basic questions related to an individual's:
-** Current situation - 
-** Personal needs - 
-** Medical neeeds-  
+*OpenVolunteerPlatform* is an progressive web application (PWA) that can be used by volunteers to collaborate and connect with vulnerable people. 
 
 NOTE: The same leaflet can be used to gather posible volunteers. 
 
