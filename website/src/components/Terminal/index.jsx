@@ -91,7 +91,7 @@ export function Terminal() {
       </div>
       <div className={styles.terminal}>
         <span>>&nbsp;&nbsp;</span>
-        <TerminalText phrase={'git clone http://github.com/aerogear/OpenVolunteerPlatform'} />
+        <TerminalText phrase={'npx openvp init yourproject'} />
         <Underscore />
       </div>
     </div>

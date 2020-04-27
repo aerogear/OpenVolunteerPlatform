@@ -42,7 +42,7 @@ export function Video() {
       <VideoModal open={open} close={toggleModal} />
       <section id="video" className={styles.videoSection}>
         <div className="text--center">
-          <h2 className={styles.subtitle}>Open Volunteer Platform back in 10 minutes</h2>
+          <h2 className={styles.subtitle}>Open Volunteer Platform in 10 minutes</h2>
           <div className={styles.videoComponent}>
             <a href="#" className={styles.play} onClick={toggleModal}>
               {/* Play */}

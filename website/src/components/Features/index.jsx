@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 
 const features = [
   {
-    title: <>Define your model</>,
+    title: <>Get reference app and define your data</>,
     imageUrl: 'img/input.png',
     description: (
       <>
@@ -15,7 +15,7 @@ const features = [
     ),
   },
   {
-    title: <>Choose your stack</>,
+    title: <>Use components and forms</>,
     imageUrl: 'img/config.png',
     description: (
       <>
@@ -57,8 +57,8 @@ export function Features () {
       <div className={classnames(styles.leftSplit, styles.featureSticky)}>
         <div className={styles.stickyContent}>
           <h2 className="hero__subtitle">Open Volunteer Platform Workflow</h2>
-          <p>Open Volunteer Platform lets you build and deploy set of applications to help your organization with all volunteering efforts.
-             Simply define your business model for Volunteers and Recipients and Deploy it to Red Hat Cloud.
+          <p>Open Volunteer Platform lets you build and deploy applications to help your organization with all volunteering efforts.
+             Simply define your business model for Volunteers and Recipients and Deploy it to Cloud in hours instead of days.
           </p>
         </div>
       </div>

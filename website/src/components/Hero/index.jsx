@@ -16,11 +16,11 @@ export function Hero({ siteConfig }) {
             </div>
             <p className="hero__title">{siteConfig.tagline}</p>
             <ul>
-              <li>Platform for rapid application developement for volounter management</li>
-              <li>Full control data and deployment</li>
-              <li>Out of the box components for Forms, Maps</li>
+              <li>Open Platform for Rapid Development of Volunteer Management Systems</li>
+              <li>Reference implementation to cover basic use cases</li>
+              <li>Out of the box components for Forms and Maps</li>
               <li>Keycloak based security and Role based authentication</li>
-              <li>Live updates thanks to GraphQL subscriptions</li>
+              <li>Live updates and tracking thanks to GraphQL subscriptions</li>
             </ul>
             <div className={styles.buttons}>
               <Link
