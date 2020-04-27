@@ -1,1 +1,0 @@
-export { clientConfig } from './clientConfig';

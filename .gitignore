@@ -34,6 +34,6 @@ UserInterfaceState.xcuserstate
 package-lock.json
 yarn.lock
 
-client/ios/
-client/android/
-client/.gradle/
+platform/client/ios/
+platform/client/android/
+platform/client/.gradle/

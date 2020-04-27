@@ -1,8 +1,8 @@
 {
-  "name": "datasync-starter",
+  "name": "OVP-starter",
   "version": "1.0.0",
   "private": true,
-  "description": "Mono repository for DataSync Starter",
+  "description": "Mono repository for OVP Starter",
   "main": "index.js",
   "devDependencies": {
     "del-cli": "3.0.0",
