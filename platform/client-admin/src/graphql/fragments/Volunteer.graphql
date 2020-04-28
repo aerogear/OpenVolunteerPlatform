@@ -1,0 +1,14 @@
+fragment VolunteerFields on Volunteer {
+   id
+   firstName
+   lastName
+   email
+   username
+   address1
+   address2
+   city
+   dateOfBirth
+   canPhoneCall
+   canDeliver
+
+} 

@@ -1,0 +1,17 @@
+fragment RecieverExpandedFields on Reciever {
+   id
+   name
+   phone
+   address
+   createdAt
+   prefferedProducts
+   actions {
+      id
+      title
+      description
+      products
+      status
+      actionType
+      createdAt
+   }
+} 

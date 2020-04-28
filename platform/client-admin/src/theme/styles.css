@@ -1,0 +1,101 @@
+.list-md {
+  padding: 0;
+}
+
+.task-item {
+  padding-bottom: 0;
+}
+
+.item ion-label {
+  overflow: visible;
+  white-space: pre-wrap;
+}
+
+ion-note {
+  padding: 10px;
+  line-height: 21px;
+  white-space: pre-wrap;
+}
+
+ion-badge {
+  vertical-align: middle;
+  white-space: pre-line;
+  text-align: left;
+}
+
+ion-footer div {
+  margin: 10px;
+}
+
+.create-button {
+  margin-left:15px;
+  z-index: 9999;
+}
+
+.trash-button {
+  margin-left:5px;
+  z-index: 9999;
+}
+
+.network-badge {
+  float: right;
+  height: calc(2.1em + 4px);
+  font-size: 13px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  line-height: calc(2.1em + 4px);
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0.9em;
+  --padding-end: 0.9em;
+}
+
+.offline-queue-button {
+  -webkit-margin-start: 0px;
+  margin-inline-start: 0px;
+}
+
+.offline-queue-badge {
+  margin-left: -7px;
+  vertical-align: top;
+}
+
+.task-item {
+  padding-bottom: 0;
+}
+
+.list-md {
+  padding: 0;
+}
+
+.item .sc-ion-label-md-h {
+  overflow: visible;
+  white-space: pre-wrap;
+}
+
+ion-note {
+  padding: 10px;
+  line-height: 21px;
+  white-space: pre-wrap;
+}
+
+ion-badge {
+  vertical-align: middle;
+  white-space: pre-line;
+  text-align: left;
+}
+
+.queue-empty {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.queue-empty p {
+  line-height: 150%
+}
+
+.submit-btn {
+  margin-top: 30px;
+}

@@ -1,5 +1,5 @@
 {
-  "name": "datasync-server-starter",
+  "name": "server-starter",
   "version": "1.0.0",
   "private": true,
   "scripts": {

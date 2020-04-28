@@ -1,0 +1,10 @@
+fragment VolunteerActionFields on VolunteerAction {
+   id
+   title
+   description
+   products
+   status
+   actionType
+   createdAt
+
+} 

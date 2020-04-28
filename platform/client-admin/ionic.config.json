@@ -1,0 +1,8 @@
+{
+  "name": "client",
+  "appId": "com.datasync.starter",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

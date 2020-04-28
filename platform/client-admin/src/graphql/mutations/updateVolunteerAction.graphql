@@ -1,0 +1,5 @@
+mutation updateVolunteerAction($input: VolunteerActionInput!) {
+  updateVolunteerAction(input: $input) {
+      ...VolunteerActionFields
+  }
+}

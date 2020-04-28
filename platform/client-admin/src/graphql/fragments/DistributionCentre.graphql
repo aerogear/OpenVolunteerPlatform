@@ -1,0 +1,11 @@
+fragment DistributionCentreFields on DistributionCentre {
+   id
+   name
+   address
+   address2
+   city
+   lat
+   long
+   stockInformation
+
+} 

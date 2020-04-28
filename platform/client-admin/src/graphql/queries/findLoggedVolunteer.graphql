@@ -1,0 +1,5 @@
+query findActiveVolunteer($username: String!) {
+  findVolunteers(fields: { username: $username }, limit: 1) {
+    ...VolunteerFields
+  }
+}
