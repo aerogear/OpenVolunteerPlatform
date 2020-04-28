@@ -12,17 +12,13 @@ import {
 } from '@ionic/react';
 import { Header } from '../components';
 import { AuthContext } from '../context/AuthContext';
-import { RouteComponentProps, useHistory } from 'react-router';
-import { useCreateVolunteerMutation, useUpdateVolunteerMutation } from "../dataFacade"
+import { RouteComponentProps } from 'react-router';
 
-import volunteerForm from '../forms/volunteer';
-import { AutoForm } from 'uniforms-ionic'
+import adminForm from '../forms/admin';
+import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic'
 
 export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
   let { keycloak, profile, volunteer } = useContext(AuthContext);
-  const [createVolunteerMutation] = useCreateVolunteerMutation()
-  const [updateVolunteerMutation] = useUpdateVolunteerMutation()
-  const history = useHistory()
 
   if (!keycloak || !profile) return (
     <IonCard>
@@ -37,36 +33,6 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
     </IonCard>
   );
 
-  const submit = (model: any) => {
-
-    if (volunteer) {
-      updateVolunteerMutation({
-        variables: { input: model }
-      }).then(() => {
-        history.push("/actions")
-      }).catch((e: any) => {
-        console.log(e);
-      })
-    } else {
-      createVolunteerMutation({
-        variables: { input: model }
-      }).then(() => {
-        history.push("/actions")
-      }).catch((e: any) => {
-        console.log(e);
-      })
-    }
-  }
-
-  if (!volunteer) {
-    volunteer = {
-      email: profile.email,
-      firstName: profile.firstName,
-      lastName: profile.lastName,
-      username: profile.username
-    } as any;
-  }
-
   return (
     <>
       <Header title="Profile" backHref="/actions" match={match} />
@@ -75,15 +41,17 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
           <IonCard>
             <IonItemGroup>
               <IonItemDivider color="light">
-                <h2>Volunteer information</h2>
+                <h2>Admin user information</h2>
               </IonItemDivider>
               <AutoForm
                 placeholder
                 model={{ ...volunteer }}
-                schema={volunteerForm}
-                onSubmit={(model: any) => submit(model)}
+                schema={adminForm}
                 showInlineError
-              />
+              >
+                <AutoFields />
+                <ErrorsField />
+              </AutoForm>
             </IonItemGroup>
           </IonCard>
         </IonList>

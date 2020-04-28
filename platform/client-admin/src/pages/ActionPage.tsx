@@ -18,8 +18,6 @@ import { RouteComponentProps } from 'react-router';
 import { useFindMyVolunteerActionsLazyQuery, ActionStatus } from '../dataFacade';
 import { useNetworkStatus } from 'react-offix-hooks';
 import { AuthContext } from '../context/AuthContext';
-import { ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
-
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   const { volunteer } = useContext(AuthContext);
@@ -45,46 +43,20 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
     content = <Empty message={<p>No tasks!</p>} />;
   }
 
-  const updateFilter = (e: CustomEvent) => {
-    if (volunteer) {
-      refetch({ volunteerId: volunteer.id, status: e.detail.value })
-    }
-  }
-  
 
   return (
     <IonPage>
       <Header title="OpenVolunteer Admin App" match={match} isOnline={isOnline} />
-      <IonToolbar>
-        <IonButtons slot="start">
-          <IonMenuButton></IonMenuButton>
-        </IonButtons>
-        <IonButtons slot="end">
-          <IonButton>
-            <IonIcon slot="icon-only" ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
-          </IonButton>
-        </IonButtons>
-      </IonToolbar>
 
-
-
-    <IonContent className="ion-padding" >
-      <IonSegment onIonChange={updateFilter}>
-        <IonSegmentButton value={ActionStatus.Assigned}>
-          <IonLabel>Open Tasks</IonLabel>
-        </IonSegmentButton>
-        <IonSegmentButton value={ActionStatus.Completed}>
-          <IonLabel>Finished Tasks</IonLabel>
-        </IonSegmentButton>
-      </IonSegment>
-      {content}
-    </IonContent>
-    <IonFooter>
-      <div>
-        OpenVolunteer Platform
+      <IonContent className="ion-padding" >
+        {content}
+      </IonContent>
+      <IonFooter>
+        <div>
+          OpenVolunteer Platform
           <NetworkBadge isOnline={isOnline} />
-      </div>
-    </IonFooter>
+        </div>
+      </IonFooter>
     </IonPage >
   );
 

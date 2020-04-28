@@ -44,7 +44,6 @@ export const Menu: React.FC<MenuProps> = ({ }) => {
   const location = useLocation();
 
   function renderlistItems(list: Pages[]) {
-    console.log(list);
     return list
       .filter(route => !!route.path)
       .map(p => (
