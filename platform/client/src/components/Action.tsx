@@ -11,7 +11,7 @@ import {
 import { helpBuoy, open } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
 
-export const Task: React.FC<any> = ({ task, updateTask, deleteTask }) => {
+export const Action: React.FC<any> = ({ task }) => {
 
   return (
     <IonItem>
@@ -30,7 +30,7 @@ export const Task: React.FC<any> = ({ task, updateTask, deleteTask }) => {
       </IonLabel>
       <IonButtons>
 
-        <Link to={`viewTask/${task.id}`}>
+        <Link to={`viewAction/${task.id}`}>
           <IonButton item-start color='primary' fill="outline">
             <IonIcon icon={open} />
           </IonButton>

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Task } from './Task';
+import { Action } from './Action';
 import { IonList } from '@ionic/react';
 import { Empty } from './Empty';
 
-export const TaskList: React.FC<any> = ({ tasks }) => {
+export const ActionsList: React.FC<any> = ({ tasks }) => {
   if(!tasks || tasks.length < 1) {
     const message = (<p>You currently have no tasks.</p>);
     return <Empty message={message} />
@@ -14,7 +14,7 @@ export const TaskList: React.FC<any> = ({ tasks }) => {
       <IonList>
         {
           tasks.map((task : any) => {
-            return <Task key={task.id} task={task} />;
+            return <Action key={task.id} task={task} />;
           })
         }
       </IonList>

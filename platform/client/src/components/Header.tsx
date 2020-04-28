@@ -25,7 +25,7 @@ export const Header : React.FC<{ title: string, backHref?: string, match: any, i
   // if keycloak is not configured, don't display logout and
   // profile icons. Only show login and profile icons on the home
   // screen
-  const buttons = (!keycloak || url !== '/tasks') ? <></> : (
+  const buttons = (!keycloak || url !== '/actions') ? <></> : (
     <IonButtons slot="end">
       <Link to="/profile">
         <IonButton>
@@ -43,7 +43,7 @@ export const Header : React.FC<{ title: string, backHref?: string, match: any, i
       <IonHeader>
         <IonToolbar>
           {
-            url !== '/tasks' &&
+            url !== '/actions' &&
             <Link 
               to={backHref as string} 
               slot="start"

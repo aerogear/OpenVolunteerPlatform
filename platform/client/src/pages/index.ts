@@ -1,3 +1,3 @@
-export { TaskPage } from './TaskPage';
+export { ActionPage } from './ActionPage';
 export { ProfilePage } from './ProfilePage';
-export { ViewTaskPage } from './ViewTaskPage';
+export { ViewActionPage } from './ViewActionPage';

@@ -9,7 +9,7 @@ import volunteerAction from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 import reciever from '../forms/reciever';
 
-export const ViewTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
+export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const { data, loading, error } = useFindVolunteerActionQuery({ fetchPolicy: "cache-first", variables: { id: match.params.id } });
   const [updateAction] = useUpdateVolunteerActionMutation();
   if (error) {
@@ -26,7 +26,7 @@ export const ViewTaskPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = (
 
   return (
     <>
-      <Header title="Manage your action" backHref="/tasks" match={match} />
+      <Header title="Manage your action" backHref="/actions" match={match} />
       <IonContent>
         <IonList>
           <IonCard>

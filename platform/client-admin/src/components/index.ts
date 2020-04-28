@@ -1,8 +1,8 @@
 
-export { Task } from './Task';
+export { Action } from './Action';
 export { Empty } from './Empty';
 export { Header } from './Header';
 export { Router } from './Router';
 export { Loading } from './Loading';
-export { TaskList } from './TaskList';
+export { ActionsList } from './ActionList';
 export { NetworkBadge } from './NetworkBadge';

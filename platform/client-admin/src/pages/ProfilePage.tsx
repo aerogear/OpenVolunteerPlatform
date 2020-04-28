@@ -43,7 +43,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
       updateVolunteerMutation({
         variables: { input: model }
       }).then(() => {
-        history.push("/tasks")
+        history.push("/actions")
       }).catch((e: any) => {
         console.log(e);
       })
@@ -51,7 +51,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
       createVolunteerMutation({
         variables: { input: model }
       }).then(() => {
-        history.push("/tasks")
+        history.push("/actions")
       }).catch((e: any) => {
         console.log(e);
       })
@@ -69,7 +69,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
 
   return (
     <>
-      <Header title="Profile" backHref="/tasks" match={match} />
+      <Header title="Profile" backHref="/actions" match={match} />
       <IonContent>
         <IonList>
           <IonCard>

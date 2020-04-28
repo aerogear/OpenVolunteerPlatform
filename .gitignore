@@ -37,3 +37,4 @@ yarn.lock
 platform/client/ios/
 platform/client/android/
 platform/client/.gradle/
+testApp

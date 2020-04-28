@@ -6,7 +6,7 @@ import './theme';
 export const App: React.FC= () => {
 
   return (
-    <>
+    <> 
       <Router />
     </>
   );
