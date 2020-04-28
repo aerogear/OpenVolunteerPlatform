@@ -1,6 +1,6 @@
 {
-  "id": "voyager-testing",
-  "realm": "OpenVolunteerPlatform",
+  "id": "open-volunteer-platform",
+  "realm": "open-volunteer-platform",
   "notBefore": 0,
   "revokeRefreshToken": false,
   "refreshTokenMaxReuse": 0,
@@ -35,29 +35,13 @@
   "roles": {
     "realm": [
       {
-        "id": "3116177a-857d-4621-b00c-7822c5403395",
-        "name": "developer",
-        "scopeParamRequired": false,
-        "composite": false,
-        "clientRole": false,
-        "containerId": "voyager-testing"
-      },
-      {
         "id": "5652e1c8-ffa1-4c61-84e4-de09e3549faa",
         "name": "offline_access",
         "description": "${role_offline-access}",
         "scopeParamRequired": true,
         "composite": false,
         "clientRole": false,
-        "containerId": "voyager-testing"
-      },
-      {
-        "id": "8191a66d-9639-4974-988b-a9c46b1cd0e8",
-        "name": "admin",
-        "scopeParamRequired": false,
-        "composite": false,
-        "clientRole": false,
-        "containerId": "voyager-testing"
+        "containerId": "open-volunteer-platform"
       },
       {
         "id": "9d966482-180a-4e4b-8337-ee497c623823",
@@ -66,7 +50,7 @@
         "scopeParamRequired": false,
         "composite": false,
         "clientRole": false,
-        "containerId": "voyager-testing"
+        "containerId": "open-volunteer-platform"
       }
     ],
     "client": {
@@ -283,7 +267,7 @@
         }
       ],
       "security-admin-console": [],
-      "voyager-testing-public": [
+      "open-volunteer-platform-public": [
         {
           "id": "d3e4b174-d5fe-4206-bf32-7566af96e4e3",
           "name": "uma_protection",
@@ -293,24 +277,7 @@
           "containerId": "9e4ad964-80b3-4daf-8917-7801f892ceef"
         }
       ],
-      "voyager-testing-bearer": [
-        {
-          "id": "c80a5c50-4053-47b4-a1c2-a91e65530346",
-          "name": "admin",
-          "scopeParamRequired": false,
-          "composite": false,
-          "clientRole": true,
-          "containerId": "cceb78c3-d2cf-4c90-b54f-a5dc9e296989"
-        },
-        {
-          "id": "b61f5114-13d9-455a-86dc-ee6ca9913018",
-          "name": "developer",
-          "scopeParamRequired": false,
-          "composite": false,
-          "clientRole": true,
-          "containerId": "cceb78c3-d2cf-4c90-b54f-a5dc9e296989"
-        }
-      ],
+      "open-volunteer-platform-bearer": [],
       "admin-cli": [],
       "broker": [
         {
@@ -620,13 +587,13 @@
       "id": "9eee3554-e5e0-432a-ab74-e01474a0c4d7",
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
-      "baseUrl": "/auth/admin/OpenVolunteerPlatform/console/index.html",
+      "baseUrl": "/auth/admin/open-volunteer-platform/console/index.html",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "/auth/admin/OpenVolunteerPlatform/console/*"
+        "/auth/admin/open-volunteer-platform/console/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -755,7 +722,7 @@
     },
     {
       "id": "9e4ad964-80b3-4daf-8917-7801f892ceef",
-      "clientId": "voyager-testing-public",
+      "clientId": "open-volunteer-platform-public",
       "rootUrl": "localhost:8100",
       "baseUrl": "localhost:8100",
       "surrogateAuthRequired": false,
@@ -939,7 +906,7 @@
       "id": "516e481b-27b5-4e24-9960-8fddc3b02f67",
       "clientId": "account",
       "name": "${client_account}",
-      "baseUrl": "/auth/realms/OpenVolunteerPlatform/account",
+      "baseUrl": "/auth/realms/open-volunteer-platform/account",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
@@ -949,7 +916,7 @@
         "view-profile"
       ],
       "redirectUris": [
-        "/auth/realms/OpenVolunteerPlatform/account/*"
+        "/auth/realms/open-volunteer-platform/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -1180,7 +1147,7 @@
     },
     {
       "id": "cceb78c3-d2cf-4c90-b54f-a5dc9e296989",
-      "clientId": "voyager-testing-bearer",
+      "clientId": "open-volunteer-platform-bearer",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
@@ -1317,10 +1284,6 @@
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
   "smtpServer": {},
-  "loginTheme": "keycloak",
-  "accountTheme": "keycloak",
-  "adminTheme": "keycloak",
-  "emailTheme": "keycloak",
   "eventsEnabled": false,
   "eventsListeners": [
     "jboss-logging"
@@ -1369,14 +1332,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "saml-role-list-mapper",
             "oidc-full-name-mapper",
-            "oidc-usermodel-property-mapper",
-            "oidc-usermodel-attribute-mapper",
             "oidc-sha256-pairwise-sub-mapper",
+            "saml-user-attribute-mapper",
             "saml-user-property-mapper",
+            "saml-role-list-mapper",
+            "oidc-usermodel-attribute-mapper",
             "oidc-address-mapper",
-            "saml-user-attribute-mapper"
+            "oidc-usermodel-property-mapper"
           ],
           "consent-required-for-all-mappers": [
             "true"
@@ -1391,14 +1354,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "oidc-usermodel-attribute-mapper",
-            "saml-user-property-mapper",
-            "oidc-address-mapper",
-            "saml-user-attribute-mapper",
             "oidc-full-name-mapper",
             "oidc-usermodel-property-mapper",
+            "saml-role-list-mapper",
+            "saml-user-property-mapper",
+            "saml-user-attribute-mapper",
+            "oidc-usermodel-attribute-mapper",
             "oidc-sha256-pairwise-sub-mapper",
-            "saml-role-list-mapper"
+            "oidc-address-mapper"
           ],
           "consent-required-for-all-mappers": [
             "true"
@@ -1471,12 +1434,10 @@
     ]
   },
   "internationalizationEnabled": false,
-  "supportedLocales": [
-    ""
-  ],
+  "supportedLocales": [],
   "authenticationFlows": [
     {
-      "id": "9fe4140f-f4ad-4cb6-8c37-697b60ea83b3",
+      "id": "fd17dd4e-d972-466d-b950-88ef9aac169b",
       "alias": "Handle Existing Account",
       "description": "Handle what to do if there is existing account with same email/username like authenticated identity provider",
       "providerId": "basic-flow",
@@ -1507,7 +1468,7 @@
       ]
     },
     {
-      "id": "006a97f6-3265-4d01-9245-37274e3ba55f",
+      "id": "a99f8598-bc9d-4aba-85c8-340ae9e9be5a",
       "alias": "Verify Existing Account by Re-authentication",
       "description": "Reauthentication of existing account",
       "providerId": "basic-flow",
@@ -1531,7 +1492,7 @@
       ]
     },
     {
-      "id": "030bd305-c11c-46aa-acf5-54798f42681a",
+      "id": "38c96501-91a0-4115-a7e5-966288fca7d0",
       "alias": "browser",
       "description": "browser based authentication",
       "providerId": "basic-flow",
@@ -1569,7 +1530,7 @@
       ]
     },
     {
-      "id": "943d6881-62b0-497e-9f6a-6d4ce69fb445",
+      "id": "1bd2c823-8f76-468a-9b9b-4fed1d3407b2",
       "alias": "clients",
       "description": "Base authentication for clients",
       "providerId": "client-flow",
@@ -1593,7 +1554,7 @@
       ]
     },
     {
-      "id": "6c3a90e0-96eb-40f3-9088-c25bbd4464a9",
+      "id": "124eb298-7357-444f-bd11-d6bd1d0a2b5e",
       "alias": "direct grant",
       "description": "OpenID Connect Resource Owner Grant",
       "providerId": "basic-flow",
@@ -1624,7 +1585,7 @@
       ]
     },
     {
-      "id": "27c8989b-a716-4755-93af-7aed990149ec",
+      "id": "88b62516-7657-44db-b3e0-ba3d50f4581d",
       "alias": "docker auth",
       "description": "Used by Docker clients to authenticate against the IDP",
       "providerId": "basic-flow",
@@ -1641,7 +1602,7 @@
       ]
     },
     {
-      "id": "5efd1407-bd25-4a2a-a306-c6f1d7860c79",
+      "id": "3ac16833-4757-4927-b029-0b227cdbd5e1",
       "alias": "first broker login",
       "description": "Actions taken after first broker login with identity provider account, which is not yet linked to any Keycloak account",
       "providerId": "basic-flow",
@@ -1674,7 +1635,7 @@
       ]
     },
     {
-      "id": "37a0fed1-3b74-44ed-826c-be5467924f9f",
+      "id": "35064aaf-e0c2-448f-a243-d0cdc086f265",
       "alias": "forms",
       "description": "Username, password, otp and other auth forms.",
       "providerId": "basic-flow",
@@ -1698,7 +1659,7 @@
       ]
     },
     {
-      "id": "af7520de-1dda-4a3a-9e5b-8b4e364376d1",
+      "id": "65edcd16-5d9a-43cd-8f5f-296b6e431584",
       "alias": "registration",
       "description": "registration flow",
       "providerId": "basic-flow",
@@ -1716,7 +1677,7 @@
       ]
     },
     {
-      "id": "065862ed-9206-4e0c-ab20-123716a43105",
+      "id": "5cc87186-18a6-4e72-8e35-a170c586294d",
       "alias": "registration form",
       "description": "registration form",
       "providerId": "form-flow",
@@ -1754,7 +1715,7 @@
       ]
     },
     {
-      "id": "d6dd1847-2a9f-4da0-b3b1-a8cc6e00db0c",
+      "id": "e8216272-c0c6-48f8-943f-ee2c65b3939e",
       "alias": "reset credentials",
       "description": "Reset credentials for a user if they forgot their password or something",
       "providerId": "basic-flow",
@@ -1792,7 +1753,7 @@
       ]
     },
     {
-      "id": "0181041f-20fd-4862-a0e8-5c09c7c5f374",
+      "id": "51e3dbd5-91b4-495d-9957-a09b2391b364",
       "alias": "saml ecp",
       "description": "SAML ECP Profile Authentication Flow",
       "providerId": "basic-flow",
@@ -1811,14 +1772,14 @@
   ],
   "authenticatorConfig": [
     {
-      "id": "22bab982-4734-4a3b-8b37-56cca171e7a3",
+      "id": "96d091f2-c654-4baa-83f2-bf4db14999d8",
       "alias": "create unique user config",
       "config": {
         "require.password.update.after.registration": "false"
       }
     },
     {
-      "id": "65317ad2-bc12-4424-ada8-4f8185b52368",
+      "id": "94c8a3a7-51ad-4c3b-b956-8387c70538a4",
       "alias": "review profile config",
       "config": {
         "update.profile.on.first.login": "missing"

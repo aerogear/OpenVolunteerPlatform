@@ -4,8 +4,8 @@
  * http://localhost:8080
  * It does the following:
  * * Imports a new realm located in ./realm-export.json. This realm has two clients
- *   * voyager-testing-public - public client used by the mobile application
- *   * voyager-testing-bearer - bearer client used by the server to authenticate requests
+ *   * open-volunteer-platform-public - public client used by the mobile application
+ *   * open-volunteer-platform-bearer - bearer client used by the server to authenticate requests
  * * Creates the realm roles and client roles defined in the realmRoleNames and clientRoleNames lists
  * * Creates the users defined in the users list
  * * Assigns the client and realm roles to the users
@@ -18,7 +18,7 @@ const realmToImport = require('./realm-export.json')
 const KEYCLOAK_URL = 'http://localhost:8080/auth'
 
 // name of the realm
-const APP_REALM = 'voyager-testing'
+const APP_REALM = 'open-volunteer-platform'
 
 // name of the admin realm
 const ADMIN_REALM = 'master'
@@ -29,8 +29,8 @@ const ADMIN_PASSWORD = 'admin'
 let token = ''
 
 // The keycloak client used by the sample app
-const PUBLIC_CLIENT_NAME = 'voyager-testing-public'
-const BEARER_CLIENT_NAME = 'voyager-testing-bearer'
+const PUBLIC_CLIENT_NAME = 'open-volunteer-platform-public'
+const BEARER_CLIENT_NAME = 'open-volunteer-platform-bearer'
 let PUBLIC_CLIENT
 
 // The client roles you want created for the BEARER_CLIENT_NAME client

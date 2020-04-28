@@ -1,8 +1,8 @@
 {
-  "realm": "OpenVolunteerPlatform",
+  "realm": "open-volunteer-platform",
   "auth-server-url": "http://localhost:8080/auth",
   "ssl-required": "none",
-  "resource": "voyager-testing-public",
+  "resource": "open-volunteer-platform-public",
   "public-client": true,
   "use-resource-role-mappings": true,
   "confidential-port": 0
