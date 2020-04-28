@@ -10,7 +10,7 @@ Open Platform for Rapid Development of Volunteer Management Systems
 
 ## Motivation
 
-OpenVolounterPlatform lets you automate and optimize work of volounteers for your 
+OpenVolounterPlatform lets you automate and optimize work of volunteers for your 
 orgranization or charity - helping them to deliver help when needed.
 
 Platform gives organization flexibility by giving them ready to use reference implementation 
