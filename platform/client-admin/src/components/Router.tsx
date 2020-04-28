@@ -1,17 +1,18 @@
 import React, { useContext } from 'react';
 import {
-  HashRouter as AppRouter,
   Switch,
   Redirect,
   Route,
 } from 'react-router-dom';
-import { IonApp } from '@ionic/react';
-import { TaskPage, ProfilePage } from '../pages';
-import { ViewTaskPage } from '../pages/ViewTaskPage';
+import { IonApp, IonSplitPane, IonRouterOutlet } from '@ionic/react';
+import { ActionPage, ProfilePage } from '../pages';
+import { ViewActionPage } from '../pages/ViewActionPage';
 import { AuthContext } from '../context/AuthContext';
 import { useFindActiveVolunteerLazyQuery, VolunteerFieldsFragment } from '../dataFacade';
 import { Loading } from './Loading';
 import { volunteerTransformer } from '../transformer/volunteerTransformer';
+import { IonReactRouter } from '@ionic/react-router';
+import { Menu } from './Menu';
 
 export const Router: React.FC = () => {
   const { profile, keycloak } = useContext(AuthContext);
@@ -39,19 +40,24 @@ export const Router: React.FC = () => {
   }
 
   return (
-    <IonApp>
-      <AppRouter>
-        <AuthContext.Provider value={{ profile, keycloak, volunteer }}>
-          <Switch>
-            <Route path="/viewTask/:id" component={ViewTaskPage} exact />
-            <Route path="/tasks" component={TaskPage} exact />
-            <Route path="/profile" component={ProfilePage} exact />
-            <Route exact path="/" render={() => volunteer ?
-              <Redirect to={{ pathname: "tasks" }} /> :
-              <Redirect to="profile" />} />
-          </Switch>
-        </AuthContext.Provider>
-      </AppRouter>
+    <IonApp className={'dark-theme'}>
+      <IonReactRouter>
+        <IonSplitPane contentId="main">
+          <AuthContext.Provider value={{ profile, keycloak, volunteer }}>
+            <Menu />
+            <IonRouterOutlet id="main">
+              <Switch>
+                <Route path="/viewAction/:id" component={ViewActionPage} exact />
+                <Route path="/actions" component={ActionPage} exact />
+                <Route path="/profile" component={ProfilePage} exact />
+                <Route exact path="/" render={() => volunteer ?
+                  <Redirect to={{ pathname: "actions" }} /> :
+                  <Redirect to="profile" />} />
+              </Switch>
+            </IonRouterOutlet>
+          </AuthContext.Provider>
+        </IonSplitPane>
+      </IonReactRouter>
     </IonApp>
   );
 }
