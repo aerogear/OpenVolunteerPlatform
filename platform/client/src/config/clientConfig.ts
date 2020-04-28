@@ -80,13 +80,7 @@ const splitLink = ApolloLink.split(
  * 
  */
 const cache = new InMemoryCache({
-  // cache redirects are used
-  // to query the cache for individual Task item
-  cacheRedirects: {
-    Query: {
-      findTasks: (_, { fields }, { getCacheKey }) => getCacheKey({ __typename: 'Task', id: fields.id }),
-    },
-  },
+
 });
 
 export const clientConfig: ApolloOfflineClientOptions = {
