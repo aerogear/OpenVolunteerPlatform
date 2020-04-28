@@ -23,6 +23,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
   const [createVolunteerMutation] = useCreateVolunteerMutation()
   const [updateVolunteerMutation] = useUpdateVolunteerMutation()
   const history = useHistory()
+  let createVolunteer = false;
 
   if (!keycloak || !profile) return (
     <IonCard>
@@ -38,9 +39,8 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
   );
 
   const submit = (model: any) => {
-
-    if (volunteer) {
-      updateVolunteerMutation({
+    if (createVolunteer) {
+      createVolunteerMutation({
         variables: { input: model }
       }).then(() => {
         history.push("/tasks")
@@ -48,7 +48,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
         console.log(e);
       })
     } else {
-      createVolunteerMutation({
+      updateVolunteerMutation({
         variables: { input: model }
       }).then(() => {
         history.push("/tasks")
@@ -59,6 +59,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
   }
 
   if (!volunteer) {
+    createVolunteer = true;
     volunteer = {
       email: profile.email,
       firstName: profile.firstName,
