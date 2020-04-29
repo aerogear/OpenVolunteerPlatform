@@ -38,7 +38,7 @@
     "typescript": "3.8.3",
     "uniforms": "v3.0.0-alpha.2",
     "uniforms-bridge-simple-schema-2": "v3.0.0-alpha.2",
-    "uniforms-ionic": "0.0.8"
+    "uniforms-ionic": "0.0.9"
   },
   "scripts": {
     "start": "npm run build && cap serve",

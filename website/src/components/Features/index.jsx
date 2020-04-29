@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 
 const features = [
   {
-    title: <>Get reference app and define your data</>,
+    title: <>Download reference applications and modify them for your own needs</>,
     imageUrl: 'img/input.png',
     description: (
       <>
@@ -15,7 +15,7 @@ const features = [
     ),
   },
   {
-    title: <>Use components and forms</>,
+    title: <>Customize by using components and forms</>,
     imageUrl: 'img/config.png',
     description: (
       <>
@@ -25,7 +25,7 @@ const features = [
     ),
   },
   {
-    title: <>Deploy</>,
+    title: <>Deploy using one of the supported cloud providers</>,
     imageUrl: 'img/rocket.png',
     description: (
       <>

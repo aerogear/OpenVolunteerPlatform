@@ -10,7 +10,7 @@ extensions:
       update: true
       findAll: false
       find: true
-      delete: false
+      delete: true
       subCreate: false
       subUpdate: false
       subDelete: false
@@ -18,7 +18,7 @@ extensions:
       graphback-client:
         format: 'graphql'
         outputPath: ./src/graphql
-        fragmentOnly: true
+        ## fragmentOnly: true
   codegen:
     generates:
       ./src/dataFacade.tsx:
