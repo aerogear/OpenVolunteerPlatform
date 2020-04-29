@@ -19,7 +19,7 @@ import volunteerForm from '../forms/volunteer';
 import { AutoForm } from 'uniforms-ionic'
 
 export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
-  let { keycloak, profile, volunteer } = useContext(AuthContext);
+  let { keycloak, profile, volunteer, setVolunteer } = useContext(AuthContext);
   const [createVolunteerMutation] = useCreateVolunteerMutation()
   const [updateVolunteerMutation] = useUpdateVolunteerMutation()
   const history = useHistory()
@@ -42,7 +42,11 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
     if (createVolunteer) {
       createVolunteerMutation({
         variables: { input: model }
-      }).then(() => {
+      }).then(({ data }) => {
+        setVolunteer({
+          ...model, 
+          id: data?.createVolunteer.id
+        });
         history.push("/actions")
       }).catch((e: any) => {
         console.log(e);
@@ -51,6 +55,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
       updateVolunteerMutation({
         variables: { input: model }
       }).then(() => {
+        setVolunteer(model);
         history.push("/actions")
       }).catch((e: any) => {
         console.log(e);
