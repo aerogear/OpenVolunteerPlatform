@@ -8,7 +8,6 @@ import { IonReactRouter } from "@ionic/react-router"
 import { IonApp, IonSplitPane, IonRouterOutlet } from '@ionic/react';
 import { ActionPage, ProfilePage } from '../pages';
 import { ViewActionPage } from '../pages/ViewActionPage';
-import { AuthContext } from '../context/AuthContext';
 import { Menu } from './Menu';
 import { SchedulePage } from '../pages/SchedulePage';
 import { MapPage } from '../pages/MapPage';
@@ -22,7 +21,6 @@ export const Router: React.FC = () => {
     <IonApp className={'dark-theme'}>
       <IonReactRouter>
         <IonSplitPane contentId="main">
-
           <Menu />
           <IonRouterOutlet id="main">
             <Switch>
@@ -32,7 +30,7 @@ export const Router: React.FC = () => {
               <Route path="/schedule" component={SchedulePage} exact />
               <Route path="/optimize" component={OptimizePage} exact />
               <Route path="/reports" component={OptimizePage} exact />
-              <Route path="/volunteers" component={VolunteersPage} exact />
+              <Route path="/volunteers" component={VolunteersPage} />
               <Route path="/manageVolunteer/:id" component={VolunteersPage} exact />
               <Route path="/recipients" component={RecipientsPage} exact />
               <Route path="/manageRecipient/:id" component={RecipientsPage} exact />

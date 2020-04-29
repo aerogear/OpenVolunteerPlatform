@@ -22,17 +22,17 @@ export const Recipient: React.FC<{ recipient: RecipientFieldsFragment }> = ({ re
         <IonNote item-start>
           {recipient.phone}
         </IonNote>
-        <IonButtons>
-
-          <Link to={`manageRecipient/${recipient.id}`}>
-            <IonButton item-start color='primary' fill="outline">
-              <IonIcon icon={open} />
-            </IonButton>
-          </Link>
-
-        </IonButtons>
       </IonLabel>
-    </IonItem>
+      <IonButtons>
+
+        <Link to={`manageRecipient/${recipient.id}`}>
+          <IonButton item-start color='primary' fill="outline">
+            <IonIcon icon={open} />
+          </IonButton>
+        </Link>
+
+      </IonButtons>
+    </IonItem >
   );
 
 };

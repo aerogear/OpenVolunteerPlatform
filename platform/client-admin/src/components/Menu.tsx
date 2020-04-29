@@ -48,7 +48,7 @@ export const Menu: React.FC<MenuProps> = ({ }) => {
       .filter(route => !!route.path)
       .map(p => (
         <IonMenuToggle key={p.title} auto-hide="false">
-          <IonItem detail={false} routerLink={p.path} routerDirection="none" className={location.pathname.startsWith(p.path) ? 'selected' : undefined}>
+          <IonItem detail={false} routerLink={p.path} className={location.pathname.startsWith(p.path) ? 'selected' : undefined}>
             <IonIcon slot="start" icon={p.icon} />
             <IonLabel>{p.title}</IonLabel>
           </IonItem>

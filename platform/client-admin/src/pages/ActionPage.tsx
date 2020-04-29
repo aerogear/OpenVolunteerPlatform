@@ -7,9 +7,7 @@ import {
 } from '@ionic/react';
 import { Empty, ActionsList, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindMyVolunteerActionsLazyQuery, ActionStatus, useFindVolunteerActionLazyQuery, useFindVolunteerActionsLazyQuery, useFindAllVolunteerActionsLazyQuery } from '../dataFacade';
-import { useNetworkStatus } from 'react-offix-hooks';
-import { AuthContext } from '../context/AuthContext';
+import { useFindAllVolunteerActionsLazyQuery } from '../dataFacade';
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   let [findActions, { data, loading, error, called }] = useFindAllVolunteerActionsLazyQuery({ fetchPolicy: "network-only" })
