@@ -1,4 +1,4 @@
-fragment RecieverExpandedFields on Reciever {
+fragment RecipientExpandedFields on Recipient {
    id
    name
    phone

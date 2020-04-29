@@ -1,0 +1,5 @@
+mutation deleteVolunteerAction($input: VolunteerActionInput!) {
+  deleteVolunteerAction(input: $input) {
+      ...VolunteerActionFields
+  }
+}

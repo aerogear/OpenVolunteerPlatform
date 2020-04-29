@@ -53,8 +53,8 @@ type Mutation {
   createVolunteerAction(input: VolunteerActionInput): VolunteerAction!
   updateVolunteerAction(input: VolunteerActionInput): VolunteerAction!
   deleteVolunteerAction(input: VolunteerActionInput): VolunteerAction!
-  createReciever(input: RecieverInput): Reciever!
-  updateReciever(input: RecieverInput): Reciever!
+  createRecipient(input: RecipientInput): Recipient!
+  updateRecipient(input: RecipientInput): Recipient!
 }
 
 type Query {
@@ -64,15 +64,15 @@ type Query {
   findVolunteers(fields: VolunteerInput, limit: Int, offset: Int): [Volunteer]!
   findAllVolunteerActions(limit: Int, offset: Int): [VolunteerAction]!
   findVolunteerActions(fields: VolunteerActionInput, limit: Int, offset: Int): [VolunteerAction]!
-  findAllRecievers(limit: Int, offset: Int): [Reciever]!
-  findRecievers(fields: RecieverInput, limit: Int, offset: Int): [Reciever]!
+  findAllRecipients(limit: Int, offset: Int): [Recipient]!
+  findRecipients(fields: RecipientInput, limit: Int, offset: Int): [Recipient]!
 }
 
 """
 @model
 @crud.delete: false
 """
-type Reciever {
+type Recipient {
   id: ID!
   name: String!
   phone: String
@@ -80,12 +80,12 @@ type Reciever {
   createdAt: DateTime
   prefferedProducts: String
 
-  """@oneToMany field: 'reciever', key: 'recieverId'"""
+  """@oneToMany field: 'recipient', key: 'recipientId'"""
   actions: [VolunteerAction]
   version: Int
 }
 
-input RecieverInput {
+input RecipientInput {
   id: ID
   name: String
   phone: String
@@ -102,8 +102,8 @@ type Subscription {
   newVolunteerAction(input: VolunteerActionInput): VolunteerAction!
   updatedVolunteerAction(input: VolunteerActionInput): VolunteerAction!
   deletedVolunteerAction(input: VolunteerActionInput): VolunteerAction!
-  newReciever(input: RecieverInput): Reciever!
-  updatedReciever(input: RecieverInput): Reciever!
+  newRecipient(input: RecipientInput): Recipient!
+  updatedRecipient(input: RecipientInput): Recipient!
 }
 
 """
@@ -146,9 +146,9 @@ type VolunteerAction {
 
   """
   Workaround for https://github.com/aerogear/graphback/issues/1167
-  @manyToOne field: 'actions', key: 'recieverId'
+  @manyToOne field: 'actions', key: 'recipientId'
   """
-  reciever: Reciever
+  recipient: Recipient
 
   """@manyToOne field: 'actions', key: 'distributionCentreId'"""
   distributionCentre: DistributionCentre
@@ -163,7 +163,7 @@ input VolunteerActionInput {
   status: ActionStatus
   actionType: ActionType
   createdAt: DateTime
-  recieverId: ID
+  recipientId: ID
   volunteerId: ID
   distributionCentreId: ID
   version: Int

@@ -1,0 +1,5 @@
+query findRecipients($fields: RecipientInput!, $limit: Int, $offset: Int) {
+    findRecipients(fields: $fields, limit: $limit, offset: $offset) {
+      ...RecipientExpandedFields
+    }
+  }

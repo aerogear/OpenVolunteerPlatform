@@ -1,9 +1,0 @@
-fragment RecieverFields on Reciever {
-   id
-   name
-   phone
-   address
-   createdAt
-   prefferedProducts
-
-} 
