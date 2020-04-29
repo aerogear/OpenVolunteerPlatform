@@ -1,0 +1,5 @@
+query findAllVolunteers($limit: Int, $offset: Int) {
+    findAllVolunteers(limit: $limit, offset: $offset) {
+      ...VolunteerExpandedFields
+    }
+  }

@@ -492,6 +492,62 @@ export type UpdateVolunteerActionMutation = (
   ) }
 );
 
+export type FindAllDistributionCentresQueryVariables = {
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type FindAllDistributionCentresQuery = (
+  { __typename?: 'Query' }
+  & { findAllDistributionCentres: Array<Maybe<(
+    { __typename?: 'DistributionCentre' }
+    & DistributionCentreExpandedFieldsFragment
+  )>> }
+);
+
+export type FindAllRecipientsQueryVariables = {
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type FindAllRecipientsQuery = (
+  { __typename?: 'Query' }
+  & { findAllRecipients: Array<Maybe<(
+    { __typename?: 'Recipient' }
+    & RecipientExpandedFieldsFragment
+  )>> }
+);
+
+export type FindAllVolunteerActionsQueryVariables = {
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type FindAllVolunteerActionsQuery = (
+  { __typename?: 'Query' }
+  & { findAllVolunteerActions: Array<Maybe<(
+    { __typename?: 'VolunteerAction' }
+    & VolunteerActionExpandedFieldsFragment
+  )>> }
+);
+
+export type FindAllVolunteersQueryVariables = {
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type FindAllVolunteersQuery = (
+  { __typename?: 'Query' }
+  & { findAllVolunteers: Array<Maybe<(
+    { __typename?: 'Volunteer' }
+    & VolunteerExpandedFieldsFragment
+  )>> }
+);
+
 export type FindDistributionCentresQueryVariables = {
   fields: DistributionCentreInput;
   limit?: Maybe<Scalars['Int']>;
@@ -993,6 +1049,142 @@ export function useUpdateVolunteerActionMutation(baseOptions?: ApolloReactHooks.
 export type UpdateVolunteerActionMutationHookResult = ReturnType<typeof useUpdateVolunteerActionMutation>;
 export type UpdateVolunteerActionMutationResult = ApolloReactCommon.MutationResult<UpdateVolunteerActionMutation>;
 export type UpdateVolunteerActionMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>;
+export const FindAllDistributionCentresDocument = gql`
+    query findAllDistributionCentres($limit: Int, $offset: Int) {
+  findAllDistributionCentres(limit: $limit, offset: $offset) {
+    ...DistributionCentreExpandedFields
+  }
+}
+    ${DistributionCentreExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useFindAllDistributionCentresQuery__
+ *
+ * To run a query within a React component, call `useFindAllDistributionCentresQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindAllDistributionCentresQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindAllDistributionCentresQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useFindAllDistributionCentresQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindAllDistributionCentresQuery, FindAllDistributionCentresQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindAllDistributionCentresQuery, FindAllDistributionCentresQueryVariables>(FindAllDistributionCentresDocument, baseOptions);
+      }
+export function useFindAllDistributionCentresLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindAllDistributionCentresQuery, FindAllDistributionCentresQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindAllDistributionCentresQuery, FindAllDistributionCentresQueryVariables>(FindAllDistributionCentresDocument, baseOptions);
+        }
+export type FindAllDistributionCentresQueryHookResult = ReturnType<typeof useFindAllDistributionCentresQuery>;
+export type FindAllDistributionCentresLazyQueryHookResult = ReturnType<typeof useFindAllDistributionCentresLazyQuery>;
+export type FindAllDistributionCentresQueryResult = ApolloReactCommon.QueryResult<FindAllDistributionCentresQuery, FindAllDistributionCentresQueryVariables>;
+export const FindAllRecipientsDocument = gql`
+    query findAllRecipients($limit: Int, $offset: Int) {
+  findAllRecipients(limit: $limit, offset: $offset) {
+    ...RecipientExpandedFields
+  }
+}
+    ${RecipientExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useFindAllRecipientsQuery__
+ *
+ * To run a query within a React component, call `useFindAllRecipientsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindAllRecipientsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindAllRecipientsQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useFindAllRecipientsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindAllRecipientsQuery, FindAllRecipientsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindAllRecipientsQuery, FindAllRecipientsQueryVariables>(FindAllRecipientsDocument, baseOptions);
+      }
+export function useFindAllRecipientsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindAllRecipientsQuery, FindAllRecipientsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindAllRecipientsQuery, FindAllRecipientsQueryVariables>(FindAllRecipientsDocument, baseOptions);
+        }
+export type FindAllRecipientsQueryHookResult = ReturnType<typeof useFindAllRecipientsQuery>;
+export type FindAllRecipientsLazyQueryHookResult = ReturnType<typeof useFindAllRecipientsLazyQuery>;
+export type FindAllRecipientsQueryResult = ApolloReactCommon.QueryResult<FindAllRecipientsQuery, FindAllRecipientsQueryVariables>;
+export const FindAllVolunteerActionsDocument = gql`
+    query findAllVolunteerActions($limit: Int, $offset: Int) {
+  findAllVolunteerActions(limit: $limit, offset: $offset) {
+    ...VolunteerActionExpandedFields
+  }
+}
+    ${VolunteerActionExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useFindAllVolunteerActionsQuery__
+ *
+ * To run a query within a React component, call `useFindAllVolunteerActionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindAllVolunteerActionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindAllVolunteerActionsQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useFindAllVolunteerActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindAllVolunteerActionsQuery, FindAllVolunteerActionsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindAllVolunteerActionsQuery, FindAllVolunteerActionsQueryVariables>(FindAllVolunteerActionsDocument, baseOptions);
+      }
+export function useFindAllVolunteerActionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindAllVolunteerActionsQuery, FindAllVolunteerActionsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindAllVolunteerActionsQuery, FindAllVolunteerActionsQueryVariables>(FindAllVolunteerActionsDocument, baseOptions);
+        }
+export type FindAllVolunteerActionsQueryHookResult = ReturnType<typeof useFindAllVolunteerActionsQuery>;
+export type FindAllVolunteerActionsLazyQueryHookResult = ReturnType<typeof useFindAllVolunteerActionsLazyQuery>;
+export type FindAllVolunteerActionsQueryResult = ApolloReactCommon.QueryResult<FindAllVolunteerActionsQuery, FindAllVolunteerActionsQueryVariables>;
+export const FindAllVolunteersDocument = gql`
+    query findAllVolunteers($limit: Int, $offset: Int) {
+  findAllVolunteers(limit: $limit, offset: $offset) {
+    ...VolunteerExpandedFields
+  }
+}
+    ${VolunteerExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useFindAllVolunteersQuery__
+ *
+ * To run a query within a React component, call `useFindAllVolunteersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindAllVolunteersQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindAllVolunteersQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useFindAllVolunteersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindAllVolunteersQuery, FindAllVolunteersQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindAllVolunteersQuery, FindAllVolunteersQueryVariables>(FindAllVolunteersDocument, baseOptions);
+      }
+export function useFindAllVolunteersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindAllVolunteersQuery, FindAllVolunteersQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindAllVolunteersQuery, FindAllVolunteersQueryVariables>(FindAllVolunteersDocument, baseOptions);
+        }
+export type FindAllVolunteersQueryHookResult = ReturnType<typeof useFindAllVolunteersQuery>;
+export type FindAllVolunteersLazyQueryHookResult = ReturnType<typeof useFindAllVolunteersLazyQuery>;
+export type FindAllVolunteersQueryResult = ApolloReactCommon.QueryResult<FindAllVolunteersQuery, FindAllVolunteersQueryVariables>;
 export const FindDistributionCentresDocument = gql`
     query findDistributionCentres($fields: DistributionCentreInput!, $limit: Int, $offset: Int) {
   findDistributionCentres(fields: $fields, limit: $limit, offset: $offset) {
