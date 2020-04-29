@@ -1,7 +1,5 @@
 
 import React from 'react';
-import GoogleMapReact from 'google-map-react';
-import { IonIcon } from '@ionic/react';
 
 export const Map: React.FC<{}> = () => {
     return (

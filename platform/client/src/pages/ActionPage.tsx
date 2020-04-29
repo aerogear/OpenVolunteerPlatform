@@ -6,20 +6,13 @@ import {
   IonLabel,
   IonFooter,
   IonLoading,
-  IonContent,
-  IonToolbar,
-  IonButtons,
-  IonMenuButton,
-  IonButton,
-  IonIcon,
+  IonContent
 } from '@ionic/react';
 import { Empty, ActionsList, NetworkBadge, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { useFindMyVolunteerActionsLazyQuery, ActionStatus } from '../dataFacade';
 import { useNetworkStatus } from 'react-offix-hooks';
 import { AuthContext } from '../context/AuthContext';
-import { ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
-
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   const { volunteer } = useContext(AuthContext);
