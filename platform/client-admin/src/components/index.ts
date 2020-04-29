@@ -5,4 +5,3 @@ export { Header } from './Header';
 export { Router } from './Router';
 export { Loading } from './generic/Loading';
 export { ActionsList } from './model/ActionList';
-export { NetworkBadge } from './generic/NetworkBadge';

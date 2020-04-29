@@ -5,7 +5,7 @@ import {
   IonLoading,
   IonContent,
 } from '@ionic/react';
-import { Empty, ActionsList, NetworkBadge, Header } from '../components';
+import { Empty, ActionsList, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { useFindMyVolunteerActionsLazyQuery, ActionStatus, useFindVolunteerActionLazyQuery, useFindVolunteerActionsLazyQuery } from '../dataFacade';
 import { useNetworkStatus } from 'react-offix-hooks';
@@ -45,7 +45,6 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
       <IonFooter>
         <div>
           OpenVolunteer Platform
-          <NetworkBadge isOnline={isOnline} />
         </div>
       </IonFooter>
     </IonPage >
