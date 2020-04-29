@@ -71,6 +71,7 @@
     "@graphql-codegen/typescript-operations": "1.13.1",
     "@graphql-codegen/typescript-react-apollo": "1.13.1",
     "@test-graphql-cli/codegen": "4.0.1-beta.3",
+    "@types/googlemaps": "3.38.0",
     "graphql-cli": "4.0.1-beta.3"
   },
   "description": "An Ionic project"
