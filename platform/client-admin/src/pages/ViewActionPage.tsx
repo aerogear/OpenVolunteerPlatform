@@ -70,7 +70,7 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                 <AutoFields />
                 <ErrorsField />
               </AutoForm>
-              <Map></Map>
+              <Map lat={model.distributionCentre?.lat!} long={model.distributionCentre?.long!} name={model.distributionCentre?.name!}></Map>
             </IonItemGroup>
           </IonCard>
           <IonCard>
@@ -85,7 +85,7 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                 <AutoFields />
                 <ErrorsField />
               </AutoForm>
-              <Map></Map>
+              <Map lat={model.distributionCentre?.lat!} long={model.distributionCentre?.long!} name={model.distributionCentre?.name!}></Map>
             </IonItemGroup>
           </IonCard>
 
