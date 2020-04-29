@@ -6,20 +6,15 @@ import { logout } from '../keycloakAuth';
 import { useApolloOfflineClient } from 'react-offix-hooks';
 import { Link } from 'react-router-dom';
 
-export const Header : React.FC<{ title: string, backHref?: string, match: any, isOnline?: boolean }> = ({ title, backHref, match, isOnline }) => {
-
+export const Header: React.FC<{ title: string, match: any }> = ({ title, match }) => {
   const { url } = match;
 
   const client = useApolloOfflineClient();
   const { keycloak } = useContext(AuthContext);
-  const [ showToast, setShowToast ] = useState(false);
 
   const handleLogout = async () => {
-    if (isOnline) {
-      await logout({ keycloak, client });
-      return;
-    }
-    setShowToast(true);
+    await logout({ keycloak, client });
+    return;
   }
 
   // if keycloak is not configured, don't display logout and
@@ -29,7 +24,7 @@ export const Header : React.FC<{ title: string, backHref?: string, match: any, i
     <IonButtons slot="end">
       <Link to="/profile">
         <IonButton>
-          <IonIcon slot="icon-only" icon={person}  />
+          <IonIcon slot="icon-only" icon={person} />
         </IonButton>
       </Link>
       <IonButton onClick={handleLogout}>
@@ -42,32 +37,10 @@ export const Header : React.FC<{ title: string, backHref?: string, match: any, i
     <>
       <IonHeader>
         <IonToolbar>
-          {
-            url !== '/actions' &&
-            <Link 
-              to={backHref as string} 
-              slot="start"
-              role="button"
-            >
-              <IonButtons>
-                <IonButton>
-                  <IonIcon icon={arrowBack}/>
-                </IonButton>
-              </IonButtons>
-            </Link>
-          }
-          <IonTitle>{ title }</IonTitle>
-          {   buttons }
+          <IonTitle>{title}</IonTitle>
+          {buttons}
         </IonToolbar>
       </IonHeader>
-      <IonToast
-        isOpen={showToast}
-        onDidDismiss={() => setShowToast(false)}
-        message="You are currently offline. Unable to logout."
-        position="top"
-        color="danger"
-        duration={1000}
-      />
     </>
   );
 };

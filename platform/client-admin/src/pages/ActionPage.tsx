@@ -7,16 +7,15 @@ import {
 } from '@ionic/react';
 import { Empty, ActionsList, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindMyVolunteerActionsLazyQuery, ActionStatus, useFindVolunteerActionLazyQuery, useFindVolunteerActionsLazyQuery } from '../dataFacade';
+import { useFindMyVolunteerActionsLazyQuery, ActionStatus, useFindVolunteerActionLazyQuery, useFindVolunteerActionsLazyQuery, useFindAllVolunteerActionsLazyQuery } from '../dataFacade';
 import { useNetworkStatus } from 'react-offix-hooks';
 import { AuthContext } from '../context/AuthContext';
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
-  let [findActions, { data, loading, error, called }] = useFindVolunteerActionsLazyQuery({ fetchPolicy: "network-only" })
-  const isOnline = useNetworkStatus();
+  let [findActions, { data, loading, error, called }] = useFindAllVolunteerActionsLazyQuery({ fetchPolicy: "network-only" })
 
   if (!called) {
-    findActions({ variables: { fields: { status: ActionStatus.Assigned } } })
+    findActions({ variables: { limit: 30 } })
   }
   if (error) {
     console.log(error);
@@ -28,8 +27,8 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   />;
 
   let content;
-  if (data?.findVolunteerActions?.length !== 0) {
-    content = <ActionsList tasks={data?.findVolunteerActions} />
+  if (data?.findAllVolunteerActions?.length !== 0) {
+    content = <ActionsList actions={data?.findAllVolunteerActions} />
   } else {
     content = <Empty message={<p>No tasks!</p>} />;
   }
@@ -37,7 +36,7 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
 
   return (
     <IonPage>
-      <Header title="OpenVolunteer Admin App" match={match} isOnline={isOnline} />
+      <Header title="OpenVolunteer Admin App" match={match} />
 
       <IonContent className="ion-padding" >
         {content}

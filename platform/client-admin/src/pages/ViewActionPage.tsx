@@ -26,7 +26,7 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
 
   return (
     <>
-      <Header title="Manage your action" backHref="/actions" match={match} />
+      <Header title="Manage your action" match={match} />
       <IonContent>
         <IonList>
           <IonCard>

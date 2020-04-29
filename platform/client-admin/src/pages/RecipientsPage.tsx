@@ -14,7 +14,6 @@ import { RecipientList } from '../components/model/RecipientList';
 
 export const RecipientsPage: React.FC<RouteComponentProps> = ({ match }) => {
   let { data, loading, error, called } = useFindRecipientsQuery({ variables: { limit: 50, fields: {} } })
-  const isOnline = useNetworkStatus();
 
   if (error) {
     console.log(error);
@@ -35,7 +34,7 @@ export const RecipientsPage: React.FC<RouteComponentProps> = ({ match }) => {
 
   return (
     <IonPage>
-      <Header title="OpenVolunteer Admin App" match={match} isOnline={isOnline} />
+      <Header title="List of Recipients" match={match} />
 
       <IonContent className="ion-padding" >
         {content}

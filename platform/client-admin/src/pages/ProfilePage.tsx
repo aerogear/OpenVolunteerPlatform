@@ -35,7 +35,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
 
   return (
     <>
-      <Header title="Profile" backHref="/actions" match={match} />
+      <Header title="Profile" match={match} />
       <IonContent>
         <IonList>
           <IonCard>
