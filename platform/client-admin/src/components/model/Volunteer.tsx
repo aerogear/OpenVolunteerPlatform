@@ -10,27 +10,33 @@ import {
 } from '@ionic/react';
 import { helpBuoy, open } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
+import { VolunteerFieldsFragment } from '../../dataFacade';
 
-export const Action: React.FC<any> = ({ action }) => {
+export const Volunteer: React.FC<{ volunteer: VolunteerFieldsFragment }> = ({ volunteer }) => {
 
   return (
     <IonItem>
       <IonIcon icon={helpBuoy} className='ion-margin-end ion-align-items-start' />
       <IonLabel>
-        <h2>{action.title}</h2>
+        <h2>{volunteer.firstName} {volunteer.lastName}</h2>
         <IonNote item-start>
-          {action.description}
+          {volunteer.canDeliver}
         </IonNote>
         <br />
         <IonNote>
-          <IonBadge color='primary'>
-            {action.status}
-          </IonBadge>
+          {volunteer.canDeliver &&
+            <IonBadge color='primary'>
+              Delivery
+            </IonBadge>}
+          {volunteer.canPhoneCall &&
+            <IonBadge color='primary'>
+              Delivery
+            </IonBadge>}
         </IonNote>
       </IonLabel>
       <IonButtons>
 
-        <Link to={`viewAction/${action.id}`}>
+        <Link to={`manageVolunteer/${volunteer.id}`}>
           <IonButton item-start color='primary' fill="outline">
             <IonIcon icon={open} />
           </IonButton>

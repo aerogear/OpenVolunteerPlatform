@@ -4,58 +4,43 @@ import {
   Redirect,
   Route,
 } from 'react-router-dom';
+import { IonReactRouter } from "@ionic/react-router"
 import { IonApp, IonSplitPane, IonRouterOutlet } from '@ionic/react';
 import { ActionPage, ProfilePage } from '../pages';
 import { ViewActionPage } from '../pages/ViewActionPage';
 import { AuthContext } from '../context/AuthContext';
-import { useFindActiveVolunteerLazyQuery, VolunteerFieldsFragment } from '../dataFacade';
-import { Loading } from './Loading';
-import { volunteerTransformer } from '../transformer/volunteerTransformer';
-import { IonReactRouter } from '@ionic/react-router';
 import { Menu } from './Menu';
+import { SchedulePage } from '../pages/SchedulePage';
+import { MapPage } from '../pages/MapPage';
+import { OptimizePage } from '../pages/OptimizePage';
+import { DistributionCentrePage } from '../pages/DistributionCentrePage';
+import { RecipientsPage } from '../pages/RecipientsPage';
+import { VolunteersPage } from '../pages/VolunteersPage';
 
 export const Router: React.FC = () => {
-  const { profile, keycloak } = useContext(AuthContext);
-
-  let [findVolunteerQuery, { data, loading, error, called }] = useFindActiveVolunteerLazyQuery({
-    fetchPolicy: "network-only"
-  });
-
-  if (loading) {
-    return <Loading loading={true} />;
-  }
-
-  if (error) {
-    console.log(`Error when fetching user ${error}`)
-    return (<>`Error`</>)
-  }
-
-  if (profile?.username && !called) {
-    findVolunteerQuery({ variables: { username: profile?.username } });
-  }
-
-  let volunteer: VolunteerFieldsFragment | undefined;
-  if (data?.findVolunteers?.length === 1 && data?.findVolunteers[0]) {
-    volunteer = volunteerTransformer(data.findVolunteers[0]);
-  }
-
   return (
     <IonApp className={'dark-theme'}>
       <IonReactRouter>
         <IonSplitPane contentId="main">
-          <AuthContext.Provider value={{ profile, keycloak, volunteer }}>
-            <Menu />
-            <IonRouterOutlet id="main">
-              <Switch>
-                <Route path="/viewAction/:id" component={ViewActionPage} exact />
-                <Route path="/actions" component={ActionPage} exact />
-                <Route path="/profile" component={ProfilePage} exact />
-                <Route exact path="/" render={() => volunteer ?
-                  <Redirect to={{ pathname: "actions" }} /> :
-                  <Redirect to="profile" />} />
-              </Switch>
-            </IonRouterOutlet>
-          </AuthContext.Provider>
+
+          <Menu />
+          <IonRouterOutlet id="main">
+            <Switch>
+              <Route path="/viewAction/:id" component={ViewActionPage} exact />
+              <Route path="/actions" component={ActionPage} exact />
+              <Route path="/map" component={MapPage} exact />
+              <Route path="/schedule" component={SchedulePage} exact />
+              <Route path="/optimize" component={OptimizePage} exact />
+              <Route path="/reports" component={OptimizePage} exact />
+              <Route path="/volunteers" component={VolunteersPage} exact />
+              <Route path="/manageVolunteer/:id" component={VolunteersPage} exact />
+              <Route path="/recipients" component={RecipientsPage} exact />
+              <Route path="/manageRecipient/:id" component={RecipientsPage} exact />
+              <Route path="/distributionCentre" component={DistributionCentrePage} exact />
+              <Route path="/profile" component={ProfilePage} exact />
+              <Redirect to={{ pathname: "actions" }} />
+            </Switch>
+          </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
     </IonApp>

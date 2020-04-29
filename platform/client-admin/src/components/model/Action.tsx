@@ -11,26 +11,26 @@ import {
 import { helpBuoy, open } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
 
-export const Action: React.FC<any> = ({ task, updateTask, deleteTask }) => {
+export const Action: React.FC<any> = ({ action }) => {
 
   return (
     <IonItem>
       <IonIcon icon={helpBuoy} className='ion-margin-end ion-align-items-start' />
       <IonLabel>
-        <h2>{task.title}</h2>
+        <h2>{action.title}</h2>
         <IonNote item-start>
-          {task.description}
+          {action.description}
         </IonNote>
         <br />
         <IonNote>
           <IonBadge color='primary'>
-            {task.status}
+            {action.status}
           </IonBadge>
         </IonNote>
       </IonLabel>
       <IonButtons>
 
-        <Link to={`viewAction/${task.id}`}>
+        <Link to={`viewAction/${action.id}`}>
           <IonButton item-start color='primary' fill="outline">
             <IonIcon icon={open} />
           </IonButton>

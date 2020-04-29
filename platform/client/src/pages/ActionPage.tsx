@@ -33,9 +33,9 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
 
   let content;
   if (data?.findVolunteerActions?.length !== 0) {
-    content = <ActionsList tasks={data?.findVolunteerActions} />
+    content = <ActionsList actions={data?.findVolunteerActions} />
   } else {
-    content = <Empty message={<p>No tasks!</p>} />;
+    content = <Empty message={<p>No actions assigned to you! You will be notified about new actions soon</p>} />;
   }
 
   const updateFilter = (e: CustomEvent) => {
@@ -51,10 +51,10 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
       <IonContent className="ion-padding" >
         <IonSegment onIonChange={updateFilter}>
           <IonSegmentButton value={ActionStatus.Assigned}>
-            <IonLabel>Open Tasks</IonLabel>
+            <IonLabel>Open Actions</IonLabel>
           </IonSegmentButton>
           <IonSegmentButton value={ActionStatus.Completed}>
-            <IonLabel>Finished Tasks</IonLabel>
+            <IonLabel>Finished Actions</IonLabel>
           </IonSegmentButton>
         </IonSegment>
         {content}

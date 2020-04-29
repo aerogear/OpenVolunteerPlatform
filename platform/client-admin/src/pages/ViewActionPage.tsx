@@ -3,14 +3,14 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Header } from '../components/Header';
 import { Map } from '../components/Map';
 import { IUpdateMatchParams } from '../declarations';
-import { useFindVolunteerActionQuery, useUpdateVolunteerActionMutation } from '../dataFacade'
+import { useUpdateVolunteerActionMutation, useFindVolunteerActionsQuery } from '../dataFacade'
 import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic'
 import volunteerAction from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
-import reciever from '../forms/reciever';
+import recipient from '../forms/recipient';
 
 export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const { data, loading, error } = useFindVolunteerActionQuery({ fetchPolicy: "cache-first", variables: { id: match.params.id } });
+  const { data, loading, error } = useFindVolunteerActionsQuery({ fetchPolicy: "cache-first", variables: { fields: {}, limit: 50 } });
   const [updateAction] = useUpdateVolunteerActionMutation();
   if (error) {
     console.log(error);
@@ -64,8 +64,8 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                 <h2>Recipient information</h2>
               </IonItemDivider>
               <AutoForm
-                model={model.reciever}
-                schema={reciever}
+                model={model.recipient}
+                schema={recipient}
               >
                 <AutoFields />
                 <ErrorsField />
@@ -80,7 +80,7 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
               </IonItemDivider>
               <AutoForm
                 model={model.distributionCentre}
-                schema={reciever}
+                schema={recipient}
               >
                 <AutoFields />
                 <ErrorsField />
