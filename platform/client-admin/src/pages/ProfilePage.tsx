@@ -18,7 +18,7 @@ import adminForm from '../forms/admin';
 import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic'
 
 export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
-  let { keycloak, profile, volunteer } = useContext(AuthContext);
+  let { keycloak, profile } = useContext(AuthContext);
 
   if (!keycloak || !profile) return (
     <IonCard>
@@ -45,7 +45,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
               </IonItemDivider>
               <AutoForm
                 placeholder
-                model={{ ...volunteer }}
+                model={{ ...profile }}
                 schema={adminForm}
                 showInlineError
               >

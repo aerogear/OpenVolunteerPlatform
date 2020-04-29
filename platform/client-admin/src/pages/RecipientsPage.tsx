@@ -5,19 +5,17 @@ import {
   IonLoading,
   IonContent,
 } from '@ionic/react';
-import { Empty, ActionsList, NetworkBadge, Header } from '../components';
+import { Empty, NetworkBadge, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindMyVolunteerActionsLazyQuery, ActionStatus, useFindVolunteerActionLazyQuery, useFindVolunteerActionsLazyQuery } from '../dataFacade';
+import { useFindRecipientsQuery } from '../dataFacade';
 import { useNetworkStatus } from 'react-offix-hooks';
-import { AuthContext } from '../context/AuthContext';
+import { RecipientList } from '../components/model/RecipientList';
 
-export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
-  let [findActions, { data, loading, error, called }] = useFindVolunteerActionsLazyQuery({ fetchPolicy: "network-only" })
+
+export const RecipientsPage: React.FC<RouteComponentProps> = ({ match }) => {
+  let { data, loading, error, called } = useFindRecipientsQuery({ variables: { limit: 50, fields: {} } })
   const isOnline = useNetworkStatus();
 
-  if (!called) {
-    findActions({ variables: { fields: { status: ActionStatus.Assigned } } })
-  }
   if (error) {
     console.log(error);
   }
@@ -28,10 +26,10 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   />;
 
   let content;
-  if (data?.findVolunteerActions?.length !== 0) {
-    content = <ActionsList tasks={data?.findVolunteerActions} />
+  if (data?.findRecipients?.length !== 0) {
+    content = <RecipientList recipients={data?.findRecipients as any} />
   } else {
-    content = <Empty message={<p>No tasks!</p>} />;
+    content = <Empty message={<p>No data!</p>} />;
   }
 
 
