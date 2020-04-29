@@ -2,7 +2,7 @@
 
 module.exports = {
   title: 'Open Volunteer Platform',
-  tagline: 'Streamline, Optimize and Organize Work of Volouteers',
+  tagline: 'Streamline, Optimize and Organize Work of Volunteers',
   url: 'https://openvolunteer.org',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
