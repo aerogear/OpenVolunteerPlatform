@@ -1,7 +1,7 @@
 import React from 'react';
 import { Action } from './Action';
 import { IonList } from '@ionic/react';
-import { Empty } from '../Empty';
+import { Empty } from '../generic/Empty';
 
 export const ActionsList: React.FC<any> = ({ actions }) => {
   if(!actions || actions.length < 1) {

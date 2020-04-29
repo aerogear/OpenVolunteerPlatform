@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonList } from '@ionic/react';
-import { Empty } from '../Empty';
+import { Empty } from '../generic/Empty';
 import { Volunteer } from './Volunteer';
 import { VolunteerFieldsFragment } from '../../dataFacade';
 

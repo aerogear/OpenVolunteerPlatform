@@ -3,7 +3,7 @@ import { ApolloOfflineClient } from 'offix-client';
 import { ApolloOfflineProvider } from 'react-offix-hooks';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { clientConfig } from './config';
-import { Loading } from './components/Loading';
+import { Loading } from './components/generic/Loading';
 import { IContainerProps } from './declarations';
 import { getKeycloakInstance } from './keycloakAuth';
 import { AuthContext } from './context/AuthContext';
