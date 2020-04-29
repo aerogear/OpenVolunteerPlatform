@@ -67,8 +67,8 @@ export type Mutation = {
   createVolunteerAction: VolunteerAction;
   updateVolunteerAction: VolunteerAction;
   deleteVolunteerAction: VolunteerAction;
-  createReciever: Reciever;
-  updateReciever: Reciever;
+  createReciever: Recipient;
+  updateReciever: Recipient;
 };
 
 
@@ -119,8 +119,8 @@ export type Query = {
   findVolunteers: Array<Maybe<Volunteer>>;
   findAllVolunteerActions: Array<Maybe<VolunteerAction>>;
   findVolunteerActions: Array<Maybe<VolunteerAction>>;
-  findAllRecievers: Array<Maybe<Reciever>>;
-  findRecievers: Array<Maybe<Reciever>>;
+  findAllRecievers: Array<Maybe<Recipient>>;
+  findRecievers: Array<Maybe<Recipient>>;
 };
 
 
@@ -179,15 +179,15 @@ export type QueryFindRecieversArgs = {
  * @model
  * @crud.delete: false
  */
-export type Reciever = {
-   __typename?: 'Reciever';
+export type Recipient = {
+   __typename?: 'Recipient';
   id: Scalars['ID'];
   name: Scalars['String'];
   phone?: Maybe<Scalars['String']>;
   address?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   prefferedProducts?: Maybe<Scalars['String']>;
-  /** @oneToMany field: 'reciever', key: 'recieverId' */
+  /** @oneToMany field: 'recipient', key: 'recieverId' */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   version?: Maybe<Scalars['Int']>;
 };
@@ -210,8 +210,8 @@ export type Subscription = {
   newVolunteerAction: VolunteerAction;
   updatedVolunteerAction: VolunteerAction;
   deletedVolunteerAction: VolunteerAction;
-  newReciever: Reciever;
-  updatedReciever: Reciever;
+  newReciever: Recipient;
+  updatedReciever: Recipient;
 };
 
 
@@ -295,7 +295,7 @@ export type VolunteerAction = {
    * Workaround for https://github.com/aerogear/graphback/issues/1167
    * @manyToOne field: 'actions', key: 'recieverId'
    */
-  reciever?: Maybe<Reciever>;
+  recipient?: Maybe<Recipient>;
   /** @manyToOne field: 'actions', key: 'distributionCentreId' */
   distributionCentre?: Maybe<DistributionCentre>;
   version?: Maybe<Scalars['Int']>;
@@ -341,13 +341,13 @@ export type DistributionCentreExpandedFieldsFragment = (
 );
 
 export type RecieverFieldsFragment = (
-  { __typename?: 'Reciever' }
-  & Pick<Reciever, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
+  { __typename?: 'Recipient' }
+  & Pick<Recipient, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
 );
 
 export type RecieverExpandedFieldsFragment = (
-  { __typename?: 'Reciever' }
-  & Pick<Reciever, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
+  { __typename?: 'Recipient' }
+  & Pick<Recipient, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
@@ -367,9 +367,9 @@ export type VolunteerActionFieldsFragment = (
 export type VolunteerActionExpandedFieldsFragment = (
   { __typename?: 'VolunteerAction' }
   & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
-  & { reciever?: Maybe<(
-    { __typename?: 'Reciever' }
-    & Pick<Reciever, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
+  & { recipient?: Maybe<(
+    { __typename?: 'Recipient' }
+    & Pick<Recipient, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
   )>, volunteer?: Maybe<(
     { __typename?: 'Volunteer' }
     & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
@@ -492,7 +492,7 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
 }
     `;
 export const RecieverFieldsFragmentDoc = gql`
-    fragment RecieverFields on Reciever {
+    fragment RecieverFields on Recipient {
   id
   name
   phone
@@ -502,7 +502,7 @@ export const RecieverFieldsFragmentDoc = gql`
 }
     `;
 export const RecieverExpandedFieldsFragmentDoc = gql`
-    fragment RecieverExpandedFields on Reciever {
+    fragment RecieverExpandedFields on Recipient {
   id
   name
   phone
@@ -555,7 +555,7 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
   status
   actionType
   createdAt
-  reciever {
+  recipient {
     id
     name
     phone
