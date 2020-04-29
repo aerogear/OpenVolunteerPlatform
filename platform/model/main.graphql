@@ -40,7 +40,7 @@ type Volunteer {
 @model
 @crud.delete: false
 """
-type Reciever {
+type Recipient {
   id: ID!
   name: String!
   phone: String
@@ -48,7 +48,7 @@ type Reciever {
   createdAt: DateTime
   prefferedProducts: String
   """
-  @oneToMany field: 'reciever'
+  @oneToMany field: 'recipient'
   """
   actions: [VolunteerAction]
 }
@@ -67,9 +67,9 @@ type VolunteerAction {
   createdAt: DateTime
   """
   Workaround for https://github.com/aerogear/graphback/issues/1167
-  @manyToOne field: 'actions', key: 'recieverId'
+  @manyToOne field: 'actions', key: 'recipientId'
   """
-  reciever: Reciever
+  recipient: Recipient
   """
   @manyToOne field: 'actions', key: 'volunteerId'
   """

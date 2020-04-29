@@ -24,7 +24,7 @@ export const models = [
     },
   },
   {
-    name: "Reciever",
+    name: "Recipient",
     pubSub: {
       publishCreate: true,
       publishUpdate: true,

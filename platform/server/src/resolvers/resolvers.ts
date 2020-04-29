@@ -27,8 +27,8 @@ export default {
         (results) => results[0]
       )
     },
-    reciever: (parent, args, context) => {
-      return context.Reciever.findBy({ id: parent.recieverId }).then(
+    recipient: (parent, args, context) => {
+      return context.Recipient.findBy({ id: parent.recipientId }).then(
         (results) => results[0]
       )
     },
@@ -44,10 +44,10 @@ export default {
     },
   },
 
-  Reciever: {
+  Recipient: {
     actions: (parent, args, context) => {
       return context.VolunteerAction.batchLoadData(
-        "recieverId",
+        "recipientId",
         parent.id,
         context
       )
@@ -76,12 +76,12 @@ export default {
     findAllVolunteers: (parent, args, context) => {
       return context.Volunteer.findAll(args)
     },
-    findRecievers: (parent, args, context) => {
+    findRecipients: (parent, args, context) => {
       const { fields, ...page } = args
-      return context.Reciever.findBy(fields, page)
+      return context.Recipient.findBy(fields, page)
     },
-    findAllRecievers: (parent, args, context) => {
-      return context.Reciever.findAll(args)
+    findAllRecipients: (parent, args, context) => {
+      return context.Recipient.findAll(args)
     },
   },
 
@@ -104,11 +104,11 @@ export default {
     updateVolunteer: (parent, args, context) => {
       return context.Volunteer.update(args.input, context)
     },
-    createReciever: (parent, args, context) => {
-      return context.Reciever.create(args.input, context)
+    createRecipient: (parent, args, context) => {
+      return context.Recipient.create(args.input, context)
     },
-    updateReciever: (parent, args, context) => {
-      return context.Reciever.update(args.input, context)
+    updateRecipient: (parent, args, context) => {
+      return context.Recipient.update(args.input, context)
     },
   },
 
@@ -143,14 +143,14 @@ export default {
         return context.Volunteer.subscribeToUpdate(args, context)
       },
     },
-    newReciever: {
+    newRecipient: {
       subscribe: (parent, args, context) => {
-        return context.Reciever.subscribeToCreate(args, context)
+        return context.Recipient.subscribeToCreate(args, context)
       },
     },
-    updatedReciever: {
+    updatedRecipient: {
       subscribe: (parent, args, context) => {
-        return context.Reciever.subscribeToUpdate(args, context)
+        return context.Recipient.subscribeToUpdate(args, context)
       },
     },
   },

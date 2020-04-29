@@ -1,0 +1,5 @@
+mutation createRecipient($input: RecipientInput!) {
+  createRecipient(input: $input) {
+      ...RecipientFields
+  }
+}

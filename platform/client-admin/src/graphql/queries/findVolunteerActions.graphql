@@ -1,0 +1,5 @@
+query findVolunteerActions($fields: VolunteerActionInput!, $limit: Int, $offset: Int) {
+    findVolunteerActions(fields: $fields, limit: $limit, offset: $offset) {
+      ...VolunteerActionExpandedFields
+    }
+  }

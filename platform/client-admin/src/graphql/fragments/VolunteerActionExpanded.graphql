@@ -6,7 +6,7 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
    status
    actionType
    createdAt
-   reciever {
+   recipient {
       id
       name
       phone
