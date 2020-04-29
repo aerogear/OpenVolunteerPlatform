@@ -47,7 +47,7 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
 
   return (
     <IonPage>
-      <Header title="OpenVolunteer Admin App" match={match} isOnline={isOnline} />
+      <Header title="OpenVolunteer Platform" match={match} isOnline={isOnline} />
       <IonContent className="ion-padding" >
         <IonSegment onIonChange={updateFilter}>
           <IonSegmentButton value={ActionStatus.Assigned}>
