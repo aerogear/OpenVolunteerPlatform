@@ -5,7 +5,7 @@ import {
   IonLoading,
   IonContent,
 } from '@ionic/react';
-import { Empty, NetworkBadge, Header } from '../components';
+import { Empty, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { useFindVolunteersQuery } from '../dataFacade';
 import { useNetworkStatus } from 'react-offix-hooks';
@@ -41,7 +41,6 @@ export const VolunteersPage: React.FC<RouteComponentProps> = ({ match }) => {
       <IonFooter>
         <div>
           OpenVolunteer Platform
-          <NetworkBadge isOnline={isOnline} />
         </div>
       </IonFooter>
     </IonPage >
