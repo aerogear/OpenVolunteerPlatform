@@ -33,4 +33,4 @@ This project provides reference admin and volunteer applications that can be use
 - Out of the box components for forms and maps
 - Keycloak based security and role based authentication
 - Live updates and tracking thanks to GraphQL subscriptions
-- Offline support and conflict resolution thanks to Offix.dev
+- Offline support and conflict resolution thanks to [Offix.dev](https://offix.dev/)
