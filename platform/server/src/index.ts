@@ -24,7 +24,6 @@ async function start() {
     console.log(`\n    ***********************************************************
     🎮 Ionic PWA application available at http://localhost:${config.port}
     🎮 Admin PWA application available at http://localhost:${config.port}/admin
-    🚀 GraphQL Playground is available at http://localhost:${config.port}/graphql
     ***********************************************************`)
   })
 }
