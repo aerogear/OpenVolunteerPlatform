@@ -23,6 +23,14 @@ Requirements:
 . Build client
 +
 ```shell
+yarn
+```
++
+
+. Build client
++
+```shell
+yarn
 yarn prepare:client
 yarn prepare:admin
 ```
@@ -105,3 +113,12 @@ MQTT_HOST=127.0.0.1
 === Running On OpenShift
 
 Please check link:./.openshift[.openshift] folder for more information.
+
+
+== Development 
+
+The below command will generate resources i.e schema, resolvers, queries, mutations for the server and client sides.
+
+```sh
+yarn generate:all
+```

@@ -22,7 +22,11 @@
     "build": "yarn workspaces run build",
     "unlock": "yarn workspaces run del package-lock.json && del yarn.lock",
     "clean": "yarn workspaces run del ./dist && del ./types",
-    "walkthrough": "./scripts/create_walkthrough.sh"
+    "walkthrough": "./scripts/create_walkthrough.sh",
+    "generate:server": "yarn graphback generate",
+    "generate:client": "cd client && yarn graphback generate && yarn graphql codegen",
+    "generate:admin": "cd client-admin && yarn graphback generate && yarn graphql codegen",
+    "generate:all": "yarn generate:server && yarn generate:client && yarn generate:admin"
   },
   "workspaces": [
     "client",
