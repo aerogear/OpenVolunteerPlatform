@@ -17,8 +17,8 @@ function VideoModal({ open, close}) {
             width="560" 
             height="310" scrolling="no" 
             marginHeight="0" 
-            marginWidth="0" 
-            src="https://www.youtube.com/embed/wmpEiffqxy8?autoplay=0" 
+            marginWidth="0"
+            src="https://www.youtube.com/embed/mu9Rnu6Q9_o?autoplay=0" 
             frameBorder="0" 
             allowFullScreen 
             align="middle"
