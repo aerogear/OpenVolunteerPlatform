@@ -6,6 +6,10 @@
 
 TODO
 
+== Documentation
+
+https://openvolunteer.org
+
 == Features
 
 * Open Platform for Rapid Development of Volunteer Management Systems
@@ -23,15 +27,10 @@ image::./website/static/img/app.png[Sunset,200,400]
 
 The application includes:
 
-* Integration with http://graphback.dev[Graphback] helps you generate your backend and client side queries based on user provided business models
+- Integration with http://graphback.dev[Graphback] helps you generate your backend and client side queries based on user provided business models
 - An example React application which uses the http://offix.dev[Offix client] to give you a fully featured offline experience
 - Integration with Keycloak (SSO) for server and client authentication and user management
 - GraphQL subscriptions backed by an MQTT broker(AMQ)
-
-== Documentation
-
-https://openvolunteer.org
-
 
 
 == License
