@@ -6,7 +6,7 @@
 
 *OpenVolunteerPlatform* is an progressive web application (PWA) that can be used by volunteers to collaborate and connect with vulnerable people. 
 
-NOTE: The same leaflet can be used to gather posible volunteers. 
+NOTE: The same leaflet can be used to gather possible volunteers. 
 
 * The form is dynamically processed using data acqusition techniques to match people that are seeking assistance with those who are able to provide support. 
  
