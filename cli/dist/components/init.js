@@ -149,7 +149,7 @@ function init(name, templateName, templateUrl) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    utils_1.logInfo(chalk_1["default"].yellow(figlet.textSync('Open Volounteer', { horizontalLayout: 'full' })));
+                    utils_1.logInfo(chalk_1["default"].yellow(figlet.textSync('Open Volunteer', { horizontalLayout: 'full' })));
                     path = process.cwd() + "/" + name;
                     checkDirectory(path, name);
                     if (!templateUrl) return [3 /*break*/, 1];

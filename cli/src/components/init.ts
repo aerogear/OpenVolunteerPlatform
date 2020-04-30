@@ -106,7 +106,7 @@ function buildTemplateFromGithub(templateUrl: string) {
  */
 export async function init(name: string, templateName?: string, templateUrl?: string) {
   logInfo(chalk.yellow(
-    figlet.textSync('Open Volounteer', { horizontalLayout: 'full' })
+    figlet.textSync('Open Volunteer', { horizontalLayout: 'full' })
   ))
   const path: string = `${process.cwd()}/${name}`
   checkDirectory(path, name)
