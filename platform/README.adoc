@@ -191,4 +191,4 @@ MQTT_HOST=127.0.0.1
 
 === Running On OpenShift
 
-Please check link:./openshift[.openshift] folder for more information.
+Please check link:./.openshift[.openshift] folder for more information.
