@@ -4,38 +4,19 @@ import SimpleSchema from 'simpl-schema';
 const recipientSchema = new SimpleSchema({
     name: {
         type: String,
-        max: 220,
-        uniforms: {
-            readonly: true
-        }
+        max: 220
     },
     phone: {
         type: String,
-        max: 220,
-        uniforms: {
-            readonly: true
-        }
+        max: 220
     },
-    address1: {
+    address: {
         type: String,
-        max: 220,
-        uniforms: {
-            readonly: true
-        }
-    },
-    address2: {
-        type: String,
-        max: 220,
-        uniforms: {
-            readonly: true
-        }
+        max: 220
     },
     prefferedProducts: {
         type: String,
-        max: 220,
-        uniforms: {
-            readonly: true
-        }
+        max: 220
     }
 } as any);
 

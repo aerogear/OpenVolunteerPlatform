@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   Switch,
   Redirect,
@@ -17,6 +17,7 @@ import { OptimizePage } from '../pages/OptimizePage';
 import { DistributionCentrePage } from '../pages/DistributionCentrePage';
 import { RecipientsPage } from '../pages/RecipientsPage';
 import { VolunteersPage } from '../pages/VolunteersPage';
+import { ViewRecipientPage } from '../pages/ViewRecipientPage';
 
 export const Router: React.FC = () => {
   return (
@@ -35,7 +36,7 @@ export const Router: React.FC = () => {
               <Route path="/volunteers" component={VolunteersPage} />
               <Route path="/manageVolunteer/:id" component={ViewVolunteerPage} exact />
               <Route path="/recipients" component={RecipientsPage} exact />
-              <Route path="/manageRecipient/:id" component={RecipientsPage} exact />
+              <Route path="/manageRecipient/:id" component={ViewRecipientPage} exact />
               <Route path="/distributionCentre" component={DistributionCentrePage} exact />
               <Route path="/profile" component={ProfilePage} exact />
               <Redirect to={{ pathname: "actions" }} />
