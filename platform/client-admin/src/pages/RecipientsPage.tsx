@@ -8,12 +8,11 @@ import {
 import { Empty, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { useFindRecipientsQuery } from '../dataFacade';
-import { useNetworkStatus } from 'react-offix-hooks';
 import { RecipientList } from '../components/model/RecipientList';
 
 
 export const RecipientsPage: React.FC<RouteComponentProps> = ({ match }) => {
-  let { data, loading, error, called } = useFindRecipientsQuery({ variables: { limit: 50, fields: {} } })
+  let { data, loading, error } = useFindRecipientsQuery({ variables: { limit: 50, fields: {} } })
 
   if (error) {
     console.log(error);
