@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 
 const features = [
   {
-    title: <>Download reference applications and modify them for your own needs</>,
+    title: <>Use one of reference applications and modify them for your own needs</>,
     imageUrl: 'img/input.png',
     description: (
       <>
