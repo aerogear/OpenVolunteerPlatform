@@ -17,7 +17,7 @@ yarn graphback generate
 yarn graphql codegen
 ```
 
-=== Running the Client
+=== Running the Client in dev mode
 
 
 . Install Ionic

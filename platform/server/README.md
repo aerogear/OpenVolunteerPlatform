@@ -1,6 +1,6 @@
-# DataSync Full Stack Server
+# Open Volunteer Full Stack Server
 
-Node.js template using Graphback
+Node.js implementation for GraphQL based API
 
 ## Integrations
 
