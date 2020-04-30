@@ -17,7 +17,7 @@ yarn graphback generate
 yarn graphql codegen
 ```
 
-=== Running the Client
+=== Running the Client in dev mode
 
 
 . Install Ionic
@@ -35,7 +35,7 @@ npm install
 . Start the app
 +
 ```shell
-npm run start
+npm run dev
 ```
 
 === Adding keycloak integration to the client
