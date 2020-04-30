@@ -2,11 +2,13 @@
 
 *OpenVolunteerPlatform* lets you automate and optimize work of volunteers for your orgranization or charity - helping them to deliver help when needed.
 
-= Overview
-
- 
 == Video
 
+TODO
+
+== Documentation
+
+https://openvolunteer.org
 
 == Features
 
@@ -19,21 +21,16 @@
 * Rule based, automatic scheduling and time management
 * Simplicity to produce reports and collect feedback from the field
 
-image::./website/static/img/app.png[Sunset,300,200]
+image::./website/static/img/app.png[Sunset,200,400]
 
 == Technical Details
 
 The application includes:
 
-* Integration with http://graphback.dev[Graphback] helps you generate your backend and client side queries based on user provided business models
+- Integration with http://graphback.dev[Graphback] helps you generate your backend and client side queries based on user provided business models
 - An example React application which uses the http://offix.dev[Offix client] to give you a fully featured offline experience
 - Integration with Keycloak (SSO) for server and client authentication and user management
 - GraphQL subscriptions backed by an MQTT broker(AMQ)
-
-== Documentation
-
-https://openvolunteer.org
-
 
 
 == License

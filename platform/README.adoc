@@ -42,8 +42,7 @@ yarn start
 ```shell
     🎮 Ionic PWA application available at http://localhost:4000
     🎮 Admin PWA application available at http://localhost:4000/admin
-    🚀 GraphQL Playground is available at http://localhost:4000/graphql
-````
+```
 
 By default, two users that can log into the application are created.
 
@@ -51,7 +50,6 @@ By default, two users that can log into the application are created.
 - username: `admin`, password: `admin`
 
 Volunteers can register to the application in login screen
-
 
 ==== Keycloak integration
 
