@@ -26,12 +26,6 @@ yarn install
 docker-compose up -d
 ```
 
-- Generate resources(schema and resolvers) and create database
-
-```sh
-yarn graphback generate
-```
-
 - Start the server
 
 ```sh
