@@ -15,7 +15,7 @@ export const AuthContext = React.createContext<IAuthContext>({
     setVolunteer: () => {}
 });
 
-export const AuthContextContextProvider = (props: any) => {
+export const AuthContextProvider = (props: any) => {
     const setVolunteer = (volunteer: VolunteerType) => {
       setState({...state, volunteer: volunteer})
     }

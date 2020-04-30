@@ -6,7 +6,7 @@ import { clientConfig } from './config';
 import { Loading } from './components/Loading';
 import { IContainerProps } from './declarations';
 import { getKeycloakInstance } from './keycloakAuth';
-import { AuthContextContextProvider } from './context/AuthContext';
+import { AuthContextProvider } from './context/AuthContext';
 
 let keycloak: any;
 const apolloClient = new ApolloOfflineClient(clientConfig);
@@ -31,12 +31,12 @@ export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
 
   // return container with keycloak provider
   return (
-    <AuthContextContextProvider value={{ keycloak, profile: keycloak.profile }}>
+    <AuthContextProvider value={{ keycloak, profile: keycloak.profile }}>
       <ApolloOfflineProvider client={apolloClient}>
         <ApolloProvider client={apolloClient}>
           <App />
         </ApolloProvider>
       </ApolloOfflineProvider>
-    </AuthContextContextProvider>
+    </AuthContextProvider>
   );
 };

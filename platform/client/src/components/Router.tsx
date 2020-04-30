@@ -8,7 +8,7 @@ import {
 import { IonApp } from '@ionic/react';
 import { ActionPage, ProfilePage } from '../pages';
 import { ViewActionPage } from '../pages/ViewActionPage';
-import { AuthContext, AuthContextContextProvider } from '../context/AuthContext';
+import { AuthContext, AuthContextProvider } from '../context/AuthContext';
 import { useFindActiveVolunteerLazyQuery, VolunteerFieldsFragment } from '../dataFacade';
 import { Loading } from './Loading';
 import { volunteerTransformer } from '../transformer/volunteerTransformer';
@@ -41,7 +41,7 @@ export const Router: React.FC = () => {
   return (
     <IonApp>
       <AppRouter>
-        <AuthContextContextProvider value={{ profile, keycloak, volunteer }}>
+        <AuthContextProvider value={{ profile, keycloak, volunteer }}>
           <Switch>
             <Route path="/viewAction/:id" component={ViewActionPage} exact />
             <Route path="/actions" component={ActionPage} exact />
@@ -50,7 +50,7 @@ export const Router: React.FC = () => {
               <Redirect to={{ pathname: "actions" }} /> :
               <Redirect to="profile" />} />
           </Switch>
-        </AuthContextContextProvider>
+        </AuthContextProvider>
       </AppRouter>
     </IonApp>
   );
