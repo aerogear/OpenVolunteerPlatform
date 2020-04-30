@@ -2,11 +2,9 @@
 
 *OpenVolunteerPlatform* lets you automate and optimize work of volunteers for your orgranization or charity - helping them to deliver help when needed.
 
-= Overview
-
- 
 == Video
 
+TODO
 
 == Features
 
@@ -19,7 +17,7 @@
 * Rule based, automatic scheduling and time management
 * Simplicity to produce reports and collect feedback from the field
 
-image::./website/static/img/app.png[Sunset,300,200]
+image::./website/static/img/app.png[Sunset,200,400]
 
 == Technical Details
 
