@@ -1,0 +1,194 @@
+= OpenVolunteerPlatform Starter
+== Getting Started
+
+Requirements:
+
+- Docker and docker-compose
+- https://nodejs.org/en/download/ (Node.js 12.x or above)
+- (optional) access to a running OpenShift instance
+
+
+=== Running App and Server
+
+==== Install dependencies 
+
+. Build client
+
++
+```shell
+yarn
+```
++
+
+. Build client
++
+```shell
+yarn
+yarn prepare:client
+yarn prepare:admin
+```
++
+
+. Start the server
++
+```shell
+cd ./server
+docker-compose up -d
+yarn start
+```
++
+
+
+==== Running the Server with the Keycloak integration
+
+Follow these instructions to set up Keycloak for Authentication/Authorization.
+
+. Configure the Keycloak Server
++
+```shell
+cd ./server
+yarn keycloak:init
+```
+
+This command creates the necessary resources in Keycloak and prints instructions *you must follow to enable the integration.* 
+
+Follow the instructions and copy the JSON configurations to the appropriate locations.
+The DataSync Starter app and server will read these configurations and the integration will be enabled when they are started.
+
+By default, two users that can log into the application are created.
+
+- username: `developer`, password: `developer`
+- username: `admin`, password: `admin`
+
+==== Using the GraphQL playground with Keycloak
+
+The GraphQL playground is available after a Keycloak login screen. Initially the following error will be displayed.
+
+```
+{
+  "error": "Failed to fetch schema. Please check your connection"
+}
+```
+
+The playground must be configured to send the Keycloak `Authorization` header with requests to the GraphQL server.
+
+In the bottom left corner of the playground there is a field called **HTTP Headers** which will be added to requests sent by the playground.
+
+Use `scripts/getToken.js` to get a valid header for the `developer` user.
+
+The following script can be used to get a token for the default Keycloak credentials
+
+```
+cd ./server/integrations/keycloak
+node getToken.js
+```
+
+Alternatively, the user-defined username and password can be passed into the script as arguments, as below
+
+```
+node getToken.js <username> <password>
+```
+
+The output will be in the form of a JSON object
+
+```
+{"Authorization":"Bearer <token string>"}
+```
+
+Copy the entire JSON object, then paste it into the HTTP Headers field in the playground. 
+The error message should disappear and it is now possible to use the playground.
+
+NOTE: The GraphQL server is using a `public` Keycloak client to redirect browsers to the login page. This is useful for testing the server locally but **it is not recommended for production**. For production GraphQL server applications you should use a `bearer` client.
+
+[NOTE]
+====
+If Keycloak integration is enabled on the server, and the Keycloak server is running using a self-signed certificate, please make sure set this environment variable before running the server:
+
+```shell
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+```
+====
+
+
+=== Running the Client
+
+. Install Ionic
++
+```shell
+npm install -g @ionic/cli
+```
+
+. Change directory
+
++
+```shell
+cd ./client
+```
++
+
+. Install dependencies
++
+```shell
+yarn
+```
++
+. Start the app
++
+```shell
+yarn start
+```
++
+
+
+=== Adding keycloak integration to the client
+
+Rename `keycloak.example.json` file in the `public` directory to `keycloak.json`. Replace the contents of the file
+with the keycloak json object generated during the keycloak integration init script.
+ 
+[source,js]
+----
+{
+  "realm": "<your realm>",
+  "auth-server-url": "https://your-server/auth",
+  "ssl-required": "none",
+  "resource": "<your-client>",
+  "public-client": true,
+  "use-resource-role-mappings": true,
+  "confidential-port": 0
+}
+----
+
+> NOTE: When running in cloud, developers can swap this file dynamically using config-map or openshift secret
+
+=== Running Native projects
+
+==== IOS
+-----
+cd ./client
+yarn cap add ios
+yarn run:ios
+-----
+
+==== Android:
+-----
+cd ./client
+yarn cap add android
+yarn run:android
+-----
+
+When running locally you will need to also enable http traffic. 
+For example for android add `android:usesCleartextTraffic="true"` to AndroidManifest.xml
+
+Project should stard in IDE and can be launched as any other native application
+
+== Using MQTT for GraphQL subscriptions
+
+1. Go to scripts ./mqtt
+2. Execute docker-compose up
+3. Set MQTT_HOST environment variable in .env file
+
+MQTT_HOST=127.0.0.1
+
+=== Running On OpenShift
+
+Please check link:./openshift[.openshift] folder for more information.
