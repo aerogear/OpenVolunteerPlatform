@@ -25,25 +25,25 @@ export const Volunteer: React.FC<{ volunteer: VolunteerFieldsFragment }> = ({ vo
         <br />
         <IonNote>
           {volunteer.canDeliver &&
-            <IonBadge color='primary'>
+            <IonBadge style={{margin:"5px"}} color='primary'>
               Delivery
             </IonBadge>}
-          {volunteer.canPhoneCall &&
-            <IonBadge color='primary'>
-              Delivery
+        {volunteer.canPhoneCall &&
+          <IonBadge color='primary'>
+            Phone call
             </IonBadge>}
         </IonNote>
       </IonLabel>
-      <IonButtons>
+    <IonButtons>
 
-        <Link to={`manageVolunteer/${volunteer.id}`}>
-          <IonButton item-start color='primary' fill="outline">
-            <IonIcon icon={open} />
-          </IonButton>
-        </Link>
+      <Link to={`manageVolunteer/${volunteer.id}`}>
+        <IonButton item-start color='primary' fill="outline">
+          <IonIcon icon={open} />
+        </IonButton>
+      </Link>
 
-      </IonButtons>
-    </IonItem>
+    </IonButtons>
+    </IonItem >
   );
 
 };
