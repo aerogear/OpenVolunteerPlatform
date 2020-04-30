@@ -10,7 +10,7 @@ import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider 
 import recipient from '../forms/recipient';
 
 export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const { data, loading, error } = useFindVolunteerActionsQuery({ fetchPolicy: "cache-first", variables: { fields: {}, limit: 50 } });
+  const { data, loading, error } = useFindVolunteerActionsQuery({ fetchPolicy: "cache-first", variables: { fields: {id: match.params.id}, limit: 1 } });
   const [updateAction] = useUpdateVolunteerActionMutation();
   if (error) {
     console.log(error);
