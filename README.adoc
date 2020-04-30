@@ -1,15 +1,26 @@
 = OpenVolunteerPlatform
 
-*OpenVolunteerPlatform* is an open source project that builds a relief management mobile application using GraphQL. The app helps users organize distribution of food and mental health services for people affected by the quarantine restrictions.
+*OpenVolunteerPlatform* lets you automate and optimize work of volunteers for your orgranization or charity - helping them to deliver help when needed.
 
-== How the app works
+= Overview
 
-*OpenVolunteerPlatform* is an progressive web application (PWA) that can be used by volunteers to collaborate and connect with vulnerable people. 
-
-NOTE: The same leaflet can be used to gather possible volunteers. 
-
-* The form is dynamically processed using data acqusition techniques to match people that are seeking assistance with those who are able to provide support. 
  
+== Video
+
+
+== Features
+
+* Open Platform for Rapid Development of Volunteer Management Systems
+* Out of the box, secure API exposing your data using role based authorization.
+* Reference implementations to cover basic use cases
+* Out of the box components for Forms, Communitation and Maps
+* Live updates and tracking thanks to GraphQL subscriptions
+* Optimalization of the volunteer assignments and various processes
+* Rule based, automatic scheduling and time management
+* Simplicity to produce reports and collect feedback from the field
+
+image::./website/static/img/app.png[Sunset,300,200]
+
 == Technical Details
 
 The application includes:
@@ -19,12 +30,11 @@ The application includes:
 - Integration with Keycloak (SSO) for server and client authentication and user management
 - GraphQL subscriptions backed by an MQTT broker(AMQ)
 
-=== GraphQL Client
+== Documentation
 
-The mobile application uses https://github.com/aerogear/offix[Offix Client] to provide additional offline capabilities on top of Apollo GraphQL.
-
-=== GraphQL Server
-
-The GraphQL server uses https://github.com/aerogear/graphback[Graphback] to provide GraphQL capabilities.
+https://openvolunteer.org
 
 
+
+== License
+This solution starter is made available under the Apache 2 License.
