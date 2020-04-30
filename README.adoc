@@ -67,7 +67,8 @@ yarn start
 ```
 +
 
-=== Running the Server with the Keycloak integration
+
+==== Running the Server with the Keycloak integration
 
 Follow these instructions to set up Keycloak for Authentication/Authorization.
 
