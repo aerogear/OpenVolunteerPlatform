@@ -61,7 +61,7 @@ yarn prepare:admin
 . Start the server
 +
 ```shell
-cd ./server
+cd ./platform/server
 docker-compose up -d
 yarn start
 ```
@@ -75,8 +75,8 @@ Follow these instructions to set up Keycloak for Authentication/Authorization.
 . Configure the Keycloak Server
 +
 ```shell
-cd server
-npm run keycloak:init
+cd platform/server
+yarn keycloak:init
 ```
 
 This command creates the necessary resources in Keycloak and prints instructions *you must follow to enable the integration.* 
@@ -108,7 +108,7 @@ Use `scripts/getToken.js` to get a valid header for the `developer` user.
 The following script can be used to get a token for the default Keycloak credentials
 
 ```
-cd server/scripts/keycloak
+cd platform/server/integrations/keycloak
 node getToken.js
 ```
 
@@ -151,20 +151,20 @@ npm install -g @ionic/cli
 
 +
 ```shell
-cd client
+cd platform/client
 ```
 +
 
 . Install dependencies
 +
 ```shell
-npm install
+yarn
 ```
 +
 . Start the app
 +
 ```shell
-npm run start
+yarn start
 ```
 +
 
@@ -193,14 +193,14 @@ with the keycloak json object generated during the keycloak integration init scr
 
 ==== IOS
 -----
-cd client
+cd platform/client
 yarn cap add ios
 yarn run:ios
 -----
 
 ==== Android:
 -----
-cd client
+cd platform/client
 yarn cap add android
 yarn run:android
 -----
