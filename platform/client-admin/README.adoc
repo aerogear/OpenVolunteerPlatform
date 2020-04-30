@@ -1,6 +1,6 @@
 = React Client
 
-Example React Web application using AeroGear DataSync GraphQL capabilities
+React Web implementation for OpenVolunteer
 
 == Getting Started
 

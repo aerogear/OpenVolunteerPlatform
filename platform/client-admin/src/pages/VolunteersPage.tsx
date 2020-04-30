@@ -31,7 +31,7 @@ export const VolunteersPage: React.FC<RouteComponentProps> = ({ match }) => {
 
   return (
     <IonPage>
-      <Header title="OpenVolunteer Admin App" match={match} />
+      <Header title="Volunteer List" match={match} />
 
       <IonContent className="ion-padding" >
         {content}
