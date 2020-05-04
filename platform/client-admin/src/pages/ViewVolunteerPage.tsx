@@ -2,7 +2,7 @@ import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Header } from '../components/Header';
 import { IUpdateMatchParams } from '../declarations';
-import { useUpdateVolunteerMutation, useFindVolunteersQuery, useFindVolunteersLazyQuery } from '../dataFacade'
+import { useUpdateVolunteerMutation, useFindVolunteersQuery } from '../dataFacade'
 import { AutoForm } from 'uniforms-ionic'
 import volunteerFormSchema from '../forms/volunteer';
 import { volunteerTransformer } from '../transformer/volunteerTransformer';

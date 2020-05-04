@@ -25,19 +25,27 @@ export enum ActionType {
   Delivery = 'DELIVERY'
 }
 
+export type Address = {
+  address1?: Maybe<Scalars['String']>;
+  address2?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  postcode?: Maybe<Scalars['Int']>;
+};
+
 
 /**
  * @model
  * @crud.update: false
  * @crud.delete: false
  */
-export type DistributionCentre = {
+export type DistributionCentre = Address & {
    __typename?: 'DistributionCentre';
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
-  address?: Maybe<Scalars['String']>;
+  address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
+  postcode?: Maybe<Scalars['Int']>;
   lat?: Maybe<Scalars['String']>;
   long?: Maybe<Scalars['String']>;
   stockInformation?: Maybe<Scalars['JSON']>;
@@ -49,9 +57,10 @@ export type DistributionCentre = {
 export type DistributionCentreInput = {
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
-  address?: Maybe<Scalars['String']>;
+  address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
+  postcode?: Maybe<Scalars['Int']>;
   lat?: Maybe<Scalars['String']>;
   long?: Maybe<Scalars['String']>;
   stockInformation?: Maybe<Scalars['JSON']>;
@@ -67,8 +76,8 @@ export type Mutation = {
   createVolunteerAction: VolunteerAction;
   updateVolunteerAction: VolunteerAction;
   deleteVolunteerAction: VolunteerAction;
-  createReciever: Recipient;
-  updateReciever: Recipient;
+  createRecipient: Recipient;
+  updateRecipient: Recipient;
 };
 
 
@@ -102,13 +111,13 @@ export type MutationDeleteVolunteerActionArgs = {
 };
 
 
-export type MutationCreateRecieverArgs = {
-  input?: Maybe<RecieverInput>;
+export type MutationCreateRecipientArgs = {
+  input?: Maybe<RecipientInput>;
 };
 
 
-export type MutationUpdateRecieverArgs = {
-  input?: Maybe<RecieverInput>;
+export type MutationUpdateRecipientArgs = {
+  input?: Maybe<RecipientInput>;
 };
 
 export type Query = {
@@ -119,8 +128,8 @@ export type Query = {
   findVolunteers: Array<Maybe<Volunteer>>;
   findAllVolunteerActions: Array<Maybe<VolunteerAction>>;
   findVolunteerActions: Array<Maybe<VolunteerAction>>;
-  findAllRecievers: Array<Maybe<Recipient>>;
-  findRecievers: Array<Maybe<Recipient>>;
+  findAllRecipients: Array<Maybe<Recipient>>;
+  findRecipients: Array<Maybe<Recipient>>;
 };
 
 
@@ -163,14 +172,14 @@ export type QueryFindVolunteerActionsArgs = {
 };
 
 
-export type QueryFindAllRecieversArgs = {
+export type QueryFindAllRecipientsArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
 
 
-export type QueryFindRecieversArgs = {
-  fields?: Maybe<RecieverInput>;
+export type QueryFindRecipientsArgs = {
+  fields?: Maybe<RecipientInput>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
@@ -179,24 +188,32 @@ export type QueryFindRecieversArgs = {
  * @model
  * @crud.delete: false
  */
-export type Recipient = {
+export type Recipient = Address & {
    __typename?: 'Recipient';
   id: Scalars['ID'];
-  name: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
-  address?: Maybe<Scalars['String']>;
+  address1?: Maybe<Scalars['String']>;
+  address2?: Maybe<Scalars['String']>;
+  postcode?: Maybe<Scalars['Int']>;
+  city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   prefferedProducts?: Maybe<Scalars['String']>;
-  /** @oneToMany field: 'recipient', key: 'recieverId' */
+  /** @oneToMany field: 'recipient', key: 'recipientId' */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   version?: Maybe<Scalars['Int']>;
 };
 
-export type RecieverInput = {
+export type RecipientInput = {
   id?: Maybe<Scalars['ID']>;
-  name?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
-  address?: Maybe<Scalars['String']>;
+  address1?: Maybe<Scalars['String']>;
+  address2?: Maybe<Scalars['String']>;
+  postcode?: Maybe<Scalars['Int']>;
+  city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   prefferedProducts?: Maybe<Scalars['String']>;
   version?: Maybe<Scalars['Int']>;
@@ -210,8 +227,8 @@ export type Subscription = {
   newVolunteerAction: VolunteerAction;
   updatedVolunteerAction: VolunteerAction;
   deletedVolunteerAction: VolunteerAction;
-  newReciever: Recipient;
-  updatedReciever: Recipient;
+  newRecipient: Recipient;
+  updatedRecipient: Recipient;
 };
 
 
@@ -245,20 +262,20 @@ export type SubscriptionDeletedVolunteerActionArgs = {
 };
 
 
-export type SubscriptionNewRecieverArgs = {
-  input?: Maybe<RecieverInput>;
+export type SubscriptionNewRecipientArgs = {
+  input?: Maybe<RecipientInput>;
 };
 
 
-export type SubscriptionUpdatedRecieverArgs = {
-  input?: Maybe<RecieverInput>;
+export type SubscriptionUpdatedRecipientArgs = {
+  input?: Maybe<RecipientInput>;
 };
 
 /**
  * @model
  * @crud.delete: false
  */
-export type Volunteer = {
+export type Volunteer = Address & {
    __typename?: 'Volunteer';
   id: Scalars['ID'];
   firstName?: Maybe<Scalars['String']>;
@@ -268,6 +285,7 @@ export type Volunteer = {
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
+  postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
   canPhoneCall: Scalars['Boolean'];
   canDeliver: Scalars['Boolean'];
@@ -293,7 +311,7 @@ export type VolunteerAction = {
   volunteer?: Maybe<Volunteer>;
   /**
    * Workaround for https://github.com/aerogear/graphback/issues/1167
-   * @manyToOne field: 'actions', key: 'recieverId'
+   * @manyToOne field: 'actions', key: 'recipientId'
    */
   recipient?: Maybe<Recipient>;
   /** @manyToOne field: 'actions', key: 'distributionCentreId' */
@@ -309,7 +327,7 @@ export type VolunteerActionInput = {
   status?: Maybe<ActionStatus>;
   actionType?: Maybe<ActionType>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  recieverId?: Maybe<Scalars['ID']>;
+  recipientId?: Maybe<Scalars['ID']>;
   volunteerId?: Maybe<Scalars['ID']>;
   distributionCentreId?: Maybe<Scalars['ID']>;
   version?: Maybe<Scalars['Int']>;
@@ -324,6 +342,7 @@ export type VolunteerInput = {
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
+  postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
   canPhoneCall?: Maybe<Scalars['Boolean']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
@@ -332,22 +351,22 @@ export type VolunteerInput = {
 
 export type DistributionCentreFieldsFragment = (
   { __typename?: 'DistributionCentre' }
-  & Pick<DistributionCentre, 'id' | 'name' | 'address' | 'address2' | 'city' | 'lat' | 'long' | 'stockInformation'>
+  & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
 );
 
 export type DistributionCentreExpandedFieldsFragment = (
   { __typename?: 'DistributionCentre' }
-  & Pick<DistributionCentre, 'id' | 'name' | 'address' | 'address2' | 'city' | 'lat' | 'long' | 'stockInformation'>
+  & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
 );
 
-export type RecieverFieldsFragment = (
+export type RecipientFieldsFragment = (
   { __typename?: 'Recipient' }
-  & Pick<Recipient, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
+  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
 );
 
-export type RecieverExpandedFieldsFragment = (
+export type RecipientExpandedFieldsFragment = (
   { __typename?: 'Recipient' }
-  & Pick<Recipient, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
+  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
@@ -356,7 +375,7 @@ export type RecieverExpandedFieldsFragment = (
 
 export type VolunteerFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
 );
 
 export type VolunteerActionFieldsFragment = (
@@ -369,19 +388,19 @@ export type VolunteerActionExpandedFieldsFragment = (
   & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
   & { recipient?: Maybe<(
     { __typename?: 'Recipient' }
-    & Pick<Recipient, 'id' | 'name' | 'phone' | 'address' | 'createdAt' | 'prefferedProducts'>
+    & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
   )>, volunteer?: Maybe<(
     { __typename?: 'Volunteer' }
-    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
+    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
   )>, distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
-    & Pick<DistributionCentre, 'id' | 'name' | 'address' | 'address2' | 'city' | 'lat' | 'long' | 'stockInformation'>
+    & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
   )> }
 );
 
 export type VolunteerExpandedFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'products' | 'status' | 'actionType' | 'createdAt'>
@@ -471,9 +490,10 @@ export const DistributionCentreFieldsFragmentDoc = gql`
     fragment DistributionCentreFields on DistributionCentre {
   id
   name
-  address
+  address1
   address2
   city
+  postcode
   lat
   long
   stockInformation
@@ -483,30 +503,39 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
     fragment DistributionCentreExpandedFields on DistributionCentre {
   id
   name
-  address
+  address1
   address2
   city
+  postcode
   lat
   long
   stockInformation
 }
     `;
-export const RecieverFieldsFragmentDoc = gql`
-    fragment RecieverFields on Recipient {
+export const RecipientFieldsFragmentDoc = gql`
+    fragment RecipientFields on Recipient {
   id
-  name
+  firstName
+  lastName
   phone
-  address
+  address1
+  address2
+  postcode
+  city
   createdAt
   prefferedProducts
 }
     `;
-export const RecieverExpandedFieldsFragmentDoc = gql`
-    fragment RecieverExpandedFields on Recipient {
+export const RecipientExpandedFieldsFragmentDoc = gql`
+    fragment RecipientExpandedFields on Recipient {
   id
-  name
+  firstName
+  lastName
   phone
-  address
+  address1
+  address2
+  postcode
+  city
   createdAt
   prefferedProducts
   actions {
@@ -530,6 +559,7 @@ export const VolunteerFieldsFragmentDoc = gql`
   address1
   address2
   city
+  postcode
   dateOfBirth
   canPhoneCall
   canDeliver
@@ -557,9 +587,13 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
   createdAt
   recipient {
     id
-    name
+    firstName
+    lastName
     phone
-    address
+    address1
+    address2
+    postcode
+    city
     createdAt
     prefferedProducts
   }
@@ -572,6 +606,7 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     address1
     address2
     city
+    postcode
     dateOfBirth
     canPhoneCall
     canDeliver
@@ -579,9 +614,10 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
   distributionCentre {
     id
     name
-    address
+    address1
     address2
     city
+    postcode
     lat
     long
     stockInformation
@@ -598,6 +634,7 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
   address1
   address2
   city
+  postcode
   dateOfBirth
   canPhoneCall
   canDeliver

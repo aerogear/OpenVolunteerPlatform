@@ -8,9 +8,13 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
    createdAt
    recipient {
       id
-      name
+      firstName
+      lastName
       phone
-      address
+      address1
+      address2
+      postcode
+      city
       createdAt
       prefferedProducts
    }
@@ -23,6 +27,7 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       address1
       address2
       city
+      postcode
       dateOfBirth
       canPhoneCall
       canDeliver
@@ -30,9 +35,10 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
    distributionCentre {
       id
       name
-      address
+      address1
       address2
       city
+      postcode
       lat
       long
       stockInformation

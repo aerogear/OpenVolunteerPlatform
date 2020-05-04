@@ -43,6 +43,10 @@ const volunteerForm = new SimpleSchema({
         required: false,
         max: 100
     },
+    postcode: {
+        type: Number,
+        required: false,
+    },
     dateOfBirth: {
         type: Date,
         required: false,
