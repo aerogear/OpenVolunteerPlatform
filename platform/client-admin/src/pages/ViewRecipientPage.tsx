@@ -42,6 +42,8 @@ const [updateRecipient]= useUpdateRecipientMutation()
                         id: model.id,
                         address1: model.address1,
                         address2: model.address2,
+                        city: model.city,
+                        postcode: model.postcode,
                         firstName: model.firstName,
                         lastName: model.lastName,
                         prefferedProducts: model.prefferedProducts,
