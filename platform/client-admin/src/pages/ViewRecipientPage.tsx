@@ -40,8 +40,10 @@ const [updateRecipient]= useUpdateRecipientMutation()
                     variables: {
                       input: {
                         id: model.id,
-                        address: model.address,
-                        name: model.name,
+                        address1: model.address1,
+                        address2: model.address2,
+                        firstName: model.firstName,
+                        lastName: model.lastName,
                         prefferedProducts: model.prefferedProducts,
                         phone: model.phone
                       }

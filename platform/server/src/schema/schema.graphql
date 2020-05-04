@@ -10,6 +10,13 @@ enum ActionType {
   DELIVERY
 }
 
+interface Address {
+  address1: String
+  address2: String
+  city: String
+  postcode: Int
+}
+
 scalar DateTime
 
 """
@@ -17,12 +24,13 @@ scalar DateTime
 @crud.update: false
 @crud.delete: false
 """
-type DistributionCentre {
+type DistributionCentre implements Address {
   id: ID!
   name: String
-  address: String
+  address1: String
   address2: String
   city: String
+  postcode: Int
   lat: String
   long: String
   stockInformation: JSON
@@ -35,9 +43,10 @@ type DistributionCentre {
 input DistributionCentreInput {
   id: ID
   name: String
-  address: String
+  address1: String
   address2: String
   city: String
+  postcode: Int
   lat: String
   long: String
   stockInformation: JSON
@@ -72,11 +81,15 @@ type Query {
 @model
 @crud.delete: false
 """
-type Recipient {
+type Recipient implements Address {
   id: ID!
-  name: String!
+  firstName: String
+  lastName: String
   phone: String
-  address: String
+  address1: String
+  address2: String
+  postcode: Int
+  city: String
   createdAt: DateTime
   prefferedProducts: String
 
@@ -87,9 +100,13 @@ type Recipient {
 
 input RecipientInput {
   id: ID
-  name: String
+  firstName: String
+  lastName: String
   phone: String
-  address: String
+  address1: String
+  address2: String
+  postcode: Int
+  city: String
   createdAt: DateTime
   prefferedProducts: String
   version: Int
@@ -110,7 +127,7 @@ type Subscription {
 @model
 @crud.delete: false
 """
-type Volunteer {
+type Volunteer implements Address {
   id: ID!
   firstName: String
   lastName: String
@@ -119,6 +136,7 @@ type Volunteer {
   address1: String
   address2: String
   city: String
+  postcode: Int
   dateOfBirth: DateTime
   canPhoneCall: Boolean!
   canDeliver: Boolean!
@@ -178,6 +196,7 @@ input VolunteerInput {
   address1: String
   address2: String
   city: String
+  postcode: Int
   dateOfBirth: DateTime
   canPhoneCall: Boolean
   canDeliver: Boolean

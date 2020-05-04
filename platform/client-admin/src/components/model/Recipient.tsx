@@ -4,7 +4,6 @@ import {
   IonButton,
   IonLabel,
   IonNote,
-  IonBadge,
   IonIcon,
   IonButtons
 } from '@ionic/react';
@@ -18,7 +17,7 @@ export const Recipient: React.FC<{ recipient: RecipientFieldsFragment }> = ({ re
     <IonItem>
       <IonIcon icon={helpBuoy} className='ion-margin-end ion-align-items-start' />
       <IonLabel>
-        <h2>{recipient.name}</h2>
+        <h2>{recipient.firstName} {recipient.lastName}</h2>
         <IonNote item-start>
           {recipient.phone}
         </IonNote>
