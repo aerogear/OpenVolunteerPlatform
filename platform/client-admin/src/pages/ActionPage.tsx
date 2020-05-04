@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   IonPage,
   IonFooter,
@@ -10,7 +10,7 @@ import { RouteComponentProps } from 'react-router';
 import { useFindAllVolunteerActionsLazyQuery } from '../dataFacade';
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
-  let [findActions, { data, loading, error, called }] = useFindAllVolunteerActionsLazyQuery({ fetchPolicy: "network-only" })
+  let [findActions, { data, loading, error, called }] = useFindAllVolunteerActionsLazyQuery()
 
   if (!called) {
     findActions({ variables: { limit: 30 } })

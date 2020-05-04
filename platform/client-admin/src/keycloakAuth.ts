@@ -1,5 +1,4 @@
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
-import { ILogoutParams } from './declarations';
 
 export let keycloak: KeycloakInstance | undefined;
 
@@ -70,19 +69,13 @@ const getKeyCloakToken = async () => {
 }
 
 /**
- * logout of keycloak, clear cache and offline store then redirect to 
- * keycloak login page
+ * logout of keycloak then redirect to keycloak login page
  * 
  * @param keycloak the keycloak instance
- * @param client offix client
  *  
  */
-export const logout = async ({ keycloak, client: apolloClient } : ILogoutParams) => {
+export const logout = async  (keycloak: Keycloak.KeycloakInstance | undefined) => {
   if(keycloak) {
     await keycloak.logout();
-    // clear offix client offline store
-    await apolloClient.resetStore();
-    // clear offix client cache
-    await apolloClient.cache.reset();
   }
 }
