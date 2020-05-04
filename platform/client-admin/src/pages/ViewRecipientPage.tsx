@@ -8,8 +8,8 @@ import recipientFormSchema from '../forms/recipient';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 
 export const ViewRecipientPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const { data, loading, error } = useFindRecipientsQuery({ fetchPolicy: "network-only", variables: { fields: {id: match.params.id}, limit: 1 } });
-const [updateRecipient]= useUpdateRecipientMutation()
+  const { data, loading, error } = useFindRecipientsQuery({ variables: { fields: { id: match.params.id }, limit: 1 } });
+  const [updateRecipient] = useUpdateRecipientMutation()
   if (error) {
     console.log(error);
   }

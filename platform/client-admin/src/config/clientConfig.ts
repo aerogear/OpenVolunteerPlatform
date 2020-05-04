@@ -3,13 +3,10 @@ import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { setContext } from 'apollo-link-context';
 import { getMainDefinition } from 'apollo-utilities';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ConflictLogger } from '../helpers';
 import { getAuthHeader } from '../keycloakAuth';
-import { ApolloOfflineClientOptions } from 'offix-client';
 import { Capacitor } from '@capacitor/core';
-import { CapacitorNetworkStatus } from '../helpers/CapacitorNetworkStatus';
-
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { DefaultOptions } from 'apollo-client';
 
 let httpUri = 'http://localhost:4000/graphql';
 let wsUri = 'ws://localhost:4000/graphql';
@@ -74,25 +71,22 @@ const splitLink = ApolloLink.split(
   httpLink,
 );
 
-/**
- * Instantiate cache object
- * and define cache redirect queries
- * 
- */
-const cache = new InMemoryCache({
- });
+const noCache = 'no-cache';
 
-export const clientConfig: ApolloOfflineClientOptions = {
-  link: authLink.concat(splitLink),
-  cache: cache,
-  conflictListener: new ConflictLogger(),
-  networkStatus: new CapacitorNetworkStatus(),
-  inputMapper: {
-    deserialize: (variables: any) => {
-      return (variables && variables.input) ? variables.input : variables;
-    },
-    serialize: (variables: any) => {
-      return { input: variables }
-    }
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: noCache,
+  },
+  query: {
+    fetchPolicy: noCache,
+  },
+  mutate: {
+    fetchPolicy: noCache
   }
+}
+
+export const clientConfig = {
+  defaultOptions,
+  cache: new InMemoryCache(),
+  link: authLink.concat(splitLink)
 };

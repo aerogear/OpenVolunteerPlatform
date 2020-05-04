@@ -1,3 +1,0 @@
-
-export { ConflictLogger } from './ConflictLogger';
- 

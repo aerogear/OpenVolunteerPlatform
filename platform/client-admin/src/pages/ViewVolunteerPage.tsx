@@ -9,8 +9,8 @@ import { volunteerTransformer } from '../transformer/volunteerTransformer';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 
 export const ViewVolunteerPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const { data, loading, error } = useFindVolunteersQuery({ fetchPolicy: "network-only", variables: { fields: {id: match.params.id}, limit: 1 } });
-  
+  const { data, loading, error } = useFindVolunteersQuery({ variables: { fields: { id: match.params.id }, limit: 1 } });
+
   const [updateVolunteer] = useUpdateVolunteerMutation();
   if (error) {
     console.log(error);

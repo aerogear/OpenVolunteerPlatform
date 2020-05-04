@@ -7,8 +7,7 @@ import {
 } from '@ionic/react';
 import { Empty, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindVolunteersQuery, useFindAllVolunteersQuery } from '../dataFacade';
-import { useNetworkStatus } from 'react-offix-hooks';
+import { useFindAllVolunteersQuery } from '../dataFacade';
 import { VolunteersList } from '../components/model/VolunteerList';
 
 export const VolunteersPage: React.FC<RouteComponentProps> = ({ match }) => {

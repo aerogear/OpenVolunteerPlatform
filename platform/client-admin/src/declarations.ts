@@ -1,6 +1,4 @@
 import { KeycloakInstance } from "keycloak-js";
-import { ApolloOfflineClient } from "offix-client";
-
 
 
 export interface IContainerProps {
@@ -19,9 +17,4 @@ export interface IAuthHeaders {
   headers: {
     Authorization: String
   }
-}
-
-export interface ILogoutParams {
-  keycloak: Keycloak.KeycloakInstance | undefined,
-  client: ApolloOfflineClient
 }

@@ -1,19 +1,17 @@
-import React, { useContext, useState } from 'react';
-import { IonHeader, IonToolbar, IonButtons, IonTitle, IonToast, IonButton, IonIcon } from '@ionic/react';
-import { person, exit, arrowBack } from 'ionicons/icons';
+import React, { useContext } from 'react';
+import { IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, IonIcon } from '@ionic/react';
+import { person, exit } from 'ionicons/icons';
 import { AuthContext } from '../context/AuthContext';
 import { logout } from '../keycloakAuth';
-import { useApolloOfflineClient } from 'react-offix-hooks';
 import { Link } from 'react-router-dom';
 
 export const Header: React.FC<{ title: string, match: any }> = ({ title, match }) => {
   const { url } = match;
 
-  const client = useApolloOfflineClient();
   const { keycloak } = useContext(AuthContext);
 
   const handleLogout = async () => {
-    await logout({ keycloak, client });
+    await logout(keycloak );
     return;
   }
 
