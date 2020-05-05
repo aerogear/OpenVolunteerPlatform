@@ -6,7 +6,7 @@ import { getMainDefinition } from 'apollo-utilities';
 import { getAuthHeader } from '../keycloakAuth';
 import { Capacitor } from '@capacitor/core';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { DefaultOptions } from 'apollo-client';
+import { DefaultOptions, FetchPolicy } from 'apollo-client';
 
 let httpUri = 'http://localhost:4000/graphql';
 let wsUri = 'ws://localhost:4000/graphql';
@@ -71,7 +71,7 @@ const splitLink = ApolloLink.split(
   httpLink,
 );
 
-const noCache = 'no-cache';
+const noCache: FetchPolicy = 'no-cache';
 
 const defaultOptions = {
   watchQuery: {
