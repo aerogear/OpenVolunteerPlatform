@@ -69,7 +69,9 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
       email: profile.email,
       firstName: profile.firstName,
       lastName: profile.lastName,
-      username: profile.username
+      username: profile.username,
+      canPhoneCall: false,
+      canDeliver: false
     } as any;
   }
 
