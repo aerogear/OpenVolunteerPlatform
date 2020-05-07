@@ -1,0 +1,5 @@
+query findAllProducts($limit: Int, $offset: Int) {
+    findAllProducts(limit: $limit, offset: $offset) {
+      ...ProductExpandedFields
+    }
+  }

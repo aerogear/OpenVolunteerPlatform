@@ -1,0 +1,5 @@
+query findPrefferedProducts($fields: PrefferedProductInput!, $limit: Int, $offset: Int) {
+    findPrefferedProducts(fields: $fields, limit: $limit, offset: $offset) {
+      ...PrefferedProductExpandedFields
+    }
+  }

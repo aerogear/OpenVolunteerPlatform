@@ -24,6 +24,30 @@ export const models = [
     },
   },
   {
+    name: "VolunteerActionProduct",
+    pubSub: {
+      publishCreate: false,
+      publishUpdate: false,
+      publishDelete: false,
+    },
+  },
+  {
+    name: "Product",
+    pubSub: {
+      publishCreate: true,
+      publishUpdate: true,
+      publishDelete: true,
+    },
+  },
+  {
+    name: "PrefferedProduct",
+    pubSub: {
+      publishCreate: false,
+      publishUpdate: false,
+      publishDelete: false,
+    },
+  },
+  {
     name: "Recipient",
     pubSub: {
       publishCreate: true,

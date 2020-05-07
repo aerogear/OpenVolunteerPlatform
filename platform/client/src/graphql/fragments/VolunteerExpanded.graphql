@@ -15,7 +15,6 @@ fragment VolunteerExpandedFields on Volunteer {
       id
       title
       description
-      products
       status
       actionType
       createdAt

@@ -1,0 +1,16 @@
+fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
+   id
+   volunteerAction {
+      id
+      title
+      description
+      status
+      actionType
+      createdAt
+   }
+   product {
+      id
+      label
+      description
+   }
+} 

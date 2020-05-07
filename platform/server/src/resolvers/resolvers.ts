@@ -27,6 +27,13 @@ export default {
         (results) => results[0]
       )
     },
+    products: (parent, args, context) => {
+      return context.VolunteerActionProduct.batchLoadData(
+        "volunteerActionId",
+        parent.id,
+        context
+      )
+    },
     recipient: (parent, args, context) => {
       return context.Recipient.findBy({ id: parent.recipientId }).then(
         (results) => results[0]
@@ -44,9 +51,59 @@ export default {
     },
   },
 
+  VolunteerActionProduct: {
+    volunteerAction: (parent, args, context) => {
+      return context.VolunteerAction.findBy({
+        id: parent.volunteerActionId,
+      }).then((results) => results[0])
+    },
+    product: (parent, args, context) => {
+      return context.Product.findBy({ id: parent.productId }).then(
+        (results) => results[0]
+      )
+    },
+  },
+
+  Product: {
+    volunteerActionProducts: (parent, args, context) => {
+      return context.VolunteerActionProduct.batchLoadData(
+        "productId",
+        parent.id,
+        context
+      )
+    },
+    preferredProducts: (parent, args, context) => {
+      return context.PrefferedProduct.batchLoadData(
+        "productId",
+        parent.id,
+        context
+      )
+    },
+  },
+
+  PrefferedProduct: {
+    product: (parent, args, context) => {
+      return context.Product.findBy({ id: parent.productId }).then(
+        (results) => results[0]
+      )
+    },
+    recipient: (parent, args, context) => {
+      return context.Recipient.findBy({ id: parent.recipientId }).then(
+        (results) => results[0]
+      )
+    },
+  },
+
   Recipient: {
     actions: (parent, args, context) => {
       return context.VolunteerAction.batchLoadData(
+        "recipientId",
+        parent.id,
+        context
+      )
+    },
+    prefferedProducts: (parent, args, context) => {
+      return context.PrefferedProduct.batchLoadData(
         "recipientId",
         parent.id,
         context
@@ -76,6 +133,27 @@ export default {
     findAllVolunteers: (parent, args, context) => {
       return context.Volunteer.findAll(args)
     },
+    findVolunteerActionProducts: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.VolunteerActionProduct.findBy(fields, page)
+    },
+    findAllVolunteerActionProducts: (parent, args, context) => {
+      return context.VolunteerActionProduct.findAll(args)
+    },
+    findProducts: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.Product.findBy(fields, page)
+    },
+    findAllProducts: (parent, args, context) => {
+      return context.Product.findAll(args)
+    },
+    findPrefferedProducts: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.PrefferedProduct.findBy(fields, page)
+    },
+    findAllPrefferedProducts: (parent, args, context) => {
+      return context.PrefferedProduct.findAll(args)
+    },
     findRecipients: (parent, args, context) => {
       const { fields, ...page } = args
       return context.Recipient.findBy(fields, page)
@@ -103,6 +181,12 @@ export default {
     },
     updateVolunteer: (parent, args, context) => {
       return context.Volunteer.update(args.input, context)
+    },
+    createProduct: (parent, args, context) => {
+      return context.Product.create(args.input, context)
+    },
+    updateProduct: (parent, args, context) => {
+      return context.Product.update(args.input, context)
     },
     createRecipient: (parent, args, context) => {
       return context.Recipient.create(args.input, context)
@@ -141,6 +225,16 @@ export default {
     updatedVolunteer: {
       subscribe: (parent, args, context) => {
         return context.Volunteer.subscribeToUpdate(args, context)
+      },
+    },
+    newProduct: {
+      subscribe: (parent, args, context) => {
+        return context.Product.subscribeToCreate(args, context)
+      },
+    },
+    updatedProduct: {
+      subscribe: (parent, args, context) => {
+        return context.Product.subscribeToUpdate(args, context)
       },
     },
     newRecipient: {
