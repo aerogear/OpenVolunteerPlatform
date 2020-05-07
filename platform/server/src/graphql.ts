@@ -1,5 +1,4 @@
 import { loadSchemaFiles } from '@graphql-toolkit/file-loading';
-import { buildSchema } from 'graphql';
 import { join } from 'path';
 import { connect } from './db';
 import resolvers from './resolvers/resolvers';

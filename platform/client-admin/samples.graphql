@@ -1,15 +1,67 @@
 # Write your query or mutation here
 query findAllVolunteers {
   findAllVolunteers {
-    id
-    username
+    id,
+    firstName,
+    lastName,
+    email,
+    username,
+    address1,
+    address2,
+    city,
+    postcode,
+    canPhoneCall,
+    canDeliver,
+    actions {
+      id,
+      products {
+        id,
+        product {
+          id,
+          label
+        }
+      }
+    }
   }
 }
 
-query findAllRecievers {
-  findAllRecievers {
-    id
-    name
+query findAllRecipients {
+  findAllRecipients {
+    id,
+    lastName,
+    firstName,
+    phone,
+    address1,
+    address2,
+    city,
+    postcode,
+    prefferedProducts {
+      product {
+        id,
+        label
+      }
+    }
+  }
+}
+
+mutation createRecipient {
+  createRecipient(input: {
+    lastName: "Pierre",
+    firstName: "Jean Luc",
+    phone: "098978789",
+    address1: "1 rue de Quelques Part",
+    address2: "En France",
+    city: "Paris",
+    postcode: 75001
+  }) {
+    id,
+    lastName,
+    firstName,
+    phone,
+    address1,
+    address2,
+    city,
+    postcode
   }
 }
 
@@ -20,8 +72,7 @@ mutation createVolunteerAction {
       title: "Deliver to Mr Boris"
       description: "Phone Number: +473020323"
       actionType: DELIVERY,
-      products: "Bread, Pasta, ToiletPaper",
-      recieverId: "5e8f3eda92787169c1e7cd87"
+      recipientId: "5e8f3eda92787169c1e7cd87"
       volunteerId: "5e9782e94b8d743f02b84e79",
       status: ASSIGNED
     }
@@ -49,3 +100,103 @@ mutation createDistributionCentre {
   }
 }
 
+query findAllDistributionCentres {
+  findAllDistributionCentres {
+    id,
+    name,
+    address1,
+    address2,
+    city,
+    postcode,
+    stockInformation,
+    lat,
+    long
+  }
+}
+
+query findAllVolunteerActions {
+  findAllVolunteerActions {
+    id,
+    products {
+      id,
+      product {
+        id
+      	label
+      }
+    }
+  }
+}
+
+mutation createProductMutation {
+  createProduct(input: {
+    label: "TP", 
+    description: "Toilet Paper"}) {
+    id
+  }
+}
+
+query findAllProducts {
+  findAllProducts {
+    id,
+    description,
+    label,
+    preferredProducts {
+      id,
+      recipient {
+        id
+      }
+    }
+  }
+}
+
+query findAllRecipients {
+  findAllRecipients {
+    id,
+    firstName,
+    lastName,
+    phone,
+    address1,
+    address2,
+    prefferedProducts {
+      id,
+      product {
+        id,
+        label        
+      }
+    }
+  }
+}
+
+mutation createPreferredProduct {
+  createPrefferedProduct(
+    input: {
+      productId: "5eb16d8d54bbea1125a1fa33"
+      recipientId: "5e8f3ef492787169c1e7cd89"
+    }
+  ) {
+    id
+    product {
+      id
+    }
+    recipient {
+      id
+    }
+  }
+}
+
+mutation createVolunteerActionProduct {
+  createVolunteerActionProduct(
+    input: {
+      productId: "5eb16d8d54bbea1125a1fa33"
+      volunteerActionId: "5e97865721f5e895feaa49db"
+    }
+  ) {
+    id
+    product {
+      id
+    }
+    volunteerAction {
+      id
+    }
+  }
+}

@@ -1,15 +1,48 @@
 # Write your query or mutation here
+
 query findAllVolunteers {
   findAllVolunteers {
-    id
-    username
+    id,
+    firstName,
+    lastName,
+    email,
+    username,
+    address1,
+    address2,
+    city,
+    postcode,
+    canPhoneCall,
+    canDeliver,
+    actions {
+      id,
+      products {
+        id,
+        product {
+          id,
+          label
+        }
+      }
+    }
   }
 }
 
-query findAllRecievers {
-  findAllRecievers {
-    id
-    name
+
+query findAllRecipients {
+  findAllRecipients {
+    id,
+    lastName,
+    firstName,
+    phone,
+    address1,
+    address2,
+    city,
+    postcode,
+    prefferedProducts {
+      product {
+        id,
+        label
+      }
+    }
   }
 }
 

@@ -8,5 +8,12 @@ fragment DistributionCentreExpandedFields on DistributionCentre {
    lat
    long
    stockInformation
-
+   actions {
+      id
+      title
+      description
+      status
+      actionType
+      createdAt
+   }
 } 

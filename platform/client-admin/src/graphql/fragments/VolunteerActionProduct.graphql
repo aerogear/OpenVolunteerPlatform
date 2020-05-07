@@ -1,0 +1,4 @@
+fragment VolunteerActionProductFields on VolunteerActionProduct {
+   id
+
+} 

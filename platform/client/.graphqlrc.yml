@@ -15,6 +15,9 @@ extensions:
       subUpdate: false
       subDelete: false
     plugins:
+      graphback-schema:
+        format: graphql
+        outputPath: ./build
       graphback-client:
         format: 'graphql'
         outputPath: ./src/graphql

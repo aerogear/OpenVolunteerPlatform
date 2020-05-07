@@ -64,6 +64,60 @@ type Mutation {
   deleteVolunteerAction(input: VolunteerActionInput): VolunteerAction!
   createRecipient(input: RecipientInput): Recipient!
   updateRecipient(input: RecipientInput): Recipient!
+  createProduct(input: ProductInput): Product!
+  updateProduct(input: ProductInput): Product!
+}
+
+"""
+Represents a join model between a recipient and product
+@model
+@crud.update: false
+@crud.delete: false
+@crud.create: false
+@crud.subCreate: false
+@crud.subUpdate: false
+@crud.subDelete: false
+"""
+type PrefferedProduct {
+  id: ID!
+
+  """@manyToOne field: 'prefferedProducts', key: 'recipientId'"""
+  recipient: Recipient
+
+  """@manyToOne field: 'preferredProducts', key: 'productId'"""
+  product: Product
+  version: Int
+}
+
+input PrefferedProductInput {
+  id: ID
+  recipientId: ID
+  productId: ID
+  version: Int
+}
+
+"""
+@model
+@crud.delete: false
+"""
+type Product {
+  id: ID!
+  label: String!
+  description: String
+
+  """@oneToMany field: 'product', key: 'productId'"""
+  preferredProducts: [PrefferedProduct]
+
+  """@oneToMany field: 'product', key: 'productId'"""
+  volunteerActionProducts: [VolunteerActionProduct]
+  version: Int
+}
+
+input ProductInput {
+  id: ID
+  label: String
+  description: String
+  version: Int
 }
 
 type Query {
@@ -73,8 +127,14 @@ type Query {
   findVolunteers(fields: VolunteerInput, limit: Int, offset: Int): [Volunteer]!
   findAllVolunteerActions(limit: Int, offset: Int): [VolunteerAction]!
   findVolunteerActions(fields: VolunteerActionInput, limit: Int, offset: Int): [VolunteerAction]!
+  findAllVolunteerActionProducts(limit: Int, offset: Int): [VolunteerActionProduct]!
+  findVolunteerActionProducts(fields: VolunteerActionProductInput, limit: Int, offset: Int): [VolunteerActionProduct]!
   findAllRecipients(limit: Int, offset: Int): [Recipient]!
   findRecipients(fields: RecipientInput, limit: Int, offset: Int): [Recipient]!
+  findAllPrefferedProducts(limit: Int, offset: Int): [PrefferedProduct]!
+  findPrefferedProducts(fields: PrefferedProductInput, limit: Int, offset: Int): [PrefferedProduct]!
+  findAllProducts(limit: Int, offset: Int): [Product]!
+  findProducts(fields: ProductInput, limit: Int, offset: Int): [Product]!
 }
 
 """
@@ -91,7 +151,9 @@ type Recipient implements Address {
   postcode: Int
   city: String
   createdAt: DateTime
-  prefferedProducts: String
+
+  """@oneToMany field: 'recipient', key: 'recipientId'"""
+  prefferedProducts: [PrefferedProduct]
 
   """@oneToMany field: 'recipient', key: 'recipientId'"""
   actions: [VolunteerAction]
@@ -108,7 +170,6 @@ input RecipientInput {
   postcode: Int
   city: String
   createdAt: DateTime
-  prefferedProducts: String
   version: Int
 }
 
@@ -121,6 +182,8 @@ type Subscription {
   deletedVolunteerAction(input: VolunteerActionInput): VolunteerAction!
   newRecipient(input: RecipientInput): Recipient!
   updatedRecipient(input: RecipientInput): Recipient!
+  newProduct(input: ProductInput): Product!
+  updatedProduct(input: ProductInput): Product!
 }
 
 """
@@ -154,7 +217,6 @@ type VolunteerAction {
   id: ID!
   title: String!
   description: String
-  products: String!
   status: ActionStatus
   actionType: ActionType
   createdAt: DateTime
@@ -162,14 +224,14 @@ type VolunteerAction {
   """@manyToOne field: 'actions', key: 'volunteerId'"""
   volunteer: Volunteer
 
-  """
-  Workaround for https://github.com/aerogear/graphback/issues/1167
-  @manyToOne field: 'actions', key: 'recipientId'
-  """
-  recipient: Recipient
-
   """@manyToOne field: 'actions', key: 'distributionCentreId'"""
   distributionCentre: DistributionCentre
+
+  """@oneToMany field: 'volunteerAction', key: 'volunteerActionId'"""
+  products: [VolunteerActionProduct]
+
+  """@manyToOne field: 'actions', key: 'recipientId'"""
+  recipient: Recipient
   version: Int
 }
 
@@ -177,13 +239,41 @@ input VolunteerActionInput {
   id: ID
   title: String
   description: String
-  products: String
   status: ActionStatus
   actionType: ActionType
   createdAt: DateTime
-  recipientId: ID
   volunteerId: ID
   distributionCentreId: ID
+  recipientId: ID
+  version: Int
+}
+
+"""
+Represents a join model between a volunteer action and product
+
+@model
+@crud.update: false
+@crud.delete: false
+@crud.create: false
+@crud.subCreate: false
+@crud.subUpdate: false
+@crud.subDelete: false
+"""
+type VolunteerActionProduct {
+  id: ID!
+
+  """@manyToOne field: 'products', key: 'volunteerActionId'"""
+  volunteerAction: VolunteerAction
+
+  """@manyToOne field: 'volunteerActionProducts', key: 'productId'"""
+  product: Product
+  version: Int
+}
+
+input VolunteerActionProductInput {
+  id: ID
+  volunteerActionId: ID
+  productId: ID
   version: Int
 }
 

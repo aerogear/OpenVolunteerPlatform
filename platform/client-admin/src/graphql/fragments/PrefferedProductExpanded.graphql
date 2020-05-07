@@ -1,0 +1,19 @@
+fragment PrefferedProductExpandedFields on PrefferedProduct {
+   id
+   recipient {
+      id
+      firstName
+      lastName
+      phone
+      address1
+      address2
+      postcode
+      city
+      createdAt
+   }
+   product {
+      id
+      label
+      description
+   }
+} 

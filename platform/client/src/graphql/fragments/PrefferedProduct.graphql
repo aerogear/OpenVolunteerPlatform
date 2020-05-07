@@ -1,0 +1,4 @@
+fragment PrefferedProductFields on PrefferedProduct {
+   id
+
+} 

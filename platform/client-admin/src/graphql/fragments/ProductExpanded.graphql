@@ -1,0 +1,11 @@
+fragment ProductExpandedFields on Product {
+   id
+   label
+   description
+   preferredProducts {
+      id
+   }
+   volunteerActionProducts {
+      id
+   }
+} 

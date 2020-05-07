@@ -52,12 +52,30 @@ type Recipient implements Address {
   postcode: Int
   city: String
   createdAt: DateTime
-  prefferedProducts: String
+  """
+  @oneToMany field: 'recipient'
+  """
+  prefferedProducts: [PrefferedProduct]
   """
   @oneToMany field: 'recipient'
   """
   actions: [VolunteerAction]
 }
+
+"""
+Represents a join model between a recipient and product
+@model
+@crud.update: false
+@crud.delete: false
+@crud.create: false
+@crud.subCreate: false
+@crud.subUpdate: false
+@crud.subDelete: false
+"""
+type PrefferedProduct {
+  id: ID!
+}
+
 
 """
 Represents action that is assigned to volunteer
@@ -67,24 +85,37 @@ type VolunteerAction {
   id: ID!
   title: String!
   description: String
-  products: String!
   status: ActionStatus
   actionType: ActionType
   createdAt: DateTime
   """
-  Workaround for https://github.com/aerogear/graphback/issues/1167
-  @manyToOne field: 'actions', key: 'recipientId'
-  """
-  recipient: Recipient
-  """
   @manyToOne field: 'actions', key: 'volunteerId'
   """
   volunteer: Volunteer
-
   """
   @manyToOne field: 'actions', key: 'distributionCentreId'
   """
   distributionCentre: DistributionCentre
+  """
+  @oneToMany field: 'volunteerAction'
+  """
+  products: [VolunteerActionProduct]
+}
+
+
+"""
+Represents a join model between a volunteer action and product
+
+@model
+@crud.update: false
+@crud.delete: false
+@crud.create: false
+@crud.subCreate: false
+@crud.subUpdate: false
+@crud.subDelete: false
+"""
+type VolunteerActionProduct {
+  id: ID!
 }
 
 interface Address {
@@ -92,6 +123,24 @@ interface Address {
   address2: String
   city: String,
   postcode: Int
+}
+
+"""
+@model
+@crud.delete: false
+"""
+type Product {
+  id: ID!
+  label: String!
+  description: String
+  """
+  @oneToMany field: 'product'
+  """
+  preferredProducts: [PrefferedProduct] 
+  """
+  @oneToMany field: 'product'
+  """
+  volunteerActionProducts: [VolunteerActionProduct] 
 }
 
 enum ActionType {
