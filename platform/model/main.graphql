@@ -30,8 +30,17 @@ type Volunteer implements Address {
   city: String
   postcode: Int
   dateOfBirth: DateTime
-  canPhoneCall: Boolean!
-  canDeliver: Boolean!
+  
+  """
+  This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
+  @db.default: false
+  """
+  canPhoneCall: Boolean
+  """
+  This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
+  @db.default: false
+  """
+  canDeliver: Boolean
   """
   @oneToMany field: 'volunteer'
   """
