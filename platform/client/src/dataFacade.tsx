@@ -20,11 +20,6 @@ export enum ActionStatus {
   Completed = 'COMPLETED'
 }
 
-export enum ActionType {
-  PhoneCall = 'PHONE_CALL',
-  Delivery = 'DELIVERY'
-}
-
 export type Address = {
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
@@ -406,8 +401,16 @@ export type Volunteer = Address & {
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
-  canPhoneCall: Scalars['Boolean'];
-  canDeliver: Scalars['Boolean'];
+  /**
+   * This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
+   * @db.default: false
+   */
+  canPhoneCall?: Maybe<Scalars['Boolean']>;
+  /**
+   * This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
+   * @db.default: false
+   */
+  canDeliver?: Maybe<Scalars['Boolean']>;
   /** @oneToMany field: 'volunteer', key: 'volunteerId' */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   version?: Maybe<Scalars['Int']>;
@@ -423,7 +426,7 @@ export type VolunteerAction = {
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
-  actionType?: Maybe<ActionType>;
+  actionType?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   /** @manyToOne field: 'actions', key: 'volunteerId' */
   volunteer?: Maybe<Volunteer>;
@@ -441,7 +444,7 @@ export type VolunteerActionInput = {
   title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
-  actionType?: Maybe<ActionType>;
+  actionType?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   volunteerId?: Maybe<Scalars['ID']>;
   distributionCentreId?: Maybe<Scalars['ID']>;

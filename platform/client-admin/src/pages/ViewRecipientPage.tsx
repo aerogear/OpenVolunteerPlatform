@@ -46,7 +46,7 @@ export const ViewRecipientPage: React.FC<RouteComponentProps<IUpdateMatchParams>
                         postcode: model.postcode,
                         firstName: model.firstName,
                         lastName: model.lastName,
-                        prefferedProducts: model.prefferedProducts,
+                        // prefferedProducts: model.prefferedProducts,
                         phone: model.phone
                       }
                     }

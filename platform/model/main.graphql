@@ -95,7 +95,7 @@ type VolunteerAction {
   title: String!
   description: String
   status: ActionStatus
-  actionType: ActionType
+  actionType: String
   createdAt: DateTime
   """
   @manyToOne field: 'actions', key: 'volunteerId'
@@ -150,11 +150,6 @@ type Product {
   @oneToMany field: 'product'
   """
   volunteerActionProducts: [VolunteerActionProduct] 
-}
-
-enum ActionType {
-  PHONE_CALL
-  DELIVERY
 }
 
 enum ActionStatus {

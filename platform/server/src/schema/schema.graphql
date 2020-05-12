@@ -5,11 +5,6 @@ enum ActionStatus {
   COMPLETED
 }
 
-enum ActionType {
-  PHONE_CALL
-  DELIVERY
-}
-
 interface Address {
   address1: String
   address2: String
@@ -201,8 +196,18 @@ type Volunteer implements Address {
   city: String
   postcode: Int
   dateOfBirth: DateTime
-  canPhoneCall: Boolean!
-  canDeliver: Boolean!
+
+  """
+  This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
+  @db.default: false
+  """
+  canPhoneCall: Boolean
+
+  """
+  This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
+  @db.default: false
+  """
+  canDeliver: Boolean
 
   """@oneToMany field: 'volunteer', key: 'volunteerId'"""
   actions: [VolunteerAction]
@@ -218,7 +223,7 @@ type VolunteerAction {
   title: String!
   description: String
   status: ActionStatus
-  actionType: ActionType
+  actionType: String
   createdAt: DateTime
 
   """@manyToOne field: 'actions', key: 'volunteerId'"""
@@ -240,7 +245,7 @@ input VolunteerActionInput {
   title: String
   description: String
   status: ActionStatus
-  actionType: ActionType
+  actionType: String
   createdAt: DateTime
   volunteerId: ID
   distributionCentreId: ID
