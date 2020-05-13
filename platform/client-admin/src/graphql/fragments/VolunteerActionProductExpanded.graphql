@@ -5,7 +5,6 @@ fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
       title
       description
       status
-      actionType
       createdAt
    }
    product {

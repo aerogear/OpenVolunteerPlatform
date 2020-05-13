@@ -71,7 +71,6 @@ mutation createVolunteerAction {
       id: ""
       title: "Deliver to Mr Boris"
       description: "Phone Number: +473020323"
-      actionType: DELIVERY,
       recipientId: "5e8f3eda92787169c1e7cd87"
       volunteerId: "5e9782e94b8d743f02b84e79",
       status: ASSIGNED

@@ -8,15 +8,12 @@ fragment RecipientExpandedFields on Recipient {
    postcode
    city
    createdAt
-   prefferedProducts {
-      id
-   }
+   prefferedProducts
    actions {
       id
       title
       description
       status
-      actionType
       createdAt
    }
 } 

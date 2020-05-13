@@ -16,13 +16,9 @@ export type Scalars = {
 };
 
 export enum ActionStatus {
+  Created = 'CREATED',
   Assigned = 'ASSIGNED',
   Completed = 'COMPLETED'
-}
-
-export enum ActionType {
-  PhoneCall = 'PHONE_CALL',
-  Delivery = 'DELIVERY'
 }
 
 export type Address = {
@@ -133,33 +129,6 @@ export type MutationUpdateProductArgs = {
 };
 
 /**
- * Represents a join model between a recipient and product
- * @model
- * @crud.update: false
- * @crud.delete: false
- * @crud.create: false
- * @crud.subCreate: false
- * @crud.subUpdate: false
- * @crud.subDelete: false
- */
-export type PrefferedProduct = {
-   __typename?: 'PrefferedProduct';
-  id: Scalars['ID'];
-  /** @manyToOne field: 'prefferedProducts', key: 'recipientId' */
-  recipient?: Maybe<Recipient>;
-  /** @manyToOne field: 'preferredProducts', key: 'productId' */
-  product?: Maybe<Product>;
-  version?: Maybe<Scalars['Int']>;
-};
-
-export type PrefferedProductInput = {
-  id?: Maybe<Scalars['ID']>;
-  recipientId?: Maybe<Scalars['ID']>;
-  productId?: Maybe<Scalars['ID']>;
-  version?: Maybe<Scalars['Int']>;
-};
-
-/**
  * @model
  * @crud.delete: false
  */
@@ -168,8 +137,6 @@ export type Product = {
   id: Scalars['ID'];
   label: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  /** @oneToMany field: 'product', key: 'productId' */
-  preferredProducts?: Maybe<Array<Maybe<PrefferedProduct>>>;
   /** @oneToMany field: 'product', key: 'productId' */
   volunteerActionProducts?: Maybe<Array<Maybe<VolunteerActionProduct>>>;
   version?: Maybe<Scalars['Int']>;
@@ -194,8 +161,6 @@ export type Query = {
   findVolunteerActionProducts: Array<Maybe<VolunteerActionProduct>>;
   findAllRecipients: Array<Maybe<Recipient>>;
   findRecipients: Array<Maybe<Recipient>>;
-  findAllPrefferedProducts: Array<Maybe<PrefferedProduct>>;
-  findPrefferedProducts: Array<Maybe<PrefferedProduct>>;
   findAllProducts: Array<Maybe<Product>>;
   findProducts: Array<Maybe<Product>>;
 };
@@ -266,19 +231,6 @@ export type QueryFindRecipientsArgs = {
 };
 
 
-export type QueryFindAllPrefferedProductsArgs = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryFindPrefferedProductsArgs = {
-  fields?: Maybe<PrefferedProductInput>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryFindAllProductsArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -306,8 +258,7 @@ export type Recipient = Address & {
   postcode?: Maybe<Scalars['Int']>;
   city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  /** @oneToMany field: 'recipient', key: 'recipientId' */
-  prefferedProducts?: Maybe<Array<Maybe<PrefferedProduct>>>;
+  prefferedProducts?: Maybe<Scalars['String']>;
   /** @oneToMany field: 'recipient', key: 'recipientId' */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   version?: Maybe<Scalars['Int']>;
@@ -323,6 +274,7 @@ export type RecipientInput = {
   postcode?: Maybe<Scalars['Int']>;
   city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  prefferedProducts?: Maybe<Scalars['String']>;
   version?: Maybe<Scalars['Int']>;
 };
 
@@ -406,8 +358,16 @@ export type Volunteer = Address & {
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
-  canPhoneCall: Scalars['Boolean'];
-  canDeliver: Scalars['Boolean'];
+  /**
+   * This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
+   * @db.default: false
+   */
+  canPhoneCall?: Maybe<Scalars['Boolean']>;
+  /**
+   * This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
+   * @db.default: false
+   */
+  canDeliver?: Maybe<Scalars['Boolean']>;
   /** @oneToMany field: 'volunteer', key: 'volunteerId' */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   version?: Maybe<Scalars['Int']>;
@@ -423,7 +383,6 @@ export type VolunteerAction = {
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
-  actionType?: Maybe<ActionType>;
   createdAt?: Maybe<Scalars['DateTime']>;
   /** @manyToOne field: 'actions', key: 'volunteerId' */
   volunteer?: Maybe<Volunteer>;
@@ -441,7 +400,6 @@ export type VolunteerActionInput = {
   title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
-  actionType?: Maybe<ActionType>;
   createdAt?: Maybe<Scalars['DateTime']>;
   volunteerId?: Maybe<Scalars['ID']>;
   distributionCentreId?: Maybe<Scalars['ID']>;
@@ -503,25 +461,8 @@ export type DistributionCentreExpandedFieldsFragment = (
   & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
   & { actions: Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'actionType' | 'createdAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   )>> }
-);
-
-export type PrefferedProductFieldsFragment = (
-  { __typename?: 'PrefferedProduct' }
-  & Pick<PrefferedProduct, 'id'>
-);
-
-export type PrefferedProductExpandedFieldsFragment = (
-  { __typename?: 'PrefferedProduct' }
-  & Pick<PrefferedProduct, 'id'>
-  & { recipient?: Maybe<(
-    { __typename?: 'Recipient' }
-    & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt'>
-  )>, product?: Maybe<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'label' | 'description'>
-  )> }
 );
 
 export type ProductFieldsFragment = (
@@ -532,10 +473,7 @@ export type ProductFieldsFragment = (
 export type ProductExpandedFieldsFragment = (
   { __typename?: 'Product' }
   & Pick<Product, 'id' | 'label' | 'description'>
-  & { preferredProducts?: Maybe<Array<Maybe<(
-    { __typename?: 'PrefferedProduct' }
-    & Pick<PrefferedProduct, 'id'>
-  )>>>, volunteerActionProducts?: Maybe<Array<Maybe<(
+  & { volunteerActionProducts?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerActionProduct' }
     & Pick<VolunteerActionProduct, 'id'>
   )>>> }
@@ -543,18 +481,15 @@ export type ProductExpandedFieldsFragment = (
 
 export type RecipientFieldsFragment = (
   { __typename?: 'Recipient' }
-  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt'>
+  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
 );
 
 export type RecipientExpandedFieldsFragment = (
   { __typename?: 'Recipient' }
-  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt'>
-  & { prefferedProducts?: Maybe<Array<Maybe<(
-    { __typename?: 'PrefferedProduct' }
-    & Pick<PrefferedProduct, 'id'>
-  )>>>, actions?: Maybe<Array<Maybe<(
+  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
+  & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'actionType' | 'createdAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   )>>> }
 );
 
@@ -565,12 +500,12 @@ export type VolunteerFieldsFragment = (
 
 export type VolunteerActionFieldsFragment = (
   { __typename?: 'VolunteerAction' }
-  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'actionType' | 'createdAt'>
+  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
 );
 
 export type VolunteerActionExpandedFieldsFragment = (
   { __typename?: 'VolunteerAction' }
-  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'actionType' | 'createdAt'>
+  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   & { volunteer?: Maybe<(
     { __typename?: 'Volunteer' }
     & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
@@ -582,7 +517,7 @@ export type VolunteerActionExpandedFieldsFragment = (
     & Pick<VolunteerActionProduct, 'id'>
   )>>>, recipient?: Maybe<(
     { __typename?: 'Recipient' }
-    & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt'>
+    & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
   )> }
 );
 
@@ -596,7 +531,7 @@ export type VolunteerActionProductExpandedFieldsFragment = (
   & Pick<VolunteerActionProduct, 'id'>
   & { volunteerAction?: Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'actionType' | 'createdAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   )>, product?: Maybe<(
     { __typename?: 'Product' }
     & Pick<Product, 'id' | 'label' | 'description'>
@@ -608,7 +543,7 @@ export type VolunteerExpandedFieldsFragment = (
   & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'actionType' | 'createdAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   )>>> }
 );
 
@@ -720,34 +655,7 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
     title
     description
     status
-    actionType
     createdAt
-  }
-}
-    `;
-export const PrefferedProductFieldsFragmentDoc = gql`
-    fragment PrefferedProductFields on PrefferedProduct {
-  id
-}
-    `;
-export const PrefferedProductExpandedFieldsFragmentDoc = gql`
-    fragment PrefferedProductExpandedFields on PrefferedProduct {
-  id
-  recipient {
-    id
-    firstName
-    lastName
-    phone
-    address1
-    address2
-    postcode
-    city
-    createdAt
-  }
-  product {
-    id
-    label
-    description
   }
 }
     `;
@@ -763,9 +671,6 @@ export const ProductExpandedFieldsFragmentDoc = gql`
   id
   label
   description
-  preferredProducts {
-    id
-  }
   volunteerActionProducts {
     id
   }
@@ -782,6 +687,7 @@ export const RecipientFieldsFragmentDoc = gql`
   postcode
   city
   createdAt
+  prefferedProducts
 }
     `;
 export const RecipientExpandedFieldsFragmentDoc = gql`
@@ -795,15 +701,12 @@ export const RecipientExpandedFieldsFragmentDoc = gql`
   postcode
   city
   createdAt
-  prefferedProducts {
-    id
-  }
+  prefferedProducts
   actions {
     id
     title
     description
     status
-    actionType
     createdAt
   }
 }
@@ -830,7 +733,6 @@ export const VolunteerActionFieldsFragmentDoc = gql`
   title
   description
   status
-  actionType
   createdAt
 }
     `;
@@ -840,7 +742,6 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
   title
   description
   status
-  actionType
   createdAt
   volunteer {
     id
@@ -880,6 +781,7 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     postcode
     city
     createdAt
+    prefferedProducts
   }
 }
     `;
@@ -896,7 +798,6 @@ export const VolunteerActionProductExpandedFieldsFragmentDoc = gql`
     title
     description
     status
-    actionType
     createdAt
   }
   product {
@@ -925,7 +826,6 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
     title
     description
     status
-    actionType
     createdAt
   }
 }

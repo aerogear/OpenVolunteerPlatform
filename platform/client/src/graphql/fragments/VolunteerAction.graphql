@@ -3,7 +3,6 @@ fragment VolunteerActionFields on VolunteerAction {
    title
    description
    status
-   actionType
    createdAt
 
 } 

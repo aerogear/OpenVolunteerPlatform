@@ -72,38 +72,11 @@ export default {
         context
       )
     },
-    preferredProducts: (parent, args, context) => {
-      return context.PrefferedProduct.batchLoadData(
-        "productId",
-        parent.id,
-        context
-      )
-    },
-  },
-
-  PrefferedProduct: {
-    product: (parent, args, context) => {
-      return context.Product.findBy({ id: parent.productId }).then(
-        (results) => results[0]
-      )
-    },
-    recipient: (parent, args, context) => {
-      return context.Recipient.findBy({ id: parent.recipientId }).then(
-        (results) => results[0]
-      )
-    },
   },
 
   Recipient: {
     actions: (parent, args, context) => {
       return context.VolunteerAction.batchLoadData(
-        "recipientId",
-        parent.id,
-        context
-      )
-    },
-    prefferedProducts: (parent, args, context) => {
-      return context.PrefferedProduct.batchLoadData(
         "recipientId",
         parent.id,
         context
@@ -146,13 +119,6 @@ export default {
     },
     findAllProducts: (parent, args, context) => {
       return context.Product.findAll(args)
-    },
-    findPrefferedProducts: (parent, args, context) => {
-      const { fields, ...page } = args
-      return context.PrefferedProduct.findBy(fields, page)
-    },
-    findAllPrefferedProducts: (parent, args, context) => {
-      return context.PrefferedProduct.findAll(args)
     },
     findRecipients: (parent, args, context) => {
       const { fields, ...page } = args
