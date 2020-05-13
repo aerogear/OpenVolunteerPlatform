@@ -3,7 +3,6 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
    title
    description
    status
-   actionType
    createdAt
    volunteer {
       id

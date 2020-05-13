@@ -13,7 +13,6 @@ fragment DistributionCentreExpandedFields on DistributionCentre {
       title
       description
       status
-      actionType
       createdAt
    }
 } 

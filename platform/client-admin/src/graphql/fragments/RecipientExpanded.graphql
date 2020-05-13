@@ -16,7 +16,6 @@ fragment RecipientExpandedFields on Recipient {
       title
       description
       status
-      actionType
       createdAt
    }
 } 

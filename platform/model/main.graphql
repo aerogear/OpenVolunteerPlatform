@@ -95,7 +95,6 @@ type VolunteerAction {
   title: String!
   description: String
   status: ActionStatus
-  actionType: String
   createdAt: DateTime
   """
   @manyToOne field: 'actions', key: 'volunteerId'

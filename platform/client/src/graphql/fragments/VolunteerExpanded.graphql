@@ -16,7 +16,6 @@ fragment VolunteerExpandedFields on Volunteer {
       title
       description
       status
-      actionType
       createdAt
    }
 } 

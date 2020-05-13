@@ -426,7 +426,6 @@ export type VolunteerAction = {
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
-  actionType?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   /** @manyToOne field: 'actions', key: 'volunteerId' */
   volunteer?: Maybe<Volunteer>;
@@ -444,7 +443,6 @@ export type VolunteerActionInput = {
   title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
-  actionType?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   volunteerId?: Maybe<Scalars['ID']>;
   distributionCentreId?: Maybe<Scalars['ID']>;
@@ -506,7 +504,7 @@ export type DistributionCentreExpandedFieldsFragment = (
   & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
   & { actions: Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'actionType' | 'createdAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   )>> }
 );
 
@@ -557,7 +555,7 @@ export type RecipientExpandedFieldsFragment = (
     & Pick<PrefferedProduct, 'id'>
   )>>>, actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'actionType' | 'createdAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   )>>> }
 );
 
@@ -568,12 +566,12 @@ export type VolunteerFieldsFragment = (
 
 export type VolunteerActionFieldsFragment = (
   { __typename?: 'VolunteerAction' }
-  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'actionType' | 'createdAt'>
+  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
 );
 
 export type VolunteerActionExpandedFieldsFragment = (
   { __typename?: 'VolunteerAction' }
-  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'actionType' | 'createdAt'>
+  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   & { volunteer?: Maybe<(
     { __typename?: 'Volunteer' }
     & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
@@ -599,7 +597,7 @@ export type VolunteerActionProductExpandedFieldsFragment = (
   & Pick<VolunteerActionProduct, 'id'>
   & { volunteerAction?: Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'actionType' | 'createdAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   )>, product?: Maybe<(
     { __typename?: 'Product' }
     & Pick<Product, 'id' | 'label' | 'description'>
@@ -611,7 +609,7 @@ export type VolunteerExpandedFieldsFragment = (
   & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'actionType' | 'createdAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   )>>> }
 );
 
@@ -723,7 +721,6 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
     title
     description
     status
-    actionType
     createdAt
   }
 }
@@ -806,7 +803,6 @@ export const RecipientExpandedFieldsFragmentDoc = gql`
     title
     description
     status
-    actionType
     createdAt
   }
 }
@@ -833,7 +829,6 @@ export const VolunteerActionFieldsFragmentDoc = gql`
   title
   description
   status
-  actionType
   createdAt
 }
     `;
@@ -843,7 +838,6 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
   title
   description
   status
-  actionType
   createdAt
   volunteer {
     id
@@ -899,7 +893,6 @@ export const VolunteerActionProductExpandedFieldsFragmentDoc = gql`
     title
     description
     status
-    actionType
     createdAt
   }
   product {
@@ -928,7 +921,6 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
     title
     description
     status
-    actionType
     createdAt
   }
 }
