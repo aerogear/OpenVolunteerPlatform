@@ -8,5 +8,6 @@ fragment RecipientFields on Recipient {
    postcode
    city
    createdAt
+   prefferedProducts
 
 } 

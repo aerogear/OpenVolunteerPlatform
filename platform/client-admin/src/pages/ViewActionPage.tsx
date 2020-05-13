@@ -1,10 +1,10 @@
-import React from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Map } from '../components/Map';
 import { IUpdateMatchParams } from '../declarations';
-import { useUpdateVolunteerActionMutation, useFindVolunteerActionsQuery } from '../dataFacade'
-import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic'
+import { useUpdateVolunteerActionMutation, useFindVolunteerActionsQuery } from '../dataFacade';
+import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic';
 import volunteerAction from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 import recipient from '../forms/recipient';
@@ -48,9 +48,7 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                     }
                   }).then(() => {
                     // TODO dialog
-                  }).catch((err) => {
-                    console.error(err);
-                  });
+                  }).catch(console.error);
                 }}
                 showInlineError
                 submitField={undefined}

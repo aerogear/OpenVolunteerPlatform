@@ -1,5 +1,0 @@
-query findAllPrefferedProducts($limit: Int, $offset: Int) {
-    findAllPrefferedProducts(limit: $limit, offset: $offset) {
-      ...PrefferedProductExpandedFields
-    }
-  }

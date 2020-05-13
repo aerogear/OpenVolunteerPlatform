@@ -65,34 +65,6 @@ type Mutation {
 }
 
 """
-Represents a join model between a recipient and product
-@model
-@crud.update: false
-@crud.delete: false
-@crud.create: false
-@crud.subCreate: false
-@crud.subUpdate: false
-@crud.subDelete: false
-"""
-type PrefferedProduct {
-  id: ID!
-
-  """@manyToOne field: 'prefferedProducts', key: 'recipientId'"""
-  recipient: Recipient
-
-  """@manyToOne field: 'preferredProducts', key: 'productId'"""
-  product: Product
-  version: Int
-}
-
-input PrefferedProductInput {
-  id: ID
-  recipientId: ID
-  productId: ID
-  version: Int
-}
-
-"""
 @model
 @crud.delete: false
 """
@@ -100,9 +72,6 @@ type Product {
   id: ID!
   label: String!
   description: String
-
-  """@oneToMany field: 'product', key: 'productId'"""
-  preferredProducts: [PrefferedProduct]
 
   """@oneToMany field: 'product', key: 'productId'"""
   volunteerActionProducts: [VolunteerActionProduct]
@@ -127,8 +96,6 @@ type Query {
   findVolunteerActionProducts(fields: VolunteerActionProductInput, limit: Int, offset: Int): [VolunteerActionProduct]!
   findAllRecipients(limit: Int, offset: Int): [Recipient]!
   findRecipients(fields: RecipientInput, limit: Int, offset: Int): [Recipient]!
-  findAllPrefferedProducts(limit: Int, offset: Int): [PrefferedProduct]!
-  findPrefferedProducts(fields: PrefferedProductInput, limit: Int, offset: Int): [PrefferedProduct]!
   findAllProducts(limit: Int, offset: Int): [Product]!
   findProducts(fields: ProductInput, limit: Int, offset: Int): [Product]!
 }
@@ -147,9 +114,7 @@ type Recipient implements Address {
   postcode: Int
   city: String
   createdAt: DateTime
-
-  """@oneToMany field: 'recipient', key: 'recipientId'"""
-  prefferedProducts: [PrefferedProduct]
+  prefferedProducts: String
 
   """@oneToMany field: 'recipient', key: 'recipientId'"""
   actions: [VolunteerAction]
@@ -166,6 +131,7 @@ input RecipientInput {
   postcode: Int
   city: String
   createdAt: DateTime
+  prefferedProducts: String
   version: Int
 }
 

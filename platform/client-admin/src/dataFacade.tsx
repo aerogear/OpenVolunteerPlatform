@@ -129,33 +129,6 @@ export type MutationUpdateProductArgs = {
 };
 
 /**
- * Represents a join model between a recipient and product
- * @model
- * @crud.update: false
- * @crud.delete: false
- * @crud.create: false
- * @crud.subCreate: false
- * @crud.subUpdate: false
- * @crud.subDelete: false
- */
-export type PrefferedProduct = {
-   __typename?: 'PrefferedProduct';
-  id: Scalars['ID'];
-  /** @manyToOne field: 'prefferedProducts', key: 'recipientId' */
-  recipient?: Maybe<Recipient>;
-  /** @manyToOne field: 'preferredProducts', key: 'productId' */
-  product?: Maybe<Product>;
-  version?: Maybe<Scalars['Int']>;
-};
-
-export type PrefferedProductInput = {
-  id?: Maybe<Scalars['ID']>;
-  recipientId?: Maybe<Scalars['ID']>;
-  productId?: Maybe<Scalars['ID']>;
-  version?: Maybe<Scalars['Int']>;
-};
-
-/**
  * @model
  * @crud.delete: false
  */
@@ -164,8 +137,6 @@ export type Product = {
   id: Scalars['ID'];
   label: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  /** @oneToMany field: 'product', key: 'productId' */
-  preferredProducts?: Maybe<Array<Maybe<PrefferedProduct>>>;
   /** @oneToMany field: 'product', key: 'productId' */
   volunteerActionProducts?: Maybe<Array<Maybe<VolunteerActionProduct>>>;
   version?: Maybe<Scalars['Int']>;
@@ -190,8 +161,6 @@ export type Query = {
   findVolunteerActionProducts: Array<Maybe<VolunteerActionProduct>>;
   findAllRecipients: Array<Maybe<Recipient>>;
   findRecipients: Array<Maybe<Recipient>>;
-  findAllPrefferedProducts: Array<Maybe<PrefferedProduct>>;
-  findPrefferedProducts: Array<Maybe<PrefferedProduct>>;
   findAllProducts: Array<Maybe<Product>>;
   findProducts: Array<Maybe<Product>>;
 };
@@ -262,19 +231,6 @@ export type QueryFindRecipientsArgs = {
 };
 
 
-export type QueryFindAllPrefferedProductsArgs = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryFindPrefferedProductsArgs = {
-  fields?: Maybe<PrefferedProductInput>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryFindAllProductsArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -302,8 +258,7 @@ export type Recipient = Address & {
   postcode?: Maybe<Scalars['Int']>;
   city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  /** @oneToMany field: 'recipient', key: 'recipientId' */
-  prefferedProducts?: Maybe<Array<Maybe<PrefferedProduct>>>;
+  prefferedProducts?: Maybe<Scalars['String']>;
   /** @oneToMany field: 'recipient', key: 'recipientId' */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   version?: Maybe<Scalars['Int']>;
@@ -319,6 +274,7 @@ export type RecipientInput = {
   postcode?: Maybe<Scalars['Int']>;
   city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  prefferedProducts?: Maybe<Scalars['String']>;
   version?: Maybe<Scalars['Int']>;
 };
 
@@ -509,23 +465,6 @@ export type DistributionCentreExpandedFieldsFragment = (
   )>> }
 );
 
-export type PrefferedProductFieldsFragment = (
-  { __typename?: 'PrefferedProduct' }
-  & Pick<PrefferedProduct, 'id'>
-);
-
-export type PrefferedProductExpandedFieldsFragment = (
-  { __typename?: 'PrefferedProduct' }
-  & Pick<PrefferedProduct, 'id'>
-  & { recipient?: Maybe<(
-    { __typename?: 'Recipient' }
-    & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt'>
-  )>, product?: Maybe<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'label' | 'description'>
-  )> }
-);
-
 export type ProductFieldsFragment = (
   { __typename?: 'Product' }
   & Pick<Product, 'id' | 'label' | 'description'>
@@ -534,10 +473,7 @@ export type ProductFieldsFragment = (
 export type ProductExpandedFieldsFragment = (
   { __typename?: 'Product' }
   & Pick<Product, 'id' | 'label' | 'description'>
-  & { preferredProducts?: Maybe<Array<Maybe<(
-    { __typename?: 'PrefferedProduct' }
-    & Pick<PrefferedProduct, 'id'>
-  )>>>, volunteerActionProducts?: Maybe<Array<Maybe<(
+  & { volunteerActionProducts?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerActionProduct' }
     & Pick<VolunteerActionProduct, 'id'>
   )>>> }
@@ -545,16 +481,13 @@ export type ProductExpandedFieldsFragment = (
 
 export type RecipientFieldsFragment = (
   { __typename?: 'Recipient' }
-  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt'>
+  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
 );
 
 export type RecipientExpandedFieldsFragment = (
   { __typename?: 'Recipient' }
-  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt'>
-  & { prefferedProducts?: Maybe<Array<Maybe<(
-    { __typename?: 'PrefferedProduct' }
-    & Pick<PrefferedProduct, 'id'>
-  )>>>, actions?: Maybe<Array<Maybe<(
+  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
+  & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   )>>> }
@@ -584,7 +517,7 @@ export type VolunteerActionExpandedFieldsFragment = (
     & Pick<VolunteerActionProduct, 'id'>
   )>>>, recipient?: Maybe<(
     { __typename?: 'Recipient' }
-    & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt'>
+    & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
   )> }
 );
 
@@ -758,20 +691,6 @@ export type FindAllDistributionCentresQuery = (
   )>> }
 );
 
-export type FindAllPrefferedProductsQueryVariables = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type FindAllPrefferedProductsQuery = (
-  { __typename?: 'Query' }
-  & { findAllPrefferedProducts: Array<Maybe<(
-    { __typename?: 'PrefferedProduct' }
-    & PrefferedProductExpandedFieldsFragment
-  )>> }
-);
-
 export type FindAllProductsQueryVariables = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -857,48 +776,6 @@ export type FindDistributionCentresQuery = (
   )>> }
 );
 
-export type FindActiveVolunteerQueryVariables = {
-  username: Scalars['String'];
-};
-
-
-export type FindActiveVolunteerQuery = (
-  { __typename?: 'Query' }
-  & { findVolunteers: Array<Maybe<(
-    { __typename?: 'Volunteer' }
-    & VolunteerFieldsFragment
-  )>> }
-);
-
-export type FindMyVolunteerActionsQueryVariables = {
-  volunteerId: Scalars['ID'];
-  status?: Maybe<ActionStatus>;
-};
-
-
-export type FindMyVolunteerActionsQuery = (
-  { __typename?: 'Query' }
-  & { findVolunteerActions: Array<Maybe<(
-    { __typename?: 'VolunteerAction' }
-    & VolunteerActionFieldsFragment
-  )>> }
-);
-
-export type FindPrefferedProductsQueryVariables = {
-  fields: PrefferedProductInput;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type FindPrefferedProductsQuery = (
-  { __typename?: 'Query' }
-  & { findPrefferedProducts: Array<Maybe<(
-    { __typename?: 'PrefferedProduct' }
-    & PrefferedProductExpandedFieldsFragment
-  )>> }
-);
-
 export type FindProductsQueryVariables = {
   fields: ProductInput;
   limit?: Maybe<Scalars['Int']>;
@@ -926,19 +803,6 @@ export type FindRecipientsQuery = (
   & { findRecipients: Array<Maybe<(
     { __typename?: 'Recipient' }
     & RecipientExpandedFieldsFragment
-  )>> }
-);
-
-export type FindVolunteerActionQueryVariables = {
-  id: Scalars['ID'];
-};
-
-
-export type FindVolunteerActionQuery = (
-  { __typename?: 'Query' }
-  & { findVolunteerActions: Array<Maybe<(
-    { __typename?: 'VolunteerAction' }
-    & VolunteerActionExpandedFieldsFragment
   )>> }
 );
 
@@ -1020,32 +884,6 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
   }
 }
     `;
-export const PrefferedProductFieldsFragmentDoc = gql`
-    fragment PrefferedProductFields on PrefferedProduct {
-  id
-}
-    `;
-export const PrefferedProductExpandedFieldsFragmentDoc = gql`
-    fragment PrefferedProductExpandedFields on PrefferedProduct {
-  id
-  recipient {
-    id
-    firstName
-    lastName
-    phone
-    address1
-    address2
-    postcode
-    city
-    createdAt
-  }
-  product {
-    id
-    label
-    description
-  }
-}
-    `;
 export const ProductFieldsFragmentDoc = gql`
     fragment ProductFields on Product {
   id
@@ -1058,9 +896,6 @@ export const ProductExpandedFieldsFragmentDoc = gql`
   id
   label
   description
-  preferredProducts {
-    id
-  }
   volunteerActionProducts {
     id
   }
@@ -1077,6 +912,7 @@ export const RecipientFieldsFragmentDoc = gql`
   postcode
   city
   createdAt
+  prefferedProducts
 }
     `;
 export const RecipientExpandedFieldsFragmentDoc = gql`
@@ -1090,9 +926,7 @@ export const RecipientExpandedFieldsFragmentDoc = gql`
   postcode
   city
   createdAt
-  prefferedProducts {
-    id
-  }
+  prefferedProducts
   actions {
     id
     title
@@ -1172,6 +1006,7 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     postcode
     city
     createdAt
+    prefferedProducts
   }
 }
     `;
@@ -1574,40 +1409,6 @@ export function useFindAllDistributionCentresLazyQuery(baseOptions?: ApolloReact
 export type FindAllDistributionCentresQueryHookResult = ReturnType<typeof useFindAllDistributionCentresQuery>;
 export type FindAllDistributionCentresLazyQueryHookResult = ReturnType<typeof useFindAllDistributionCentresLazyQuery>;
 export type FindAllDistributionCentresQueryResult = ApolloReactCommon.QueryResult<FindAllDistributionCentresQuery, FindAllDistributionCentresQueryVariables>;
-export const FindAllPrefferedProductsDocument = gql`
-    query findAllPrefferedProducts($limit: Int, $offset: Int) {
-  findAllPrefferedProducts(limit: $limit, offset: $offset) {
-    ...PrefferedProductExpandedFields
-  }
-}
-    ${PrefferedProductExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindAllPrefferedProductsQuery__
- *
- * To run a query within a React component, call `useFindAllPrefferedProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindAllPrefferedProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindAllPrefferedProductsQuery({
- *   variables: {
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
- *   },
- * });
- */
-export function useFindAllPrefferedProductsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindAllPrefferedProductsQuery, FindAllPrefferedProductsQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindAllPrefferedProductsQuery, FindAllPrefferedProductsQueryVariables>(FindAllPrefferedProductsDocument, baseOptions);
-      }
-export function useFindAllPrefferedProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindAllPrefferedProductsQuery, FindAllPrefferedProductsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindAllPrefferedProductsQuery, FindAllPrefferedProductsQueryVariables>(FindAllPrefferedProductsDocument, baseOptions);
-        }
-export type FindAllPrefferedProductsQueryHookResult = ReturnType<typeof useFindAllPrefferedProductsQuery>;
-export type FindAllPrefferedProductsLazyQueryHookResult = ReturnType<typeof useFindAllPrefferedProductsLazyQuery>;
-export type FindAllPrefferedProductsQueryResult = ApolloReactCommon.QueryResult<FindAllPrefferedProductsQuery, FindAllPrefferedProductsQueryVariables>;
 export const FindAllProductsDocument = gql`
     query findAllProducts($limit: Int, $offset: Int) {
   findAllProducts(limit: $limit, offset: $offset) {
@@ -1813,108 +1614,6 @@ export function useFindDistributionCentresLazyQuery(baseOptions?: ApolloReactHoo
 export type FindDistributionCentresQueryHookResult = ReturnType<typeof useFindDistributionCentresQuery>;
 export type FindDistributionCentresLazyQueryHookResult = ReturnType<typeof useFindDistributionCentresLazyQuery>;
 export type FindDistributionCentresQueryResult = ApolloReactCommon.QueryResult<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>;
-export const FindActiveVolunteerDocument = gql`
-    query findActiveVolunteer($username: String!) {
-  findVolunteers(fields: {username: $username}, limit: 1) {
-    ...VolunteerFields
-  }
-}
-    ${VolunteerFieldsFragmentDoc}`;
-
-/**
- * __useFindActiveVolunteerQuery__
- *
- * To run a query within a React component, call `useFindActiveVolunteerQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindActiveVolunteerQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindActiveVolunteerQuery({
- *   variables: {
- *      username: // value for 'username'
- *   },
- * });
- */
-export function useFindActiveVolunteerQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>(FindActiveVolunteerDocument, baseOptions);
-      }
-export function useFindActiveVolunteerLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>(FindActiveVolunteerDocument, baseOptions);
-        }
-export type FindActiveVolunteerQueryHookResult = ReturnType<typeof useFindActiveVolunteerQuery>;
-export type FindActiveVolunteerLazyQueryHookResult = ReturnType<typeof useFindActiveVolunteerLazyQuery>;
-export type FindActiveVolunteerQueryResult = ApolloReactCommon.QueryResult<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>;
-export const FindMyVolunteerActionsDocument = gql`
-    query findMyVolunteerActions($volunteerId: ID!, $status: ActionStatus) {
-  findVolunteerActions(fields: {volunteerId: $volunteerId, status: $status}) {
-    ...VolunteerActionFields
-  }
-}
-    ${VolunteerActionFieldsFragmentDoc}`;
-
-/**
- * __useFindMyVolunteerActionsQuery__
- *
- * To run a query within a React component, call `useFindMyVolunteerActionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindMyVolunteerActionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindMyVolunteerActionsQuery({
- *   variables: {
- *      volunteerId: // value for 'volunteerId'
- *      status: // value for 'status'
- *   },
- * });
- */
-export function useFindMyVolunteerActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindMyVolunteerActionsQuery, FindMyVolunteerActionsQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindMyVolunteerActionsQuery, FindMyVolunteerActionsQueryVariables>(FindMyVolunteerActionsDocument, baseOptions);
-      }
-export function useFindMyVolunteerActionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindMyVolunteerActionsQuery, FindMyVolunteerActionsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindMyVolunteerActionsQuery, FindMyVolunteerActionsQueryVariables>(FindMyVolunteerActionsDocument, baseOptions);
-        }
-export type FindMyVolunteerActionsQueryHookResult = ReturnType<typeof useFindMyVolunteerActionsQuery>;
-export type FindMyVolunteerActionsLazyQueryHookResult = ReturnType<typeof useFindMyVolunteerActionsLazyQuery>;
-export type FindMyVolunteerActionsQueryResult = ApolloReactCommon.QueryResult<FindMyVolunteerActionsQuery, FindMyVolunteerActionsQueryVariables>;
-export const FindPrefferedProductsDocument = gql`
-    query findPrefferedProducts($fields: PrefferedProductInput!, $limit: Int, $offset: Int) {
-  findPrefferedProducts(fields: $fields, limit: $limit, offset: $offset) {
-    ...PrefferedProductExpandedFields
-  }
-}
-    ${PrefferedProductExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindPrefferedProductsQuery__
- *
- * To run a query within a React component, call `useFindPrefferedProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindPrefferedProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindPrefferedProductsQuery({
- *   variables: {
- *      fields: // value for 'fields'
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
- *   },
- * });
- */
-export function useFindPrefferedProductsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindPrefferedProductsQuery, FindPrefferedProductsQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindPrefferedProductsQuery, FindPrefferedProductsQueryVariables>(FindPrefferedProductsDocument, baseOptions);
-      }
-export function useFindPrefferedProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindPrefferedProductsQuery, FindPrefferedProductsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindPrefferedProductsQuery, FindPrefferedProductsQueryVariables>(FindPrefferedProductsDocument, baseOptions);
-        }
-export type FindPrefferedProductsQueryHookResult = ReturnType<typeof useFindPrefferedProductsQuery>;
-export type FindPrefferedProductsLazyQueryHookResult = ReturnType<typeof useFindPrefferedProductsLazyQuery>;
-export type FindPrefferedProductsQueryResult = ApolloReactCommon.QueryResult<FindPrefferedProductsQuery, FindPrefferedProductsQueryVariables>;
 export const FindProductsDocument = gql`
     query findProducts($fields: ProductInput!, $limit: Int, $offset: Int) {
   findProducts(fields: $fields, limit: $limit, offset: $offset) {
@@ -1985,39 +1684,6 @@ export function useFindRecipientsLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type FindRecipientsQueryHookResult = ReturnType<typeof useFindRecipientsQuery>;
 export type FindRecipientsLazyQueryHookResult = ReturnType<typeof useFindRecipientsLazyQuery>;
 export type FindRecipientsQueryResult = ApolloReactCommon.QueryResult<FindRecipientsQuery, FindRecipientsQueryVariables>;
-export const FindVolunteerActionDocument = gql`
-    query findVolunteerAction($id: ID!) {
-  findVolunteerActions(fields: {id: $id}) {
-    ...VolunteerActionExpandedFields
-  }
-}
-    ${VolunteerActionExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindVolunteerActionQuery__
- *
- * To run a query within a React component, call `useFindVolunteerActionQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindVolunteerActionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindVolunteerActionQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useFindVolunteerActionQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindVolunteerActionQuery, FindVolunteerActionQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindVolunteerActionQuery, FindVolunteerActionQueryVariables>(FindVolunteerActionDocument, baseOptions);
-      }
-export function useFindVolunteerActionLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindVolunteerActionQuery, FindVolunteerActionQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindVolunteerActionQuery, FindVolunteerActionQueryVariables>(FindVolunteerActionDocument, baseOptions);
-        }
-export type FindVolunteerActionQueryHookResult = ReturnType<typeof useFindVolunteerActionQuery>;
-export type FindVolunteerActionLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionLazyQuery>;
-export type FindVolunteerActionQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionQuery, FindVolunteerActionQueryVariables>;
 export const FindVolunteerActionProductsDocument = gql`
     query findVolunteerActionProducts($fields: VolunteerActionProductInput!, $limit: Int, $offset: Int) {
   findVolunteerActionProducts(fields: $fields, limit: $limit, offset: $offset) {

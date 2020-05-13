@@ -42,5 +42,6 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       postcode
       city
       createdAt
+      prefferedProducts
    }
 } 

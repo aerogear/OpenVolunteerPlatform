@@ -30,11 +30,11 @@ const recipientSchema = new SimpleSchema({
     postcode: {
         type: Number,
         required: false
-    }/*,
+    },
     prefferedProducts: {
         type: String,
         max: 220
-    }*/
+    }
 } as any);
 
 export default new SimpleSchema2Bridge(recipientSchema);

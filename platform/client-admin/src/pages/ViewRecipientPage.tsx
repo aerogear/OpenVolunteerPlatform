@@ -1,9 +1,9 @@
-import React from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { IUpdateMatchParams } from '../declarations';
-import { useFindRecipientsQuery, useUpdateRecipientMutation } from '../dataFacade'
-import { AutoForm } from 'uniforms-ionic'
+import { useFindRecipientsQuery, useUpdateRecipientMutation } from '../dataFacade';
+import { AutoForm } from 'uniforms-ionic';
 import recipientFormSchema from '../forms/recipient';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 
@@ -46,15 +46,13 @@ export const ViewRecipientPage: React.FC<RouteComponentProps<IUpdateMatchParams>
                         postcode: model.postcode,
                         firstName: model.firstName,
                         lastName: model.lastName,
-                        // prefferedProducts: model.prefferedProducts,
+                        prefferedProducts: model.prefferedProducts,
                         phone: model.phone
                       }
                     }
                   }).then(() => {
                     // TODO dialog
-                  }).catch((err) => {
-                    console.error(err);
-                  });
+                  }).catch(console.error);
                 }}
                 showInlineError
                 submitField={undefined}

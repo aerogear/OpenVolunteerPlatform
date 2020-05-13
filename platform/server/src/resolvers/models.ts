@@ -40,14 +40,6 @@ export const models = [
     },
   },
   {
-    name: "PrefferedProduct",
-    pubSub: {
-      publishCreate: false,
-      publishUpdate: false,
-      publishDelete: false,
-    },
-  },
-  {
     name: "Recipient",
     pubSub: {
       publishCreate: true,
