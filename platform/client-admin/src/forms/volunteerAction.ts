@@ -6,31 +6,31 @@ const volunteerActionForm = new SimpleSchema({
         type: String,
         max: 120,
         uniforms: {
-            readonly: true
+            readonly: false
         }
     },
     description: {
         type: String,
         max: 120,
         uniforms: {
-            readonly: true
+            readonly: false
         }
-    },
+    },/*
     products: {
         type: String,
         max: 220,
         uniforms: {
             readonly: true
         }
-    },
+    },*/
     status: {
         type: String,
         max: 220,
         uniforms: {
             readonly: false,
-            defaultValue: 'ASSIGNED',
+            defaultValue: 'CREATED',
             allowedValues: [
-                'ASSIGNED', 'COMPLETED'
+                'CREATED', 'ASSIGNED', 'COMPLETED'
             ]
         }
     },

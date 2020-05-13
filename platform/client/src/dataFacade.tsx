@@ -16,6 +16,7 @@ export type Scalars = {
 };
 
 export enum ActionStatus {
+  Created = 'CREATED',
   Assigned = 'ASSIGNED',
   Completed = 'COMPLETED'
 }

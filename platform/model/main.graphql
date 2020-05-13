@@ -152,6 +152,7 @@ type Product {
 }
 
 enum ActionStatus {
+  CREATED
   ASSIGNED
   COMPLETED
 }
