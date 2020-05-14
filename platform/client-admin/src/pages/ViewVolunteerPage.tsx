@@ -10,18 +10,19 @@ import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider 
 
 export const ViewVolunteerPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const { data, loading, error } = useFindVolunteersQuery({ variables: { fields: { id: match.params.id }, limit: 1 } });
-
   const [updateVolunteer] = useUpdateVolunteerMutation();
+  
   if (error) {
     console.log(error);
   }
 
-  if (!data || !data.findVolunteers[0]) {
+  const volunteer = data?.findVolunteers[0];
+  if (!volunteer) {
     return <div>Cannot fetch element with provided id</div>
   }
 
   if (loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
-  const model = volunteerTransformer(data.findVolunteers[0]);
+  const model = volunteerTransformer(volunteer);
 
   return (
     <>

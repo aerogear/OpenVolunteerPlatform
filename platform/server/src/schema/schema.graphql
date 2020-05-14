@@ -32,6 +32,9 @@ type DistributionCentre implements Address {
   stockInformation: JSON
 
   """@oneToMany field: 'distributionCentre', key: 'distributionCentreId'"""
+  products: [Product]
+
+  """@oneToMany field: 'distributionCentre', key: 'distributionCentreId'"""
   actions: [VolunteerAction]!
   version: Int
 }
@@ -53,6 +56,8 @@ scalar JSON
 
 type Mutation {
   createDistributionCentre(input: DistributionCentreInput): DistributionCentre!
+  createProduct(input: ProductInput): Product!
+  updateProduct(input: ProductInput): Product!
   createVolunteer(input: VolunteerInput): Volunteer!
   updateVolunteer(input: VolunteerInput): Volunteer!
   createVolunteerAction(input: VolunteerActionInput): VolunteerAction!
@@ -60,8 +65,6 @@ type Mutation {
   deleteVolunteerAction(input: VolunteerActionInput): VolunteerAction!
   createRecipient(input: RecipientInput): Recipient!
   updateRecipient(input: RecipientInput): Recipient!
-  createProduct(input: ProductInput): Product!
-  updateProduct(input: ProductInput): Product!
 }
 
 """
@@ -75,6 +78,9 @@ type Product {
 
   """@oneToMany field: 'product', key: 'productId'"""
   volunteerActionProducts: [VolunteerActionProduct]
+
+  """@manyToOne field: 'products', key: 'distributionCentreId'"""
+  distributionCentre: DistributionCentre
   version: Int
 }
 
@@ -82,22 +88,23 @@ input ProductInput {
   id: ID
   label: String
   description: String
+  distributionCentreId: ID
   version: Int
 }
 
 type Query {
   findAllDistributionCentres(limit: Int, offset: Int): [DistributionCentre]!
   findDistributionCentres(fields: DistributionCentreInput, limit: Int, offset: Int): [DistributionCentre]!
+  findAllProducts(limit: Int, offset: Int): [Product]!
+  findProducts(fields: ProductInput, limit: Int, offset: Int): [Product]!
+  findAllVolunteerActionProducts(limit: Int, offset: Int): [VolunteerActionProduct]!
+  findVolunteerActionProducts(fields: VolunteerActionProductInput, limit: Int, offset: Int): [VolunteerActionProduct]!
   findAllVolunteers(limit: Int, offset: Int): [Volunteer]!
   findVolunteers(fields: VolunteerInput, limit: Int, offset: Int): [Volunteer]!
   findAllVolunteerActions(limit: Int, offset: Int): [VolunteerAction]!
   findVolunteerActions(fields: VolunteerActionInput, limit: Int, offset: Int): [VolunteerAction]!
-  findAllVolunteerActionProducts(limit: Int, offset: Int): [VolunteerActionProduct]!
-  findVolunteerActionProducts(fields: VolunteerActionProductInput, limit: Int, offset: Int): [VolunteerActionProduct]!
   findAllRecipients(limit: Int, offset: Int): [Recipient]!
   findRecipients(fields: RecipientInput, limit: Int, offset: Int): [Recipient]!
-  findAllProducts(limit: Int, offset: Int): [Product]!
-  findProducts(fields: ProductInput, limit: Int, offset: Int): [Product]!
 }
 
 """
@@ -114,6 +121,11 @@ type Recipient implements Address {
   postcode: Int
   city: String
   createdAt: DateTime
+
+  """
+  Comma separated list of preferrend products labels.
+  Easier to create volunteer actions when knowing what one really needs. 
+  """
   prefferedProducts: String
 
   """@oneToMany field: 'recipient', key: 'recipientId'"""
@@ -137,6 +149,8 @@ input RecipientInput {
 
 type Subscription {
   newDistributionCentre(input: DistributionCentreInput): DistributionCentre!
+  newProduct(input: ProductInput): Product!
+  updatedProduct(input: ProductInput): Product!
   newVolunteer(input: VolunteerInput): Volunteer!
   updatedVolunteer(input: VolunteerInput): Volunteer!
   newVolunteerAction(input: VolunteerActionInput): VolunteerAction!
@@ -144,8 +158,6 @@ type Subscription {
   deletedVolunteerAction(input: VolunteerActionInput): VolunteerAction!
   newRecipient(input: RecipientInput): Recipient!
   updatedRecipient(input: RecipientInput): Recipient!
-  newProduct(input: ProductInput): Product!
-  updatedProduct(input: ProductInput): Product!
 }
 
 """
@@ -232,18 +244,18 @@ Represents a join model between a volunteer action and product
 type VolunteerActionProduct {
   id: ID!
 
-  """@manyToOne field: 'products', key: 'volunteerActionId'"""
-  volunteerAction: VolunteerAction
-
   """@manyToOne field: 'volunteerActionProducts', key: 'productId'"""
   product: Product
+
+  """@manyToOne field: 'products', key: 'volunteerActionId'"""
+  volunteerAction: VolunteerAction
   version: Int
 }
 
 input VolunteerActionProductInput {
   id: ID
-  volunteerActionId: ID
   productId: ID
+  volunteerActionId: ID
   version: Int
 }
 

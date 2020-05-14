@@ -8,15 +8,7 @@ export const models = [
     },
   },
   {
-    name: "VolunteerAction",
-    pubSub: {
-      publishCreate: true,
-      publishUpdate: true,
-      publishDelete: true,
-    },
-  },
-  {
-    name: "Volunteer",
+    name: "Product",
     pubSub: {
       publishCreate: true,
       publishUpdate: true,
@@ -32,7 +24,15 @@ export const models = [
     },
   },
   {
-    name: "Product",
+    name: "VolunteerAction",
+    pubSub: {
+      publishCreate: true,
+      publishUpdate: true,
+      publishDelete: true,
+    },
+  },
+  {
+    name: "Volunteer",
     pubSub: {
       publishCreate: true,
       publishUpdate: true,

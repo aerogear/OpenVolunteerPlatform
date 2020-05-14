@@ -18,6 +18,9 @@ import { DistributionCentrePage } from '../pages/DistributionCentrePage';
 import { RecipientsPage } from '../pages/RecipientsPage';
 import { VolunteersPage } from '../pages/VolunteersPage';
 import { ViewRecipientPage } from '../pages/ViewRecipientPage';
+import { ProductsPage } from '../pages/ProductsPage';
+import { ViewProductPage } from '../pages/ViewProductPage';
+import { CreateProductPage } from '../pages/CreateProductPage';
 
 export const Router: React.FC = () => {
   return (
@@ -33,6 +36,9 @@ export const Router: React.FC = () => {
               <Route path="/schedule" component={SchedulePage} exact />
               <Route path="/optimize" component={OptimizePage} exact />
               <Route path="/reports" component={OptimizePage} exact />
+              <Route path="/products" component={ProductsPage} />
+              <Route path="/manageProduct/:id" component={ViewProductPage} exact />
+              <Route path="/createProduct" component={CreateProductPage} exact />
               <Route path="/volunteers" component={VolunteersPage} />
               <Route path="/manageVolunteer/:id" component={ViewVolunteerPage} exact />
               <Route path="/recipients" component={RecipientsPage} exact />

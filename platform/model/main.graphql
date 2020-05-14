@@ -12,7 +12,12 @@ type DistributionCentre implements Address {
   postcode: Int
   lat: String
   long: String
-  stockInformation: JSON
+  stockInformation: JSON,
+  
+  """
+  @oneToMany field: "distributionCentre"
+  """
+  products: [Product]
 }
 
 """
@@ -61,6 +66,10 @@ type Recipient implements Address {
   postcode: Int
   city: String
   createdAt: DateTime
+  """
+  Comma separated list of preferrend products labels.
+  Easier to create volunteer actions when knowing what one really needs. 
+  """
   prefferedProducts: String
   """
   @oneToMany field: 'recipient'

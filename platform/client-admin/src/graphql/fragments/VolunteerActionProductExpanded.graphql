@@ -1,15 +1,15 @@
 fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
    id
+   product {
+      id
+      label
+      description
+   }
    volunteerAction {
       id
       title
       description
       status
       createdAt
-   }
-   product {
-      id
-      label
-      description
    }
 } 

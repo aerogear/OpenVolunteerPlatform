@@ -7,6 +7,13 @@
 
 export default {
   DistributionCentre: {
+    products: (parent, args, context) => {
+      return context.Product.batchLoadData(
+        "distributionCentreId",
+        parent.id,
+        context
+      )
+    },
     actions: (parent, args, context) => {
       return context.VolunteerAction.batchLoadData(
         "distributionCentreId",
@@ -16,22 +23,50 @@ export default {
     },
   },
 
+  Product: {
+    distributionCentre: (parent, args, context) => {
+      return context.DistributionCentre.findBy({
+        id: parent.distributionCentreId,
+      }).then((results) => results[0])
+    },
+    volunteerActionProducts: (parent, args, context) => {
+      return context.VolunteerActionProduct.batchLoadData(
+        "productId",
+        parent.id,
+        context
+      )
+    },
+  },
+
+  VolunteerActionProduct: {
+    product: (parent, args, context) => {
+      return context.Product.findBy({ id: parent.productId }).then(
+        (results) => results[0]
+      )
+    },
+    volunteerAction: (parent, args, context) => {
+      return context.VolunteerAction.findBy({
+        id: parent.volunteerActionId,
+      }).then((results) => results[0])
+    },
+  },
+
   VolunteerAction: {
     distributionCentre: (parent, args, context) => {
       return context.DistributionCentre.findBy({
         id: parent.distributionCentreId,
       }).then((results) => results[0])
     },
-    volunteer: (parent, args, context) => {
-      return context.Volunteer.findBy({ id: parent.volunteerId }).then(
-        (results) => results[0]
-      )
-    },
     products: (parent, args, context) => {
       return context.VolunteerActionProduct.batchLoadData(
         "volunteerActionId",
         parent.id,
         context
+      )
+    },
+    volunteer: (parent, args, context) => {
+      return context.Volunteer.findBy({ id: parent.volunteerId }).then(
+        (results) => results[0]
       )
     },
     recipient: (parent, args, context) => {
@@ -45,29 +80,6 @@ export default {
     actions: (parent, args, context) => {
       return context.VolunteerAction.batchLoadData(
         "volunteerId",
-        parent.id,
-        context
-      )
-    },
-  },
-
-  VolunteerActionProduct: {
-    volunteerAction: (parent, args, context) => {
-      return context.VolunteerAction.findBy({
-        id: parent.volunteerActionId,
-      }).then((results) => results[0])
-    },
-    product: (parent, args, context) => {
-      return context.Product.findBy({ id: parent.productId }).then(
-        (results) => results[0]
-      )
-    },
-  },
-
-  Product: {
-    volunteerActionProducts: (parent, args, context) => {
-      return context.VolunteerActionProduct.batchLoadData(
-        "productId",
         parent.id,
         context
       )
@@ -92,6 +104,20 @@ export default {
     findAllDistributionCentres: (parent, args, context) => {
       return context.DistributionCentre.findAll(args)
     },
+    findProducts: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.Product.findBy(fields, page)
+    },
+    findAllProducts: (parent, args, context) => {
+      return context.Product.findAll(args)
+    },
+    findVolunteerActionProducts: (parent, args, context) => {
+      const { fields, ...page } = args
+      return context.VolunteerActionProduct.findBy(fields, page)
+    },
+    findAllVolunteerActionProducts: (parent, args, context) => {
+      return context.VolunteerActionProduct.findAll(args)
+    },
     findVolunteerActions: (parent, args, context) => {
       const { fields, ...page } = args
       return context.VolunteerAction.findBy(fields, page)
@@ -106,20 +132,6 @@ export default {
     findAllVolunteers: (parent, args, context) => {
       return context.Volunteer.findAll(args)
     },
-    findVolunteerActionProducts: (parent, args, context) => {
-      const { fields, ...page } = args
-      return context.VolunteerActionProduct.findBy(fields, page)
-    },
-    findAllVolunteerActionProducts: (parent, args, context) => {
-      return context.VolunteerActionProduct.findAll(args)
-    },
-    findProducts: (parent, args, context) => {
-      const { fields, ...page } = args
-      return context.Product.findBy(fields, page)
-    },
-    findAllProducts: (parent, args, context) => {
-      return context.Product.findAll(args)
-    },
     findRecipients: (parent, args, context) => {
       const { fields, ...page } = args
       return context.Recipient.findBy(fields, page)
@@ -132,6 +144,12 @@ export default {
   Mutation: {
     createDistributionCentre: (parent, args, context) => {
       return context.DistributionCentre.create(args.input, context)
+    },
+    createProduct: (parent, args, context) => {
+      return context.Product.create(args.input, context)
+    },
+    updateProduct: (parent, args, context) => {
+      return context.Product.update(args.input, context)
     },
     createVolunteerAction: (parent, args, context) => {
       return context.VolunteerAction.create(args.input, context)
@@ -148,12 +166,6 @@ export default {
     updateVolunteer: (parent, args, context) => {
       return context.Volunteer.update(args.input, context)
     },
-    createProduct: (parent, args, context) => {
-      return context.Product.create(args.input, context)
-    },
-    updateProduct: (parent, args, context) => {
-      return context.Product.update(args.input, context)
-    },
     createRecipient: (parent, args, context) => {
       return context.Recipient.create(args.input, context)
     },
@@ -166,6 +178,16 @@ export default {
     newDistributionCentre: {
       subscribe: (parent, args, context) => {
         return context.DistributionCentre.subscribeToCreate(args, context)
+      },
+    },
+    newProduct: {
+      subscribe: (parent, args, context) => {
+        return context.Product.subscribeToCreate(args, context)
+      },
+    },
+    updatedProduct: {
+      subscribe: (parent, args, context) => {
+        return context.Product.subscribeToUpdate(args, context)
       },
     },
     newVolunteerAction: {
@@ -191,16 +213,6 @@ export default {
     updatedVolunteer: {
       subscribe: (parent, args, context) => {
         return context.Volunteer.subscribeToUpdate(args, context)
-      },
-    },
-    newProduct: {
-      subscribe: (parent, args, context) => {
-        return context.Product.subscribeToCreate(args, context)
-      },
-    },
-    updatedProduct: {
-      subscribe: (parent, args, context) => {
-        return context.Product.subscribeToUpdate(args, context)
       },
     },
     newRecipient: {

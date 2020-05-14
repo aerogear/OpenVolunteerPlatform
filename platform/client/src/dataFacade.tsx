@@ -46,6 +46,8 @@ export type DistributionCentre = Address & {
   long?: Maybe<Scalars['String']>;
   stockInformation?: Maybe<Scalars['JSON']>;
   /** @oneToMany field: 'distributionCentre', key: 'distributionCentreId' */
+  products?: Maybe<Array<Maybe<Product>>>;
+  /** @oneToMany field: 'distributionCentre', key: 'distributionCentreId' */
   actions: Array<Maybe<VolunteerAction>>;
   version?: Maybe<Scalars['Int']>;
 };
@@ -67,6 +69,8 @@ export type DistributionCentreInput = {
 export type Mutation = {
    __typename?: 'Mutation';
   createDistributionCentre: DistributionCentre;
+  createProduct: Product;
+  updateProduct: Product;
   createVolunteer: Volunteer;
   updateVolunteer: Volunteer;
   createVolunteerAction: VolunteerAction;
@@ -74,13 +78,21 @@ export type Mutation = {
   deleteVolunteerAction: VolunteerAction;
   createRecipient: Recipient;
   updateRecipient: Recipient;
-  createProduct: Product;
-  updateProduct: Product;
 };
 
 
 export type MutationCreateDistributionCentreArgs = {
   input?: Maybe<DistributionCentreInput>;
+};
+
+
+export type MutationCreateProductArgs = {
+  input?: Maybe<ProductInput>;
+};
+
+
+export type MutationUpdateProductArgs = {
+  input?: Maybe<ProductInput>;
 };
 
 
@@ -118,16 +130,6 @@ export type MutationUpdateRecipientArgs = {
   input?: Maybe<RecipientInput>;
 };
 
-
-export type MutationCreateProductArgs = {
-  input?: Maybe<ProductInput>;
-};
-
-
-export type MutationUpdateProductArgs = {
-  input?: Maybe<ProductInput>;
-};
-
 /**
  * @model
  * @crud.delete: false
@@ -139,6 +141,8 @@ export type Product = {
   description?: Maybe<Scalars['String']>;
   /** @oneToMany field: 'product', key: 'productId' */
   volunteerActionProducts?: Maybe<Array<Maybe<VolunteerActionProduct>>>;
+  /** @manyToOne field: 'products', key: 'distributionCentreId' */
+  distributionCentre?: Maybe<DistributionCentre>;
   version?: Maybe<Scalars['Int']>;
 };
 
@@ -146,6 +150,7 @@ export type ProductInput = {
   id?: Maybe<Scalars['ID']>;
   label?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  distributionCentreId?: Maybe<Scalars['ID']>;
   version?: Maybe<Scalars['Int']>;
 };
 
@@ -153,16 +158,16 @@ export type Query = {
    __typename?: 'Query';
   findAllDistributionCentres: Array<Maybe<DistributionCentre>>;
   findDistributionCentres: Array<Maybe<DistributionCentre>>;
+  findAllProducts: Array<Maybe<Product>>;
+  findProducts: Array<Maybe<Product>>;
+  findAllVolunteerActionProducts: Array<Maybe<VolunteerActionProduct>>;
+  findVolunteerActionProducts: Array<Maybe<VolunteerActionProduct>>;
   findAllVolunteers: Array<Maybe<Volunteer>>;
   findVolunteers: Array<Maybe<Volunteer>>;
   findAllVolunteerActions: Array<Maybe<VolunteerAction>>;
   findVolunteerActions: Array<Maybe<VolunteerAction>>;
-  findAllVolunteerActionProducts: Array<Maybe<VolunteerActionProduct>>;
-  findVolunteerActionProducts: Array<Maybe<VolunteerActionProduct>>;
   findAllRecipients: Array<Maybe<Recipient>>;
   findRecipients: Array<Maybe<Recipient>>;
-  findAllProducts: Array<Maybe<Product>>;
-  findProducts: Array<Maybe<Product>>;
 };
 
 
@@ -174,6 +179,32 @@ export type QueryFindAllDistributionCentresArgs = {
 
 export type QueryFindDistributionCentresArgs = {
   fields?: Maybe<DistributionCentreInput>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryFindAllProductsArgs = {
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryFindProductsArgs = {
+  fields?: Maybe<ProductInput>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryFindAllVolunteerActionProductsArgs = {
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryFindVolunteerActionProductsArgs = {
+  fields?: Maybe<VolunteerActionProductInput>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
@@ -205,19 +236,6 @@ export type QueryFindVolunteerActionsArgs = {
 };
 
 
-export type QueryFindAllVolunteerActionProductsArgs = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryFindVolunteerActionProductsArgs = {
-  fields?: Maybe<VolunteerActionProductInput>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryFindAllRecipientsArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -226,19 +244,6 @@ export type QueryFindAllRecipientsArgs = {
 
 export type QueryFindRecipientsArgs = {
   fields?: Maybe<RecipientInput>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryFindAllProductsArgs = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryFindProductsArgs = {
-  fields?: Maybe<ProductInput>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };
@@ -258,6 +263,10 @@ export type Recipient = Address & {
   postcode?: Maybe<Scalars['Int']>;
   city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  /**
+   * Comma separated list of preferrend products labels.
+   * Easier to create volunteer actions when knowing what one really needs. 
+   */
   prefferedProducts?: Maybe<Scalars['String']>;
   /** @oneToMany field: 'recipient', key: 'recipientId' */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
@@ -281,6 +290,8 @@ export type RecipientInput = {
 export type Subscription = {
    __typename?: 'Subscription';
   newDistributionCentre: DistributionCentre;
+  newProduct: Product;
+  updatedProduct: Product;
   newVolunteer: Volunteer;
   updatedVolunteer: Volunteer;
   newVolunteerAction: VolunteerAction;
@@ -288,13 +299,21 @@ export type Subscription = {
   deletedVolunteerAction: VolunteerAction;
   newRecipient: Recipient;
   updatedRecipient: Recipient;
-  newProduct: Product;
-  updatedProduct: Product;
 };
 
 
 export type SubscriptionNewDistributionCentreArgs = {
   input?: Maybe<DistributionCentreInput>;
+};
+
+
+export type SubscriptionNewProductArgs = {
+  input?: Maybe<ProductInput>;
+};
+
+
+export type SubscriptionUpdatedProductArgs = {
+  input?: Maybe<ProductInput>;
 };
 
 
@@ -330,16 +349,6 @@ export type SubscriptionNewRecipientArgs = {
 
 export type SubscriptionUpdatedRecipientArgs = {
   input?: Maybe<RecipientInput>;
-};
-
-
-export type SubscriptionNewProductArgs = {
-  input?: Maybe<ProductInput>;
-};
-
-
-export type SubscriptionUpdatedProductArgs = {
-  input?: Maybe<ProductInput>;
 };
 
 /**
@@ -421,17 +430,17 @@ export type VolunteerActionInput = {
 export type VolunteerActionProduct = {
    __typename?: 'VolunteerActionProduct';
   id: Scalars['ID'];
-  /** @manyToOne field: 'products', key: 'volunteerActionId' */
-  volunteerAction?: Maybe<VolunteerAction>;
   /** @manyToOne field: 'volunteerActionProducts', key: 'productId' */
   product?: Maybe<Product>;
+  /** @manyToOne field: 'products', key: 'volunteerActionId' */
+  volunteerAction?: Maybe<VolunteerAction>;
   version?: Maybe<Scalars['Int']>;
 };
 
 export type VolunteerActionProductInput = {
   id?: Maybe<Scalars['ID']>;
-  volunteerActionId?: Maybe<Scalars['ID']>;
   productId?: Maybe<Scalars['ID']>;
+  volunteerActionId?: Maybe<Scalars['ID']>;
   version?: Maybe<Scalars['Int']>;
 };
 
@@ -459,7 +468,10 @@ export type DistributionCentreFieldsFragment = (
 export type DistributionCentreExpandedFieldsFragment = (
   { __typename?: 'DistributionCentre' }
   & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
-  & { actions: Array<Maybe<(
+  & { products?: Maybe<Array<Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'label' | 'description'>
+  )>>>, actions: Array<Maybe<(
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   )>> }
@@ -476,7 +488,10 @@ export type ProductExpandedFieldsFragment = (
   & { volunteerActionProducts?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerActionProduct' }
     & Pick<VolunteerActionProduct, 'id'>
-  )>>> }
+  )>>>, distributionCentre?: Maybe<(
+    { __typename?: 'DistributionCentre' }
+    & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
+  )> }
 );
 
 export type RecipientFieldsFragment = (
@@ -529,12 +544,12 @@ export type VolunteerActionProductFieldsFragment = (
 export type VolunteerActionProductExpandedFieldsFragment = (
   { __typename?: 'VolunteerActionProduct' }
   & Pick<VolunteerActionProduct, 'id'>
-  & { volunteerAction?: Maybe<(
-    { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
-  )>, product?: Maybe<(
+  & { product?: Maybe<(
     { __typename?: 'Product' }
     & Pick<Product, 'id' | 'label' | 'description'>
+  )>, volunteerAction?: Maybe<(
+    { __typename?: 'VolunteerAction' }
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   )> }
 );
 
@@ -650,6 +665,11 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
   lat
   long
   stockInformation
+  products {
+    id
+    label
+    description
+  }
   actions {
     id
     title
@@ -673,6 +693,17 @@ export const ProductExpandedFieldsFragmentDoc = gql`
   description
   volunteerActionProducts {
     id
+  }
+  distributionCentre {
+    id
+    name
+    address1
+    address2
+    city
+    postcode
+    lat
+    long
+    stockInformation
   }
 }
     `;
@@ -793,17 +824,17 @@ export const VolunteerActionProductFieldsFragmentDoc = gql`
 export const VolunteerActionProductExpandedFieldsFragmentDoc = gql`
     fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
   id
+  product {
+    id
+    label
+    description
+  }
   volunteerAction {
     id
     title
     description
     status
     createdAt
-  }
-  product {
-    id
-    label
-    description
   }
 }
     `;
