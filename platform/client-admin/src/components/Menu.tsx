@@ -1,9 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 
-import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonToggle } from '@ionic/react';
+import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle } from '@ionic/react';
 
-import { calendarOutline, helpBuoy, textOutline, informationCircleOutline, peopleCircleSharp, mapOutline, peopleOutline, optionsSharp, codeWorking } from 'ionicons/icons';
+import { calendarOutline, helpBuoy, textOutline, informationCircleOutline, peopleCircleSharp, mapOutline, peopleOutline, optionsSharp, codeWorking, cart } from 'ionicons/icons';
 
 import './Menu.css'
 
@@ -18,6 +18,7 @@ const routes = {
   managementPages: [
     { title: 'Volunteers', path: '/volunteers', icon: peopleOutline },
     { title: 'Recipients', path: '/recipients', icon: peopleCircleSharp },
+    { title: 'Products', path: '/products', icon: cart },
     { title: 'Distribution Centre', path: '/distributionCentre', icon: informationCircleOutline }
   ],
   profile: [

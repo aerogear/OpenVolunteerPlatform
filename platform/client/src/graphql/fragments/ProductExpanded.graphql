@@ -5,4 +5,15 @@ fragment ProductExpandedFields on Product {
    volunteerActionProducts {
       id
    }
+   distributionCentre {
+      id
+      name
+      address1
+      address2
+      city
+      postcode
+      lat
+      long
+      stockInformation
+   }
 } 

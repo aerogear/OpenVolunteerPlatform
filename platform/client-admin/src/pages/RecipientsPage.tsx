@@ -10,7 +10,6 @@ import { RouteComponentProps } from 'react-router';
 import { useFindAllRecipientsQuery } from '../dataFacade';
 import { RecipientList } from '../components/model/RecipientList';
 
-
 export const RecipientsPage: React.FC<RouteComponentProps> = ({ match }) => {
   let { data, loading, error } = useFindAllRecipientsQuery();
 

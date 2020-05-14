@@ -14,12 +14,15 @@ export const ViewRecipientPage: React.FC<RouteComponentProps<IUpdateMatchParams>
     console.log(error);
   }
 
-  if (!data || !data.findRecipients[0]) {
+  const recipient = data?.findRecipients[0];
+
+  if (!recipient) {
     return <div>Cannot fetch element with provided id</div>
   }
 
   if (loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
-  const model = data.findRecipients[0];
+  
+  const model = recipient;
 
   return (
     <>
