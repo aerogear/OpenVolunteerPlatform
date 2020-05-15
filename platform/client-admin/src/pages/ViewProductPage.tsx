@@ -2,14 +2,14 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { IUpdateMatchParams } from '../declarations';
-import { useFindProductsQuery, useUpdateProductMutation, useFindAllDistributionCentresQuery } from '../dataFacade';
+import { useFindProductsQuery, useUpdateProductMutation, useFindIdAndNamesOfAllDistributionCentresQuery } from '../dataFacade';
 import { AutoForm } from 'uniforms-ionic';
 import createProductSchema from '../forms/product';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 
 export const ViewProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const { data, loading, error } = useFindProductsQuery({ variables: { fields: { id: match.params.id }, limit: 1 } });
-  const distibutionCentresQuery = useFindAllDistributionCentresQuery()
+  const distibutionCentresQuery = useFindIdAndNamesOfAllDistributionCentresQuery()
 
   const [updateProduct] = useUpdateProductMutation();
   if (error || distibutionCentresQuery.error) {
