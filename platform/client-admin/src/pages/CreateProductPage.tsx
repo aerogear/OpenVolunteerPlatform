@@ -2,7 +2,7 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { IUpdateMatchParams } from '../declarations';
-import { useFindAllDistributionCentresQuery, useCreateProductMutation } from '../dataFacade';
+import { useFindIdAndNamesOfAllDistributionCentresQuery, useCreateProductMutation } from '../dataFacade';
 import { AutoForm } from 'uniforms-ionic';
 import createProductSchema from '../forms/product';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
@@ -10,7 +10,7 @@ import { useHistory } from 'react-router';
 
 export const CreateProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const history = useHistory()
-  const { data, loading, error } = useFindAllDistributionCentresQuery()
+  const { data, loading, error } = useFindIdAndNamesOfAllDistributionCentresQuery()
   const [createProduct] = useCreateProductMutation();
   if (error) {
     console.log(error);
