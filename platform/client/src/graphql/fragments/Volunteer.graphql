@@ -9,7 +9,6 @@ fragment VolunteerFields on Volunteer {
    city
    postcode
    dateOfBirth
-   canPhoneCall
    canDeliver
 
 } 

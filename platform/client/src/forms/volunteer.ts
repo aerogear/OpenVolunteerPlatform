@@ -20,7 +20,8 @@ const volunteerForm = new SimpleSchema({
         type: String,
         max: 220,
         uniforms: {
-            readonly: true
+            readonly: true,
+            type: 'email'
         }
     },
     username: {
@@ -53,13 +54,6 @@ const volunteerForm = new SimpleSchema({
         uniforms: {
             label: "Date Of Birth"
         },
-    },
-    canPhoneCall: {
-        type: Boolean,
-        uniforms: {
-            label: "I volunteer to deliver basic goods to recipients",
-            defaultValue: false
-        }
     },
     canDeliver: {
         type: Boolean,

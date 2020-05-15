@@ -47,8 +47,7 @@ export const ViewVolunteerPage: React.FC<RouteComponentProps<IUpdateMatchParams>
                         address1: model.address1,
                         address2: model.address2,
                         dateOfBirth: model.dateOfBirth,
-                        canDeliver: model.canDeliver,
-                        canPhoneCall: model.canPhoneCall
+                        canDeliver: model.canDeliver
                       }
                     }
                   }).then(() => {

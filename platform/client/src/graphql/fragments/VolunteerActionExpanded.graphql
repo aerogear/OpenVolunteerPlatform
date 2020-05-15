@@ -15,7 +15,6 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       city
       postcode
       dateOfBirth
-      canPhoneCall
       canDeliver
    }
    distributionCentre {

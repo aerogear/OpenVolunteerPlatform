@@ -10,7 +10,6 @@ query findAllVolunteers {
     address2,
     city,
     postcode,
-    canPhoneCall,
     canDeliver,
     actions {
       id,
