@@ -4,31 +4,19 @@ import SimpleSchema from 'simpl-schema';
 const volunteerForm = new SimpleSchema({
     firstName: {
         type: String,
-        max: 120,
-        uniforms: {
-            readonly: true
-        }
+        max: 120
     },
     lastName: {
         type: String,
-        max: 120,
-        uniforms: {
-            readonly: true
-        }
+        max: 120
     },
     email: {
         type: String,
-        max: 220,
-        uniforms: {
-            readonly: true
-        }
+        max: 220
     },
     username: {
         type: String,
-        max: 220,
-        uniforms: {
-            readonly: true
-        }
+        max: 220
     },
     address1: {
         type: String,
