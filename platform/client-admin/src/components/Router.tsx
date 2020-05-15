@@ -22,6 +22,7 @@ import { ProductsPage } from '../pages/ProductsPage';
 import { ViewProductPage } from '../pages/ViewProductPage';
 import { CreateProductPage } from '../pages/CreateProductPage';
 import { CreateRecipientPage } from '../pages/CreateRecipientPage';
+import { CreateVolunteerPage } from '../pages/CreateVolunteerPage';
 
 export const Router: React.FC = () => {
   return (
@@ -42,6 +43,7 @@ export const Router: React.FC = () => {
               <Route path="/createProduct" component={CreateProductPage} exact />
               <Route path="/volunteers" component={VolunteersPage} />
               <Route path="/manageVolunteer/:id" component={ViewVolunteerPage} exact />
+              <Route path="/createVolunteer" component={CreateVolunteerPage} exact />
               <Route path="/recipients" component={RecipientsPage} exact />
               <Route path="/manageRecipient/:id" component={ViewRecipientPage} exact />
               <Route path="/createRecipient" component={CreateRecipientPage} exact />

@@ -4,11 +4,15 @@ import {
   IonFooter,
   IonLoading,
   IonContent,
+  IonButton,
+  IonIcon,
 } from '@ionic/react';
 import { Empty, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { useFindAllVolunteersQuery } from '../dataFacade';
 import { VolunteersList } from '../components/model/VolunteerList';
+import { Link } from 'react-router-dom';
+import { open } from "ionicons/icons";
 
 export const VolunteersPage: React.FC<RouteComponentProps> = ({ match }) => {
   let { data, loading, error } = useFindAllVolunteersQuery()
@@ -34,6 +38,12 @@ export const VolunteersPage: React.FC<RouteComponentProps> = ({ match }) => {
 
       <IonContent className="ion-padding" >
         {content}
+        <Link to={'createVolunteer'}>
+          <IonButton item-start color='primary' fill="outline">
+            <IonIcon icon={open} />
+              Create Volunteer
+          </IonButton>
+        </Link>
       </IonContent>
       <IonFooter>
         <div>
