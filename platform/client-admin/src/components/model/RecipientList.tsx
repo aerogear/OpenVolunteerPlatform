@@ -6,7 +6,7 @@ import { Recipient } from './Recipient';
 
 export const RecipientList: React.FC<{ recipients: [RecipientFieldsFragment] }> = ({ recipients }) => {
   if (!recipients || recipients.length < 1) {
-    const message = (<p>You currently have no tasks.</p>);
+    const message = (<p>You currently have no recipients.</p>);
     return <Empty message={message} />
   };
 

@@ -6,7 +6,7 @@ import { VolunteerFieldsFragment } from '../../dataFacade';
 
 export const VolunteersList: React.FC<{ volunteers: [VolunteerFieldsFragment] }> = ({ volunteers }) => {
   if (!volunteers || volunteers.length < 1) {
-    const message = (<p>You currently have no tasks.</p>);
+    const message = (<p>You currently have no volunteers.</p>);
     return <Empty message={message} />
   };
 
