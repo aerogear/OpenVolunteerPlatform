@@ -33,7 +33,8 @@ const recipientSchema = new SimpleSchema({
     },
     prefferedProducts: {
         type: String,
-        max: 220
+        max: 220,
+        required: false
     }
 } as any);
 
