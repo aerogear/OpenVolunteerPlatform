@@ -6,7 +6,7 @@ import { getMainDefinition } from 'apollo-utilities';
 import { getAuthHeader } from '../keycloakAuth';
 import { Capacitor } from '@capacitor/core';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { DefaultOptions, FetchPolicy } from 'apollo-client';
+import { FetchPolicy } from 'apollo-client';
 
 let httpUri = 'http://localhost:4000/graphql';
 let wsUri = 'ws://localhost:4000/graphql';

@@ -41,7 +41,7 @@ interface StateProps {
 
 interface MenuProps { }
 
-export const Menu: React.FC<MenuProps> = ({ }) => {
+export const Menu: React.FC<MenuProps> = () => {
   const location = useLocation();
 
   function renderlistItems(list: Pages[]) {
