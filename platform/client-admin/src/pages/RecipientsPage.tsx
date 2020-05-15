@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   IonPage,
   IonFooter,
@@ -7,12 +7,12 @@ import {
 } from '@ionic/react';
 import { Empty, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindRecipientsQuery } from '../dataFacade';
+import { useFindAllRecipientsQuery } from '../dataFacade';
 import { RecipientList } from '../components/model/RecipientList';
 
 
 export const RecipientsPage: React.FC<RouteComponentProps> = ({ match }) => {
-  let { data, loading, error } = useFindRecipientsQuery({ variables: { limit: 50, fields: {} } })
+  let { data, loading, error } = useFindAllRecipientsQuery();
 
   if (error) {
     console.log(error);
@@ -24,8 +24,8 @@ export const RecipientsPage: React.FC<RouteComponentProps> = ({ match }) => {
   />;
 
   let content;
-  if (data?.findRecipients?.length !== 0) {
-    content = <RecipientList recipients={data?.findRecipients as any} />
+  if (data?.findAllRecipients?.length !== 0) {
+    content = <RecipientList recipients={data?.findAllRecipients as any} />
   } else {
     content = <Empty message={<p>No data!</p>} />;
   }

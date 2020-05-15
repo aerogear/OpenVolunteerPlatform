@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   IonPage,
   IonFooter,
@@ -11,7 +11,7 @@ import { useFindAllVolunteersQuery } from '../dataFacade';
 import { VolunteersList } from '../components/model/VolunteerList';
 
 export const VolunteersPage: React.FC<RouteComponentProps> = ({ match }) => {
-  let { data, loading, error } = useFindAllVolunteersQuery({ variables: { limit: 50} })
+  let { data, loading, error } = useFindAllVolunteersQuery()
   if (error) {
     console.log(error);
   }
