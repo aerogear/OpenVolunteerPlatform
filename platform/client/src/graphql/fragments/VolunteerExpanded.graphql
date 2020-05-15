@@ -9,7 +9,6 @@ fragment VolunteerExpandedFields on Volunteer {
    city
    postcode
    dateOfBirth
-   canPhoneCall
    canDeliver
    actions {
       id

@@ -28,10 +28,6 @@ export const Volunteer: React.FC<{ volunteer: VolunteerFieldsFragment }> = ({ vo
             <IonBadge style={{margin:"5px"}} color='primary'>
               Delivery
             </IonBadge>}
-        {volunteer.canPhoneCall &&
-          <IonBadge color='primary'>
-            Phone call
-            </IonBadge>}
         </IonNote>
       </IonLabel>
     <IonButtons>

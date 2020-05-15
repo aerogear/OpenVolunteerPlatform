@@ -70,7 +70,6 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
       firstName: profile.firstName,
       lastName: profile.lastName,
       username: profile.username,
-      canPhoneCall: false,
       canDeliver: false
     } as any;
   }

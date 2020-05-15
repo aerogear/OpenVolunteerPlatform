@@ -371,11 +371,6 @@ export type Volunteer = Address & {
    * This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
    * @db.default: false
    */
-  canPhoneCall?: Maybe<Scalars['Boolean']>;
-  /**
-   * This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
-   * @db.default: false
-   */
   canDeliver?: Maybe<Scalars['Boolean']>;
   /** @oneToMany field: 'volunteer', key: 'volunteerId' */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
@@ -455,7 +450,6 @@ export type VolunteerInput = {
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
-  canPhoneCall?: Maybe<Scalars['Boolean']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
   version?: Maybe<Scalars['Int']>;
 };
@@ -510,7 +504,7 @@ export type RecipientExpandedFieldsFragment = (
 
 export type VolunteerFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver'>
 );
 
 export type VolunteerActionFieldsFragment = (
@@ -523,7 +517,7 @@ export type VolunteerActionExpandedFieldsFragment = (
   & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   & { volunteer?: Maybe<(
     { __typename?: 'Volunteer' }
-    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
+    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver'>
   )>, distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
     & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
@@ -555,7 +549,7 @@ export type VolunteerActionProductExpandedFieldsFragment = (
 
 export type VolunteerExpandedFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canPhoneCall' | 'canDeliver'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
@@ -754,7 +748,6 @@ export const VolunteerFieldsFragmentDoc = gql`
   city
   postcode
   dateOfBirth
-  canPhoneCall
   canDeliver
 }
     `;
@@ -785,7 +778,6 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     city
     postcode
     dateOfBirth
-    canPhoneCall
     canDeliver
   }
   distributionCentre {
@@ -850,7 +842,6 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
   city
   postcode
   dateOfBirth
-  canPhoneCall
   canDeliver
   actions {
     id
