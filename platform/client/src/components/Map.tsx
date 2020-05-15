@@ -57,5 +57,4 @@ export const Map: React.FC<Location> = ({ lat, long, name }) => {
        }}></div>
      </div>
    );
-  return <>Map</>
 }
