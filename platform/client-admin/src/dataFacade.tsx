@@ -855,6 +855,36 @@ export type FindVolunteerActionQuery = (
   )>> }
 );
 
+export type FindVolunteerActionDetailsQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type FindVolunteerActionDetailsQuery = (
+  { __typename?: 'Query' }
+  & { findVolunteerActions: Array<Maybe<(
+    { __typename?: 'VolunteerAction' }
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status'>
+    & { distributionCentre?: Maybe<(
+      { __typename?: 'DistributionCentre' }
+      & DistributionCentreFieldsFragment
+    )>, recipient?: Maybe<(
+      { __typename?: 'Recipient' }
+      & RecipientFieldsFragment
+    )>, volunteer?: Maybe<(
+      { __typename?: 'Volunteer' }
+      & VolunteerFieldsFragment
+    )>, products?: Maybe<Array<Maybe<(
+      { __typename?: 'VolunteerActionProduct' }
+      & Pick<VolunteerActionProduct, 'id'>
+      & { product?: Maybe<(
+        { __typename?: 'Product' }
+        & ProductFieldsFragment
+      )> }
+    )>>> }
+  )>> }
+);
+
 export type FindVolunteerActionProductsQueryVariables = {
   fields: VolunteerActionProductInput;
   limit?: Maybe<Scalars['Int']>;
@@ -1847,6 +1877,60 @@ export function useFindVolunteerActionLazyQuery(baseOptions?: ApolloReactHooks.L
 export type FindVolunteerActionQueryHookResult = ReturnType<typeof useFindVolunteerActionQuery>;
 export type FindVolunteerActionLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionLazyQuery>;
 export type FindVolunteerActionQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionQuery, FindVolunteerActionQueryVariables>;
+export const FindVolunteerActionDetailsDocument = gql`
+    query findVolunteerActionDetails($id: ID!) {
+  findVolunteerActions(fields: {id: $id}, limit: 1) {
+    id
+    title
+    description
+    status
+    distributionCentre {
+      ...DistributionCentreFields
+    }
+    recipient {
+      ...RecipientFields
+    }
+    volunteer {
+      ...VolunteerFields
+    }
+    products {
+      id
+      product {
+        ...ProductFields
+      }
+    }
+  }
+}
+    ${DistributionCentreFieldsFragmentDoc}
+${RecipientFieldsFragmentDoc}
+${VolunteerFieldsFragmentDoc}
+${ProductFieldsFragmentDoc}`;
+
+/**
+ * __useFindVolunteerActionDetailsQuery__
+ *
+ * To run a query within a React component, call `useFindVolunteerActionDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindVolunteerActionDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindVolunteerActionDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useFindVolunteerActionDetailsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>(FindVolunteerActionDetailsDocument, baseOptions);
+      }
+export function useFindVolunteerActionDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>(FindVolunteerActionDetailsDocument, baseOptions);
+        }
+export type FindVolunteerActionDetailsQueryHookResult = ReturnType<typeof useFindVolunteerActionDetailsQuery>;
+export type FindVolunteerActionDetailsLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionDetailsLazyQuery>;
+export type FindVolunteerActionDetailsQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>;
 export const FindVolunteerActionProductsDocument = gql`
     query findVolunteerActionProducts($fields: VolunteerActionProductInput!, $limit: Int, $offset: Int) {
   findVolunteerActionProducts(fields: $fields, limit: $limit, offset: $offset) {

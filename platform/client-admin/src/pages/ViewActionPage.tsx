@@ -3,27 +3,35 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Map } from '../components/Map';
 import { IUpdateMatchParams } from '../declarations';
-import { useUpdateVolunteerActionMutation, useFindVolunteerActionsQuery } from '../dataFacade';
+import { useUpdateVolunteerActionMutation, useFindVolunteerActionDetailsQuery } from '../dataFacade';
 import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic';
-import volunteerAction from '../forms/volunteerAction';
+import volunteerActionForm from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
-import recipient from '../forms/recipient';
+import recipientForm from '../forms/volunteer-action-recipient';
 
 export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const { data, loading, error } = useFindVolunteerActionsQuery({ variables: { fields: {id: match.params.id}, limit: 1 } });
+  const { data, loading, error } = useFindVolunteerActionDetailsQuery({ variables: { id: match.params.id }});
   const [updateAction] = useUpdateVolunteerActionMutation();
   if (error) {
     console.log(error);
   }
 
-  if (!data || !data.findVolunteerActions[0]) {
+  const volunteerAction = data?.findVolunteerActions[0];
+
+  if (!volunteerAction) {
     return <div>Cannot fetch element with provided id</div>
   }
 
   if (loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
-  const model = data.findVolunteerActions[0];
-  console.log(model)
+  const products = volunteerAction
+  .products?.map((volunteerActionProduct) => volunteerActionProduct?.product?.label)
+  .join(" , ");
 
+  const model = {
+    ...volunteerAction,
+    products
+  };
+  
   return (
     <>
       <Header title="Manage your action" match={match} />
@@ -37,7 +45,7 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
               <AutoForm
                 placeholder
                 model={model}
-                schema={volunteerAction}
+                schema={volunteerActionForm}
                 onSubmit={(model: any) => {
                   updateAction({
                     variables: {
@@ -63,12 +71,11 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
               </IonItemDivider>
               <AutoForm
                 model={model.recipient}
-                schema={recipient}
+                schema={recipientForm}
               >
                 <AutoFields />
                 <ErrorsField />
               </AutoForm>
-              <Map lat={model.distributionCentre?.lat!} long={model.distributionCentre?.long!} name={model.distributionCentre?.name!}></Map>
             </IonItemGroup>
           </IonCard>
           <IonCard>
@@ -76,13 +83,6 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
               <IonItemDivider color="light">
                 <h2>Distribution Centre Details</h2>
               </IonItemDivider>
-              <AutoForm
-                model={model.distributionCentre}
-                schema={recipient}
-              >
-                <AutoFields />
-                <ErrorsField />
-              </AutoForm>
               <Map lat={model.distributionCentre?.lat!} long={model.distributionCentre?.long!} name={model.distributionCentre?.name!}></Map>
             </IonItemGroup>
           </IonCard>

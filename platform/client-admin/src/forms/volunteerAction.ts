@@ -15,14 +15,14 @@ const volunteerActionForm = new SimpleSchema({
         uniforms: {
             readonly: false
         }
-    },/*
+    },
     products: {
         type: String,
         max: 220,
         uniforms: {
             readonly: true
         }
-    },*/
+    },
     status: {
         type: String,
         max: 220,
