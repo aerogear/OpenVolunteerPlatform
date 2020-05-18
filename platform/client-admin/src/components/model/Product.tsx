@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { ProductFieldsFragment } from '../../dataFacade';
 
 export const Product: React.FC<{ product: ProductFieldsFragment }> = ({ product }) => {
+  // TODO - link a product to volunteer action. See https://github.com/aerogear/OpenVolunteerPlatform/issues/69
 
   return (
     <IonItem>
@@ -28,7 +29,7 @@ export const Product: React.FC<{ product: ProductFieldsFragment }> = ({ product 
             <IonIcon icon={open} />
           </IonButton>
         </Link>
-
+      
       </IonButtons>
     </IonItem >
   );
