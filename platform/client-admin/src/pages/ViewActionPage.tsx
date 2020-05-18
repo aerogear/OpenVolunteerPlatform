@@ -7,7 +7,7 @@ import { useUpdateVolunteerActionMutation, useFindVolunteerActionDetailsQuery } 
 import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic';
 import volunteerActionForm from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
-import recipientForm from '../forms/volunteer-action-recipient';
+import recipientForm from '../forms/volunteerActionRecipient';
 
 export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const { data, loading, error } = useFindVolunteerActionDetailsQuery({ variables: { id: match.params.id }});

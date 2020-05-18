@@ -4,7 +4,7 @@ import { Header } from '../components/Header';
 import { IUpdateMatchParams } from '../declarations';
 import { useCreateVolunteerMutation } from '../dataFacade'
 import { AutoForm } from 'uniforms-ionic'
-import volunteerFormSchema from '../forms/create-volunteer';
+import volunteerFormSchema from '../forms/createVolunteer';
 import { IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 import { useHistory } from 'react-router';
 
