@@ -23,6 +23,7 @@ import { ViewProductPage } from '../pages/ViewProductPage';
 import { CreateProductPage } from '../pages/CreateProductPage';
 import { CreateRecipientPage } from '../pages/CreateRecipientPage';
 import { CreateVolunteerPage } from '../pages/CreateVolunteerPage';
+import { CreateVolunteerActionPage } from '../pages/CreateVolunteerAction';
 
 export const Router: React.FC = () => {
   return (
@@ -33,6 +34,7 @@ export const Router: React.FC = () => {
           <IonRouterOutlet id="main">
             <Switch>
               <Route path="/viewAction/:id" component={ViewActionPage} exact />
+              <Route path="/createAction" component={CreateVolunteerActionPage} exact />
               <Route path="/actions" component={ActionPage} exact />
               <Route path="/map" component={MapPage} exact />
               <Route path="/schedule" component={SchedulePage} exact />

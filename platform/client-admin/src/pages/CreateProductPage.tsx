@@ -9,8 +9,8 @@ import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider 
 import { useHistory } from 'react-router';
 
 export const CreateProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const history = useHistory()
-  const { data, loading, error } = useFindIdAndNamesOfAllDistributionCentresQuery()
+  const history = useHistory();
+  const { data, loading, error } = useFindIdAndNamesOfAllDistributionCentresQuery();
   const [createProduct] = useCreateProductMutation();
   if (error) {
     console.log(error);
@@ -19,9 +19,11 @@ export const CreateProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>
   if (loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
   
   const model = {};
-  const distributionCentres = data?.findAllDistributionCentres || []
-  const distributionCentresNames = distributionCentres.map((distributionCentre) => distributionCentre!!.name as string)
+  const distributionCentres = data?.findAllDistributionCentres || [];
+  const distributionCentresNames = distributionCentres
+  .map((distributionCentre) => distributionCentre!!.name as string);
   const productFormSchema = createProductSchema(distributionCentresNames,"")
+  
   return (
     <>
       <Header title="Create Product" match={match} />
@@ -37,21 +39,12 @@ export const CreateProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>
                 model={model}
                 schema={productFormSchema}
                 onSubmit={(model: any) => {
-                  const distributionCentre = 
-                  model.distributionCentre ? 
-                  distributionCentres
-                  .find((distributionCentre) => {
-                    const name = distributionCentre?.name || ""
-                    return name.includes(model.distributionCentre.trim())
-                  }) : undefined;
-
                   createProduct({
                     variables: {
                       input: {
-                        id: model.id,
                         label: model.label,
                         description: model.description,
-                        distributionCentreId: distributionCentre?.id
+                        distributionCentreId: retrieveDistributionCentreId(model.distributionCentre, distributionCentres)
                       }
                     }
                   }).then(({data}) => {
@@ -71,4 +64,18 @@ export const CreateProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>
     </>
   );
 
+}
+
+
+function retrieveDistributionCentreId(distributionCentreName: string, distributionCentres: any[]) {
+  if (!distributionCentreName) {
+    return undefined;
+  }
+
+  const distributionCentre = distributionCentres.find((distributionCentre) => {
+    const name = distributionCentre?.name || "";
+    return name.includes(distributionCentreName);
+  });
+
+  return distributionCentre?.id;
 }
