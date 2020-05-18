@@ -1,0 +1,23 @@
+query findVolunteerActionDetails($id: ID!) {
+  findVolunteerActions(fields: { id: $id }, limit: 1) {
+    id,
+    title,
+    description,
+    status,
+    distributionCentre {
+     ...DistributionCentreFields
+    },
+    recipient {
+      ...RecipientFields
+    },
+    volunteer {
+      ...VolunteerFields
+    },
+    products {
+      id,
+      product {
+        ...ProductFields
+      }
+    }
+  }
+}

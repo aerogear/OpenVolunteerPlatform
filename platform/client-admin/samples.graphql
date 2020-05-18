@@ -198,3 +198,36 @@ mutation createVolunteerActionProduct {
     }
   }
 }
+
+query findVolunteerActions {
+  findAllVolunteerActions {
+    id,
+    title,
+    description,
+    status,
+    distributionCentre {
+      name,
+      lat,
+      long
+    },
+    recipient {
+      firstName,
+      lastName,
+      phone,
+      prefferedProducts
+    },
+    volunteer {
+      id,
+      lastName,
+      firstName
+    },
+    products {
+      id,
+      product {
+        id,
+        label
+      }
+    }
+  }
+}
+
