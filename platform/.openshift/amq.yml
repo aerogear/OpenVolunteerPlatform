@@ -8,14 +8,14 @@ objects:
   - apiVersion: enmasse.io/v1beta1
     kind: AddressSpace
     metadata:
-      name: datasync
+      name: ovp
     spec:
       type: brokered
       plan: brokered-single-broker
   - apiVersion: enmasse.io/v1beta1
     kind: Address
     metadata:
-        name: datasync.${AMQ_ADDRESS} 
+        name: ovp.${AMQ_ADDRESS} 
     spec:
         address: ${AMQ_ADDRESS}
         type: topic
@@ -23,7 +23,7 @@ objects:
   - apiVersion: user.enmasse.io/v1beta1
     kind: MessagingUser
     metadata:
-      name: datasync.${AMQ_USERNAME}
+      name: ovp.${AMQ_USERNAME}
     spec:
       username: ${AMQ_USERNAME}
       authentication:

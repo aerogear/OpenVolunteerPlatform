@@ -3,16 +3,16 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 labels:
-  template: datasync-starter-server
+  template: ovp-server
 metadata:
-  name: datasync-starter-server
+  name: ovp-server
   annotations:
     openshift.io/display-name: DataSync Starter 
     description: |-
-        This template allows for the deployment of the Data Sync Example DataSync Starter App.
-        The Data Sync Example App contains an example Node.js server implementation that 
+        This template allows for the deployment of the Open Volunteer Platform application.
+        The OVP app contains an example Node.js server implementation that 
         connects to a MongoDB database.
-        For more information, see https://github.com/aerogear/datasync-starter/
+        For more information, see http://openvolunteer.org/
     tags: sync, mobile, nodejs
     iconClass: icon-nodejs
     openshift.io/provider-display-name: Red Hat, Inc.
@@ -29,13 +29,13 @@ objects:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
     labels:
-      app: datasync-starter-server
-    name: datasync-starter-server
+      app: ovp-server
+    name: ovp-server
   spec:
     replicas: 1
     selector:
-      app: datasync-starter-server
-      deploymentconfig: datasync-starter-server
+      app: ovp-server
+      deploymentconfig: ovp-server
     strategy:
       type: Recreate
     template:
@@ -44,8 +44,8 @@ objects:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: datasync-starter-server
-          deploymentconfig: datasync-starter-server
+          app: ovp-server
+          deploymentconfig: ovp-server
       spec:
         containers:
         - env:
@@ -57,8 +57,8 @@ objects:
               value: "${DATABASE_PASSWORD}"
             - name: MQTT_HOST
               value: mosquitto-mqtt-broker
-          image: docker.io/aerogear/datasync-starter:latest
-          name: datasync-starter-server
+          image: docker.io/aerogear/ovp:latest # TODO change image name
+          name: ovp-server
           ports:
           - containerPort: 4000
             protocol: TCP
@@ -73,8 +73,8 @@ objects:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
     labels:
-      app: datasync-starter-server
-    name: datasync-starter-server
+      app: ovp-server
+    name: ovp-server
   spec:
     ports:
     - name: 4000-tcp
@@ -82,15 +82,15 @@ objects:
       protocol: TCP
       targetPort: 4000
     selector:
-      app: datasync-starter-server
-      deploymentconfig: datasync-starter-server
+      app: ovp-server
+      deploymentconfig: ovp-server
 
 
 - apiVersion: v1
   kind: Route
   metadata:
     labels:
-      app: datasync-starter-server
+      app: ovp-server
     name: "${SERVER_SERVICE_NAME}"
   spec:
     host: ""
@@ -109,12 +109,12 @@ objects:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
     labels:
-      app: datasync-starter-server
+      app: ovp-server
     name: mosquitto-mqtt-broker
   spec:
     replicas: 1
     selector:
-      app: datasync-starter-server
+      app: ovp-server
       deploymentconfig: mosquitto-mqtt-broker
     template:
       metadata:
@@ -122,7 +122,7 @@ objects:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: datasync-starter-server
+          app: ovp-server
           deploymentconfig: mosquitto-mqtt-broker
       spec:
         containers:
@@ -145,7 +145,7 @@ objects:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
     labels:
-      app: datasync-starter-server
+      app: ovp-server
     name: mosquitto-mqtt-broker
   spec:
     ports:
@@ -154,7 +154,7 @@ objects:
       protocol: TCP
       targetPort: 1883
     selector:
-      app: datasync-starter-server
+      app: ovp-server
       deploymentconfig: mosquitto-mqtt-broker
   status:
     loadBalancer: {}
@@ -183,4 +183,4 @@ parameters:
 - description: The name of the OpenShift Service exposed for the Server.
   displayName: Server Service name
   name: SERVER_SERVICE_NAME
-  value: datasync-starter-server
+  value: ovp-server
