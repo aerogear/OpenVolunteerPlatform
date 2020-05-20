@@ -8,6 +8,8 @@ import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic';
 import volunteerActionForm from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 import recipientForm from '../forms/volunteerActionRecipient';
+import { Marker } from 'google-maps-react';
+import { Empty } from '../components';
 
 export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const { data, loading, error } = useFindVolunteerActionDetailsQuery({ variables: { id: match.params.id }});
@@ -31,6 +33,26 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
     ...volunteerAction,
     products
   };
+  
+
+  let mapContent = <Empty />;
+  
+  if (model.distributionCentre) {
+    const distributionCentre = model.distributionCentre;
+    const title = `${distributionCentre.address1} ${distributionCentre.address2} ${distributionCentre.city}`;
+    mapContent = <Map center={{
+      lat: parseInt(distributionCentre.lat!),
+      lng: parseInt(distributionCentre.long!)
+    }}>
+      <Marker
+        label={distributionCentre.name!}
+        title={title}
+        position={{
+          lat: parseInt(distributionCentre.lat!),
+          lng: parseInt(distributionCentre.long!)
+        }} />
+    </Map>
+  }
   
   return (
     <>
@@ -83,7 +105,7 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
               <IonItemDivider color="light">
                 <h2>Distribution Centre Details</h2>
               </IonItemDivider>
-              <Map lat={model.distributionCentre?.lat!} long={model.distributionCentre?.long!} name={model.distributionCentre?.name!}></Map>
+              {mapContent}
             </IonItemGroup>
           </IonCard>
 
