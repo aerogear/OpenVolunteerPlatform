@@ -24,7 +24,6 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
 
   if (loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
   const model = data.findVolunteerActions[0];
-  console.log(model)
 
   let mapContent = <Empty />;
   
@@ -32,15 +31,15 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
     const distributionCentre = model.distributionCentre;
     const title = `${distributionCentre.address1} ${distributionCentre.address2} ${distributionCentre.city}`;
     mapContent = <Map center={{
-      lat: parseInt(distributionCentre.lat!),
-      lng: parseInt(distributionCentre.long!)
+      lat: distributionCentre.lat!,
+      lng: distributionCentre.long!
     }}>
       <Marker
         label={distributionCentre.name!}
         title={title}
         position={{
-          lat: parseInt(distributionCentre.lat!),
-          lng: parseInt(distributionCentre.long!)
+          lat: distributionCentre.lat!,
+          lng: distributionCentre.long!
         }} />
     </Map>
   }

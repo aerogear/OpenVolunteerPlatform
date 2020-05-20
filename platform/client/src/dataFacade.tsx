@@ -31,7 +31,6 @@ export type Address = {
 
 /**
  * @model
- * @crud.update: false
  * @crud.delete: false
  */
 export type DistributionCentre = Address & {
@@ -42,8 +41,8 @@ export type DistributionCentre = Address & {
   address2?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
-  lat?: Maybe<Scalars['String']>;
-  long?: Maybe<Scalars['String']>;
+  lat?: Maybe<Scalars['Float']>;
+  long?: Maybe<Scalars['Float']>;
   stockInformation?: Maybe<Scalars['JSON']>;
   /** @oneToMany field: 'distributionCentre', key: 'distributionCentreId' */
   products?: Maybe<Array<Maybe<Product>>>;
@@ -59,8 +58,8 @@ export type DistributionCentreInput = {
   address2?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
-  lat?: Maybe<Scalars['String']>;
-  long?: Maybe<Scalars['String']>;
+  lat?: Maybe<Scalars['Float']>;
+  long?: Maybe<Scalars['Float']>;
   stockInformation?: Maybe<Scalars['JSON']>;
   version?: Maybe<Scalars['Int']>;
 };
@@ -69,6 +68,7 @@ export type DistributionCentreInput = {
 export type Mutation = {
    __typename?: 'Mutation';
   createDistributionCentre: DistributionCentre;
+  updateDistributionCentre: DistributionCentre;
   createProduct: Product;
   updateProduct: Product;
   createVolunteerActionProduct: VolunteerActionProduct;
@@ -83,6 +83,11 @@ export type Mutation = {
 
 
 export type MutationCreateDistributionCentreArgs = {
+  input?: Maybe<DistributionCentreInput>;
+};
+
+
+export type MutationUpdateDistributionCentreArgs = {
   input?: Maybe<DistributionCentreInput>;
 };
 
@@ -296,6 +301,7 @@ export type RecipientInput = {
 export type Subscription = {
    __typename?: 'Subscription';
   newDistributionCentre: DistributionCentre;
+  updatedDistributionCentre: DistributionCentre;
   newProduct: Product;
   updatedProduct: Product;
   newVolunteer: Volunteer;
@@ -309,6 +315,11 @@ export type Subscription = {
 
 
 export type SubscriptionNewDistributionCentreArgs = {
+  input?: Maybe<DistributionCentreInput>;
+};
+
+
+export type SubscriptionUpdatedDistributionCentreArgs = {
   input?: Maybe<DistributionCentreInput>;
 };
 

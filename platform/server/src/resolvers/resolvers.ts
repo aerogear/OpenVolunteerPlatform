@@ -145,6 +145,9 @@ export default {
     createDistributionCentre: (parent, args, context) => {
       return context.DistributionCentre.create(args.input, context)
     },
+    updateDistributionCentre: (parent, args, context) => {
+      return context.DistributionCentre.update(args.input, context)
+    },
     createProduct: (parent, args, context) => {
       return context.Product.create(args.input, context)
     },
@@ -181,6 +184,11 @@ export default {
     newDistributionCentre: {
       subscribe: (parent, args, context) => {
         return context.DistributionCentre.subscribeToCreate(args, context)
+      },
+    },
+    updatedDistributionCentre: {
+      subscribe: (parent, args, context) => {
+        return context.DistributionCentre.subscribeToUpdate(args, context)
       },
     },
     newProduct: {

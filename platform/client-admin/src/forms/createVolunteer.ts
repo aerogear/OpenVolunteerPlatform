@@ -43,7 +43,7 @@ const volunteerForm = new SimpleSchema({
         required: false,
         uniforms: {
             label: "Date Of Birth"
-        },
+        }
     },
     canDeliver: {
         type: Boolean,
