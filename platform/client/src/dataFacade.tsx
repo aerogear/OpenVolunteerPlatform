@@ -71,6 +71,7 @@ export type Mutation = {
   createDistributionCentre: DistributionCentre;
   createProduct: Product;
   updateProduct: Product;
+  createVolunteerActionProduct: VolunteerActionProduct;
   createVolunteer: Volunteer;
   updateVolunteer: Volunteer;
   createVolunteerAction: VolunteerAction;
@@ -93,6 +94,11 @@ export type MutationCreateProductArgs = {
 
 export type MutationUpdateProductArgs = {
   input?: Maybe<ProductInput>;
+};
+
+
+export type MutationCreateVolunteerActionProductArgs = {
+  input?: Maybe<VolunteerActionProductInput>;
 };
 
 
@@ -415,9 +421,9 @@ export type VolunteerActionInput = {
  * Represents a join model between a volunteer action and product
  * 
  * @model
+ * @crud.create: true
  * @crud.update: false
  * @crud.delete: false
- * @crud.create: false
  * @crud.subCreate: false
  * @crud.subUpdate: false
  * @crud.subDelete: false

@@ -58,6 +58,7 @@ type Mutation {
   createDistributionCentre(input: DistributionCentreInput): DistributionCentre!
   createProduct(input: ProductInput): Product!
   updateProduct(input: ProductInput): Product!
+  createVolunteerActionProduct(input: VolunteerActionProductInput): VolunteerActionProduct!
   createVolunteer(input: VolunteerInput): Volunteer!
   updateVolunteer(input: VolunteerInput): Volunteer!
   createVolunteerAction(input: VolunteerActionInput): VolunteerAction!
@@ -228,9 +229,9 @@ input VolunteerActionInput {
 Represents a join model between a volunteer action and product
 
 @model
+@crud.create: true
 @crud.update: false
 @crud.delete: false
-@crud.create: false
 @crud.subCreate: false
 @crud.subUpdate: false
 @crud.subDelete: false

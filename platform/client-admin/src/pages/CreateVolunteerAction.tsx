@@ -8,6 +8,7 @@ import {
   useFindAllRecipientsQuery,
   useCreateVolunteerActionMutation,
   useFindIdAndNamesOfAllDistributionCentresQuery,
+  useCreateVolunteerActionProductMutation,
   ActionStatus
 } from '../dataFacade';
 import { AutoForm } from 'uniforms-ionic';
@@ -19,6 +20,7 @@ export const CreateVolunteerActionPage: React.FC<RouteComponentProps<IUpdateMatc
   const history = useHistory();
 
   const [createVolunteerAction] = useCreateVolunteerActionMutation();
+  const [createVolunteerActionProduct] = useCreateVolunteerActionProductMutation();
 
   const productsQuery = useFindAllProductsQuery();
   const recipientsQuery = useFindAllRecipientsQuery();
@@ -87,8 +89,23 @@ export const CreateVolunteerActionPage: React.FC<RouteComponentProps<IUpdateMatc
                       }
                     }
                   }).then(({ data }) => {
-                    history.push(`/viewAction/${data?.createVolunteerAction.id}`);
-                    // TODO - add products to volunteer action. See https://github.com/aerogear/OpenVolunteerPlatform/pull/67#discussion_r426658820
+                    const volunteerActionId = data?.createVolunteerAction.id;
+                    // TODO - retrieve products labels from form
+                    // See https://github.com/aerogear/OpenVolunteerPlatform/pull/67#discussion_r426658820                    
+                    const productsLabels = model.products || [];
+                    return Promise.all(
+                      retrieveProductIds(products, productsLabels)
+                      .map(productId => createVolunteerActionProduct({
+                        variables: {
+                          input: {
+                            productId,
+                            volunteerActionId
+                          }
+                        }
+                      }))
+                    ).then(() => {
+                      history.push(`/viewAction/${volunteerActionId}`);
+                    });
                   }).catch(console.error);
                 }}
                 showInlineError
@@ -134,4 +151,10 @@ function retrieveIdFromSelectedName(selectedName: string, persons: any[]) {
     .find(({ firstName, lastName }) => `${firstName} ${lastName}` === selectedName);
 
   return correspondingPerson?.id;
+}
+
+function retrieveProductIds(products: any[], productsLabels: string[]): string[] {
+  return products
+  .filter(({ label }) => productsLabels.includes(label))
+  .map(({ id }) => id);
 }

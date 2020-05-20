@@ -151,6 +151,9 @@ export default {
     updateProduct: (parent, args, context) => {
       return context.Product.update(args.input, context)
     },
+    createVolunteerActionProduct: (parent, args, context) => {
+      return context.VolunteerActionProduct.create(args.input, context)
+    },
     createVolunteerAction: (parent, args, context) => {
       return context.VolunteerAction.create(args.input, context)
     },

@@ -71,6 +71,7 @@ export type Mutation = {
   createDistributionCentre: DistributionCentre;
   createProduct: Product;
   updateProduct: Product;
+  createVolunteerActionProduct: VolunteerActionProduct;
   createVolunteer: Volunteer;
   updateVolunteer: Volunteer;
   createVolunteerAction: VolunteerAction;
@@ -93,6 +94,11 @@ export type MutationCreateProductArgs = {
 
 export type MutationUpdateProductArgs = {
   input?: Maybe<ProductInput>;
+};
+
+
+export type MutationCreateVolunteerActionProductArgs = {
+  input?: Maybe<VolunteerActionProductInput>;
 };
 
 
@@ -415,9 +421,9 @@ export type VolunteerActionInput = {
  * Represents a join model between a volunteer action and product
  * 
  * @model
+ * @crud.create: true
  * @crud.update: false
  * @crud.delete: false
- * @crud.create: false
  * @crud.subCreate: false
  * @crud.subUpdate: false
  * @crud.subDelete: false
@@ -618,6 +624,19 @@ export type CreateVolunteerActionMutation = (
   & { createVolunteerAction: (
     { __typename?: 'VolunteerAction' }
     & VolunteerActionFieldsFragment
+  ) }
+);
+
+export type CreateVolunteerActionProductMutationVariables = {
+  input: VolunteerActionProductInput;
+};
+
+
+export type CreateVolunteerActionProductMutation = (
+  { __typename?: 'Mutation' }
+  & { createVolunteerActionProduct: (
+    { __typename?: 'VolunteerActionProduct' }
+    & VolunteerActionProductFieldsFragment
   ) }
 );
 
@@ -1307,6 +1326,38 @@ export function useCreateVolunteerActionMutation(baseOptions?: ApolloReactHooks.
 export type CreateVolunteerActionMutationHookResult = ReturnType<typeof useCreateVolunteerActionMutation>;
 export type CreateVolunteerActionMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerActionMutation>;
 export type CreateVolunteerActionMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerActionMutation, CreateVolunteerActionMutationVariables>;
+export const CreateVolunteerActionProductDocument = gql`
+    mutation createVolunteerActionProduct($input: VolunteerActionProductInput!) {
+  createVolunteerActionProduct(input: $input) {
+    ...VolunteerActionProductFields
+  }
+}
+    ${VolunteerActionProductFieldsFragmentDoc}`;
+export type CreateVolunteerActionProductMutationFn = ApolloReactCommon.MutationFunction<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>;
+
+/**
+ * __useCreateVolunteerActionProductMutation__
+ *
+ * To run a mutation, you first call `useCreateVolunteerActionProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateVolunteerActionProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createVolunteerActionProductMutation, { data, loading, error }] = useCreateVolunteerActionProductMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateVolunteerActionProductMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>(CreateVolunteerActionProductDocument, baseOptions);
+      }
+export type CreateVolunteerActionProductMutationHookResult = ReturnType<typeof useCreateVolunteerActionProductMutation>;
+export type CreateVolunteerActionProductMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerActionProductMutation>;
+export type CreateVolunteerActionProductMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>;
 export const DeleteVolunteerActionDocument = gql`
     mutation deleteVolunteerAction($input: VolunteerActionInput!) {
   deleteVolunteerAction(input: $input) {
