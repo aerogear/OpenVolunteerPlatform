@@ -8,6 +8,8 @@ import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic'
 import volunteerAction from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 import recipient from '../forms/recipient';
+import { Marker } from 'google-maps-react';
+import { Empty } from '../components';
 
 export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const { data, loading, error } = useFindVolunteerActionQuery({ fetchPolicy: "cache-first", variables: { id: match.params.id } });
@@ -23,6 +25,25 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
   if (loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
   const model = data.findVolunteerActions[0];
   console.log(model)
+
+  let mapContent = <Empty />;
+  
+  if (model.distributionCentre) {
+    const distributionCentre = model.distributionCentre;
+    const title = `${distributionCentre.address1} ${distributionCentre.address2} ${distributionCentre.city}`;
+    mapContent = <Map center={{
+      lat: parseInt(distributionCentre.lat!),
+      lng: parseInt(distributionCentre.long!)
+    }}>
+      <Marker
+        label={distributionCentre.name!}
+        title={title}
+        position={{
+          lat: parseInt(distributionCentre.lat!),
+          lng: parseInt(distributionCentre.long!)
+        }} />
+    </Map>
+  }
 
   return (
     <>
@@ -70,7 +91,6 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                 <AutoFields />
                 <ErrorsField />
               </AutoForm>
-              <Map lat={model.distributionCentre?.lat!} long={model.distributionCentre?.long!} name={model.distributionCentre?.name!}></Map>
             </IonItemGroup>
           </IonCard>
           <IonCard>
@@ -85,14 +105,12 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                 <AutoFields />
                 <ErrorsField />
               </AutoForm>
-              <Map lat={model.distributionCentre?.lat!} long={model.distributionCentre?.long!} name={model.distributionCentre?.name!}></Map>
+              {mapContent}
             </IonItemGroup>
           </IonCard>
 
         </IonList>
       </IonContent>
-
-
     </>
   );
 
