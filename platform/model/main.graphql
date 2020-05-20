@@ -1,6 +1,5 @@
 """
 @model
-@crud.update: false
 @crud.delete: false
 """
 type DistributionCentre implements Address {
@@ -10,8 +9,8 @@ type DistributionCentre implements Address {
   address2: String
   city: String
   postcode: Int
-  lat: String
-  long: String
+  lat: Float
+  long: Float
   stockInformation: JSON,
   
   """

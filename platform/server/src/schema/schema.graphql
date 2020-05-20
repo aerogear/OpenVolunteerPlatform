@@ -17,7 +17,6 @@ scalar DateTime
 
 """
 @model
-@crud.update: false
 @crud.delete: false
 """
 type DistributionCentre implements Address {
@@ -27,8 +26,8 @@ type DistributionCentre implements Address {
   address2: String
   city: String
   postcode: Int
-  lat: String
-  long: String
+  lat: Float
+  long: Float
   stockInformation: JSON
 
   """@oneToMany field: 'distributionCentre', key: 'distributionCentreId'"""
@@ -46,8 +45,8 @@ input DistributionCentreInput {
   address2: String
   city: String
   postcode: Int
-  lat: String
-  long: String
+  lat: Float
+  long: Float
   stockInformation: JSON
   version: Int
 }
@@ -56,6 +55,7 @@ scalar JSON
 
 type Mutation {
   createDistributionCentre(input: DistributionCentreInput): DistributionCentre!
+  updateDistributionCentre(input: DistributionCentreInput): DistributionCentre!
   createProduct(input: ProductInput): Product!
   updateProduct(input: ProductInput): Product!
   createVolunteerActionProduct(input: VolunteerActionProductInput): VolunteerActionProduct!
@@ -150,6 +150,7 @@ input RecipientInput {
 
 type Subscription {
   newDistributionCentre(input: DistributionCentreInput): DistributionCentre!
+  updatedDistributionCentre(input: DistributionCentreInput): DistributionCentre!
   newProduct(input: ProductInput): Product!
   updatedProduct(input: ProductInput): Product!
   newVolunteer(input: VolunteerInput): Volunteer!

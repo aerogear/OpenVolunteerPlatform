@@ -24,6 +24,8 @@ import { CreateProductPage } from '../pages/CreateProductPage';
 import { CreateRecipientPage } from '../pages/CreateRecipientPage';
 import { CreateVolunteerPage } from '../pages/CreateVolunteerPage';
 import { CreateVolunteerActionPage } from '../pages/CreateVolunteerAction';
+import { ViewDistributionCentrePage } from '../pages/ViewDistributionCentrePage';
+import { CreateDistributionCentrePage } from '../pages/CreateDistributionCentrePage';
 
 export const Router: React.FC = () => {
   return (
@@ -50,6 +52,8 @@ export const Router: React.FC = () => {
               <Route path="/manageRecipient/:id" component={ViewRecipientPage} exact />
               <Route path="/createRecipient" component={CreateRecipientPage} exact />
               <Route path="/distributionCentre" component={DistributionCentrePage} exact />
+              <Route path="/manageDistributionCentre/:id" component={ViewDistributionCentrePage} exact />
+              <Route path="/createDistributionCentre" component={CreateDistributionCentrePage} exact />
               <Route path="/profile" component={ProfilePage} exact />
               <Redirect to={{ pathname: "actions" }} />
             </Switch>
