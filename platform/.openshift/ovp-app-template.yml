@@ -7,7 +7,7 @@ labels:
 metadata:
   name: ovp-server
   annotations:
-    openshift.io/display-name: DataSync Starter 
+    openshift.io/display-name: OVP Starter 
     description: |-
         This template allows for the deployment of the Open Volunteer Platform application.
         The OVP app contains an example Node.js server implementation that 
@@ -19,7 +19,7 @@ metadata:
     openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html-single/developing_a_data_sync_app/index
     openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: 'false'
-    aerogear.org/datasync-template-version: '0.9.3'
+    aerogear.org/datasync-template-version: '0.9.3' # TODO needs changing?
 objects:
 
 - apiVersion: v1

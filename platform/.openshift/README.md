@@ -1,10 +1,10 @@
 ## OpenShift templates
 
-### DataSync Starter App template
+### OVP Starter App template
 
-Name: `datasync-app-template.yml`
+Name: `ovp-app-template.yml`
 
-This template starts datasync container on top of the mongodb instances:
+This template starts ovp container on top of the mongodb instances:
 
 #### Prerequisites
 
@@ -43,12 +43,12 @@ oc project <project where template was provisioned>
 * Update the deployment to add the `MQTT_HOST` variable. 
 
 ```
-oc get addressspace datasync -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].serviceHost}'
+oc get addressspace ovp -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].serviceHost}'
 ```
 
 If you want to use service outside the OpenShift cluster please request external URL:
 ```
-oc get addressspace datasync -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].externalHost}'
+oc get addressspace ovp -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].externalHost}'
 ```
 
 Provide set of the environment variables required to connect to the running AMQ
