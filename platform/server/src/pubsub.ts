@@ -1,6 +1,6 @@
-import mqtt from 'mqtt'
-import { PubSub } from 'apollo-server-express'
-import { MQTTPubSub } from '@aerogear/graphql-mqtt-subscriptions'
+import mqtt from 'mqtt';
+import { PubSub } from 'apollo-server-express';
+import { MQTTPubSub } from '@aerogear/graphql-mqtt-subscriptions';
 
 export function getPubSub() {
   const mqttHost = process.env.MQTT_HOST
