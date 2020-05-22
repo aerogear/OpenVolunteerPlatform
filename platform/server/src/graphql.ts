@@ -1,15 +1,15 @@
-import { loadSchemaFiles } from '@graphql-toolkit/file-loading';
-import { join } from 'path';
+import { printSchema } from 'graphql';
+import { GraphbackRuntime } from 'graphback';
 import { connect } from './db';
-import resolvers from './resolvers/resolvers';
+import path from 'path';
 import scalars from './resolvers/scalars';
 import customResolvers from './resolvers/custom-resolvers';
-import { models } from './resolvers/models'
 import { getPubSub } from './pubsub'
 import { Config } from './config/config';
-import { ApolloServer, ApolloServerExpressConfig, makeExecutableSchema } from "apollo-server-express";
+import { loadConfigSync } from 'graphql-config';
+import { ApolloServer, ApolloServerExpressConfig } from "apollo-server-express";
 import { buildKeycloakApolloConfig } from './auth';
-import { createMongoCRUDRuntimeContext } from './mongo/createMongoServices';
+import { createMongoCRUDRuntimeContext } from '@graphback/runtime-mongo';
 
 /**
  * Creates Apollo server
@@ -18,19 +18,24 @@ export const createApolloServer = async function (app: any, config: Config) {
     const db = await connect(config);
     const pubSub = getPubSub();
 
-    const typeDefs = loadSchemaFiles(join(__dirname, '/schema/')).join('\n');
-    const schema = makeExecutableSchema({
-        typeDefs,
-        resolvers,
-        resolverValidationOptions: { requireResolversForResolveType: false },
-      });
-    const context = createMongoCRUDRuntimeContext(models, schema, db, pubSub);
+    const projectConfig = loadConfigSync({
+        extensions: [
+            () => ({ name: 'graphback' }),
+        ]
+    }).getDefault()
+
+    const graphbackConfig = projectConfig.extension('graphback');
+    const model = projectConfig.loadSchemaSync(path.resolve(graphbackConfig.model));
+    const runtimeEngine = new GraphbackRuntime(model, graphbackConfig);
+    const models = runtimeEngine.getDataSourceModels();
+    const context = createMongoCRUDRuntimeContext(models, model, db, pubSub);
+    const { schema, resolvers } = runtimeEngine.buildRuntime(context);
+
 
     let apolloConfig: ApolloServerExpressConfig = {
-        typeDefs: typeDefs,
-        resolvers: { ...resolvers, ...scalars, ...customResolvers},
-        playground: true,
-        context: context
+        typeDefs: printSchema(schema),
+        resolvers: { ...resolvers, ...scalars, ...customResolvers },
+        playground: true
     }
 
     apolloConfig = buildKeycloakApolloConfig(app, apolloConfig)

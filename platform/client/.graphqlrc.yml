@@ -8,12 +8,12 @@ extensions:
     crud:
       create: true
       update: true
-      findAll: false
+      findOne: true
       find: true
-      delete: false
-      subCreate: false
-      subUpdate: false
-      subDelete: false
+      delete: true
+      subCreate: true
+      subUpdate: true
+      subDelete: true
     plugins:
       graphback-schema:
         format: graphql
