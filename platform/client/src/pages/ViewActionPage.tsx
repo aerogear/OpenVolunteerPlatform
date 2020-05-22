@@ -8,6 +8,8 @@ import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic'
 import volunteerAction from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 import recipient from '../forms/recipient';
+import distributionCentre from '../forms/distributionCentre';
+
 import { Marker } from 'google-maps-react';
 import { Empty } from '../components';
 
@@ -26,7 +28,8 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
   const model = data.findVolunteerActions[0];
 
   let mapContent = <Empty />;
-  
+  let distributionCentreModel = {};
+
   if (model.distributionCentre) {
     const distributionCentre = model.distributionCentre;
     const title = `${distributionCentre.address1} ${distributionCentre.address2} ${distributionCentre.city}`;
@@ -42,6 +45,11 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
           lng: distributionCentre.long!
         }} />
     </Map>
+
+    distributionCentreModel = {
+      ...distributionCentre,
+      stockInformation: JSON.stringify(distributionCentre.stockInformation, null, '\t')
+    };
   }
 
   return (
@@ -98,8 +106,8 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                 <h2>Distribution Centre Details</h2>
               </IonItemDivider>
               <AutoForm
-                model={model.distributionCentre}
-                schema={recipient}
+                model={distributionCentreModel}
+                schema={distributionCentre}
               >
                 <AutoFields />
                 <ErrorsField />
