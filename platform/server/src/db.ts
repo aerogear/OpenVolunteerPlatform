@@ -14,14 +14,16 @@ export async function connect(config: Config) {
     url = `mongodb://${config.db.host}:${config.db.port}/${config.db.database}`
   }
 
-  // var backup = require('mongodb-backup');
+  const backup = require('mongodb-backup');
 
-  // backup({
-  //   uri: url,
-  //   root: resolve(__dirname, '../mongodump')
-  // });
+  /*
+  backup({
+    uri: url,
+    root: resolve(__dirname, '../mongodump')
+  });
+*/
 
-  var restore = require('mongodb-restore');
+  const restore = require('mongodb-restore');
   restore({
     uri: url,
     root: resolve(__dirname, '../mongodump/showcase')
