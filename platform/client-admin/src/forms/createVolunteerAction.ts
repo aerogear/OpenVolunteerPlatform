@@ -31,14 +31,17 @@ export default function createVolunteerActionForm(recipients: string[], voluntee
             uniforms: {
                 allowedValues: distributionCentres
             }
-        }/*,
+        },
         products: {
-            type: String,
+            type: Array,
             uniforms: {
                 multiple: true,
                 allowedValues: products
             }
-        }*/
+        },
+        "products.$": {
+            type: String
+        }
     } as any);
 
     return new SimpleSchema2Bridge(volunteerActionForm);
