@@ -34,12 +34,7 @@ query findAllRecipients {
     address2,
     city,
     postcode,
-    prefferedProducts {
-      product {
-        id,
-        label
-      }
-    }
+    prefferedProducts
   }
 }
 
@@ -138,46 +133,9 @@ query findAllProducts {
     id,
     description,
     label,
-    preferredProducts {
+    distributionCentre {
       id,
-      recipient {
-        id
-      }
-    }
-  }
-}
-
-query findAllRecipients {
-  findAllRecipients {
-    id,
-    firstName,
-    lastName,
-    phone,
-    address1,
-    address2,
-    prefferedProducts {
-      id,
-      product {
-        id,
-        label        
-      }
-    }
-  }
-}
-
-mutation createPreferredProduct {
-  createPrefferedProduct(
-    input: {
-      productId: "5eb16d8d54bbea1125a1fa33"
-      recipientId: "5e8f3ef492787169c1e7cd89"
-    }
-  ) {
-    id
-    product {
-      id
-    }
-    recipient {
-      id
+      name
     }
   }
 }
