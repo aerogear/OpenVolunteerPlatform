@@ -19,7 +19,7 @@ export const CreateProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>
   if (loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
   
   const model = {};
-  const distributionCentres = data?.findAllDistributionCentres || [];
+  const distributionCentres = data?.findDistributionCentres?.items || [];
   const distributionCentresNames = distributionCentres
   .map((distributionCentre) => distributionCentre!!.name as string);
   const productFormSchema = createProductSchema(distributionCentresNames,"")

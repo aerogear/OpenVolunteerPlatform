@@ -1,0 +1,5 @@
+query getVolunteer($id: ID!) {
+    getVolunteer(id: $id) {
+      ...VolunteerExpandedFields
+    }
+  }

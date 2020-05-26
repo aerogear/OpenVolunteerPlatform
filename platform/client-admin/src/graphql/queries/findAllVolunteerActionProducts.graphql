@@ -1,5 +1,0 @@
-query findAllVolunteerActionProducts($limit: Int, $offset: Int) {
-    findAllVolunteerActionProducts(limit: $limit, offset: $offset) {
-      ...VolunteerActionProductExpandedFields
-    }
-  }

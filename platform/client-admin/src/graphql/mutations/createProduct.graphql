@@ -1,4 +1,4 @@
-mutation createProduct($input: ProductInput!) {
+mutation createProduct($input: CreateProductInput!) {
   createProduct(input: $input) {
       ...ProductFields
   }

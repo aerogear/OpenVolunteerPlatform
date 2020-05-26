@@ -1,5 +1,5 @@
 query findVolunteerActionDetails($id: ID!) {
-  findVolunteerActions(fields: { id: $id }, limit: 1) {
+  getVolunteerAction(id: $id ) {
     id,
     title,
     description,

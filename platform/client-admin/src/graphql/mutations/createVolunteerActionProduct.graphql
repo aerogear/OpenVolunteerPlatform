@@ -1,4 +1,4 @@
-mutation createVolunteerActionProduct($input: VolunteerActionProductInput!) {
+mutation createVolunteerActionProduct($input: CreateVolunteerActionProductInput!) {
   createVolunteerActionProduct(input: $input) {
       ...VolunteerActionProductFields
   }

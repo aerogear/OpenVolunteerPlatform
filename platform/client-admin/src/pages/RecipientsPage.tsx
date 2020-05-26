@@ -9,13 +9,13 @@ import {
 } from '@ionic/react';
 import { Empty, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindAllRecipientsQuery } from '../dataFacade';
+import { useFindRecipientsQuery } from '../dataFacade';
 import { RecipientList } from '../components/model/RecipientList';
 import { Link } from 'react-router-dom';
 import { open } from 'ionicons/icons';
 
 export const RecipientsPage: React.FC<RouteComponentProps> = ({ match }) => {
-  let { data, loading, error } = useFindAllRecipientsQuery();
+  let { data, loading, error } = useFindRecipientsQuery();
 
   if (error) {
     console.log(error);
@@ -27,8 +27,8 @@ export const RecipientsPage: React.FC<RouteComponentProps> = ({ match }) => {
   />;
 
   let content;
-  if (data?.findAllRecipients?.length !== 0) {
-    content = <RecipientList recipients={data?.findAllRecipients as any} />
+  if (data?.findRecipients?.items.length !== 0) {
+    content = <RecipientList recipients={data?.findRecipients.items as any} />
   } else {
     content = <Empty message={<p>No data!</p>} />;
   }

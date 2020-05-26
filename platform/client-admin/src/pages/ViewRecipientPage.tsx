@@ -2,19 +2,19 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { IUpdateMatchParams } from '../declarations';
-import { useFindRecipientsQuery, useUpdateRecipientMutation } from '../dataFacade';
+import { useGetRecipientQuery, useUpdateRecipientMutation } from '../dataFacade';
 import { AutoForm } from 'uniforms-ionic';
 import recipientFormSchema from '../forms/recipient';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 
 export const ViewRecipientPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const { data, loading, error } = useFindRecipientsQuery({ variables: { fields: { id: match.params.id }, limit: 1 } });
+  const { data, loading, error } = useGetRecipientQuery({ variables: { id: match.params.id  } });
   const [updateRecipient] = useUpdateRecipientMutation()
   if (error) {
     console.log(error);
   }
 
-  const recipient = data?.findRecipients[0];
+  const recipient = data?.getRecipient;
 
   if (!recipient) {
     return <div>Cannot fetch element with provided id</div>

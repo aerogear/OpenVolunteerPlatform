@@ -1,0 +1,5 @@
+query getRecipient($id: ID!) {
+    getRecipient(id: $id) {
+      ...RecipientExpandedFields
+    }
+  }

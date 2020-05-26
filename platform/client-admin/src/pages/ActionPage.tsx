@@ -9,16 +9,13 @@ import {
 } from '@ionic/react';
 import { Empty, ActionsList, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindAllVolunteerActionsLazyQuery } from '../dataFacade';
+import { useFindVolunteerActionsQuery } from '../dataFacade';
 import { Link } from 'react-router-dom';
 import { open } from 'ionicons/icons';
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
-  let [findActions, { data, loading, error, called }] = useFindAllVolunteerActionsLazyQuery()
+  const { data, loading, error } = useFindVolunteerActionsQuery()
 
-  if (!called) {
-    findActions({ variables: { limit: 30 } })
-  }
   if (error) {
     console.log(error);
   }
@@ -29,8 +26,8 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   />;
 
   let content;
-  if (data?.findAllVolunteerActions?.length !== 0) {
-    content = <ActionsList actions={data?.findAllVolunteerActions} />
+  if (data?.findVolunteerActions?.items.length !== 0) {
+    content = <ActionsList actions={data?.findVolunteerActions?.items} />
   } else {
     content = <Empty message={<p>No tasks!</p>} />;
   }

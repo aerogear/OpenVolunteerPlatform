@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFindAllDistributionCentresQuery } from '../dataFacade';
+import { useFindDistributionCentresQuery } from '../dataFacade';
 import { IonLoading, IonPage, IonContent, IonFooter, IonButton, IonIcon } from '@ionic/react';
 import { Header, Empty } from '../components';
 import { RouteComponentProps, useHistory } from 'react-router';
@@ -10,7 +10,7 @@ import { open } from 'ionicons/icons';
 
 export const DistributionCentrePage: React.FC<RouteComponentProps> = ({ match }) => {
   const history = useHistory();
-  let { data, loading, error } = useFindAllDistributionCentresQuery();
+  let { data, loading, error } = useFindDistributionCentresQuery();
 
   if (error) {
     console.log(error);
@@ -21,7 +21,7 @@ export const DistributionCentrePage: React.FC<RouteComponentProps> = ({ match })
     message={'Loading...'}
   />;
 
-  const distributionCentres = data?.findAllDistributionCentres || [];
+  const distributionCentres = data?.findDistributionCentres?.items || [];
 
   let mapContent = <Empty />;
   const size = distributionCentres.length;

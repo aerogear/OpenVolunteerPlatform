@@ -34,8 +34,10 @@ export const Router: React.FC = () => {
   }
 
   let volunteer: VolunteerFieldsFragment | undefined;
-  if (data?.findVolunteers?.length === 1 && data?.findVolunteers[0]) {
-    volunteer = volunteerTransformer(data.findVolunteers[0]);
+  
+
+  if (data?.findVolunteers?.items.length === 1 && data?.findVolunteers.items[0]) {
+    volunteer = volunteerTransformer(data.findVolunteers.items[0]);
   }
 
   return (

@@ -2,13 +2,13 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { IUpdateMatchParams } from '../declarations';
-import { useFindProductsQuery, useUpdateProductMutation, useFindIdAndNamesOfAllDistributionCentresQuery } from '../dataFacade';
+import { useGetProductQuery, useUpdateProductMutation, useFindIdAndNamesOfAllDistributionCentresQuery } from '../dataFacade';
 import { AutoForm } from 'uniforms-ionic';
 import createProductSchema from '../forms/product';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 
 export const ViewProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const { data, loading, error } = useFindProductsQuery({ variables: { fields: { id: match.params.id }, limit: 1 } });
+  const { data, loading, error } = useGetProductQuery({ variables: {  id: match.params.id } });
   const distibutionCentresQuery = useFindIdAndNamesOfAllDistributionCentresQuery()
 
   const [updateProduct] = useUpdateProductMutation();
@@ -16,7 +16,7 @@ export const ViewProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>> 
     console.log(error);
   }
 
-  const product = data?.findProducts[0];
+  const product = data?.getProduct;
 
   if (!product) {
     return <div>Cannot fetch element with provided id</div>
@@ -31,7 +31,7 @@ export const ViewProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>> 
     distributionCentre: product.distributionCentre?.name
   };
 
-  const distributionCentres = distibutionCentresQuery.data?.findAllDistributionCentres || [];
+  const distributionCentres = distibutionCentresQuery.data?.findDistributionCentres.items || [];
   const distributionCentresNames = distributionCentres.map((distributionCentre) => distributionCentre!!.name as string)
   const productFormSchema = createProductSchema(distributionCentresNames,"")
   

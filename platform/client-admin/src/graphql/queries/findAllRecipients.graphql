@@ -1,5 +1,0 @@
-query findAllRecipients($limit: Int, $offset: Int) {
-    findAllRecipients(limit: $limit, offset: $offset) {
-      ...RecipientExpandedFields
-    }
-  }
