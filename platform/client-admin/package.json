@@ -21,8 +21,8 @@
     "react-router-dom": "5.1.2",
     "simpl-schema": "^1.5.7",
     "subscriptions-transport-ws": "0.9.16",
-    "uniforms": "v3.0.0-alpha.2",
-    "uniforms-bridge-simple-schema-2": "v3.0.0-alpha.2",
+    "uniforms": "^v3.0.0-alpha.2",
+    "uniforms-bridge-simple-schema-2": "^v3.0.0-alpha.2",
     "uniforms-ionic": "0.0.11"
   },
   "scripts": {
@@ -48,6 +48,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "uniforms": "v3.0.0-alpha.2"
   },
   "devDependencies": {
     "@capacitor/cli": "2.0.1",
