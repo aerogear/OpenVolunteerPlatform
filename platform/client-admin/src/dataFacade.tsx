@@ -28,6 +28,74 @@ export type Address = {
   postcode?: Maybe<Scalars['Int']>;
 };
 
+export type BooleanInput = {
+  ne?: Maybe<Scalars['Boolean']>;
+  eq?: Maybe<Scalars['Boolean']>;
+};
+
+export type CreateDistributionCentreInput = {
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  address1?: Maybe<Scalars['String']>;
+  address2?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  postcode?: Maybe<Scalars['Int']>;
+  lat?: Maybe<Scalars['Float']>;
+  long?: Maybe<Scalars['Float']>;
+  stockInformation?: Maybe<Scalars['JSON']>;
+};
+
+export type CreateProductInput = {
+  id?: Maybe<Scalars['ID']>;
+  label: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  distributionCentreId?: Maybe<Scalars['ID']>;
+};
+
+export type CreateRecipientInput = {
+  id?: Maybe<Scalars['ID']>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  address1?: Maybe<Scalars['String']>;
+  address2?: Maybe<Scalars['String']>;
+  postcode?: Maybe<Scalars['Int']>;
+  city?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  prefferedProducts?: Maybe<Scalars['String']>;
+};
+
+export type CreateVolunteerActionInput = {
+  id?: Maybe<Scalars['ID']>;
+  title: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  status?: Maybe<ActionStatus>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  distributionCentreId?: Maybe<Scalars['ID']>;
+  volunteerId?: Maybe<Scalars['ID']>;
+  recipientId?: Maybe<Scalars['ID']>;
+};
+
+export type CreateVolunteerActionProductInput = {
+  id?: Maybe<Scalars['ID']>;
+  productId?: Maybe<Scalars['ID']>;
+  volunteerActionId?: Maybe<Scalars['ID']>;
+};
+
+export type CreateVolunteerInput = {
+  id?: Maybe<Scalars['ID']>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  username: Scalars['String'];
+  address1?: Maybe<Scalars['String']>;
+  address2?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  postcode?: Maybe<Scalars['Int']>;
+  dateOfBirth?: Maybe<Scalars['DateTime']>;
+  canDeliver?: Maybe<Scalars['Boolean']>;
+};
+
 
 /**
  * @model
@@ -48,11 +116,87 @@ export type DistributionCentre = Address & {
   products?: Maybe<Array<Maybe<Product>>>;
   /** @oneToMany field: 'distributionCentre', key: 'distributionCentreId' */
   actions: Array<Maybe<VolunteerAction>>;
-  version?: Maybe<Scalars['Int']>;
 };
 
-export type DistributionCentreInput = {
-  id?: Maybe<Scalars['ID']>;
+
+/**
+ * @model
+ * @crud.delete: false
+ */
+export type DistributionCentreProductsArgs = {
+  filter?: Maybe<ProductFilter>;
+};
+
+
+/**
+ * @model
+ * @crud.delete: false
+ */
+export type DistributionCentreActionsArgs = {
+  filter?: Maybe<VolunteerActionFilter>;
+};
+
+export type DistributionCentreFilter = {
+  id?: Maybe<IdInput>;
+  name?: Maybe<StringInput>;
+  address1?: Maybe<StringInput>;
+  address2?: Maybe<StringInput>;
+  city?: Maybe<StringInput>;
+  postcode?: Maybe<IntInput>;
+  lat?: Maybe<FloatInput>;
+  long?: Maybe<FloatInput>;
+  stockInformation?: Maybe<StringInput>;
+  and?: Maybe<Array<Maybe<DistributionCentreFilter>>>;
+  or?: Maybe<Array<Maybe<DistributionCentreFilter>>>;
+  not?: Maybe<DistributionCentreFilter>;
+};
+
+export type DistributionCentreResultList = {
+   __typename?: 'DistributionCentreResultList';
+  items: Array<Maybe<DistributionCentre>>;
+  offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type FloatInput = {
+  ne?: Maybe<Scalars['Float']>;
+  eq?: Maybe<Scalars['Float']>;
+  le?: Maybe<Scalars['Float']>;
+  lt?: Maybe<Scalars['Float']>;
+  ge?: Maybe<Scalars['Float']>;
+  gt?: Maybe<Scalars['Float']>;
+  in?: Maybe<Array<Maybe<Scalars['Float']>>>;
+  between?: Maybe<Array<Maybe<Scalars['Float']>>>;
+};
+
+export type IdInput = {
+  ne?: Maybe<Scalars['ID']>;
+  eq?: Maybe<Scalars['ID']>;
+  le?: Maybe<Scalars['ID']>;
+  lt?: Maybe<Scalars['ID']>;
+  ge?: Maybe<Scalars['ID']>;
+  gt?: Maybe<Scalars['ID']>;
+  in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  contains?: Maybe<Scalars['ID']>;
+  startsWith?: Maybe<Scalars['ID']>;
+  endsWith?: Maybe<Scalars['ID']>;
+};
+
+export type IntInput = {
+  ne?: Maybe<Scalars['Int']>;
+  eq?: Maybe<Scalars['Int']>;
+  le?: Maybe<Scalars['Int']>;
+  lt?: Maybe<Scalars['Int']>;
+  ge?: Maybe<Scalars['Int']>;
+  gt?: Maybe<Scalars['Int']>;
+  in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  between?: Maybe<Array<Maybe<Scalars['Int']>>>;
+};
+
+
+export type MutateDistributionCentreInput = {
+  id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
@@ -61,9 +205,52 @@ export type DistributionCentreInput = {
   lat?: Maybe<Scalars['Float']>;
   long?: Maybe<Scalars['Float']>;
   stockInformation?: Maybe<Scalars['JSON']>;
-  version?: Maybe<Scalars['Int']>;
 };
 
+export type MutateProductInput = {
+  id: Scalars['ID'];
+  label?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  distributionCentreId?: Maybe<Scalars['ID']>;
+};
+
+export type MutateRecipientInput = {
+  id: Scalars['ID'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  address1?: Maybe<Scalars['String']>;
+  address2?: Maybe<Scalars['String']>;
+  postcode?: Maybe<Scalars['Int']>;
+  city?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  prefferedProducts?: Maybe<Scalars['String']>;
+};
+
+export type MutateVolunteerActionInput = {
+  id: Scalars['ID'];
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  status?: Maybe<ActionStatus>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  distributionCentreId?: Maybe<Scalars['ID']>;
+  volunteerId?: Maybe<Scalars['ID']>;
+  recipientId?: Maybe<Scalars['ID']>;
+};
+
+export type MutateVolunteerInput = {
+  id: Scalars['ID'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  address1?: Maybe<Scalars['String']>;
+  address2?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  postcode?: Maybe<Scalars['Int']>;
+  dateOfBirth?: Maybe<Scalars['DateTime']>;
+  canDeliver?: Maybe<Scalars['Boolean']>;
+};
 
 export type Mutation = {
    __typename?: 'Mutation';
@@ -76,69 +263,73 @@ export type Mutation = {
   updateVolunteer: Volunteer;
   createVolunteerAction: VolunteerAction;
   updateVolunteerAction: VolunteerAction;
-  deleteVolunteerAction: VolunteerAction;
   createRecipient: Recipient;
   updateRecipient: Recipient;
 };
 
 
 export type MutationCreateDistributionCentreArgs = {
-  input?: Maybe<DistributionCentreInput>;
+  input: CreateDistributionCentreInput;
 };
 
 
 export type MutationUpdateDistributionCentreArgs = {
-  input?: Maybe<DistributionCentreInput>;
+  input: MutateDistributionCentreInput;
 };
 
 
 export type MutationCreateProductArgs = {
-  input?: Maybe<ProductInput>;
+  input: CreateProductInput;
 };
 
 
 export type MutationUpdateProductArgs = {
-  input?: Maybe<ProductInput>;
+  input: MutateProductInput;
 };
 
 
 export type MutationCreateVolunteerActionProductArgs = {
-  input?: Maybe<VolunteerActionProductInput>;
+  input: CreateVolunteerActionProductInput;
 };
 
 
 export type MutationCreateVolunteerArgs = {
-  input?: Maybe<VolunteerInput>;
+  input: CreateVolunteerInput;
 };
 
 
 export type MutationUpdateVolunteerArgs = {
-  input?: Maybe<VolunteerInput>;
+  input: MutateVolunteerInput;
 };
 
 
 export type MutationCreateVolunteerActionArgs = {
-  input?: Maybe<VolunteerActionInput>;
+  input: CreateVolunteerActionInput;
 };
 
 
 export type MutationUpdateVolunteerActionArgs = {
-  input?: Maybe<VolunteerActionInput>;
-};
-
-
-export type MutationDeleteVolunteerActionArgs = {
-  input?: Maybe<VolunteerActionInput>;
+  input: MutateVolunteerActionInput;
 };
 
 
 export type MutationCreateRecipientArgs = {
-  input?: Maybe<RecipientInput>;
+  input: CreateRecipientInput;
 };
 
 
 export type MutationUpdateRecipientArgs = {
-  input?: Maybe<RecipientInput>;
+  input: MutateRecipientInput;
+};
+
+export type OrderByInput = {
+  field: Scalars['String'];
+  order?: Maybe<SortDirectionEnum>;
+};
+
+export type PageRequest = {
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 /**
@@ -150,113 +341,125 @@ export type Product = {
   id: Scalars['ID'];
   label: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  /** @oneToMany field: 'product', key: 'productId' */
-  volunteerActionProducts?: Maybe<Array<Maybe<VolunteerActionProduct>>>;
   /** @manyToOne field: 'products', key: 'distributionCentreId' */
   distributionCentre?: Maybe<DistributionCentre>;
-  version?: Maybe<Scalars['Int']>;
+  /** @oneToMany field: 'product', key: 'productId' */
+  volunteerActionProducts?: Maybe<Array<Maybe<VolunteerActionProduct>>>;
 };
 
-export type ProductInput = {
-  id?: Maybe<Scalars['ID']>;
-  label?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  distributionCentreId?: Maybe<Scalars['ID']>;
-  version?: Maybe<Scalars['Int']>;
+
+/**
+ * @model
+ * @crud.delete: false
+ */
+export type ProductVolunteerActionProductsArgs = {
+  filter?: Maybe<VolunteerActionProductFilter>;
+};
+
+export type ProductFilter = {
+  id?: Maybe<IdInput>;
+  label?: Maybe<StringInput>;
+  description?: Maybe<StringInput>;
+  distributionCentreId?: Maybe<IdInput>;
+  and?: Maybe<Array<Maybe<ProductFilter>>>;
+  or?: Maybe<Array<Maybe<ProductFilter>>>;
+  not?: Maybe<ProductFilter>;
+};
+
+export type ProductResultList = {
+   __typename?: 'ProductResultList';
+  items: Array<Maybe<Product>>;
+  offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']>;
 };
 
 export type Query = {
    __typename?: 'Query';
-  findAllDistributionCentres: Array<Maybe<DistributionCentre>>;
-  findDistributionCentres: Array<Maybe<DistributionCentre>>;
-  findAllProducts: Array<Maybe<Product>>;
-  findProducts: Array<Maybe<Product>>;
-  findAllVolunteerActionProducts: Array<Maybe<VolunteerActionProduct>>;
-  findVolunteerActionProducts: Array<Maybe<VolunteerActionProduct>>;
-  findAllVolunteers: Array<Maybe<Volunteer>>;
-  findVolunteers: Array<Maybe<Volunteer>>;
-  findAllVolunteerActions: Array<Maybe<VolunteerAction>>;
-  findVolunteerActions: Array<Maybe<VolunteerAction>>;
-  findAllRecipients: Array<Maybe<Recipient>>;
-  findRecipients: Array<Maybe<Recipient>>;
+  getDistributionCentre?: Maybe<DistributionCentre>;
+  findDistributionCentres: DistributionCentreResultList;
+  getProduct?: Maybe<Product>;
+  findProducts: ProductResultList;
+  getVolunteerActionProduct?: Maybe<VolunteerActionProduct>;
+  findVolunteerActionProducts: VolunteerActionProductResultList;
+  getVolunteer?: Maybe<Volunteer>;
+  findVolunteers: VolunteerResultList;
+  getVolunteerAction?: Maybe<VolunteerAction>;
+  findVolunteerActions: VolunteerActionResultList;
+  getRecipient?: Maybe<Recipient>;
+  findRecipients: RecipientResultList;
 };
 
 
-export type QueryFindAllDistributionCentresArgs = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+export type QueryGetDistributionCentreArgs = {
+  id: Scalars['ID'];
 };
 
 
 export type QueryFindDistributionCentresArgs = {
-  fields?: Maybe<DistributionCentreInput>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  filter?: Maybe<DistributionCentreFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
 };
 
 
-export type QueryFindAllProductsArgs = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+export type QueryGetProductArgs = {
+  id: Scalars['ID'];
 };
 
 
 export type QueryFindProductsArgs = {
-  fields?: Maybe<ProductInput>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  filter?: Maybe<ProductFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
 };
 
 
-export type QueryFindAllVolunteerActionProductsArgs = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+export type QueryGetVolunteerActionProductArgs = {
+  id: Scalars['ID'];
 };
 
 
 export type QueryFindVolunteerActionProductsArgs = {
-  fields?: Maybe<VolunteerActionProductInput>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  filter?: Maybe<VolunteerActionProductFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
 };
 
 
-export type QueryFindAllVolunteersArgs = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+export type QueryGetVolunteerArgs = {
+  id: Scalars['ID'];
 };
 
 
 export type QueryFindVolunteersArgs = {
-  fields?: Maybe<VolunteerInput>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  filter?: Maybe<VolunteerFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
 };
 
 
-export type QueryFindAllVolunteerActionsArgs = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+export type QueryGetVolunteerActionArgs = {
+  id: Scalars['ID'];
 };
 
 
 export type QueryFindVolunteerActionsArgs = {
-  fields?: Maybe<VolunteerActionInput>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  filter?: Maybe<VolunteerActionFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
 };
 
 
-export type QueryFindAllRecipientsArgs = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+export type QueryGetRecipientArgs = {
+  id: Scalars['ID'];
 };
 
 
 export type QueryFindRecipientsArgs = {
-  fields?: Maybe<RecipientInput>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  filter?: Maybe<RecipientFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
 };
 
 /**
@@ -281,91 +484,57 @@ export type Recipient = Address & {
   prefferedProducts?: Maybe<Scalars['String']>;
   /** @oneToMany field: 'recipient', key: 'recipientId' */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
-  version?: Maybe<Scalars['Int']>;
-};
-
-export type RecipientInput = {
-  id?: Maybe<Scalars['ID']>;
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  phone?: Maybe<Scalars['String']>;
-  address1?: Maybe<Scalars['String']>;
-  address2?: Maybe<Scalars['String']>;
-  postcode?: Maybe<Scalars['Int']>;
-  city?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  prefferedProducts?: Maybe<Scalars['String']>;
-  version?: Maybe<Scalars['Int']>;
-};
-
-export type Subscription = {
-   __typename?: 'Subscription';
-  newDistributionCentre: DistributionCentre;
-  updatedDistributionCentre: DistributionCentre;
-  newProduct: Product;
-  updatedProduct: Product;
-  newVolunteer: Volunteer;
-  updatedVolunteer: Volunteer;
-  newVolunteerAction: VolunteerAction;
-  updatedVolunteerAction: VolunteerAction;
-  deletedVolunteerAction: VolunteerAction;
-  newRecipient: Recipient;
-  updatedRecipient: Recipient;
 };
 
 
-export type SubscriptionNewDistributionCentreArgs = {
-  input?: Maybe<DistributionCentreInput>;
+/**
+ * @model
+ * @crud.delete: false
+ */
+export type RecipientActionsArgs = {
+  filter?: Maybe<VolunteerActionFilter>;
 };
 
-
-export type SubscriptionUpdatedDistributionCentreArgs = {
-  input?: Maybe<DistributionCentreInput>;
+export type RecipientFilter = {
+  id?: Maybe<IdInput>;
+  firstName?: Maybe<StringInput>;
+  lastName?: Maybe<StringInput>;
+  phone?: Maybe<StringInput>;
+  address1?: Maybe<StringInput>;
+  address2?: Maybe<StringInput>;
+  postcode?: Maybe<IntInput>;
+  city?: Maybe<StringInput>;
+  createdAt?: Maybe<StringInput>;
+  prefferedProducts?: Maybe<StringInput>;
+  and?: Maybe<Array<Maybe<RecipientFilter>>>;
+  or?: Maybe<Array<Maybe<RecipientFilter>>>;
+  not?: Maybe<RecipientFilter>;
 };
 
-
-export type SubscriptionNewProductArgs = {
-  input?: Maybe<ProductInput>;
+export type RecipientResultList = {
+   __typename?: 'RecipientResultList';
+  items: Array<Maybe<Recipient>>;
+  offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']>;
 };
 
+export enum SortDirectionEnum {
+  Desc = 'DESC',
+  Asc = 'ASC'
+}
 
-export type SubscriptionUpdatedProductArgs = {
-  input?: Maybe<ProductInput>;
-};
-
-
-export type SubscriptionNewVolunteerArgs = {
-  input?: Maybe<VolunteerInput>;
-};
-
-
-export type SubscriptionUpdatedVolunteerArgs = {
-  input?: Maybe<VolunteerInput>;
-};
-
-
-export type SubscriptionNewVolunteerActionArgs = {
-  input?: Maybe<VolunteerActionInput>;
-};
-
-
-export type SubscriptionUpdatedVolunteerActionArgs = {
-  input?: Maybe<VolunteerActionInput>;
-};
-
-
-export type SubscriptionDeletedVolunteerActionArgs = {
-  input?: Maybe<VolunteerActionInput>;
-};
-
-
-export type SubscriptionNewRecipientArgs = {
-  input?: Maybe<RecipientInput>;
-};
-
-
-export type SubscriptionUpdatedRecipientArgs = {
-  input?: Maybe<RecipientInput>;
+export type StringInput = {
+  ne?: Maybe<Scalars['String']>;
+  eq?: Maybe<Scalars['String']>;
+  le?: Maybe<Scalars['String']>;
+  lt?: Maybe<Scalars['String']>;
+  ge?: Maybe<Scalars['String']>;
+  gt?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  contains?: Maybe<Scalars['String']>;
+  startsWith?: Maybe<Scalars['String']>;
+  endsWith?: Maybe<Scalars['String']>;
 };
 
 /**
@@ -391,7 +560,15 @@ export type Volunteer = Address & {
   canDeliver?: Maybe<Scalars['Boolean']>;
   /** @oneToMany field: 'volunteer', key: 'volunteerId' */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
-  version?: Maybe<Scalars['Int']>;
+};
+
+
+/**
+ * @model
+ * @crud.delete: false
+ */
+export type VolunteerActionsArgs = {
+  filter?: Maybe<VolunteerActionFilter>;
 };
 
 /**
@@ -405,27 +582,37 @@ export type VolunteerAction = {
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  /** @manyToOne field: 'actions', key: 'volunteerId' */
-  volunteer?: Maybe<Volunteer>;
   /** @manyToOne field: 'actions', key: 'distributionCentreId' */
   distributionCentre?: Maybe<DistributionCentre>;
   /** @oneToMany field: 'volunteerAction', key: 'volunteerActionId' */
   products?: Maybe<Array<Maybe<VolunteerActionProduct>>>;
+  /** @manyToOne field: 'actions', key: 'volunteerId' */
+  volunteer?: Maybe<Volunteer>;
   /** @manyToOne field: 'actions', key: 'recipientId' */
   recipient?: Maybe<Recipient>;
-  version?: Maybe<Scalars['Int']>;
 };
 
-export type VolunteerActionInput = {
-  id?: Maybe<Scalars['ID']>;
-  title?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  status?: Maybe<ActionStatus>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  volunteerId?: Maybe<Scalars['ID']>;
-  distributionCentreId?: Maybe<Scalars['ID']>;
-  recipientId?: Maybe<Scalars['ID']>;
-  version?: Maybe<Scalars['Int']>;
+
+/**
+ * Represents action that is assigned to volunteer
+ * @model
+ */
+export type VolunteerActionProductsArgs = {
+  filter?: Maybe<VolunteerActionProductFilter>;
+};
+
+export type VolunteerActionFilter = {
+  id?: Maybe<IdInput>;
+  title?: Maybe<StringInput>;
+  description?: Maybe<StringInput>;
+  status?: Maybe<StringInput>;
+  createdAt?: Maybe<StringInput>;
+  distributionCentreId?: Maybe<IdInput>;
+  volunteerId?: Maybe<IdInput>;
+  recipientId?: Maybe<IdInput>;
+  and?: Maybe<Array<Maybe<VolunteerActionFilter>>>;
+  or?: Maybe<Array<Maybe<VolunteerActionFilter>>>;
+  not?: Maybe<VolunteerActionFilter>;
 };
 
 /**
@@ -446,29 +633,56 @@ export type VolunteerActionProduct = {
   product?: Maybe<Product>;
   /** @manyToOne field: 'products', key: 'volunteerActionId' */
   volunteerAction?: Maybe<VolunteerAction>;
-  version?: Maybe<Scalars['Int']>;
 };
 
-export type VolunteerActionProductInput = {
-  id?: Maybe<Scalars['ID']>;
-  productId?: Maybe<Scalars['ID']>;
-  volunteerActionId?: Maybe<Scalars['ID']>;
-  version?: Maybe<Scalars['Int']>;
+export type VolunteerActionProductFilter = {
+  id?: Maybe<IdInput>;
+  productId?: Maybe<IdInput>;
+  volunteerActionId?: Maybe<IdInput>;
+  and?: Maybe<Array<Maybe<VolunteerActionProductFilter>>>;
+  or?: Maybe<Array<Maybe<VolunteerActionProductFilter>>>;
+  not?: Maybe<VolunteerActionProductFilter>;
 };
 
-export type VolunteerInput = {
-  id?: Maybe<Scalars['ID']>;
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  username?: Maybe<Scalars['String']>;
-  address1?: Maybe<Scalars['String']>;
-  address2?: Maybe<Scalars['String']>;
-  city?: Maybe<Scalars['String']>;
-  postcode?: Maybe<Scalars['Int']>;
-  dateOfBirth?: Maybe<Scalars['DateTime']>;
-  canDeliver?: Maybe<Scalars['Boolean']>;
-  version?: Maybe<Scalars['Int']>;
+export type VolunteerActionProductResultList = {
+   __typename?: 'VolunteerActionProductResultList';
+  items: Array<Maybe<VolunteerActionProduct>>;
+  offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type VolunteerActionResultList = {
+   __typename?: 'VolunteerActionResultList';
+  items: Array<Maybe<VolunteerAction>>;
+  offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type VolunteerFilter = {
+  id?: Maybe<IdInput>;
+  firstName?: Maybe<StringInput>;
+  lastName?: Maybe<StringInput>;
+  email?: Maybe<StringInput>;
+  username?: Maybe<StringInput>;
+  address1?: Maybe<StringInput>;
+  address2?: Maybe<StringInput>;
+  city?: Maybe<StringInput>;
+  postcode?: Maybe<IntInput>;
+  dateOfBirth?: Maybe<StringInput>;
+  canDeliver?: Maybe<BooleanInput>;
+  and?: Maybe<Array<Maybe<VolunteerFilter>>>;
+  or?: Maybe<Array<Maybe<VolunteerFilter>>>;
+  not?: Maybe<VolunteerFilter>;
+};
+
+export type VolunteerResultList = {
+   __typename?: 'VolunteerResultList';
+  items: Array<Maybe<Volunteer>>;
+  offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']>;
 };
 
 export type DistributionCentreFieldsFragment = (
@@ -496,13 +710,13 @@ export type ProductFieldsFragment = (
 export type ProductExpandedFieldsFragment = (
   { __typename?: 'Product' }
   & Pick<Product, 'id' | 'label' | 'description'>
-  & { volunteerActionProducts?: Maybe<Array<Maybe<(
-    { __typename?: 'VolunteerActionProduct' }
-    & Pick<VolunteerActionProduct, 'id'>
-  )>>>, distributionCentre?: Maybe<(
+  & { distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
     & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
-  )> }
+  )>, volunteerActionProducts?: Maybe<Array<Maybe<(
+    { __typename?: 'VolunteerActionProduct' }
+    & Pick<VolunteerActionProduct, 'id'>
+  )>>> }
 );
 
 export type RecipientFieldsFragment = (
@@ -532,16 +746,16 @@ export type VolunteerActionFieldsFragment = (
 export type VolunteerActionExpandedFieldsFragment = (
   { __typename?: 'VolunteerAction' }
   & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
-  & { volunteer?: Maybe<(
-    { __typename?: 'Volunteer' }
-    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver'>
-  )>, distributionCentre?: Maybe<(
+  & { distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
     & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
   )>, products?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerActionProduct' }
     & Pick<VolunteerActionProduct, 'id'>
-  )>>>, recipient?: Maybe<(
+  )>>>, volunteer?: Maybe<(
+    { __typename?: 'Volunteer' }
+    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver'>
+  )>, recipient?: Maybe<(
     { __typename?: 'Recipient' }
     & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
   )> }
@@ -574,7 +788,7 @@ export type VolunteerExpandedFieldsFragment = (
 );
 
 export type CreateDistributionCentreMutationVariables = {
-  input: DistributionCentreInput;
+  input: CreateDistributionCentreInput;
 };
 
 
@@ -587,7 +801,7 @@ export type CreateDistributionCentreMutation = (
 );
 
 export type CreateProductMutationVariables = {
-  input: ProductInput;
+  input: CreateProductInput;
 };
 
 
@@ -600,7 +814,7 @@ export type CreateProductMutation = (
 );
 
 export type CreateRecipientMutationVariables = {
-  input: RecipientInput;
+  input: CreateRecipientInput;
 };
 
 
@@ -613,7 +827,7 @@ export type CreateRecipientMutation = (
 );
 
 export type CreateVolunteerMutationVariables = {
-  input: VolunteerInput;
+  input: CreateVolunteerInput;
 };
 
 
@@ -626,7 +840,7 @@ export type CreateVolunteerMutation = (
 );
 
 export type CreateVolunteerActionMutationVariables = {
-  input: VolunteerActionInput;
+  input: CreateVolunteerActionInput;
 };
 
 
@@ -639,7 +853,7 @@ export type CreateVolunteerActionMutation = (
 );
 
 export type CreateVolunteerActionProductMutationVariables = {
-  input: VolunteerActionProductInput;
+  input: CreateVolunteerActionProductInput;
 };
 
 
@@ -651,21 +865,8 @@ export type CreateVolunteerActionProductMutation = (
   ) }
 );
 
-export type DeleteVolunteerActionMutationVariables = {
-  input: VolunteerActionInput;
-};
-
-
-export type DeleteVolunteerActionMutation = (
-  { __typename?: 'Mutation' }
-  & { deleteVolunteerAction: (
-    { __typename?: 'VolunteerAction' }
-    & VolunteerActionFieldsFragment
-  ) }
-);
-
 export type UpdateDistributionCentreMutationVariables = {
-  input: DistributionCentreInput;
+  input: MutateDistributionCentreInput;
 };
 
 
@@ -678,7 +879,7 @@ export type UpdateDistributionCentreMutation = (
 );
 
 export type UpdateProductMutationVariables = {
-  input: ProductInput;
+  input: MutateProductInput;
 };
 
 
@@ -691,7 +892,7 @@ export type UpdateProductMutation = (
 );
 
 export type UpdateRecipientMutationVariables = {
-  input: RecipientInput;
+  input: MutateRecipientInput;
 };
 
 
@@ -704,7 +905,7 @@ export type UpdateRecipientMutation = (
 );
 
 export type UpdateVolunteerMutationVariables = {
-  input: VolunteerInput;
+  input: MutateVolunteerInput;
 };
 
 
@@ -717,7 +918,7 @@ export type UpdateVolunteerMutation = (
 );
 
 export type UpdateVolunteerActionMutationVariables = {
-  input: VolunteerActionInput;
+  input: MutateVolunteerActionInput;
 };
 
 
@@ -729,103 +930,23 @@ export type UpdateVolunteerActionMutation = (
   ) }
 );
 
-export type FindAllDistributionCentresQueryVariables = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type FindAllDistributionCentresQuery = (
-  { __typename?: 'Query' }
-  & { findAllDistributionCentres: Array<Maybe<(
-    { __typename?: 'DistributionCentre' }
-    & DistributionCentreExpandedFieldsFragment
-  )>> }
-);
-
-export type FindAllProductsQueryVariables = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type FindAllProductsQuery = (
-  { __typename?: 'Query' }
-  & { findAllProducts: Array<Maybe<(
-    { __typename?: 'Product' }
-    & ProductExpandedFieldsFragment
-  )>> }
-);
-
-export type FindAllRecipientsQueryVariables = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type FindAllRecipientsQuery = (
-  { __typename?: 'Query' }
-  & { findAllRecipients: Array<Maybe<(
-    { __typename?: 'Recipient' }
-    & RecipientExpandedFieldsFragment
-  )>> }
-);
-
-export type FindAllVolunteerActionProductsQueryVariables = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type FindAllVolunteerActionProductsQuery = (
-  { __typename?: 'Query' }
-  & { findAllVolunteerActionProducts: Array<Maybe<(
-    { __typename?: 'VolunteerActionProduct' }
-    & VolunteerActionProductExpandedFieldsFragment
-  )>> }
-);
-
-export type FindAllVolunteerActionsQueryVariables = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type FindAllVolunteerActionsQuery = (
-  { __typename?: 'Query' }
-  & { findAllVolunteerActions: Array<Maybe<(
-    { __typename?: 'VolunteerAction' }
-    & VolunteerActionExpandedFieldsFragment
-  )>> }
-);
-
-export type FindAllVolunteersQueryVariables = {
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type FindAllVolunteersQuery = (
-  { __typename?: 'Query' }
-  & { findAllVolunteers: Array<Maybe<(
-    { __typename?: 'Volunteer' }
-    & VolunteerExpandedFieldsFragment
-  )>> }
-);
-
 export type FindDistributionCentresQueryVariables = {
-  fields: DistributionCentreInput;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  filter?: Maybe<DistributionCentreFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
 };
 
 
 export type FindDistributionCentresQuery = (
   { __typename?: 'Query' }
-  & { findDistributionCentres: Array<Maybe<(
-    { __typename?: 'DistributionCentre' }
-    & DistributionCentreExpandedFieldsFragment
-  )>> }
+  & { findDistributionCentres: (
+    { __typename?: 'DistributionCentreResultList' }
+    & Pick<DistributionCentreResultList, 'offset' | 'limit'>
+    & { items: Array<Maybe<(
+      { __typename?: 'DistributionCentre' }
+      & DistributionCentreExpandedFieldsFragment
+    )>> }
+  ) }
 );
 
 export type FindIdAndNamesOfAllDistributionCentresQueryVariables = {
@@ -836,10 +957,13 @@ export type FindIdAndNamesOfAllDistributionCentresQueryVariables = {
 
 export type FindIdAndNamesOfAllDistributionCentresQuery = (
   { __typename?: 'Query' }
-  & { findAllDistributionCentres: Array<Maybe<(
-    { __typename?: 'DistributionCentre' }
-    & Pick<DistributionCentre, 'id' | 'name'>
-  )>> }
+  & { findDistributionCentres: (
+    { __typename?: 'DistributionCentreResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'DistributionCentre' }
+      & Pick<DistributionCentre, 'id' | 'name'>
+    )>> }
+  ) }
 );
 
 export type FindActiveVolunteerQueryVariables = {
@@ -849,53 +973,51 @@ export type FindActiveVolunteerQueryVariables = {
 
 export type FindActiveVolunteerQuery = (
   { __typename?: 'Query' }
-  & { findVolunteers: Array<Maybe<(
-    { __typename?: 'Volunteer' }
-    & VolunteerFieldsFragment
-  )>> }
+  & { findVolunteers: (
+    { __typename?: 'VolunteerResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'Volunteer' }
+      & VolunteerFieldsFragment
+    )>> }
+  ) }
 );
 
 export type FindProductsQueryVariables = {
-  fields: ProductInput;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  filter?: Maybe<ProductFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
 };
 
 
 export type FindProductsQuery = (
   { __typename?: 'Query' }
-  & { findProducts: Array<Maybe<(
-    { __typename?: 'Product' }
-    & ProductExpandedFieldsFragment
-  )>> }
+  & { findProducts: (
+    { __typename?: 'ProductResultList' }
+    & Pick<ProductResultList, 'offset' | 'limit'>
+    & { items: Array<Maybe<(
+      { __typename?: 'Product' }
+      & ProductExpandedFieldsFragment
+    )>> }
+  ) }
 );
 
 export type FindRecipientsQueryVariables = {
-  fields: RecipientInput;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  filter?: Maybe<RecipientFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
 };
 
 
 export type FindRecipientsQuery = (
   { __typename?: 'Query' }
-  & { findRecipients: Array<Maybe<(
-    { __typename?: 'Recipient' }
-    & RecipientExpandedFieldsFragment
-  )>> }
-);
-
-export type FindVolunteerActionQueryVariables = {
-  id: Scalars['ID'];
-};
-
-
-export type FindVolunteerActionQuery = (
-  { __typename?: 'Query' }
-  & { findVolunteerActions: Array<Maybe<(
-    { __typename?: 'VolunteerAction' }
-    & VolunteerActionExpandedFieldsFragment
-  )>> }
+  & { findRecipients: (
+    { __typename?: 'RecipientResultList' }
+    & Pick<RecipientResultList, 'offset' | 'limit'>
+    & { items: Array<Maybe<(
+      { __typename?: 'Recipient' }
+      & RecipientExpandedFieldsFragment
+    )>> }
+  ) }
 );
 
 export type FindVolunteerActionDetailsQueryVariables = {
@@ -905,7 +1027,7 @@ export type FindVolunteerActionDetailsQueryVariables = {
 
 export type FindVolunteerActionDetailsQuery = (
   { __typename?: 'Query' }
-  & { findVolunteerActions: Array<Maybe<(
+  & { getVolunteerAction?: Maybe<(
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status'>
     & { distributionCentre?: Maybe<(
@@ -925,52 +1047,142 @@ export type FindVolunteerActionDetailsQuery = (
         & ProductFieldsFragment
       )> }
     )>>> }
-  )>> }
+  )> }
 );
 
 export type FindVolunteerActionProductsQueryVariables = {
-  fields: VolunteerActionProductInput;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  filter?: Maybe<VolunteerActionProductFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
 };
 
 
 export type FindVolunteerActionProductsQuery = (
   { __typename?: 'Query' }
-  & { findVolunteerActionProducts: Array<Maybe<(
-    { __typename?: 'VolunteerActionProduct' }
-    & VolunteerActionProductExpandedFieldsFragment
-  )>> }
+  & { findVolunteerActionProducts: (
+    { __typename?: 'VolunteerActionProductResultList' }
+    & Pick<VolunteerActionProductResultList, 'offset' | 'limit'>
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerActionProduct' }
+      & VolunteerActionProductExpandedFieldsFragment
+    )>> }
+  ) }
 );
 
 export type FindVolunteerActionsQueryVariables = {
-  fields: VolunteerActionInput;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  filter?: Maybe<VolunteerActionFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
 };
 
 
 export type FindVolunteerActionsQuery = (
   { __typename?: 'Query' }
-  & { findVolunteerActions: Array<Maybe<(
-    { __typename?: 'VolunteerAction' }
-    & VolunteerActionExpandedFieldsFragment
-  )>> }
+  & { findVolunteerActions: (
+    { __typename?: 'VolunteerActionResultList' }
+    & Pick<VolunteerActionResultList, 'offset' | 'limit'>
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerAction' }
+      & VolunteerActionExpandedFieldsFragment
+    )>> }
+  ) }
 );
 
 export type FindVolunteersQueryVariables = {
-  fields: VolunteerInput;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  filter?: Maybe<VolunteerFilter>;
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
 };
 
 
 export type FindVolunteersQuery = (
   { __typename?: 'Query' }
-  & { findVolunteers: Array<Maybe<(
+  & { findVolunteers: (
+    { __typename?: 'VolunteerResultList' }
+    & Pick<VolunteerResultList, 'offset' | 'limit'>
+    & { items: Array<Maybe<(
+      { __typename?: 'Volunteer' }
+      & VolunteerExpandedFieldsFragment
+    )>> }
+  ) }
+);
+
+export type GetDistributionCentreQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type GetDistributionCentreQuery = (
+  { __typename?: 'Query' }
+  & { getDistributionCentre?: Maybe<(
+    { __typename?: 'DistributionCentre' }
+    & DistributionCentreExpandedFieldsFragment
+  )> }
+);
+
+export type GetProductQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type GetProductQuery = (
+  { __typename?: 'Query' }
+  & { getProduct?: Maybe<(
+    { __typename?: 'Product' }
+    & ProductExpandedFieldsFragment
+  )> }
+);
+
+export type GetRecipientQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type GetRecipientQuery = (
+  { __typename?: 'Query' }
+  & { getRecipient?: Maybe<(
+    { __typename?: 'Recipient' }
+    & RecipientExpandedFieldsFragment
+  )> }
+);
+
+export type GetVolunteerQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type GetVolunteerQuery = (
+  { __typename?: 'Query' }
+  & { getVolunteer?: Maybe<(
     { __typename?: 'Volunteer' }
     & VolunteerExpandedFieldsFragment
-  )>> }
+  )> }
+);
+
+export type GetVolunteerActionQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type GetVolunteerActionQuery = (
+  { __typename?: 'Query' }
+  & { getVolunteerAction?: Maybe<(
+    { __typename?: 'VolunteerAction' }
+    & VolunteerActionExpandedFieldsFragment
+  )> }
+);
+
+export type GetVolunteerActionProductQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type GetVolunteerActionProductQuery = (
+  { __typename?: 'Query' }
+  & { getVolunteerActionProduct?: Maybe<(
+    { __typename?: 'VolunteerActionProduct' }
+    & VolunteerActionProductExpandedFieldsFragment
+  )> }
 );
 
 export const DistributionCentreFieldsFragmentDoc = gql`
@@ -1023,9 +1235,6 @@ export const ProductExpandedFieldsFragmentDoc = gql`
   id
   label
   description
-  volunteerActionProducts {
-    id
-  }
   distributionCentre {
     id
     name
@@ -1036,6 +1245,9 @@ export const ProductExpandedFieldsFragmentDoc = gql`
     lat
     long
     stockInformation
+  }
+  volunteerActionProducts {
+    id
   }
 }
     `;
@@ -1105,19 +1317,6 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
   description
   status
   createdAt
-  volunteer {
-    id
-    firstName
-    lastName
-    email
-    username
-    address1
-    address2
-    city
-    postcode
-    dateOfBirth
-    canDeliver
-  }
   distributionCentre {
     id
     name
@@ -1131,6 +1330,19 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
   }
   products {
     id
+  }
+  volunteer {
+    id
+    firstName
+    lastName
+    email
+    username
+    address1
+    address2
+    city
+    postcode
+    dateOfBirth
+    canDeliver
   }
   recipient {
     id
@@ -1191,7 +1403,7 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
 }
     `;
 export const CreateDistributionCentreDocument = gql`
-    mutation createDistributionCentre($input: DistributionCentreInput!) {
+    mutation createDistributionCentre($input: CreateDistributionCentreInput!) {
   createDistributionCentre(input: $input) {
     ...DistributionCentreFields
   }
@@ -1223,7 +1435,7 @@ export type CreateDistributionCentreMutationHookResult = ReturnType<typeof useCr
 export type CreateDistributionCentreMutationResult = ApolloReactCommon.MutationResult<CreateDistributionCentreMutation>;
 export type CreateDistributionCentreMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>;
 export const CreateProductDocument = gql`
-    mutation createProduct($input: ProductInput!) {
+    mutation createProduct($input: CreateProductInput!) {
   createProduct(input: $input) {
     ...ProductFields
   }
@@ -1255,7 +1467,7 @@ export type CreateProductMutationHookResult = ReturnType<typeof useCreateProduct
 export type CreateProductMutationResult = ApolloReactCommon.MutationResult<CreateProductMutation>;
 export type CreateProductMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
 export const CreateRecipientDocument = gql`
-    mutation createRecipient($input: RecipientInput!) {
+    mutation createRecipient($input: CreateRecipientInput!) {
   createRecipient(input: $input) {
     ...RecipientFields
   }
@@ -1287,7 +1499,7 @@ export type CreateRecipientMutationHookResult = ReturnType<typeof useCreateRecip
 export type CreateRecipientMutationResult = ApolloReactCommon.MutationResult<CreateRecipientMutation>;
 export type CreateRecipientMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateRecipientMutation, CreateRecipientMutationVariables>;
 export const CreateVolunteerDocument = gql`
-    mutation createVolunteer($input: VolunteerInput!) {
+    mutation createVolunteer($input: CreateVolunteerInput!) {
   createVolunteer(input: $input) {
     ...VolunteerFields
   }
@@ -1319,7 +1531,7 @@ export type CreateVolunteerMutationHookResult = ReturnType<typeof useCreateVolun
 export type CreateVolunteerMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerMutation>;
 export type CreateVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerMutation, CreateVolunteerMutationVariables>;
 export const CreateVolunteerActionDocument = gql`
-    mutation createVolunteerAction($input: VolunteerActionInput!) {
+    mutation createVolunteerAction($input: CreateVolunteerActionInput!) {
   createVolunteerAction(input: $input) {
     ...VolunteerActionFields
   }
@@ -1351,7 +1563,7 @@ export type CreateVolunteerActionMutationHookResult = ReturnType<typeof useCreat
 export type CreateVolunteerActionMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerActionMutation>;
 export type CreateVolunteerActionMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerActionMutation, CreateVolunteerActionMutationVariables>;
 export const CreateVolunteerActionProductDocument = gql`
-    mutation createVolunteerActionProduct($input: VolunteerActionProductInput!) {
+    mutation createVolunteerActionProduct($input: CreateVolunteerActionProductInput!) {
   createVolunteerActionProduct(input: $input) {
     ...VolunteerActionProductFields
   }
@@ -1382,40 +1594,8 @@ export function useCreateVolunteerActionProductMutation(baseOptions?: ApolloReac
 export type CreateVolunteerActionProductMutationHookResult = ReturnType<typeof useCreateVolunteerActionProductMutation>;
 export type CreateVolunteerActionProductMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerActionProductMutation>;
 export type CreateVolunteerActionProductMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>;
-export const DeleteVolunteerActionDocument = gql`
-    mutation deleteVolunteerAction($input: VolunteerActionInput!) {
-  deleteVolunteerAction(input: $input) {
-    ...VolunteerActionFields
-  }
-}
-    ${VolunteerActionFieldsFragmentDoc}`;
-export type DeleteVolunteerActionMutationFn = ApolloReactCommon.MutationFunction<DeleteVolunteerActionMutation, DeleteVolunteerActionMutationVariables>;
-
-/**
- * __useDeleteVolunteerActionMutation__
- *
- * To run a mutation, you first call `useDeleteVolunteerActionMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteVolunteerActionMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteVolunteerActionMutation, { data, loading, error }] = useDeleteVolunteerActionMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useDeleteVolunteerActionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteVolunteerActionMutation, DeleteVolunteerActionMutationVariables>) {
-        return ApolloReactHooks.useMutation<DeleteVolunteerActionMutation, DeleteVolunteerActionMutationVariables>(DeleteVolunteerActionDocument, baseOptions);
-      }
-export type DeleteVolunteerActionMutationHookResult = ReturnType<typeof useDeleteVolunteerActionMutation>;
-export type DeleteVolunteerActionMutationResult = ApolloReactCommon.MutationResult<DeleteVolunteerActionMutation>;
-export type DeleteVolunteerActionMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteVolunteerActionMutation, DeleteVolunteerActionMutationVariables>;
 export const UpdateDistributionCentreDocument = gql`
-    mutation updateDistributionCentre($input: DistributionCentreInput!) {
+    mutation updateDistributionCentre($input: MutateDistributionCentreInput!) {
   updateDistributionCentre(input: $input) {
     ...DistributionCentreFields
   }
@@ -1447,7 +1627,7 @@ export type UpdateDistributionCentreMutationHookResult = ReturnType<typeof useUp
 export type UpdateDistributionCentreMutationResult = ApolloReactCommon.MutationResult<UpdateDistributionCentreMutation>;
 export type UpdateDistributionCentreMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>;
 export const UpdateProductDocument = gql`
-    mutation updateProduct($input: ProductInput!) {
+    mutation updateProduct($input: MutateProductInput!) {
   updateProduct(input: $input) {
     ...ProductFields
   }
@@ -1479,7 +1659,7 @@ export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProduct
 export type UpdateProductMutationResult = ApolloReactCommon.MutationResult<UpdateProductMutation>;
 export type UpdateProductMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
 export const UpdateRecipientDocument = gql`
-    mutation updateRecipient($input: RecipientInput!) {
+    mutation updateRecipient($input: MutateRecipientInput!) {
   updateRecipient(input: $input) {
     ...RecipientFields
   }
@@ -1511,7 +1691,7 @@ export type UpdateRecipientMutationHookResult = ReturnType<typeof useUpdateRecip
 export type UpdateRecipientMutationResult = ApolloReactCommon.MutationResult<UpdateRecipientMutation>;
 export type UpdateRecipientMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateRecipientMutation, UpdateRecipientMutationVariables>;
 export const UpdateVolunteerDocument = gql`
-    mutation updateVolunteer($input: VolunteerInput!) {
+    mutation updateVolunteer($input: MutateVolunteerInput!) {
   updateVolunteer(input: $input) {
     ...VolunteerFields
   }
@@ -1543,7 +1723,7 @@ export type UpdateVolunteerMutationHookResult = ReturnType<typeof useUpdateVolun
 export type UpdateVolunteerMutationResult = ApolloReactCommon.MutationResult<UpdateVolunteerMutation>;
 export type UpdateVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateVolunteerMutation, UpdateVolunteerMutationVariables>;
 export const UpdateVolunteerActionDocument = gql`
-    mutation updateVolunteerAction($input: VolunteerActionInput!) {
+    mutation updateVolunteerAction($input: MutateVolunteerActionInput!) {
   updateVolunteerAction(input: $input) {
     ...VolunteerActionFields
   }
@@ -1574,214 +1754,14 @@ export function useUpdateVolunteerActionMutation(baseOptions?: ApolloReactHooks.
 export type UpdateVolunteerActionMutationHookResult = ReturnType<typeof useUpdateVolunteerActionMutation>;
 export type UpdateVolunteerActionMutationResult = ApolloReactCommon.MutationResult<UpdateVolunteerActionMutation>;
 export type UpdateVolunteerActionMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>;
-export const FindAllDistributionCentresDocument = gql`
-    query findAllDistributionCentres($limit: Int, $offset: Int) {
-  findAllDistributionCentres(limit: $limit, offset: $offset) {
-    ...DistributionCentreExpandedFields
-  }
-}
-    ${DistributionCentreExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindAllDistributionCentresQuery__
- *
- * To run a query within a React component, call `useFindAllDistributionCentresQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindAllDistributionCentresQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindAllDistributionCentresQuery({
- *   variables: {
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
- *   },
- * });
- */
-export function useFindAllDistributionCentresQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindAllDistributionCentresQuery, FindAllDistributionCentresQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindAllDistributionCentresQuery, FindAllDistributionCentresQueryVariables>(FindAllDistributionCentresDocument, baseOptions);
-      }
-export function useFindAllDistributionCentresLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindAllDistributionCentresQuery, FindAllDistributionCentresQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindAllDistributionCentresQuery, FindAllDistributionCentresQueryVariables>(FindAllDistributionCentresDocument, baseOptions);
-        }
-export type FindAllDistributionCentresQueryHookResult = ReturnType<typeof useFindAllDistributionCentresQuery>;
-export type FindAllDistributionCentresLazyQueryHookResult = ReturnType<typeof useFindAllDistributionCentresLazyQuery>;
-export type FindAllDistributionCentresQueryResult = ApolloReactCommon.QueryResult<FindAllDistributionCentresQuery, FindAllDistributionCentresQueryVariables>;
-export const FindAllProductsDocument = gql`
-    query findAllProducts($limit: Int, $offset: Int) {
-  findAllProducts(limit: $limit, offset: $offset) {
-    ...ProductExpandedFields
-  }
-}
-    ${ProductExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindAllProductsQuery__
- *
- * To run a query within a React component, call `useFindAllProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindAllProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindAllProductsQuery({
- *   variables: {
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
- *   },
- * });
- */
-export function useFindAllProductsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindAllProductsQuery, FindAllProductsQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindAllProductsQuery, FindAllProductsQueryVariables>(FindAllProductsDocument, baseOptions);
-      }
-export function useFindAllProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindAllProductsQuery, FindAllProductsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindAllProductsQuery, FindAllProductsQueryVariables>(FindAllProductsDocument, baseOptions);
-        }
-export type FindAllProductsQueryHookResult = ReturnType<typeof useFindAllProductsQuery>;
-export type FindAllProductsLazyQueryHookResult = ReturnType<typeof useFindAllProductsLazyQuery>;
-export type FindAllProductsQueryResult = ApolloReactCommon.QueryResult<FindAllProductsQuery, FindAllProductsQueryVariables>;
-export const FindAllRecipientsDocument = gql`
-    query findAllRecipients($limit: Int, $offset: Int) {
-  findAllRecipients(limit: $limit, offset: $offset) {
-    ...RecipientExpandedFields
-  }
-}
-    ${RecipientExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindAllRecipientsQuery__
- *
- * To run a query within a React component, call `useFindAllRecipientsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindAllRecipientsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindAllRecipientsQuery({
- *   variables: {
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
- *   },
- * });
- */
-export function useFindAllRecipientsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindAllRecipientsQuery, FindAllRecipientsQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindAllRecipientsQuery, FindAllRecipientsQueryVariables>(FindAllRecipientsDocument, baseOptions);
-      }
-export function useFindAllRecipientsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindAllRecipientsQuery, FindAllRecipientsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindAllRecipientsQuery, FindAllRecipientsQueryVariables>(FindAllRecipientsDocument, baseOptions);
-        }
-export type FindAllRecipientsQueryHookResult = ReturnType<typeof useFindAllRecipientsQuery>;
-export type FindAllRecipientsLazyQueryHookResult = ReturnType<typeof useFindAllRecipientsLazyQuery>;
-export type FindAllRecipientsQueryResult = ApolloReactCommon.QueryResult<FindAllRecipientsQuery, FindAllRecipientsQueryVariables>;
-export const FindAllVolunteerActionProductsDocument = gql`
-    query findAllVolunteerActionProducts($limit: Int, $offset: Int) {
-  findAllVolunteerActionProducts(limit: $limit, offset: $offset) {
-    ...VolunteerActionProductExpandedFields
-  }
-}
-    ${VolunteerActionProductExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindAllVolunteerActionProductsQuery__
- *
- * To run a query within a React component, call `useFindAllVolunteerActionProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindAllVolunteerActionProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindAllVolunteerActionProductsQuery({
- *   variables: {
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
- *   },
- * });
- */
-export function useFindAllVolunteerActionProductsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindAllVolunteerActionProductsQuery, FindAllVolunteerActionProductsQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindAllVolunteerActionProductsQuery, FindAllVolunteerActionProductsQueryVariables>(FindAllVolunteerActionProductsDocument, baseOptions);
-      }
-export function useFindAllVolunteerActionProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindAllVolunteerActionProductsQuery, FindAllVolunteerActionProductsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindAllVolunteerActionProductsQuery, FindAllVolunteerActionProductsQueryVariables>(FindAllVolunteerActionProductsDocument, baseOptions);
-        }
-export type FindAllVolunteerActionProductsQueryHookResult = ReturnType<typeof useFindAllVolunteerActionProductsQuery>;
-export type FindAllVolunteerActionProductsLazyQueryHookResult = ReturnType<typeof useFindAllVolunteerActionProductsLazyQuery>;
-export type FindAllVolunteerActionProductsQueryResult = ApolloReactCommon.QueryResult<FindAllVolunteerActionProductsQuery, FindAllVolunteerActionProductsQueryVariables>;
-export const FindAllVolunteerActionsDocument = gql`
-    query findAllVolunteerActions($limit: Int, $offset: Int) {
-  findAllVolunteerActions(limit: $limit, offset: $offset) {
-    ...VolunteerActionExpandedFields
-  }
-}
-    ${VolunteerActionExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindAllVolunteerActionsQuery__
- *
- * To run a query within a React component, call `useFindAllVolunteerActionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindAllVolunteerActionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindAllVolunteerActionsQuery({
- *   variables: {
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
- *   },
- * });
- */
-export function useFindAllVolunteerActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindAllVolunteerActionsQuery, FindAllVolunteerActionsQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindAllVolunteerActionsQuery, FindAllVolunteerActionsQueryVariables>(FindAllVolunteerActionsDocument, baseOptions);
-      }
-export function useFindAllVolunteerActionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindAllVolunteerActionsQuery, FindAllVolunteerActionsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindAllVolunteerActionsQuery, FindAllVolunteerActionsQueryVariables>(FindAllVolunteerActionsDocument, baseOptions);
-        }
-export type FindAllVolunteerActionsQueryHookResult = ReturnType<typeof useFindAllVolunteerActionsQuery>;
-export type FindAllVolunteerActionsLazyQueryHookResult = ReturnType<typeof useFindAllVolunteerActionsLazyQuery>;
-export type FindAllVolunteerActionsQueryResult = ApolloReactCommon.QueryResult<FindAllVolunteerActionsQuery, FindAllVolunteerActionsQueryVariables>;
-export const FindAllVolunteersDocument = gql`
-    query findAllVolunteers($limit: Int, $offset: Int) {
-  findAllVolunteers(limit: $limit, offset: $offset) {
-    ...VolunteerExpandedFields
-  }
-}
-    ${VolunteerExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindAllVolunteersQuery__
- *
- * To run a query within a React component, call `useFindAllVolunteersQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindAllVolunteersQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindAllVolunteersQuery({
- *   variables: {
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
- *   },
- * });
- */
-export function useFindAllVolunteersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindAllVolunteersQuery, FindAllVolunteersQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindAllVolunteersQuery, FindAllVolunteersQueryVariables>(FindAllVolunteersDocument, baseOptions);
-      }
-export function useFindAllVolunteersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindAllVolunteersQuery, FindAllVolunteersQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindAllVolunteersQuery, FindAllVolunteersQueryVariables>(FindAllVolunteersDocument, baseOptions);
-        }
-export type FindAllVolunteersQueryHookResult = ReturnType<typeof useFindAllVolunteersQuery>;
-export type FindAllVolunteersLazyQueryHookResult = ReturnType<typeof useFindAllVolunteersLazyQuery>;
-export type FindAllVolunteersQueryResult = ApolloReactCommon.QueryResult<FindAllVolunteersQuery, FindAllVolunteersQueryVariables>;
 export const FindDistributionCentresDocument = gql`
-    query findDistributionCentres($fields: DistributionCentreInput!, $limit: Int, $offset: Int) {
-  findDistributionCentres(fields: $fields, limit: $limit, offset: $offset) {
-    ...DistributionCentreExpandedFields
+    query findDistributionCentres($filter: DistributionCentreFilter, $page: PageRequest, $orderBy: OrderByInput) {
+  findDistributionCentres(filter: $filter, page: $page, orderBy: $orderBy) {
+    items {
+      ...DistributionCentreExpandedFields
+    }
+    offset
+    limit
   }
 }
     ${DistributionCentreExpandedFieldsFragmentDoc}`;
@@ -1798,9 +1778,9 @@ export const FindDistributionCentresDocument = gql`
  * @example
  * const { data, loading, error } = useFindDistributionCentresQuery({
  *   variables: {
- *      fields: // value for 'fields'
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
+ *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */
@@ -1815,9 +1795,11 @@ export type FindDistributionCentresLazyQueryHookResult = ReturnType<typeof useFi
 export type FindDistributionCentresQueryResult = ApolloReactCommon.QueryResult<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>;
 export const FindIdAndNamesOfAllDistributionCentresDocument = gql`
     query findIdAndNamesOfAllDistributionCentres($limit: Int, $offset: Int) {
-  findAllDistributionCentres(limit: $limit, offset: $offset) {
-    id
-    name
+  findDistributionCentres(page: {limit: $limit, offset: $offset}) {
+    items {
+      id
+      name
+    }
   }
 }
     `;
@@ -1850,8 +1832,10 @@ export type FindIdAndNamesOfAllDistributionCentresLazyQueryHookResult = ReturnTy
 export type FindIdAndNamesOfAllDistributionCentresQueryResult = ApolloReactCommon.QueryResult<FindIdAndNamesOfAllDistributionCentresQuery, FindIdAndNamesOfAllDistributionCentresQueryVariables>;
 export const FindActiveVolunteerDocument = gql`
     query findActiveVolunteer($username: String!) {
-  findVolunteers(fields: {username: $username}, limit: 1) {
-    ...VolunteerFields
+  findVolunteers(filter: {username: {eq: $username}}, page: {limit: 1}) {
+    items {
+      ...VolunteerFields
+    }
   }
 }
     ${VolunteerFieldsFragmentDoc}`;
@@ -1882,9 +1866,13 @@ export type FindActiveVolunteerQueryHookResult = ReturnType<typeof useFindActive
 export type FindActiveVolunteerLazyQueryHookResult = ReturnType<typeof useFindActiveVolunteerLazyQuery>;
 export type FindActiveVolunteerQueryResult = ApolloReactCommon.QueryResult<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>;
 export const FindProductsDocument = gql`
-    query findProducts($fields: ProductInput!, $limit: Int, $offset: Int) {
-  findProducts(fields: $fields, limit: $limit, offset: $offset) {
-    ...ProductExpandedFields
+    query findProducts($filter: ProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
+  findProducts(filter: $filter, page: $page, orderBy: $orderBy) {
+    items {
+      ...ProductExpandedFields
+    }
+    offset
+    limit
   }
 }
     ${ProductExpandedFieldsFragmentDoc}`;
@@ -1901,9 +1889,9 @@ export const FindProductsDocument = gql`
  * @example
  * const { data, loading, error } = useFindProductsQuery({
  *   variables: {
- *      fields: // value for 'fields'
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
+ *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */
@@ -1917,9 +1905,13 @@ export type FindProductsQueryHookResult = ReturnType<typeof useFindProductsQuery
 export type FindProductsLazyQueryHookResult = ReturnType<typeof useFindProductsLazyQuery>;
 export type FindProductsQueryResult = ApolloReactCommon.QueryResult<FindProductsQuery, FindProductsQueryVariables>;
 export const FindRecipientsDocument = gql`
-    query findRecipients($fields: RecipientInput!, $limit: Int, $offset: Int) {
-  findRecipients(fields: $fields, limit: $limit, offset: $offset) {
-    ...RecipientExpandedFields
+    query findRecipients($filter: RecipientFilter, $page: PageRequest, $orderBy: OrderByInput) {
+  findRecipients(filter: $filter, page: $page, orderBy: $orderBy) {
+    items {
+      ...RecipientExpandedFields
+    }
+    offset
+    limit
   }
 }
     ${RecipientExpandedFieldsFragmentDoc}`;
@@ -1936,9 +1928,9 @@ export const FindRecipientsDocument = gql`
  * @example
  * const { data, loading, error } = useFindRecipientsQuery({
  *   variables: {
- *      fields: // value for 'fields'
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
+ *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */
@@ -1951,42 +1943,9 @@ export function useFindRecipientsLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type FindRecipientsQueryHookResult = ReturnType<typeof useFindRecipientsQuery>;
 export type FindRecipientsLazyQueryHookResult = ReturnType<typeof useFindRecipientsLazyQuery>;
 export type FindRecipientsQueryResult = ApolloReactCommon.QueryResult<FindRecipientsQuery, FindRecipientsQueryVariables>;
-export const FindVolunteerActionDocument = gql`
-    query findVolunteerAction($id: ID!) {
-  findVolunteerActions(fields: {id: $id}) {
-    ...VolunteerActionExpandedFields
-  }
-}
-    ${VolunteerActionExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindVolunteerActionQuery__
- *
- * To run a query within a React component, call `useFindVolunteerActionQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindVolunteerActionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindVolunteerActionQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useFindVolunteerActionQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindVolunteerActionQuery, FindVolunteerActionQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindVolunteerActionQuery, FindVolunteerActionQueryVariables>(FindVolunteerActionDocument, baseOptions);
-      }
-export function useFindVolunteerActionLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindVolunteerActionQuery, FindVolunteerActionQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindVolunteerActionQuery, FindVolunteerActionQueryVariables>(FindVolunteerActionDocument, baseOptions);
-        }
-export type FindVolunteerActionQueryHookResult = ReturnType<typeof useFindVolunteerActionQuery>;
-export type FindVolunteerActionLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionLazyQuery>;
-export type FindVolunteerActionQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionQuery, FindVolunteerActionQueryVariables>;
 export const FindVolunteerActionDetailsDocument = gql`
     query findVolunteerActionDetails($id: ID!) {
-  findVolunteerActions(fields: {id: $id}, limit: 1) {
+  getVolunteerAction(id: $id) {
     id
     title
     description
@@ -2039,9 +1998,13 @@ export type FindVolunteerActionDetailsQueryHookResult = ReturnType<typeof useFin
 export type FindVolunteerActionDetailsLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionDetailsLazyQuery>;
 export type FindVolunteerActionDetailsQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>;
 export const FindVolunteerActionProductsDocument = gql`
-    query findVolunteerActionProducts($fields: VolunteerActionProductInput!, $limit: Int, $offset: Int) {
-  findVolunteerActionProducts(fields: $fields, limit: $limit, offset: $offset) {
-    ...VolunteerActionProductExpandedFields
+    query findVolunteerActionProducts($filter: VolunteerActionProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
+  findVolunteerActionProducts(filter: $filter, page: $page, orderBy: $orderBy) {
+    items {
+      ...VolunteerActionProductExpandedFields
+    }
+    offset
+    limit
   }
 }
     ${VolunteerActionProductExpandedFieldsFragmentDoc}`;
@@ -2058,9 +2021,9 @@ export const FindVolunteerActionProductsDocument = gql`
  * @example
  * const { data, loading, error } = useFindVolunteerActionProductsQuery({
  *   variables: {
- *      fields: // value for 'fields'
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
+ *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */
@@ -2074,9 +2037,13 @@ export type FindVolunteerActionProductsQueryHookResult = ReturnType<typeof useFi
 export type FindVolunteerActionProductsLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionProductsLazyQuery>;
 export type FindVolunteerActionProductsQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionProductsQuery, FindVolunteerActionProductsQueryVariables>;
 export const FindVolunteerActionsDocument = gql`
-    query findVolunteerActions($fields: VolunteerActionInput!, $limit: Int, $offset: Int) {
-  findVolunteerActions(fields: $fields, limit: $limit, offset: $offset) {
-    ...VolunteerActionExpandedFields
+    query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $orderBy: OrderByInput) {
+  findVolunteerActions(filter: $filter, page: $page, orderBy: $orderBy) {
+    items {
+      ...VolunteerActionExpandedFields
+    }
+    offset
+    limit
   }
 }
     ${VolunteerActionExpandedFieldsFragmentDoc}`;
@@ -2093,9 +2060,9 @@ export const FindVolunteerActionsDocument = gql`
  * @example
  * const { data, loading, error } = useFindVolunteerActionsQuery({
  *   variables: {
- *      fields: // value for 'fields'
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
+ *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */
@@ -2109,9 +2076,13 @@ export type FindVolunteerActionsQueryHookResult = ReturnType<typeof useFindVolun
 export type FindVolunteerActionsLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionsLazyQuery>;
 export type FindVolunteerActionsQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionsQuery, FindVolunteerActionsQueryVariables>;
 export const FindVolunteersDocument = gql`
-    query findVolunteers($fields: VolunteerInput!, $limit: Int, $offset: Int) {
-  findVolunteers(fields: $fields, limit: $limit, offset: $offset) {
-    ...VolunteerExpandedFields
+    query findVolunteers($filter: VolunteerFilter, $page: PageRequest, $orderBy: OrderByInput) {
+  findVolunteers(filter: $filter, page: $page, orderBy: $orderBy) {
+    items {
+      ...VolunteerExpandedFields
+    }
+    offset
+    limit
   }
 }
     ${VolunteerExpandedFieldsFragmentDoc}`;
@@ -2128,9 +2099,9 @@ export const FindVolunteersDocument = gql`
  * @example
  * const { data, loading, error } = useFindVolunteersQuery({
  *   variables: {
- *      fields: // value for 'fields'
- *      limit: // value for 'limit'
- *      offset: // value for 'offset'
+ *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */
@@ -2143,3 +2114,201 @@ export function useFindVolunteersLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type FindVolunteersQueryHookResult = ReturnType<typeof useFindVolunteersQuery>;
 export type FindVolunteersLazyQueryHookResult = ReturnType<typeof useFindVolunteersLazyQuery>;
 export type FindVolunteersQueryResult = ApolloReactCommon.QueryResult<FindVolunteersQuery, FindVolunteersQueryVariables>;
+export const GetDistributionCentreDocument = gql`
+    query getDistributionCentre($id: ID!) {
+  getDistributionCentre(id: $id) {
+    ...DistributionCentreExpandedFields
+  }
+}
+    ${DistributionCentreExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useGetDistributionCentreQuery__
+ *
+ * To run a query within a React component, call `useGetDistributionCentreQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDistributionCentreQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDistributionCentreQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetDistributionCentreQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>(GetDistributionCentreDocument, baseOptions);
+      }
+export function useGetDistributionCentreLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>(GetDistributionCentreDocument, baseOptions);
+        }
+export type GetDistributionCentreQueryHookResult = ReturnType<typeof useGetDistributionCentreQuery>;
+export type GetDistributionCentreLazyQueryHookResult = ReturnType<typeof useGetDistributionCentreLazyQuery>;
+export type GetDistributionCentreQueryResult = ApolloReactCommon.QueryResult<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>;
+export const GetProductDocument = gql`
+    query getProduct($id: ID!) {
+  getProduct(id: $id) {
+    ...ProductExpandedFields
+  }
+}
+    ${ProductExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useGetProductQuery__
+ *
+ * To run a query within a React component, call `useGetProductQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetProductQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetProductQuery, GetProductQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetProductQuery, GetProductQueryVariables>(GetProductDocument, baseOptions);
+      }
+export function useGetProductLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetProductQuery, GetProductQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetProductQuery, GetProductQueryVariables>(GetProductDocument, baseOptions);
+        }
+export type GetProductQueryHookResult = ReturnType<typeof useGetProductQuery>;
+export type GetProductLazyQueryHookResult = ReturnType<typeof useGetProductLazyQuery>;
+export type GetProductQueryResult = ApolloReactCommon.QueryResult<GetProductQuery, GetProductQueryVariables>;
+export const GetRecipientDocument = gql`
+    query getRecipient($id: ID!) {
+  getRecipient(id: $id) {
+    ...RecipientExpandedFields
+  }
+}
+    ${RecipientExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useGetRecipientQuery__
+ *
+ * To run a query within a React component, call `useGetRecipientQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRecipientQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRecipientQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetRecipientQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetRecipientQuery, GetRecipientQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetRecipientQuery, GetRecipientQueryVariables>(GetRecipientDocument, baseOptions);
+      }
+export function useGetRecipientLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetRecipientQuery, GetRecipientQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetRecipientQuery, GetRecipientQueryVariables>(GetRecipientDocument, baseOptions);
+        }
+export type GetRecipientQueryHookResult = ReturnType<typeof useGetRecipientQuery>;
+export type GetRecipientLazyQueryHookResult = ReturnType<typeof useGetRecipientLazyQuery>;
+export type GetRecipientQueryResult = ApolloReactCommon.QueryResult<GetRecipientQuery, GetRecipientQueryVariables>;
+export const GetVolunteerDocument = gql`
+    query getVolunteer($id: ID!) {
+  getVolunteer(id: $id) {
+    ...VolunteerExpandedFields
+  }
+}
+    ${VolunteerExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useGetVolunteerQuery__
+ *
+ * To run a query within a React component, call `useGetVolunteerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetVolunteerQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetVolunteerQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetVolunteerQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetVolunteerQuery, GetVolunteerQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetVolunteerQuery, GetVolunteerQueryVariables>(GetVolunteerDocument, baseOptions);
+      }
+export function useGetVolunteerLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetVolunteerQuery, GetVolunteerQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetVolunteerQuery, GetVolunteerQueryVariables>(GetVolunteerDocument, baseOptions);
+        }
+export type GetVolunteerQueryHookResult = ReturnType<typeof useGetVolunteerQuery>;
+export type GetVolunteerLazyQueryHookResult = ReturnType<typeof useGetVolunteerLazyQuery>;
+export type GetVolunteerQueryResult = ApolloReactCommon.QueryResult<GetVolunteerQuery, GetVolunteerQueryVariables>;
+export const GetVolunteerActionDocument = gql`
+    query getVolunteerAction($id: ID!) {
+  getVolunteerAction(id: $id) {
+    ...VolunteerActionExpandedFields
+  }
+}
+    ${VolunteerActionExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useGetVolunteerActionQuery__
+ *
+ * To run a query within a React component, call `useGetVolunteerActionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetVolunteerActionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetVolunteerActionQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetVolunteerActionQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>(GetVolunteerActionDocument, baseOptions);
+      }
+export function useGetVolunteerActionLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>(GetVolunteerActionDocument, baseOptions);
+        }
+export type GetVolunteerActionQueryHookResult = ReturnType<typeof useGetVolunteerActionQuery>;
+export type GetVolunteerActionLazyQueryHookResult = ReturnType<typeof useGetVolunteerActionLazyQuery>;
+export type GetVolunteerActionQueryResult = ApolloReactCommon.QueryResult<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>;
+export const GetVolunteerActionProductDocument = gql`
+    query getVolunteerActionProduct($id: ID!) {
+  getVolunteerActionProduct(id: $id) {
+    ...VolunteerActionProductExpandedFields
+  }
+}
+    ${VolunteerActionProductExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useGetVolunteerActionProductQuery__
+ *
+ * To run a query within a React component, call `useGetVolunteerActionProductQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetVolunteerActionProductQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetVolunteerActionProductQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetVolunteerActionProductQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>(GetVolunteerActionProductDocument, baseOptions);
+      }
+export function useGetVolunteerActionProductLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>(GetVolunteerActionProductDocument, baseOptions);
+        }
+export type GetVolunteerActionProductQueryHookResult = ReturnType<typeof useGetVolunteerActionProductQuery>;
+export type GetVolunteerActionProductLazyQueryHookResult = ReturnType<typeof useGetVolunteerActionProductLazyQuery>;
+export type GetVolunteerActionProductQueryResult = ApolloReactCommon.QueryResult<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>;

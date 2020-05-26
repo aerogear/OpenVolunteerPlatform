@@ -1,4 +1,4 @@
-mutation updateRecipient($input: RecipientInput!) {
+mutation updateRecipient($input: MutateRecipientInput!) {
   updateRecipient(input: $input) {
       ...RecipientFields
   }

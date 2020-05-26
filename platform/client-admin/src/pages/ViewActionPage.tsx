@@ -18,7 +18,7 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
     console.log(error);
   }
 
-  const volunteerAction = data?.findVolunteerActions[0];
+  const volunteerAction = data?.getVolunteerAction
 
   if (!volunteerAction) {
     return <div>Cannot fetch element with provided id</div>

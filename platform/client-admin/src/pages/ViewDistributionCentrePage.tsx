@@ -2,7 +2,7 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { IUpdateMatchParams } from '../declarations';
-import { useFindDistributionCentresQuery, useUpdateDistributionCentreMutation } from '../dataFacade';
+import { useGetDistributionCentreQuery, useUpdateDistributionCentreMutation } from '../dataFacade';
 import { AutoForm } from 'uniforms-ionic';
 import distributionCentreForm from '../forms/distributionCentre';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
@@ -10,13 +10,13 @@ import { Marker } from 'google-maps-react';
 import { Map } from '../components/Map';
 
 export const ViewDistributionCentrePage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const { data, loading, error } = useFindDistributionCentresQuery({ variables: { fields: { id: match.params.id }, limit: 1 } });
+  const { data, loading, error } = useGetDistributionCentreQuery({ variables: { id: match.params.id } } );
   const [updateDistributionCentre] = useUpdateDistributionCentreMutation()
   if (error) {
     console.log(error);
   }
 
-  const distributionCentre = data?.findDistributionCentres[0];
+  const distributionCentre = data?.getDistributionCentre;
 
   if (!distributionCentre) {
     return <div>Cannot fetch element with provided id</div>

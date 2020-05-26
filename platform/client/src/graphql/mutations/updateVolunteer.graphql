@@ -1,4 +1,4 @@
-mutation updateVolunteer($input: VolunteerInput!) {
+mutation updateVolunteer($input: MutateVolunteerInput!) {
   updateVolunteer(input: $input) {
       ...VolunteerFields
   }

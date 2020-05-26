@@ -1,5 +1,9 @@
-query findMyVolunteerActions($volunteerId: ID!, $status: ActionStatus) {
-  findVolunteerActions(fields: { volunteerId: $volunteerId, status: $status }) {
-    ...VolunteerActionFields
+query findMyVolunteerActions($volunteerId: ID!, $status: String) {
+  findVolunteerActions(filter: { volunteerId: {eq: $volunteerId}, status: {
+    eq: $status
+  } }) {
+    items {
+      ...VolunteerActionFields
+    }
   }
 }

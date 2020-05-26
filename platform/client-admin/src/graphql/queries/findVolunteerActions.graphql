@@ -1,5 +1,9 @@
-query findVolunteerActions($fields: VolunteerActionInput!, $limit: Int, $offset: Int) {
-    findVolunteerActions(fields: $fields, limit: $limit, offset: $offset) {
-      ...VolunteerActionExpandedFields
+query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $orderBy: OrderByInput) {
+    findVolunteerActions(filter: $filter, page: $page, orderBy: $orderBy) {
+      items {
+        ...VolunteerActionExpandedFields
+      }
+      offset
+      limit
     }
   }

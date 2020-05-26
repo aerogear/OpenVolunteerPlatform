@@ -1,4 +1,4 @@
-mutation createDistributionCentre($input: DistributionCentreInput!) {
+mutation createDistributionCentre($input: CreateDistributionCentreInput!) {
   createDistributionCentre(input: $input) {
       ...DistributionCentreFields
   }

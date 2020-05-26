@@ -9,13 +9,13 @@ import {
 } from '@ionic/react';
 import { Empty, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindAllVolunteersQuery } from '../dataFacade';
+import { useFindVolunteersQuery } from '../dataFacade';
 import { VolunteersList } from '../components/model/VolunteerList';
 import { Link } from 'react-router-dom';
 import { open } from "ionicons/icons";
 
 export const VolunteersPage: React.FC<RouteComponentProps> = ({ match }) => {
-  let { data, loading, error } = useFindAllVolunteersQuery()
+  let { data, loading, error } = useFindVolunteersQuery()
   if (error) {
     console.log(error);
   }
@@ -26,8 +26,8 @@ export const VolunteersPage: React.FC<RouteComponentProps> = ({ match }) => {
   />;
 
   let content;
-  if (data?.findAllVolunteers?.length !== 0) {
-    content = <VolunteersList volunteers={data?.findAllVolunteers as any} />
+  if (data?.findVolunteers?.items.length !== 0) {
+    content = <VolunteersList volunteers={data?.findVolunteers.items as any} />
   } else {
     content = <Empty message={<p>No data!</p>} />;
   }

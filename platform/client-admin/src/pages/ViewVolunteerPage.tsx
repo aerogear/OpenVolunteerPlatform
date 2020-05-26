@@ -2,21 +2,21 @@ import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Header } from '../components/Header';
 import { IUpdateMatchParams } from '../declarations';
-import { useUpdateVolunteerMutation, useFindVolunteersQuery } from '../dataFacade'
+import { useUpdateVolunteerMutation, useGetVolunteerQuery } from '../dataFacade'
 import { AutoForm } from 'uniforms-ionic'
 import volunteerFormSchema from '../forms/volunteer';
 import { volunteerTransformer } from '../transformer/volunteerTransformer';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 
 export const ViewVolunteerPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const { data, loading, error } = useFindVolunteersQuery({ variables: { fields: { id: match.params.id }, limit: 1 } });
+  const { data, loading, error } = useGetVolunteerQuery({ variables: { id: match.params.id } });
   const [updateVolunteer] = useUpdateVolunteerMutation();
   
   if (error) {
     console.log(error);
   }
 
-  const volunteer = data?.findVolunteers[0];
+  const volunteer = data?.getVolunteer;
   if (!volunteer) {
     return <div>Cannot fetch element with provided id</div>
   }

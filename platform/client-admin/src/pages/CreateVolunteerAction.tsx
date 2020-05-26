@@ -3,9 +3,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { IUpdateMatchParams } from '../declarations';
 import {
-  useFindAllProductsQuery,
-  useFindAllVolunteersQuery,
-  useFindAllRecipientsQuery,
+  useFindProductsQuery,
+  useFindVolunteersQuery,
+  useFindRecipientsQuery,
   useCreateVolunteerActionMutation,
   useFindIdAndNamesOfAllDistributionCentresQuery,
   useCreateVolunteerActionProductMutation,
@@ -22,9 +22,9 @@ export const CreateVolunteerActionPage: React.FC<RouteComponentProps<IUpdateMatc
   const [createVolunteerAction] = useCreateVolunteerActionMutation();
   const [createVolunteerActionProduct] = useCreateVolunteerActionProductMutation();
 
-  const productsQuery = useFindAllProductsQuery();
-  const recipientsQuery = useFindAllRecipientsQuery();
-  const volunteersQuery = useFindAllVolunteersQuery();
+  const productsQuery = useFindProductsQuery();
+  const recipientsQuery = useFindRecipientsQuery();
+  const volunteersQuery = useFindVolunteersQuery();
   const distributionCentresQuery = useFindIdAndNamesOfAllDistributionCentresQuery();
 
   if (productsQuery.error) {
@@ -49,15 +49,15 @@ export const CreateVolunteerActionPage: React.FC<RouteComponentProps<IUpdateMatc
 
   const model = {};
 
-  const products = productsQuery.data?.findAllProducts || [];
+  const products = productsQuery.data?.findProducts?.items || [];
   const productsLabels = retrieveProductsLabel(products);
 
-  const recipients = recipientsQuery.data?.findAllRecipients || [];
+  const recipients = recipientsQuery.data?.findRecipients?.items || [];
   const recipientsNames = retrievePersonNames(recipients);
-  const volunteers = volunteersQuery.data?.findAllVolunteers || [];
+  const volunteers = volunteersQuery.data?.findVolunteers?.items || [];
   const volunteersNames = retrievePersonNames(volunteers);
 
-  const distributionCentres = distributionCentresQuery.data?.findAllDistributionCentres || [];
+  const distributionCentres = distributionCentresQuery.data?.findDistributionCentres?.items || [];
   const distributionCentresNames = distributionCentres.map((distributionCentre) => distributionCentre!!.name as string);
   const createVolunteerActionFormSchema = createVolunteerActionSchema(recipientsNames, volunteersNames, distributionCentresNames, productsLabels);
 

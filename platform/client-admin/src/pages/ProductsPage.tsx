@@ -9,14 +9,14 @@ import {
 } from '@ionic/react';
 import { Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindAllProductsQuery } from '../dataFacade';
+import { useFindProductsQuery } from '../dataFacade';
 import { ProductList } from '../components/model/ProductList';
 import { Link } from 'react-router-dom';
 import { open } from 'ionicons/icons';
 
 
 export const ProductsPage: React.FC<RouteComponentProps> = ({ match }) => {
-  let { data, loading, error } = useFindAllProductsQuery();
+  let { data, loading, error } = useFindProductsQuery();
 
   if (error) {
     console.log(error);
@@ -27,7 +27,7 @@ export const ProductsPage: React.FC<RouteComponentProps> = ({ match }) => {
     message={'Loading...'}
   />;
 
-  const products = data?.findAllProducts || [];
+  const products = data?.findProducts?.items || [];
   const content = <ProductList products={products as any} />
   
   return (

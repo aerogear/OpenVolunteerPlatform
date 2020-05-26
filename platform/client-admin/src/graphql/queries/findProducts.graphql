@@ -1,5 +1,9 @@
-query findProducts($fields: ProductInput!, $limit: Int, $offset: Int) {
-    findProducts(fields: $fields, limit: $limit, offset: $offset) {
-      ...ProductExpandedFields
+query findProducts($filter: ProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
+    findProducts(filter: $filter, page: $page, orderBy: $orderBy) {
+      items {
+        ...ProductExpandedFields
+      }
+      offset
+      limit
     }
   }

@@ -1,0 +1,5 @@
+query getVolunteerAction($id: ID!) {
+    getVolunteerAction(id: $id) {
+      ...VolunteerActionExpandedFields
+    }
+  }

@@ -1,4 +1,4 @@
-mutation createRecipient($input: RecipientInput!) {
+mutation createRecipient($input: CreateRecipientInput!) {
   createRecipient(input: $input) {
       ...RecipientFields
   }
