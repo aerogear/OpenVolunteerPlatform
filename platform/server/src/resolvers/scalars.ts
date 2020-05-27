@@ -1,10 +1,3 @@
-import {
-    DateTimeResolver,
-    JSONResolver,
-} from 'graphql-scalars';
+import { DateTimeResolver } from 'graphql-scalars';
 
-export default {
-    // ObjectID: ObjectIDResolver,
-    DateTime: DateTimeResolver,
-    JSON: JSONResolver
-}
+export default { DateTime: DateTimeResolver }

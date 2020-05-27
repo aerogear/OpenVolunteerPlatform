@@ -11,7 +11,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  JSON: any;
   DateTime: any;
 };
 
@@ -42,7 +41,6 @@ export type CreateDistributionCentreInput = {
   postcode?: Maybe<Scalars['Int']>;
   lat?: Maybe<Scalars['Float']>;
   long?: Maybe<Scalars['Float']>;
-  stockInformation?: Maybe<Scalars['JSON']>;
 };
 
 export type CreateProductInput = {
@@ -111,7 +109,6 @@ export type DistributionCentre = Address & {
   postcode?: Maybe<Scalars['Int']>;
   lat?: Maybe<Scalars['Float']>;
   long?: Maybe<Scalars['Float']>;
-  stockInformation?: Maybe<Scalars['JSON']>;
   /** @oneToMany field: 'distributionCentre', key: 'distributionCentreId' */
   products?: Maybe<Array<Maybe<Product>>>;
   /** @oneToMany field: 'distributionCentre', key: 'distributionCentreId' */
@@ -145,7 +142,6 @@ export type DistributionCentreFilter = {
   postcode?: Maybe<IntInput>;
   lat?: Maybe<FloatInput>;
   long?: Maybe<FloatInput>;
-  stockInformation?: Maybe<StringInput>;
   and?: Maybe<Array<Maybe<DistributionCentreFilter>>>;
   or?: Maybe<Array<Maybe<DistributionCentreFilter>>>;
   not?: Maybe<DistributionCentreFilter>;
@@ -194,7 +190,6 @@ export type IntInput = {
   between?: Maybe<Array<Maybe<Scalars['Int']>>>;
 };
 
-
 export type MutateDistributionCentreInput = {
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
@@ -204,7 +199,6 @@ export type MutateDistributionCentreInput = {
   postcode?: Maybe<Scalars['Int']>;
   lat?: Maybe<Scalars['Float']>;
   long?: Maybe<Scalars['Float']>;
-  stockInformation?: Maybe<Scalars['JSON']>;
 };
 
 export type MutateProductInput = {
@@ -687,12 +681,12 @@ export type VolunteerResultList = {
 
 export type DistributionCentreFieldsFragment = (
   { __typename?: 'DistributionCentre' }
-  & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
+  & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
 );
 
 export type DistributionCentreExpandedFieldsFragment = (
   { __typename?: 'DistributionCentre' }
-  & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
+  & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
   & { products?: Maybe<Array<Maybe<(
     { __typename?: 'Product' }
     & Pick<Product, 'id' | 'label' | 'description'>
@@ -712,7 +706,7 @@ export type ProductExpandedFieldsFragment = (
   & Pick<Product, 'id' | 'label' | 'description'>
   & { distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
-    & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
+    & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
   )>, volunteerActionProducts?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerActionProduct' }
     & Pick<VolunteerActionProduct, 'id'>
@@ -748,7 +742,7 @@ export type VolunteerActionExpandedFieldsFragment = (
   & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
   & { distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
-    & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
+    & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
   )>, products?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerActionProduct' }
     & Pick<VolunteerActionProduct, 'id'>
@@ -1195,7 +1189,6 @@ export const DistributionCentreFieldsFragmentDoc = gql`
   postcode
   lat
   long
-  stockInformation
 }
     `;
 export const DistributionCentreExpandedFieldsFragmentDoc = gql`
@@ -1208,7 +1201,6 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
   postcode
   lat
   long
-  stockInformation
   products {
     id
     label
@@ -1244,7 +1236,6 @@ export const ProductExpandedFieldsFragmentDoc = gql`
     postcode
     lat
     long
-    stockInformation
   }
   volunteerActionProducts {
     id
@@ -1326,7 +1317,6 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     postcode
     lat
     long
-    stockInformation
   }
   products {
     id

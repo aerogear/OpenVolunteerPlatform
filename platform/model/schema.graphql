@@ -27,7 +27,6 @@ input CreateDistributionCentreInput {
   postcode: Int
   lat: Float
   long: Float
-  stockInformation: JSON
 }
 
 input CreateProductInput {
@@ -96,7 +95,6 @@ type DistributionCentre implements Address {
   postcode: Int
   lat: Float
   long: Float
-  stockInformation: JSON
 
   """@oneToMany field: 'distributionCentre', key: 'distributionCentreId'"""
   products(filter: ProductFilter): [Product]
@@ -114,7 +112,6 @@ input DistributionCentreFilter {
   postcode: IntInput
   lat: FloatInput
   long: FloatInput
-  stockInformation: StringInput
   and: [DistributionCentreFilter]
   or: [DistributionCentreFilter]
   not: DistributionCentreFilter
@@ -162,8 +159,6 @@ input IntInput {
   between: [Int]
 }
 
-scalar JSON
-
 input MutateDistributionCentreInput {
   id: ID!
   name: String
@@ -173,7 +168,6 @@ input MutateDistributionCentreInput {
   postcode: Int
   lat: Float
   long: Float
-  stockInformation: JSON
 }
 
 input MutateProductInput {

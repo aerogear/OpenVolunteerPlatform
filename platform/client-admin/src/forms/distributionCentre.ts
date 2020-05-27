@@ -36,14 +36,7 @@ const distributionCentre = new SimpleSchema({
         uniforms: {
             label: "Longitude"
         }
-    },
-    stockInformation: {
-        type: String,
-        required: false,
-        uniforms: {
-            label: "Stock information in JSON format"
-        }
-    } 
+    }
 } as any);
 
 export default new SimpleSchema2Bridge(distributionCentre);

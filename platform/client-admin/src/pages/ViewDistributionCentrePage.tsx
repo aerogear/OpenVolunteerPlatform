@@ -40,10 +40,7 @@ export const ViewDistributionCentrePage: React.FC<RouteComponentProps<IUpdateMat
       }} />
   </Map>
 
-  const model = {
-    ...distributionCentre,
-    stockInformation: JSON.stringify(distributionCentre.stockInformation, null, '\t')
-  };
+  const model = distributionCentre;
 
   return (
     <>
@@ -70,8 +67,7 @@ export const ViewDistributionCentrePage: React.FC<RouteComponentProps<IUpdateMat
                         name: model.name,
                         address1: model.address1,
                         address2: model.address2,
-                        postcode: model.postcode,
-                        stockInformation: JSON.parse(model.stockInformation),
+                        postcode: model.postcode
                       }
                     }
                   }).then(() => {
