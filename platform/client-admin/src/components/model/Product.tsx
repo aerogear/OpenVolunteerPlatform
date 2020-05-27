@@ -7,7 +7,7 @@ import {
   IonIcon,
   IonButtons
 } from '@ionic/react';
-import { helpBuoy, open } from 'ionicons/icons';
+import { cartSharp, open } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
 import { ProductFieldsFragment } from '../../dataFacade';
 
@@ -16,7 +16,7 @@ export const Product: React.FC<{ product: ProductFieldsFragment }> = ({ product 
 
   return (
     <IonItem>
-      <IonIcon icon={helpBuoy} className='ion-margin-end ion-align-items-start' />
+      <IonIcon icon={cartSharp} className='ion-margin-end ion-align-items-start' />
       <IonLabel>
         <IonNote item-start>
           {product.label}
