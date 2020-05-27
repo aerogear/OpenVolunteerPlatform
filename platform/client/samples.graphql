@@ -1,24 +1,26 @@
 # Write your query or mutation here
 
 query findAllVolunteers {
-  findAllVolunteers {
-    id,
-    firstName,
-    lastName,
-    email,
-    username,
-    address1,
-    address2,
-    city,
-    postcode,
-    canDeliver,
-    actions {
+  findVolunteers {
+    items {
       id,
-      products {
+      firstName,
+      lastName,
+      email,
+      username,
+      address1,
+      address2,
+      city,
+      postcode,
+      canDeliver,
+      actions {
         id,
-        product {
+        products {
           id,
-          label
+          product {
+            id,
+            label
+          }
         }
       }
     }
@@ -27,20 +29,17 @@ query findAllVolunteers {
 
 
 query findAllRecipients {
-  findAllRecipients {
-    id,
-    lastName,
-    firstName,
-    phone,
-    address1,
-    address2,
-    city,
-    postcode,
-    prefferedProducts {
-      product {
-        id,
-        label
-      }
+  findRecipients {
+    items {
+      id,
+      lastName,
+      firstName,
+      phone,
+      address1,
+      address2,
+      city,
+      postcode,
+      prefferedProducts
     }
   }
 }
@@ -73,7 +72,6 @@ mutation createDistributionCentre {
       city: "New York"
       lat: "0"
       long: "0"
-      stockInformation: {}
     }
   ) {
     id

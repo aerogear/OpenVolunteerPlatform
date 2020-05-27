@@ -11,7 +11,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  JSON: any;
   DateTime: any;
 };
 
@@ -42,7 +41,6 @@ export type CreateDistributionCentreInput = {
   postcode?: Maybe<Scalars['Int']>;
   lat?: Maybe<Scalars['Float']>;
   long?: Maybe<Scalars['Float']>;
-  stockInformation?: Maybe<Scalars['JSON']>;
 };
 
 export type CreateProductInput = {
@@ -71,8 +69,8 @@ export type CreateVolunteerActionInput = {
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  distributionCentreId?: Maybe<Scalars['ID']>;
   volunteerId?: Maybe<Scalars['ID']>;
+  distributionCentreId?: Maybe<Scalars['ID']>;
   recipientId?: Maybe<Scalars['ID']>;
 };
 
@@ -111,7 +109,6 @@ export type DistributionCentre = Address & {
   postcode?: Maybe<Scalars['Int']>;
   lat?: Maybe<Scalars['Float']>;
   long?: Maybe<Scalars['Float']>;
-  stockInformation?: Maybe<Scalars['JSON']>;
   /** @oneToMany field: 'distributionCentre', key: 'distributionCentreId' */
   products?: Maybe<Array<Maybe<Product>>>;
   /** @oneToMany field: 'distributionCentre', key: 'distributionCentreId' */
@@ -145,7 +142,6 @@ export type DistributionCentreFilter = {
   postcode?: Maybe<IntInput>;
   lat?: Maybe<FloatInput>;
   long?: Maybe<FloatInput>;
-  stockInformation?: Maybe<StringInput>;
   and?: Maybe<Array<Maybe<DistributionCentreFilter>>>;
   or?: Maybe<Array<Maybe<DistributionCentreFilter>>>;
   not?: Maybe<DistributionCentreFilter>;
@@ -194,7 +190,6 @@ export type IntInput = {
   between?: Maybe<Array<Maybe<Scalars['Int']>>>;
 };
 
-
 export type MutateDistributionCentreInput = {
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
@@ -204,7 +199,6 @@ export type MutateDistributionCentreInput = {
   postcode?: Maybe<Scalars['Int']>;
   lat?: Maybe<Scalars['Float']>;
   long?: Maybe<Scalars['Float']>;
-  stockInformation?: Maybe<Scalars['JSON']>;
 };
 
 export type MutateProductInput = {
@@ -233,8 +227,8 @@ export type MutateVolunteerActionInput = {
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  distributionCentreId?: Maybe<Scalars['ID']>;
   volunteerId?: Maybe<Scalars['ID']>;
+  distributionCentreId?: Maybe<Scalars['ID']>;
   recipientId?: Maybe<Scalars['ID']>;
 };
 
@@ -263,7 +257,6 @@ export type Mutation = {
   updateVolunteer: Volunteer;
   createVolunteerAction: VolunteerAction;
   updateVolunteerAction: VolunteerAction;
-  deleteVolunteerAction: VolunteerAction;
   createRecipient: Recipient;
   updateRecipient: Recipient;
 };
@@ -314,11 +307,6 @@ export type MutationUpdateVolunteerActionArgs = {
 };
 
 
-export type MutationDeleteVolunteerActionArgs = {
-  input: MutateVolunteerActionInput;
-};
-
-
 export type MutationCreateRecipientArgs = {
   input: CreateRecipientInput;
 };
@@ -347,10 +335,10 @@ export type Product = {
   id: Scalars['ID'];
   label: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  /** @manyToOne field: 'products', key: 'distributionCentreId' */
-  distributionCentre?: Maybe<DistributionCentre>;
   /** @oneToMany field: 'product', key: 'productId' */
   volunteerActionProducts?: Maybe<Array<Maybe<VolunteerActionProduct>>>;
+  /** @manyToOne field: 'products', key: 'distributionCentreId' */
+  distributionCentre?: Maybe<DistributionCentre>;
 };
 
 
@@ -588,12 +576,12 @@ export type VolunteerAction = {
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  /** @manyToOne field: 'actions', key: 'volunteerId' */
+  volunteer?: Maybe<Volunteer>;
   /** @manyToOne field: 'actions', key: 'distributionCentreId' */
   distributionCentre?: Maybe<DistributionCentre>;
   /** @oneToMany field: 'volunteerAction', key: 'volunteerActionId' */
   products?: Maybe<Array<Maybe<VolunteerActionProduct>>>;
-  /** @manyToOne field: 'actions', key: 'volunteerId' */
-  volunteer?: Maybe<Volunteer>;
   /** @manyToOne field: 'actions', key: 'recipientId' */
   recipient?: Maybe<Recipient>;
 };
@@ -613,8 +601,8 @@ export type VolunteerActionFilter = {
   description?: Maybe<StringInput>;
   status?: Maybe<StringInput>;
   createdAt?: Maybe<StringInput>;
-  distributionCentreId?: Maybe<IdInput>;
   volunteerId?: Maybe<IdInput>;
+  distributionCentreId?: Maybe<IdInput>;
   recipientId?: Maybe<IdInput>;
   and?: Maybe<Array<Maybe<VolunteerActionFilter>>>;
   or?: Maybe<Array<Maybe<VolunteerActionFilter>>>;
@@ -693,12 +681,12 @@ export type VolunteerResultList = {
 
 export type DistributionCentreFieldsFragment = (
   { __typename?: 'DistributionCentre' }
-  & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
+  & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
 );
 
 export type DistributionCentreExpandedFieldsFragment = (
   { __typename?: 'DistributionCentre' }
-  & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
+  & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
   & { products?: Maybe<Array<Maybe<(
     { __typename?: 'Product' }
     & Pick<Product, 'id' | 'label' | 'description'>
@@ -716,13 +704,13 @@ export type ProductFieldsFragment = (
 export type ProductExpandedFieldsFragment = (
   { __typename?: 'Product' }
   & Pick<Product, 'id' | 'label' | 'description'>
-  & { distributionCentre?: Maybe<(
-    { __typename?: 'DistributionCentre' }
-    & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
-  )>, volunteerActionProducts?: Maybe<Array<Maybe<(
+  & { volunteerActionProducts?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerActionProduct' }
     & Pick<VolunteerActionProduct, 'id'>
-  )>>> }
+  )>>>, distributionCentre?: Maybe<(
+    { __typename?: 'DistributionCentre' }
+    & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
+  )> }
 );
 
 export type RecipientFieldsFragment = (
@@ -752,16 +740,16 @@ export type VolunteerActionFieldsFragment = (
 export type VolunteerActionExpandedFieldsFragment = (
   { __typename?: 'VolunteerAction' }
   & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
-  & { distributionCentre?: Maybe<(
+  & { volunteer?: Maybe<(
+    { __typename?: 'Volunteer' }
+    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver'>
+  )>, distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
-    & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'stockInformation'>
+    & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
   )>, products?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerActionProduct' }
     & Pick<VolunteerActionProduct, 'id'>
-  )>>>, volunteer?: Maybe<(
-    { __typename?: 'Volunteer' }
-    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver'>
-  )>, recipient?: Maybe<(
+  )>>>, recipient?: Maybe<(
     { __typename?: 'Recipient' }
     & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
   )> }
@@ -868,19 +856,6 @@ export type CreateVolunteerActionProductMutation = (
   & { createVolunteerActionProduct: (
     { __typename?: 'VolunteerActionProduct' }
     & VolunteerActionProductFieldsFragment
-  ) }
-);
-
-export type DeleteVolunteerActionMutationVariables = {
-  input: MutateVolunteerActionInput;
-};
-
-
-export type DeleteVolunteerActionMutation = (
-  { __typename?: 'Mutation' }
-  & { deleteVolunteerAction: (
-    { __typename?: 'VolunteerAction' }
-    & VolunteerActionFieldsFragment
   ) }
 );
 
@@ -1184,7 +1159,6 @@ export const DistributionCentreFieldsFragmentDoc = gql`
   postcode
   lat
   long
-  stockInformation
 }
     `;
 export const DistributionCentreExpandedFieldsFragmentDoc = gql`
@@ -1197,7 +1171,6 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
   postcode
   lat
   long
-  stockInformation
   products {
     id
     label
@@ -1224,6 +1197,9 @@ export const ProductExpandedFieldsFragmentDoc = gql`
   id
   label
   description
+  volunteerActionProducts {
+    id
+  }
   distributionCentre {
     id
     name
@@ -1233,10 +1209,6 @@ export const ProductExpandedFieldsFragmentDoc = gql`
     postcode
     lat
     long
-    stockInformation
-  }
-  volunteerActionProducts {
-    id
   }
 }
     `;
@@ -1306,20 +1278,6 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
   description
   status
   createdAt
-  distributionCentre {
-    id
-    name
-    address1
-    address2
-    city
-    postcode
-    lat
-    long
-    stockInformation
-  }
-  products {
-    id
-  }
   volunteer {
     id
     firstName
@@ -1332,6 +1290,19 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     postcode
     dateOfBirth
     canDeliver
+  }
+  distributionCentre {
+    id
+    name
+    address1
+    address2
+    city
+    postcode
+    lat
+    long
+  }
+  products {
+    id
   }
   recipient {
     id
@@ -1583,38 +1554,6 @@ export function useCreateVolunteerActionProductMutation(baseOptions?: ApolloReac
 export type CreateVolunteerActionProductMutationHookResult = ReturnType<typeof useCreateVolunteerActionProductMutation>;
 export type CreateVolunteerActionProductMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerActionProductMutation>;
 export type CreateVolunteerActionProductMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>;
-export const DeleteVolunteerActionDocument = gql`
-    mutation deleteVolunteerAction($input: MutateVolunteerActionInput!) {
-  deleteVolunteerAction(input: $input) {
-    ...VolunteerActionFields
-  }
-}
-    ${VolunteerActionFieldsFragmentDoc}`;
-export type DeleteVolunteerActionMutationFn = ApolloReactCommon.MutationFunction<DeleteVolunteerActionMutation, DeleteVolunteerActionMutationVariables>;
-
-/**
- * __useDeleteVolunteerActionMutation__
- *
- * To run a mutation, you first call `useDeleteVolunteerActionMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteVolunteerActionMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteVolunteerActionMutation, { data, loading, error }] = useDeleteVolunteerActionMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useDeleteVolunteerActionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteVolunteerActionMutation, DeleteVolunteerActionMutationVariables>) {
-        return ApolloReactHooks.useMutation<DeleteVolunteerActionMutation, DeleteVolunteerActionMutationVariables>(DeleteVolunteerActionDocument, baseOptions);
-      }
-export type DeleteVolunteerActionMutationHookResult = ReturnType<typeof useDeleteVolunteerActionMutation>;
-export type DeleteVolunteerActionMutationResult = ApolloReactCommon.MutationResult<DeleteVolunteerActionMutation>;
-export type DeleteVolunteerActionMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteVolunteerActionMutation, DeleteVolunteerActionMutationVariables>;
 export const UpdateDistributionCentreDocument = gql`
     mutation updateDistributionCentre($input: MutateDistributionCentreInput!) {
   updateDistributionCentre(input: $input) {

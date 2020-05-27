@@ -13,7 +13,6 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       postcode
       lat
       long
-      stockInformation
    }
    products {
       id

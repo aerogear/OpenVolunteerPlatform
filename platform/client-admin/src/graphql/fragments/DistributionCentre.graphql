@@ -7,6 +7,5 @@ fragment DistributionCentreFields on DistributionCentre {
    postcode
    lat
    long
-   stockInformation
 
 } 

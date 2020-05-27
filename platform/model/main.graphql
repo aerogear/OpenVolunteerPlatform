@@ -11,7 +11,6 @@ type DistributionCentre implements Address {
   postcode: Int
   lat: Float
   long: Float
-  stockInformation: JSON,
   
   """
   @oneToMany field: "distributionCentre"
@@ -139,5 +138,4 @@ enum ActionStatus {
 }
 
 scalar DateTime
-scalar JSON
 scalar ID
