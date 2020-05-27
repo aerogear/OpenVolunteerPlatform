@@ -4,15 +4,15 @@ import {
   IonFooter,
   IonLoading,
   IonContent,
-  IonButton,
   IonIcon,
+  IonFab,
+  IonFabButton,
 } from '@ionic/react';
 import { Empty, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { useFindRecipientsQuery } from '../dataFacade';
 import { RecipientList } from '../components/model/RecipientList';
-import { Link } from 'react-router-dom';
-import { open } from 'ionicons/icons';
+import { add } from 'ionicons/icons';
 
 export const RecipientsPage: React.FC<RouteComponentProps> = ({ match }) => {
   let { data, loading, error } = useFindRecipientsQuery();
@@ -40,12 +40,11 @@ export const RecipientsPage: React.FC<RouteComponentProps> = ({ match }) => {
 
       <IonContent className="ion-padding" >
         {content}
-        <Link to={'createRecipient'}>
-          <IonButton item-start color='primary' fill="outline">
-            <IonIcon icon={open} />
-              Create Recipient
-          </IonButton>
-        </Link>
+        <IonFab vertical="top" horizontal="center" slot="fixed">
+          <IonFabButton routerLink="createRecipient">
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
       <IonFooter>
         <div>
