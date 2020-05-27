@@ -7,7 +7,7 @@ import {
   IonIcon,
   IonButtons
 } from '@ionic/react';
-import { helpBuoy, open } from 'ionicons/icons';
+import { peopleCircleSharp, open } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
 import { RecipientFieldsFragment } from '../../dataFacade';
 
@@ -15,7 +15,7 @@ export const Recipient: React.FC<{ recipient: RecipientFieldsFragment }> = ({ re
 
   return (
     <IonItem>
-      <IonIcon icon={helpBuoy} className='ion-margin-end ion-align-items-start' />
+      <IonIcon icon={peopleCircleSharp} className='ion-margin-end ion-align-items-start' />
       <IonLabel>
         <h2>{recipient.firstName} {recipient.lastName}</h2>
         <IonNote item-start>
