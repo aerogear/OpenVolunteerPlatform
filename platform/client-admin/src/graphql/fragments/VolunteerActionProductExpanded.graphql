@@ -11,5 +11,7 @@ fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
       description
       status
       createdAt
+      assignedAt
+      completedAt
    }
 } 
