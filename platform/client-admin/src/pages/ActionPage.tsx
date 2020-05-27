@@ -4,14 +4,14 @@ import {
   IonFooter,
   IonLoading,
   IonContent,
-  IonButton,
   IonIcon,
+  IonFab,
+  IonFabButton,
 } from '@ionic/react';
 import { Empty, ActionsList, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { useFindVolunteerActionsQuery } from '../dataFacade';
-import { Link } from 'react-router-dom';
-import { open } from 'ionicons/icons';
+import { add } from 'ionicons/icons';
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   const { data, loading, error } = useFindVolunteerActionsQuery()
@@ -39,12 +39,11 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
 
       <IonContent className="ion-padding" >
         {content}
-        <Link to={'createAction'}>
-          <IonButton item-start color='primary' fill="outline">
-            <IonIcon icon={open} />
-              Create Volunteer Action
-          </IonButton>
-        </Link>
+        <IonFab vertical="top" horizontal="center" slot="fixed">
+          <IonFabButton routerLink="createAction">
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
       <IonFooter>
         <div>
