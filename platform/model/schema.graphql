@@ -11,6 +11,8 @@ interface Address {
   address2: String
   city: String
   postcode: Int
+  lat: Float
+  long: Float
 }
 
 input BooleanInput {
@@ -45,6 +47,8 @@ input CreateRecipientInput {
   address2: String
   postcode: Int
   city: String
+  lat: Float
+  long: Float
   createdAt: DateTime
   prefferedProducts: String
 }
@@ -77,6 +81,8 @@ input CreateVolunteerInput {
   city: String
   postcode: Int
   dateOfBirth: DateTime
+  lat: Float
+  long: Float
   canDeliver: Boolean
 }
 
@@ -186,6 +192,8 @@ input MutateRecipientInput {
   address2: String
   postcode: Int
   city: String
+  lat: Float
+  long: Float
   createdAt: DateTime
   prefferedProducts: String
 }
@@ -212,6 +220,8 @@ input MutateVolunteerInput {
   city: String
   postcode: Int
   dateOfBirth: DateTime
+  lat: Float
+  long: Float
   canDeliver: Boolean
 }
 
@@ -300,6 +310,8 @@ type Recipient implements Address {
   address2: String
   postcode: Int
   city: String
+  lat: Float
+  long: Float
   createdAt: DateTime
 
   """
@@ -321,6 +333,8 @@ input RecipientFilter {
   address2: StringInput
   postcode: IntInput
   city: StringInput
+  lat: FloatInput
+  long: FloatInput
   createdAt: StringInput
   prefferedProducts: StringInput
   and: [RecipientFilter]
@@ -368,6 +382,8 @@ type Volunteer implements Address {
   city: String
   postcode: Int
   dateOfBirth: DateTime
+  lat: Float
+  long: Float
 
   """
   This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
@@ -472,6 +488,8 @@ input VolunteerFilter {
   city: StringInput
   postcode: IntInput
   dateOfBirth: StringInput
+  lat: FloatInput
+  long: FloatInput
   canDeliver: BooleanInput
   and: [VolunteerFilter]
   or: [VolunteerFilter]

@@ -35,6 +35,20 @@ const recipientSchema = new SimpleSchema({
         type: String,
         max: 220,
         required: false
+    },
+    lat: {
+        type: Number,
+        required: false,
+        uniforms: {
+            label: "Latitude"
+        }
+    },
+    long: {
+        type: Number,
+        required: false,
+        uniforms: {
+            label: "Longitude"
+        }
     }
 } as any);
 

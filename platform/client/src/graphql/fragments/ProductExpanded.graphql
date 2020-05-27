@@ -2,9 +2,6 @@ fragment ProductExpandedFields on Product {
    id
    label
    description
-   volunteerActionProducts {
-      id
-   }
    distributionCentre {
       id
       name
@@ -14,5 +11,8 @@ fragment ProductExpandedFields on Product {
       postcode
       lat
       long
+   }
+   volunteerActionProducts {
+      id
    }
 } 

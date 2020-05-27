@@ -7,6 +7,8 @@ fragment RecipientExpandedFields on Recipient {
    address2
    postcode
    city
+   lat
+   long
    createdAt
    prefferedProducts
    actions {

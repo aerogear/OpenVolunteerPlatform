@@ -11,7 +11,6 @@ type DistributionCentre implements Address {
   postcode: Int
   lat: Float
   long: Float
-  
   """
   @oneToMany field: "distributionCentre"
   """
@@ -33,6 +32,8 @@ type Volunteer implements Address {
   city: String
   postcode: Int
   dateOfBirth: DateTime
+  lat: Float
+  long: Float
   
   """
   This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
@@ -58,6 +59,8 @@ type Recipient implements Address {
   address2: String
   postcode: Int
   city: String
+  lat: Float
+  long: Float
   createdAt: DateTime
   """
   Comma separated list of preferrend products labels.
@@ -113,8 +116,10 @@ type VolunteerActionProduct {
 interface Address {
   address1: String
   address2: String
-  city: String,
+  city: String
   postcode: Int
+  lat: Float
+  long: Float
 }
 
 """

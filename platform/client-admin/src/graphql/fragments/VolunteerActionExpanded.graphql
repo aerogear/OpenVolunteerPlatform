@@ -28,6 +28,8 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       city
       postcode
       dateOfBirth
+      lat
+      long
       canDeliver
    }
    recipient {
@@ -39,6 +41,8 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       address2
       postcode
       city
+      lat
+      long
       createdAt
       prefferedProducts
    }

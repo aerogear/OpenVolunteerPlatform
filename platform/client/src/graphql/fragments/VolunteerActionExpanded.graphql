@@ -4,19 +4,6 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
    description
    status
    createdAt
-   volunteer {
-      id
-      firstName
-      lastName
-      email
-      username
-      address1
-      address2
-      city
-      postcode
-      dateOfBirth
-      canDeliver
-   }
    distributionCentre {
       id
       name
@@ -30,6 +17,21 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
    products {
       id
    }
+   volunteer {
+      id
+      firstName
+      lastName
+      email
+      username
+      address1
+      address2
+      city
+      postcode
+      dateOfBirth
+      lat
+      long
+      canDeliver
+   }
    recipient {
       id
       firstName
@@ -39,6 +41,8 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       address2
       postcode
       city
+      lat
+      long
       createdAt
       prefferedProducts
    }
