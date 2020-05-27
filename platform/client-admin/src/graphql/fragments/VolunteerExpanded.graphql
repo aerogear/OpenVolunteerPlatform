@@ -9,6 +9,8 @@ fragment VolunteerExpandedFields on Volunteer {
    city
    postcode
    dateOfBirth
+   lat
+   long
    canDeliver
    actions {
       id

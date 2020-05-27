@@ -20,10 +20,11 @@ import { AutoForm } from 'uniforms-ionic'
 
 export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
   let { keycloak, profile, volunteer, setVolunteer } = useContext(AuthContext);
-  const [createVolunteerMutation] = useCreateVolunteerMutation()
-  const [updateVolunteerMutation] = useUpdateVolunteerMutation()
-  const history = useHistory()
-  let createVolunteer = false;
+  const [createVolunteerMutation] = useCreateVolunteerMutation();
+  const [updateVolunteerMutation] = useUpdateVolunteerMutation();
+  const history = useHistory();
+  
+  const createVolunteer = volunteer?.id === undefined;
 
   if (!keycloak || !profile) return (
     <IonCard>
@@ -63,8 +64,9 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
     }
   }
 
+  console.log({volunteer});
+
   if (!volunteer) {
-    createVolunteer = true;
     volunteer = {
       email: profile.email,
       firstName: profile.firstName,
@@ -72,6 +74,18 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
       username: profile.username,
       canDeliver: false
     } as any;
+    if (navigator.geolocation) {
+      navigator.geolocation
+        .getCurrentPosition((location) => {
+          setVolunteer({
+            ...volunteer,
+            lat: location.coords.latitude,
+            long: location.coords.longitude
+          } as any);
+  
+          // TODO - get city and address using Google Map API and put on map
+        }, console.error);
+    }
   }
 
   return (

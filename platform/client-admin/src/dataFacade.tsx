@@ -25,6 +25,8 @@ export type Address = {
   address2?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
+  lat?: Maybe<Scalars['Float']>;
+  long?: Maybe<Scalars['Float']>;
 };
 
 export type BooleanInput = {
@@ -59,6 +61,8 @@ export type CreateRecipientInput = {
   address2?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
   city?: Maybe<Scalars['String']>;
+  lat?: Maybe<Scalars['Float']>;
+  long?: Maybe<Scalars['Float']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   prefferedProducts?: Maybe<Scalars['String']>;
 };
@@ -91,6 +95,8 @@ export type CreateVolunteerInput = {
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
+  lat?: Maybe<Scalars['Float']>;
+  long?: Maybe<Scalars['Float']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
 };
 
@@ -217,6 +223,8 @@ export type MutateRecipientInput = {
   address2?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
   city?: Maybe<Scalars['String']>;
+  lat?: Maybe<Scalars['Float']>;
+  long?: Maybe<Scalars['Float']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   prefferedProducts?: Maybe<Scalars['String']>;
 };
@@ -243,6 +251,8 @@ export type MutateVolunteerInput = {
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
+  lat?: Maybe<Scalars['Float']>;
+  long?: Maybe<Scalars['Float']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
 };
 
@@ -470,6 +480,8 @@ export type Recipient = Address & {
   address2?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
   city?: Maybe<Scalars['String']>;
+  lat?: Maybe<Scalars['Float']>;
+  long?: Maybe<Scalars['Float']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   /**
    * Comma separated list of preferrend products labels.
@@ -498,6 +510,8 @@ export type RecipientFilter = {
   address2?: Maybe<StringInput>;
   postcode?: Maybe<IntInput>;
   city?: Maybe<StringInput>;
+  lat?: Maybe<FloatInput>;
+  long?: Maybe<FloatInput>;
   createdAt?: Maybe<StringInput>;
   prefferedProducts?: Maybe<StringInput>;
   and?: Maybe<Array<Maybe<RecipientFilter>>>;
@@ -547,6 +561,8 @@ export type Volunteer = Address & {
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
+  lat?: Maybe<Scalars['Float']>;
+  long?: Maybe<Scalars['Float']>;
   /**
    * This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
    * @db.default: false
@@ -665,6 +681,8 @@ export type VolunteerFilter = {
   city?: Maybe<StringInput>;
   postcode?: Maybe<IntInput>;
   dateOfBirth?: Maybe<StringInput>;
+  lat?: Maybe<FloatInput>;
+  long?: Maybe<FloatInput>;
   canDeliver?: Maybe<BooleanInput>;
   and?: Maybe<Array<Maybe<VolunteerFilter>>>;
   or?: Maybe<Array<Maybe<VolunteerFilter>>>;
@@ -715,12 +733,12 @@ export type ProductExpandedFieldsFragment = (
 
 export type RecipientFieldsFragment = (
   { __typename?: 'Recipient' }
-  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
+  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'createdAt' | 'prefferedProducts'>
 );
 
 export type RecipientExpandedFieldsFragment = (
   { __typename?: 'Recipient' }
-  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
+  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'createdAt' | 'prefferedProducts'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
@@ -729,7 +747,7 @@ export type RecipientExpandedFieldsFragment = (
 
 export type VolunteerFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'lat' | 'long' | 'canDeliver'>
 );
 
 export type VolunteerActionFieldsFragment = (
@@ -748,10 +766,10 @@ export type VolunteerActionExpandedFieldsFragment = (
     & Pick<VolunteerActionProduct, 'id'>
   )>>>, volunteer?: Maybe<(
     { __typename?: 'Volunteer' }
-    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver'>
+    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'lat' | 'long' | 'canDeliver'>
   )>, recipient?: Maybe<(
     { __typename?: 'Recipient' }
-    & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'createdAt' | 'prefferedProducts'>
+    & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'createdAt' | 'prefferedProducts'>
   )> }
 );
 
@@ -774,7 +792,7 @@ export type VolunteerActionProductExpandedFieldsFragment = (
 
 export type VolunteerExpandedFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'lat' | 'long' | 'canDeliver'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
@@ -1252,6 +1270,8 @@ export const RecipientFieldsFragmentDoc = gql`
   address2
   postcode
   city
+  lat
+  long
   createdAt
   prefferedProducts
 }
@@ -1266,6 +1286,8 @@ export const RecipientExpandedFieldsFragmentDoc = gql`
   address2
   postcode
   city
+  lat
+  long
   createdAt
   prefferedProducts
   actions {
@@ -1289,6 +1311,8 @@ export const VolunteerFieldsFragmentDoc = gql`
   city
   postcode
   dateOfBirth
+  lat
+  long
   canDeliver
 }
     `;
@@ -1332,6 +1356,8 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     city
     postcode
     dateOfBirth
+    lat
+    long
     canDeliver
   }
   recipient {
@@ -1343,6 +1369,8 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     address2
     postcode
     city
+    lat
+    long
     createdAt
     prefferedProducts
   }
@@ -1382,6 +1410,8 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
   city
   postcode
   dateOfBirth
+  lat
+  long
   canDeliver
   actions {
     id

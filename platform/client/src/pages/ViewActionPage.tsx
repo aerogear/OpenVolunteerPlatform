@@ -31,6 +31,7 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
   let distributionCentre;
 
   if (model.distributionCentre) {
+    // TODO add recipient to Map
     distributionCentre = model.distributionCentre;
     const title = `${distributionCentre.address1} ${distributionCentre.address2} ${distributionCentre.city}`;
     mapContent = <Map center={{
