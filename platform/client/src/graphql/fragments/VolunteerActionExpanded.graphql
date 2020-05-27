@@ -4,6 +4,8 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
    description
    status
    createdAt
+   assignedAt
+   completedAt
    distributionCentre {
       id
       name

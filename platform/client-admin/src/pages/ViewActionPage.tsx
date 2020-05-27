@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Map } from '../components/Map';
 import { IUpdateMatchParams } from '../declarations';
-import { useUpdateVolunteerActionMutation, useFindVolunteerActionDetailsQuery } from '../dataFacade';
+import { useUpdateVolunteerActionMutation, useFindVolunteerActionDetailsQuery, ActionStatus } from '../dataFacade';
 import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic';
 import volunteerActionForm from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
@@ -73,7 +73,9 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                     variables: {
                       input: {
                         id: model.id,
-                        status: model.status
+                        status: model.status,
+                        assignedAt: model.status === ActionStatus.Assigned ? new Date(): undefined,
+                        completedAt: model.status === ActionStatus.Completed ? new Date(): undefined
                       }
                     }
                   }).then(() => {

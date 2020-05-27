@@ -4,5 +4,7 @@ fragment VolunteerActionFields on VolunteerAction {
    description
    status
    createdAt
+   assignedAt
+   completedAt
 
 } 

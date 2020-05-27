@@ -17,5 +17,7 @@ fragment RecipientExpandedFields on Recipient {
       description
       status
       createdAt
+      assignedAt
+      completedAt
    }
 } 

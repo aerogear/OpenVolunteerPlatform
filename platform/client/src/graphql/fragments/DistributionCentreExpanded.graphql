@@ -18,5 +18,7 @@ fragment DistributionCentreExpandedFields on DistributionCentre {
       description
       status
       createdAt
+      assignedAt
+      completedAt
    }
 } 

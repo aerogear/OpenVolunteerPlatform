@@ -73,6 +73,8 @@ export type CreateVolunteerActionInput = {
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  assignedAt?: Maybe<Scalars['DateTime']>;
+  completedAt?: Maybe<Scalars['DateTime']>;
   distributionCentreId?: Maybe<Scalars['ID']>;
   volunteerId?: Maybe<Scalars['ID']>;
   recipientId?: Maybe<Scalars['ID']>;
@@ -235,6 +237,8 @@ export type MutateVolunteerActionInput = {
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  assignedAt?: Maybe<Scalars['DateTime']>;
+  completedAt?: Maybe<Scalars['DateTime']>;
   distributionCentreId?: Maybe<Scalars['ID']>;
   volunteerId?: Maybe<Scalars['ID']>;
   recipientId?: Maybe<Scalars['ID']>;
@@ -592,6 +596,8 @@ export type VolunteerAction = {
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
   createdAt?: Maybe<Scalars['DateTime']>;
+  assignedAt?: Maybe<Scalars['DateTime']>;
+  completedAt?: Maybe<Scalars['DateTime']>;
   /** @manyToOne field: 'actions', key: 'distributionCentreId' */
   distributionCentre?: Maybe<DistributionCentre>;
   /** @oneToMany field: 'volunteerAction', key: 'volunteerActionId' */
@@ -617,6 +623,8 @@ export type VolunteerActionFilter = {
   description?: Maybe<StringInput>;
   status?: Maybe<StringInput>;
   createdAt?: Maybe<StringInput>;
+  assignedAt?: Maybe<StringInput>;
+  completedAt?: Maybe<StringInput>;
   distributionCentreId?: Maybe<IdInput>;
   volunteerId?: Maybe<IdInput>;
   recipientId?: Maybe<IdInput>;
@@ -710,7 +718,7 @@ export type DistributionCentreExpandedFieldsFragment = (
     & Pick<Product, 'id' | 'label' | 'description'>
   )>>>, actions: Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt'>
   )>> }
 );
 
@@ -741,7 +749,7 @@ export type RecipientExpandedFieldsFragment = (
   & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'createdAt' | 'prefferedProducts'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt'>
   )>>> }
 );
 
@@ -752,12 +760,12 @@ export type VolunteerFieldsFragment = (
 
 export type VolunteerActionFieldsFragment = (
   { __typename?: 'VolunteerAction' }
-  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
+  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt'>
 );
 
 export type VolunteerActionExpandedFieldsFragment = (
   { __typename?: 'VolunteerAction' }
-  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
+  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt'>
   & { distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
     & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
@@ -786,7 +794,7 @@ export type VolunteerActionProductExpandedFieldsFragment = (
     & Pick<Product, 'id' | 'label' | 'description'>
   )>, volunteerAction?: Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt'>
   )> }
 );
 
@@ -795,7 +803,7 @@ export type VolunteerExpandedFieldsFragment = (
   & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'lat' | 'long' | 'canDeliver'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt'>
   )>>> }
 );
 
@@ -1200,6 +1208,8 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
     description
     status
     createdAt
+    assignedAt
+    completedAt
   }
 }
     `;
@@ -1266,6 +1276,8 @@ export const RecipientExpandedFieldsFragmentDoc = gql`
     description
     status
     createdAt
+    assignedAt
+    completedAt
   }
 }
     `;
@@ -1293,6 +1305,8 @@ export const VolunteerActionFieldsFragmentDoc = gql`
   description
   status
   createdAt
+  assignedAt
+  completedAt
 }
     `;
 export const VolunteerActionExpandedFieldsFragmentDoc = gql`
@@ -1302,6 +1316,8 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
   description
   status
   createdAt
+  assignedAt
+  completedAt
   distributionCentre {
     id
     name
@@ -1365,6 +1381,8 @@ export const VolunteerActionProductExpandedFieldsFragmentDoc = gql`
     description
     status
     createdAt
+    assignedAt
+    completedAt
   }
 }
     `;
@@ -1389,6 +1407,8 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
     description
     status
     createdAt
+    assignedAt
+    completedAt
   }
 }
     `;
