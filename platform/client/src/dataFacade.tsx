@@ -103,6 +103,17 @@ export type CreateVolunteerInput = {
 };
 
 
+export type DateTimeInput = {
+  ne?: Maybe<Scalars['DateTime']>;
+  eq?: Maybe<Scalars['DateTime']>;
+  le?: Maybe<Scalars['DateTime']>;
+  lt?: Maybe<Scalars['DateTime']>;
+  ge?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Maybe<Scalars['DateTime']>>>;
+  between?: Maybe<Array<Maybe<Scalars['DateTime']>>>;
+};
+
 /**
  * @model
  * @crud.delete: false
@@ -182,9 +193,6 @@ export type IdInput = {
   ge?: Maybe<Scalars['ID']>;
   gt?: Maybe<Scalars['ID']>;
   in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  contains?: Maybe<Scalars['ID']>;
-  startsWith?: Maybe<Scalars['ID']>;
-  endsWith?: Maybe<Scalars['ID']>;
 };
 
 export type IntInput = {
@@ -516,7 +524,7 @@ export type RecipientFilter = {
   city?: Maybe<StringInput>;
   lat?: Maybe<FloatInput>;
   long?: Maybe<FloatInput>;
-  createdAt?: Maybe<StringInput>;
+  createdAt?: Maybe<DateTimeInput>;
   prefferedProducts?: Maybe<StringInput>;
   and?: Maybe<Array<Maybe<RecipientFilter>>>;
   or?: Maybe<Array<Maybe<RecipientFilter>>>;
@@ -622,9 +630,9 @@ export type VolunteerActionFilter = {
   title?: Maybe<StringInput>;
   description?: Maybe<StringInput>;
   status?: Maybe<StringInput>;
-  createdAt?: Maybe<StringInput>;
-  assignedAt?: Maybe<StringInput>;
-  completedAt?: Maybe<StringInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  assignedAt?: Maybe<DateTimeInput>;
+  completedAt?: Maybe<DateTimeInput>;
   distributionCentreId?: Maybe<IdInput>;
   volunteerId?: Maybe<IdInput>;
   recipientId?: Maybe<IdInput>;
@@ -688,7 +696,7 @@ export type VolunteerFilter = {
   address2?: Maybe<StringInput>;
   city?: Maybe<StringInput>;
   postcode?: Maybe<IntInput>;
-  dateOfBirth?: Maybe<StringInput>;
+  dateOfBirth?: Maybe<DateTimeInput>;
   lat?: Maybe<FloatInput>;
   long?: Maybe<FloatInput>;
   canDeliver?: Maybe<BooleanInput>;
