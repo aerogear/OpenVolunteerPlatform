@@ -1,0 +1,147 @@
+query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime, $lat: [Float], $long:[Float]) {
+  CreatedActions: findVolunteerActions(filter: { status: { eq: "CREATED" } }) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+
+  AssignedActions: findVolunteerActions(filter: { status: { eq: "ASSIGNED" } }) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+
+  CompletedActions: findVolunteerActions(filter: { status: { eq: "COMPLETED" } }) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+
+  ActionsCreatedToday: findVolunteerActions(
+    filter: { status: { eq: "CREATED" }, createdAt: { ge: $todayMidnight } }
+  ) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+
+  ActionsAssignedToday: findVolunteerActions(
+    filter: { status: { eq: "ASSIGNED" }, assignedAt: { ge: $todayMidnight } }
+  ) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+
+  ActionsCommpletedToday: findVolunteerActions(
+    filter: { status: { eq: "COMPLETED" }, completedAt: { ge: $todayMidnight } }
+  ) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+
+  ActionsCreatedButNeverAssigned: findVolunteerActions(
+    filter: { status: { eq: "CREATED" }, assignedAt: { eq: null } }
+  ) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+
+  ActionsAssignedButNeverCompleted: findVolunteerActions(
+    filter: {
+      status: { eq: "ASSIGNED" }
+      completedAt: { eq: null }
+    }
+  ) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  
+  ActionsCreatedTodayButNotAssigned: findVolunteerActions(
+    filter: {
+      status: { eq: "CREATED" }
+      createdAt: { ge: $todayMidnight }
+      assignedAt: { eq: null }
+    }
+  ) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  
+  ActionsAssignedTodayButNotCompleted: findVolunteerActions(
+    filter: {
+      status: { eq: "ASSIGNED" }
+      assignedAt: { ge: $todayMidnight }
+      completedAt: { eq: null }
+    }
+  ) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  
+  ActionsCreatedAssignedAndCompletedToday: findVolunteerActions(
+    filter: {
+      status: { eq: "COMPLETED" }
+      createdAt: { ge: $todayMidnight, lt: $tomorrowMidnight }
+      assignedAt: { ge: $todayMidnight, lt: $tomorrowMidnight }
+      completedAt: { ge: $todayMidnight, lt: $tomorrowMidnight }
+    }
+  ) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+
+  CreatedActionsNearbyCurrentLocation: findRecipients(filter: {
+    lat: {
+      between: $lat
+    },
+    long: {
+      between: $long
+    }
+  }) {
+    items {
+      id,
+      actions(filter: {status: {eq: "CREATED"}}) {
+        ...VolunteerActionFields
+      }
+    }
+  }
+
+  AssignedActionsNearbyCurrentLocation: findRecipients(filter: {
+    lat: {
+      between: $lat
+    },
+    long: {
+      between: $long
+    }
+  }) {
+    items {
+      id,
+      actions(filter: {status: {eq: "ASSIGNED"}}) {
+       ...VolunteerActionFields
+      }
+    }
+  }
+
+  CompletedActionsNearbyCurrentLocation: findRecipients(filter: {
+    lat: {
+      between: $lat
+    },
+    long: {
+      between: $long
+    }
+  }) {
+    items {
+      id,
+      actions(filter: {status: {eq: "COMPLETED"}}) {
+       ...VolunteerActionFields
+      }
+    }
+  }
+}

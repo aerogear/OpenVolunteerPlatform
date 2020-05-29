@@ -26,6 +26,7 @@ import { CreateVolunteerPage } from '../pages/CreateVolunteerPage';
 import { CreateVolunteerActionPage } from '../pages/CreateVolunteerAction';
 import { ViewDistributionCentrePage } from '../pages/ViewDistributionCentrePage';
 import { CreateDistributionCentrePage } from '../pages/CreateDistributionCentrePage';
+import { ActionReportPage } from '../pages/ActionReportPage';
 
 export const Router: React.FC = () => {
   return (
@@ -41,7 +42,7 @@ export const Router: React.FC = () => {
               <Route path="/map" component={MapPage} exact />
               <Route path="/schedule" component={SchedulePage} exact />
               <Route path="/optimize" component={OptimizePage} exact />
-              <Route path="/reports" component={OptimizePage} exact />
+              <Route path="/reports" component={ActionReportPage} exact />
               <Route path="/products" component={ProductsPage} />
               <Route path="/manageProduct/:id" component={ViewProductPage} exact />
               <Route path="/createProduct" component={CreateProductPage} exact />

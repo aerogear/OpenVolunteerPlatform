@@ -103,6 +103,17 @@ export type CreateVolunteerInput = {
 };
 
 
+export type DateTimeInput = {
+  ne?: Maybe<Scalars['DateTime']>;
+  eq?: Maybe<Scalars['DateTime']>;
+  le?: Maybe<Scalars['DateTime']>;
+  lt?: Maybe<Scalars['DateTime']>;
+  ge?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Maybe<Scalars['DateTime']>>>;
+  between?: Maybe<Array<Maybe<Scalars['DateTime']>>>;
+};
+
 /**
  * @model
  * @crud.delete: false
@@ -182,9 +193,6 @@ export type IdInput = {
   ge?: Maybe<Scalars['ID']>;
   gt?: Maybe<Scalars['ID']>;
   in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  contains?: Maybe<Scalars['ID']>;
-  startsWith?: Maybe<Scalars['ID']>;
-  endsWith?: Maybe<Scalars['ID']>;
 };
 
 export type IntInput = {
@@ -516,7 +524,7 @@ export type RecipientFilter = {
   city?: Maybe<StringInput>;
   lat?: Maybe<FloatInput>;
   long?: Maybe<FloatInput>;
-  createdAt?: Maybe<StringInput>;
+  createdAt?: Maybe<DateTimeInput>;
   prefferedProducts?: Maybe<StringInput>;
   and?: Maybe<Array<Maybe<RecipientFilter>>>;
   or?: Maybe<Array<Maybe<RecipientFilter>>>;
@@ -622,9 +630,9 @@ export type VolunteerActionFilter = {
   title?: Maybe<StringInput>;
   description?: Maybe<StringInput>;
   status?: Maybe<StringInput>;
-  createdAt?: Maybe<StringInput>;
-  assignedAt?: Maybe<StringInput>;
-  completedAt?: Maybe<StringInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  assignedAt?: Maybe<DateTimeInput>;
+  completedAt?: Maybe<DateTimeInput>;
   distributionCentreId?: Maybe<IdInput>;
   volunteerId?: Maybe<IdInput>;
   recipientId?: Maybe<IdInput>;
@@ -688,7 +696,7 @@ export type VolunteerFilter = {
   address2?: Maybe<StringInput>;
   city?: Maybe<StringInput>;
   postcode?: Maybe<IntInput>;
-  dateOfBirth?: Maybe<StringInput>;
+  dateOfBirth?: Maybe<DateTimeInput>;
   lat?: Maybe<FloatInput>;
   long?: Maybe<FloatInput>;
   canDeliver?: Maybe<BooleanInput>;
@@ -1164,6 +1172,115 @@ export type GetRecipientQuery = (
     { __typename?: 'Recipient' }
     & RecipientExpandedFieldsFragment
   )> }
+);
+
+export type GetTodayActionReportQueryVariables = {
+  todayMidnight?: Maybe<Scalars['DateTime']>;
+  tomorrowMidnight?: Maybe<Scalars['DateTime']>;
+  lat?: Maybe<Array<Maybe<Scalars['Float']>>>;
+  long?: Maybe<Array<Maybe<Scalars['Float']>>>;
+};
+
+
+export type GetTodayActionReportQuery = (
+  { __typename?: 'Query' }
+  & { CreatedActions: (
+    { __typename?: 'VolunteerActionResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerAction' }
+      & VolunteerActionFieldsFragment
+    )>> }
+  ), AssignedActions: (
+    { __typename?: 'VolunteerActionResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerAction' }
+      & VolunteerActionFieldsFragment
+    )>> }
+  ), CompletedActions: (
+    { __typename?: 'VolunteerActionResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerAction' }
+      & VolunteerActionFieldsFragment
+    )>> }
+  ), ActionsCreatedToday: (
+    { __typename?: 'VolunteerActionResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerAction' }
+      & VolunteerActionFieldsFragment
+    )>> }
+  ), ActionsAssignedToday: (
+    { __typename?: 'VolunteerActionResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerAction' }
+      & VolunteerActionFieldsFragment
+    )>> }
+  ), ActionsCommpletedToday: (
+    { __typename?: 'VolunteerActionResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerAction' }
+      & VolunteerActionFieldsFragment
+    )>> }
+  ), ActionsCreatedButNeverAssigned: (
+    { __typename?: 'VolunteerActionResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerAction' }
+      & VolunteerActionFieldsFragment
+    )>> }
+  ), ActionsAssignedButNeverCompleted: (
+    { __typename?: 'VolunteerActionResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerAction' }
+      & VolunteerActionFieldsFragment
+    )>> }
+  ), ActionsCreatedTodayButNotAssigned: (
+    { __typename?: 'VolunteerActionResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerAction' }
+      & VolunteerActionFieldsFragment
+    )>> }
+  ), ActionsAssignedTodayButNotCompleted: (
+    { __typename?: 'VolunteerActionResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerAction' }
+      & VolunteerActionFieldsFragment
+    )>> }
+  ), ActionsCreatedAssignedAndCompletedToday: (
+    { __typename?: 'VolunteerActionResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'VolunteerAction' }
+      & VolunteerActionFieldsFragment
+    )>> }
+  ), CreatedActionsNearbyCurrentLocation: (
+    { __typename?: 'RecipientResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'Recipient' }
+      & Pick<Recipient, 'id'>
+      & { actions?: Maybe<Array<Maybe<(
+        { __typename?: 'VolunteerAction' }
+        & VolunteerActionFieldsFragment
+      )>>> }
+    )>> }
+  ), AssignedActionsNearbyCurrentLocation: (
+    { __typename?: 'RecipientResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'Recipient' }
+      & Pick<Recipient, 'id'>
+      & { actions?: Maybe<Array<Maybe<(
+        { __typename?: 'VolunteerAction' }
+        & VolunteerActionFieldsFragment
+      )>>> }
+    )>> }
+  ), CompletedActionsNearbyCurrentLocation: (
+    { __typename?: 'RecipientResultList' }
+    & { items: Array<Maybe<(
+      { __typename?: 'Recipient' }
+      & Pick<Recipient, 'id'>
+      & { actions?: Maybe<Array<Maybe<(
+        { __typename?: 'VolunteerAction' }
+        & VolunteerActionFieldsFragment
+      )>>> }
+    )>> }
+  ) }
 );
 
 export type GetVolunteerQueryVariables = {
@@ -2253,6 +2370,118 @@ export function useGetRecipientLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type GetRecipientQueryHookResult = ReturnType<typeof useGetRecipientQuery>;
 export type GetRecipientLazyQueryHookResult = ReturnType<typeof useGetRecipientLazyQuery>;
 export type GetRecipientQueryResult = ApolloReactCommon.QueryResult<GetRecipientQuery, GetRecipientQueryVariables>;
+export const GetTodayActionReportDocument = gql`
+    query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime, $lat: [Float], $long: [Float]) {
+  CreatedActions: findVolunteerActions(filter: {status: {eq: "CREATED"}}) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  AssignedActions: findVolunteerActions(filter: {status: {eq: "ASSIGNED"}}) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  CompletedActions: findVolunteerActions(filter: {status: {eq: "COMPLETED"}}) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  ActionsCreatedToday: findVolunteerActions(filter: {status: {eq: "CREATED"}, createdAt: {ge: $todayMidnight}}) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  ActionsAssignedToday: findVolunteerActions(filter: {status: {eq: "ASSIGNED"}, assignedAt: {ge: $todayMidnight}}) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  ActionsCommpletedToday: findVolunteerActions(filter: {status: {eq: "COMPLETED"}, completedAt: {ge: $todayMidnight}}) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  ActionsCreatedButNeverAssigned: findVolunteerActions(filter: {status: {eq: "CREATED"}, assignedAt: {eq: null}}) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  ActionsAssignedButNeverCompleted: findVolunteerActions(filter: {status: {eq: "ASSIGNED"}, completedAt: {eq: null}}) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  ActionsCreatedTodayButNotAssigned: findVolunteerActions(filter: {status: {eq: "CREATED"}, createdAt: {ge: $todayMidnight}, assignedAt: {eq: null}}) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  ActionsAssignedTodayButNotCompleted: findVolunteerActions(filter: {status: {eq: "ASSIGNED"}, assignedAt: {ge: $todayMidnight}, completedAt: {eq: null}}) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  ActionsCreatedAssignedAndCompletedToday: findVolunteerActions(filter: {status: {eq: "COMPLETED"}, createdAt: {ge: $todayMidnight, lt: $tomorrowMidnight}, assignedAt: {ge: $todayMidnight, lt: $tomorrowMidnight}, completedAt: {ge: $todayMidnight, lt: $tomorrowMidnight}}) {
+    items {
+      ...VolunteerActionFields
+    }
+  }
+  CreatedActionsNearbyCurrentLocation: findRecipients(filter: {lat: {between: $lat}, long: {between: $long}}) {
+    items {
+      id
+      actions(filter: {status: {eq: "CREATED"}}) {
+        ...VolunteerActionFields
+      }
+    }
+  }
+  AssignedActionsNearbyCurrentLocation: findRecipients(filter: {lat: {between: $lat}, long: {between: $long}}) {
+    items {
+      id
+      actions(filter: {status: {eq: "ASSIGNED"}}) {
+        ...VolunteerActionFields
+      }
+    }
+  }
+  CompletedActionsNearbyCurrentLocation: findRecipients(filter: {lat: {between: $lat}, long: {between: $long}}) {
+    items {
+      id
+      actions(filter: {status: {eq: "COMPLETED"}}) {
+        ...VolunteerActionFields
+      }
+    }
+  }
+}
+    ${VolunteerActionFieldsFragmentDoc}`;
+
+/**
+ * __useGetTodayActionReportQuery__
+ *
+ * To run a query within a React component, call `useGetTodayActionReportQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTodayActionReportQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTodayActionReportQuery({
+ *   variables: {
+ *      todayMidnight: // value for 'todayMidnight'
+ *      tomorrowMidnight: // value for 'tomorrowMidnight'
+ *      lat: // value for 'lat'
+ *      long: // value for 'long'
+ *   },
+ * });
+ */
+export function useGetTodayActionReportQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>(GetTodayActionReportDocument, baseOptions);
+      }
+export function useGetTodayActionReportLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>(GetTodayActionReportDocument, baseOptions);
+        }
+export type GetTodayActionReportQueryHookResult = ReturnType<typeof useGetTodayActionReportQuery>;
+export type GetTodayActionReportLazyQueryHookResult = ReturnType<typeof useGetTodayActionReportLazyQuery>;
+export type GetTodayActionReportQueryResult = ApolloReactCommon.QueryResult<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>;
 export const GetVolunteerDocument = gql`
     query getVolunteer($id: ID!) {
   getVolunteer(id: $id) {

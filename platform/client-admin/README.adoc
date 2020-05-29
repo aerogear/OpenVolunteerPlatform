@@ -47,3 +47,12 @@ accordingly.
 }
 ----
 
+
+=== Customizing the Action Reports Grid
+
+Column size can be customized via the `REACT_APP_REPORT_COLUMN_SIZE` environment variable. This value can be changed in `.env` file. The default value is `4`.
+
+=== Customizing action report nearby distance
+
+Nearby distance to calculate actions reports depending on closeness of recipient location can be customized via `REACT_APP_NEARBY_MAX_DISTANCE` environment variable.
+This value can be changed in `.env` file. The default value is `100` km.

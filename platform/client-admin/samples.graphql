@@ -200,26 +200,26 @@ query findVolunteerActions {
 }
 
 # Queries that will be used to construct the report page
-query ActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime) {
-  created: findVolunteerActions(filter: { status: { eq: "CREATED" } }) {
+query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime, $lat: [Float], $long: [Float]) {
+  CreatedActions: findVolunteerActions(filter: { status: { eq: "CREATED" } }) {
     items {
       id
     }
   }
 
-  assigned: findVolunteerActions(filter: { status: { eq: "ASSIGNED" } }) {
+  AssignedActions: findVolunteerActions(filter: { status: { eq: "ASSIGNED" } }) {
     items {
       id
     }
   }
 
-  completed: findVolunteerActions(filter: { status: { eq: "COMPLETED" } }) {
+  CompletedActions: findVolunteerActions(filter: { status: { eq: "COMPLETED" } }) {
     items {
       id
     }
   }
 
-  createdInADate: findVolunteerActions(
+  ActionsCreatedToday: findVolunteerActions(
     filter: { status: { eq: "CREATED" }, createdAt: { ge: $todayMidnight } }
   ) {
     items {
@@ -227,7 +227,7 @@ query ActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime) {
     }
   }
 
-  assignedInADate: findVolunteerActions(
+  ActionsAssignedToday: findVolunteerActions(
     filter: { status: { eq: "ASSIGNED" }, assignedAt: { ge: $todayMidnight } }
   ) {
     items {
@@ -235,7 +235,7 @@ query ActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime) {
     }
   }
 
-  completedInADate: findVolunteerActions(
+  ActionsCommpletedToday: findVolunteerActions(
     filter: { status: { eq: "COMPLETED" }, completedAt: { ge: $todayMidnight } }
   ) {
     items {
@@ -243,7 +243,7 @@ query ActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime) {
     }
   }
 
-  createdButNeverAssigned: findVolunteerActions(
+  ActionsCreatedButNeverAssigned: findVolunteerActions(
     filter: { status: { eq: "CREATED" }, assignedAt: { eq: null } }
   ) {
     items {
@@ -251,7 +251,7 @@ query ActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime) {
     }
   }
 
-  assignedButNeverCompleted: findVolunteerActions(
+  ActionsAssignedButNeverCompleted: findVolunteerActions(
     filter: {
       status: { eq: "ASSIGNED" }
       completedAt: { eq: null }
@@ -262,7 +262,7 @@ query ActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime) {
     }
   }
   
-  createdInADateButNotAssigned: findVolunteerActions(
+  ActionsCreatedTodayButNotAssigned: findVolunteerActions(
     filter: {
       status: { eq: "CREATED" }
       createdAt: { ge: $todayMidnight }
@@ -274,7 +274,7 @@ query ActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime) {
     }
   }
   
-  assignedInADateButNotCompleted: findVolunteerActions(
+  ActionsAssignedTodayButNotCompleted: findVolunteerActions(
     filter: {
       status: { eq: "ASSIGNED" }
       assignedAt: { ge: $todayMidnight }
@@ -286,7 +286,7 @@ query ActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime) {
     }
   }
   
-  createdAssignedAndCompletedWithinADay: findVolunteerActions(
+  ActionsCreatedAssignedAndCompletedToday: findVolunteerActions(
     filter: {
       status: { eq: "COMPLETED" }
       createdAt: { ge: $todayMidnight, lt: $tomorrowMidnight }
@@ -296,6 +296,52 @@ query ActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime) {
   ) {
     items {
       id
+    }
+  }
+
+ CreatedActionsNearbyCurrentLocation: findRecipients(filter: {
+    lat: {
+      between: $lat
+    },
+    long: {
+      between: $long
+    }
+  }) {
+    items {
+      id,
+      actions(filter: {status: {eq: "CREATED"}}) {
+        id
+      }
+    }
+  }
+  AssignedActionsNearbyCurrentLocation: findRecipients(filter: {
+    lat: {
+      between: $lat
+    },
+    long: {
+      between: $long
+    }
+  }) {
+    items {
+      id,
+      actions(filter: {status: {eq: "ASSIGNED"}}) {
+        id
+      }
+    }
+  }
+  CompletedActionsNearbyCurrentLocation: findRecipients(filter: {
+    lat: {
+      between: $lat
+    },
+    long: {
+      between: $long
+    }
+  }) {
+    items {
+      id,
+      actions(filter: {status: {eq: "COMPLETED"}}) {
+        id
+      }
     }
   }
 }
