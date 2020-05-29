@@ -198,3 +198,104 @@ query findVolunteerActions {
     }
   }
 }
+
+# Queries that will be used to construct the report page
+query ActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime) {
+  created: findVolunteerActions(filter: { status: { eq: "CREATED" } }) {
+    items {
+      id
+    }
+  }
+
+  assigned: findVolunteerActions(filter: { status: { eq: "ASSIGNED" } }) {
+    items {
+      id
+    }
+  }
+
+  completed: findVolunteerActions(filter: { status: { eq: "COMPLETED" } }) {
+    items {
+      id
+    }
+  }
+
+  createdInADate: findVolunteerActions(
+    filter: { status: { eq: "CREATED" }, createdAt: { ge: $todayMidnight } }
+  ) {
+    items {
+      id
+    }
+  }
+
+  assignedInADate: findVolunteerActions(
+    filter: { status: { eq: "ASSIGNED" }, assignedAt: { ge: $todayMidnight } }
+  ) {
+    items {
+      id
+    }
+  }
+
+  completedInADate: findVolunteerActions(
+    filter: { status: { eq: "COMPLETED" }, completedAt: { ge: $todayMidnight } }
+  ) {
+    items {
+      id
+    }
+  }
+
+  createdButNeverAssigned: findVolunteerActions(
+    filter: { status: { eq: "CREATED" }, assignedAt: { eq: null } }
+  ) {
+    items {
+      id
+    }
+  }
+
+  assignedButNeverCompleted: findVolunteerActions(
+    filter: {
+      status: { eq: "ASSIGNED" }
+      completedAt: { eq: null }
+    }
+  ) {
+    items {
+      id
+    }
+  }
+  
+  createdInADateButNotAssigned: findVolunteerActions(
+    filter: {
+      status: { eq: "CREATED" }
+      createdAt: { ge: $todayMidnight }
+      assignedAt: { eq: null }
+    }
+  ) {
+    items {
+      id
+    }
+  }
+  
+  assignedInADateButNotCompleted: findVolunteerActions(
+    filter: {
+      status: { eq: "ASSIGNED" }
+      assignedAt: { ge: $todayMidnight }
+      completedAt: { eq: null }
+    }
+  ) {
+    items {
+      id
+    }
+  }
+  
+  createdAssignedAndCompletedWithinADay: findVolunteerActions(
+    filter: {
+      status: { eq: "COMPLETED" }
+      createdAt: { ge: $todayMidnight, lt: $tomorrowMidnight }
+      assignedAt: { ge: $todayMidnight, lt: $tomorrowMidnight }
+      completedAt: { ge: $todayMidnight, lt: $tomorrowMidnight }
+    }
+  ) {
+    items {
+      id
+    }
+  }
+}
