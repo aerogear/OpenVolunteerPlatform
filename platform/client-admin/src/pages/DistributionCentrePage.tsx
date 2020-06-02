@@ -30,7 +30,7 @@ export const DistributionCentrePage: React.FC<RouteComponentProps> = ({ match })
       lat: 0, lng: 0
     };
 
-    let distributionMarkers = distributionCentres
+    const distributionMarkers = distributionCentres
       .map((distributionCentre, index) => {
         const lat = distributionCentre?.lat!;
         const lng = distributionCentre?.long!;
@@ -63,7 +63,7 @@ export const DistributionCentrePage: React.FC<RouteComponentProps> = ({ match })
 
   return (
     <IonPage>
-      <Header title="List of Distribution" match={match} />
+      <Header title="Distribution Centers Map" match={match} />
       <IonContent className="ion-padding" >
         {mapContent}
         <IonFab vertical="top" horizontal="center" slot="fixed">
