@@ -14,7 +14,7 @@ import { useFindVolunteerActionsQuery } from '../dataFacade';
 import { add } from 'ionicons/icons';
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
-  const { data, loading, error } = useFindVolunteerActionsQuery()
+  const { data, loading, error } = useFindVolunteerActionsQuery();
 
   if (error) {
     console.log(error);

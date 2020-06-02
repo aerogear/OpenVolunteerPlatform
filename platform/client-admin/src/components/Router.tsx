@@ -12,7 +12,7 @@ import { ViewVolunteerPage } from '../pages/ViewVolunteerPage';
 
 import { Menu } from './Menu';
 import { SchedulePage } from '../pages/SchedulePage';
-import { MapPage } from '../pages/MapPage';
+import { ActionsMapPage } from '../pages/ActionsMapPage';
 import { OptimizePage } from '../pages/OptimizePage';
 import { DistributionCentrePage } from '../pages/DistributionCentrePage';
 import { RecipientsPage } from '../pages/RecipientsPage';
@@ -39,7 +39,7 @@ export const Router: React.FC = () => {
               <Route path="/viewAction/:id" component={ViewActionPage} exact />
               <Route path="/createAction" component={CreateVolunteerActionPage} exact />
               <Route path="/actions" component={ActionPage} exact />
-              <Route path="/map" component={MapPage} exact />
+              <Route path="/map" component={ActionsMapPage} exact />
               <Route path="/schedule" component={SchedulePage} exact />
               <Route path="/optimize" component={OptimizePage} exact />
               <Route path="/reports" component={ActionReportPage} exact />
