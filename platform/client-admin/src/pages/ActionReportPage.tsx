@@ -19,29 +19,31 @@ export const ActionReportPage: React.FC<RouteComponentProps> = ({ match }) => {
   const todayMidnight = now.startOf(DAY_UNIT_OF_TIME);
   const tomorrowMidnight = now.add(1, DAY_UNIT_OF_TIME).startOf(DAY_UNIT_OF_TIME);
 
-  const [getTodayActionReport, { data, loading, error }] = useGetTodayActionReportLazyQuery();
+  const [getTodayActionReport, { data, loading, error, called }] = useGetTodayActionReportLazyQuery();
 
-  if (navigator.geolocation) {
-    navigator.geolocation
-      .getCurrentPosition((location) => {
-        getTodayActionReport({
-          variables: {
-            todayMidnight,
-            tomorrowMidnight,
-            lat: latFilter(location.coords.latitude),
-            long: longFilter(location.coords.longitude, location.coords.latitude)
-          }
-        });
-      }, console.error);
-  } else {
-    getTodayActionReport({
-      variables: {
-        todayMidnight,
-        tomorrowMidnight,
-        lat: latFilter(),
-        long: longFilter()
-      }
-    });
+  if (!called) {
+    if (navigator.geolocation) {
+      navigator.geolocation
+        .getCurrentPosition((location) => {
+          getTodayActionReport({
+            variables: {
+              todayMidnight,
+              tomorrowMidnight,
+              lat: latFilter(location.coords.latitude),
+              long: longFilter(location.coords.longitude, location.coords.latitude)
+            }
+          });
+        }, console.error);
+    } else {
+      getTodayActionReport({
+        variables: {
+          todayMidnight,
+          tomorrowMidnight,
+          lat: latFilter(),
+          long: longFilter()
+        }
+      });
+    }
   }
 
   if (error) {
