@@ -1,9 +1,0 @@
-query findDistributionCentres($filter: DistributionCentreFilter, $page: PageRequest, $orderBy: OrderByInput) {
-    findDistributionCentres(filter: $filter, page: $page, orderBy: $orderBy) {
-      items {
-        ...DistributionCentreExpandedFields
-      }
-      offset
-      limit
-    }
-  }

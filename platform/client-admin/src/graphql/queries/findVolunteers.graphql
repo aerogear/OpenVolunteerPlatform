@@ -1,9 +1,0 @@
-query findVolunteers($filter: VolunteerFilter, $page: PageRequest, $orderBy: OrderByInput) {
-    findVolunteers(filter: $filter, page: $page, orderBy: $orderBy) {
-      items {
-        ...VolunteerExpandedFields
-      }
-      offset
-      limit
-    }
-  }

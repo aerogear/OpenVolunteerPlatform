@@ -1,5 +1,0 @@
-query getDistributionCentre($id: ID!) {
-    getDistributionCentre(id: $id) {
-      ...DistributionCentreExpandedFields
-    }
-  }

@@ -1,9 +1,0 @@
-query findVolunteerActionProducts($filter: VolunteerActionProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
-    findVolunteerActionProducts(filter: $filter, page: $page, orderBy: $orderBy) {
-      items {
-        ...VolunteerActionProductExpandedFields
-      }
-      offset
-      limit
-    }
-  }

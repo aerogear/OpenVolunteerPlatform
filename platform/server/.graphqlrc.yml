@@ -3,7 +3,7 @@
 schema: ./src/schema/schema.graphql
 extensions:
   graphback:
-    model: ../model/**/*.graphql
+    model: ../model/**/main.graphql
     crud:
       create: true
       update: true

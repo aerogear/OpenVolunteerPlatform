@@ -1,9 +1,0 @@
-query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $orderBy: OrderByInput) {
-    findVolunteerActions(filter: $filter, page: $page, orderBy: $orderBy) {
-      items {
-        ...VolunteerActionExpandedFields
-      }
-      offset
-      limit
-    }
-  }

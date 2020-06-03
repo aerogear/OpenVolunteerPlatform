@@ -1,5 +1,0 @@
-query getVolunteerActionProduct($id: ID!) {
-    getVolunteerActionProduct(id: $id) {
-      ...VolunteerActionProductExpandedFields
-    }
-  }
