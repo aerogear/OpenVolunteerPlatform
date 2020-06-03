@@ -11,7 +11,7 @@ const EARTH_RADIUS = 6378.137;
 const DAY_UNIT_OF_TIME: unitOfTime.Base = "day";
 const ONE_KILOMETER_IN_EARTH_DEGREES = (1 / ((2 * Math.PI / 360) * EARTH_RADIUS));
 const REPORT_COLUMN_SIZE = parseInt(process.env.REACT_APP_REPORT_COLUMN_SIZE || '4');
-const NEARBY_MAX_DISTANCE =  parseInt(process.env.REACT_APP_NEARBY_MAX_DISTANCE || '100');
+const NEARBY_MAX_DISTANCE = parseInt(process.env.REACT_APP_NEARBY_MAX_DISTANCE || '100');
 const LATITUDE_INCREMENT = NEARBY_MAX_DISTANCE * ONE_KILOMETER_IN_EARTH_DEGREES;
 
 export const ActionReportPage: React.FC<RouteComponentProps> = ({ match }) => {
@@ -19,12 +19,7 @@ export const ActionReportPage: React.FC<RouteComponentProps> = ({ match }) => {
   const todayMidnight = now.startOf(DAY_UNIT_OF_TIME);
   const tomorrowMidnight = now.add(1, DAY_UNIT_OF_TIME).startOf(DAY_UNIT_OF_TIME);
 
-  const [getTodayActionReport, { data, loading, error }] = useGetTodayActionReportLazyQuery({
-    variables: {
-      todayMidnight,
-      tomorrowMidnight
-    }
-  });
+  const [getTodayActionReport, { data, loading, error }] = useGetTodayActionReportLazyQuery();
 
   if (navigator.geolocation) {
     navigator.geolocation
@@ -72,19 +67,19 @@ export const ActionReportPage: React.FC<RouteComponentProps> = ({ match }) => {
   const entries: any[] = Object.entries(reports);
   for (let row = 0; row < entries.length; row += REPORT_COLUMN_SIZE) {
     const columns = entries.slice(row, row + REPORT_COLUMN_SIZE).map((entry) => {
-        let count = 0; 
-        if (entry[1].__typename === data?.CreatedActions.__typename) {
-          count = entry[1].items.length;  
-        } else {
-          const uniqueActions: Set<string> = new Set();
-          for (const recipient of entry[1].items) {
-              for (const action of recipient.actions) {
-                 uniqueActions.add(action.id); 
-              }
+      let count = 0;
+      if (entry[1].__typename === data?.CreatedActions.__typename) {
+        count = entry[1].items.length;
+      } else {
+        const uniqueActions: Set<string> = new Set();
+        for (const recipient of entry[1].items) {
+          for (const action of recipient.actions) {
+            uniqueActions.add(action.id);
           }
-          count = uniqueActions.size;
         }
-        return [entry[0], count];
+        count = uniqueActions.size;
+      }
+      return [entry[0], count];
     });
 
     reportsRows.push(columns);
@@ -134,8 +129,8 @@ function longFilter(currentLong?: number, lat?: number): number[] {
   if (currentLong === undefined) {
     return [-180, 180];
   }
-  
+
   const longitudeIncrement = LATITUDE_INCREMENT / Math.cos(lat!! * Math.PI / 180);
 
-  return [currentLong + longitudeIncrement , currentLong - longitudeIncrement].sort();
+  return [currentLong + longitudeIncrement, currentLong - longitudeIncrement].sort();
 }
