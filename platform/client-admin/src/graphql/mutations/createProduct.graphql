@@ -1,5 +1,0 @@
-mutation createProduct($input: CreateProductInput!) {
-  createProduct(input: $input) {
-      ...ProductFields
-  }
-}

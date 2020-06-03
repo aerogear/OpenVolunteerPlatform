@@ -1,5 +1,0 @@
-mutation updateDistributionCentre($input: MutateDistributionCentreInput!) {
-  updateDistributionCentre(input: $input) {
-      ...DistributionCentreFields
-  }
-}

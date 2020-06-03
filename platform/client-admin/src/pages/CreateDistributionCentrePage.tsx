@@ -11,7 +11,7 @@ import { useState } from 'react';
 
 export const CreateDistributionCentrePage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const history = useHistory();
-  const [createDistributionCentre] = useCreateDistributionCentreMutation()
+  const [createDistributionCentre] = useCreateDistributionCentreMutation();
 
   const [model, setModel] = useState({
     lat: 0,

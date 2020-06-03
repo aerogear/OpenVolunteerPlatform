@@ -1,5 +1,6 @@
 """
 @model
+@versioned
 @crud.delete: false
 """
 type DistributionCentre implements Address {
@@ -19,6 +20,7 @@ type DistributionCentre implements Address {
 
 """
 @model
+@versioned
 @crud.delete: false
 """
 type Volunteer implements Address {
@@ -48,6 +50,7 @@ type Volunteer implements Address {
 
 """
 @model
+@versioned
 @crud.delete: false
 """
 type Recipient implements Address {
@@ -86,6 +89,10 @@ type VolunteerAction {
   assignedAt: DateTime
   completedAt: DateTime
   """
+  @updatedAt
+  """
+  updatedAt: String
+  """
   @manyToOne field: 'actions', key: 'volunteerId'
   """
   volunteer: Volunteer
@@ -104,6 +111,7 @@ type VolunteerAction {
 Represents a join model between a volunteer action and product
 
 @model
+@versioned
 @crud.create: true
 @crud.update: false
 @crud.delete: false
@@ -126,6 +134,7 @@ interface Address {
 
 """
 @model
+@versioned
 @crud.delete: false
 """
 type Product {

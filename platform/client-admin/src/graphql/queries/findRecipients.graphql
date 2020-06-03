@@ -1,9 +1,0 @@
-query findRecipients($filter: RecipientFilter, $page: PageRequest, $orderBy: OrderByInput) {
-    findRecipients(filter: $filter, page: $page, orderBy: $orderBy) {
-      items {
-        ...RecipientExpandedFields
-      }
-      offset
-      limit
-    }
-  }
