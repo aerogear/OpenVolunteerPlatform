@@ -3,7 +3,7 @@ import { useLocation } from 'react-router';
 
 import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle } from '@ionic/react';
 
-import { logOut, textOutline, informationCircleOutline, peopleCircleSharp, mapOutline, peopleOutline, optionsSharp, codeWorking, cart } from 'ionicons/icons';
+import { textOutline, informationCircleOutline, peopleCircleSharp, mapOutline, peopleOutline, optionsSharp, codeWorking, cart } from 'ionicons/icons';
 
 import './Menu.css'
 
@@ -19,9 +19,6 @@ const routes = {
     { title: 'Recipients', path: '/recipients', icon: peopleCircleSharp },
     { title: 'Products', path: '/products', icon: cart },
     { title: 'Distribution Centre', path: '/distributionCentre', icon: informationCircleOutline }
-  ],
-  profile: [
-    { title: 'Logout', path: '/logout', icon: logOut },
   ]
 };
 
@@ -65,10 +62,6 @@ export const Menu: React.FC<MenuProps> = () => {
         <IonList lines="none">
           <IonListHeader>Management</IonListHeader>
           {renderlistItems(routes.managementPages)}
-        </IonList>
-        <IonList lines="none">
-          <IonListHeader>Profile</IonListHeader>
-          {renderlistItems(routes.profile)}
         </IonList>
       </IonContent>
     </IonMenu>
