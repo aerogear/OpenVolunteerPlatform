@@ -53,8 +53,9 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
         console.log(e);
       })
     } else {
+      const {createdAt, updatedAt, ...rest} = model
       updateVolunteerMutation({
-        variables: { input: model }
+        variables: { input: rest }
       }).then(() => {
         setVolunteer(model);
         history.push("/actions")
