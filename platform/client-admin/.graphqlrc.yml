@@ -20,7 +20,7 @@ extensions:
         outputPath: ./build
       graphback-client:
         format: 'graphql'
-        outputPath: ./src/graphql
+        outputFile: ./src/graphql/graphback.graphql
         ## fragmentOnly: true
   codegen:
     generates:
