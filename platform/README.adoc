@@ -20,19 +20,19 @@ Requirements:
 
 === Running Apps and Server
 
-. Build client
+. Install dependencies
 +
 ```shell
+npm install -g yarn
 yarn
 ```
 +
 
-. Build client
+. Build client admin and client 
 +
 ```shell
 yarn
-yarn prepare:client
-yarn prepare:admin
+yarn prepare:all
 ```
 +
 

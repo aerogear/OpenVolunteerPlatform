@@ -25,7 +25,8 @@
     "walkthrough": "./scripts/create_walkthrough.sh",
     "generate:client": "cd client && yarn graphback generate && yarn graphql codegen",
     "generate:admin": "cd client-admin && yarn graphback generate && yarn graphql codegen",
-    "generate:all": "yarn generate:client && yarn generate:admin"
+    "generate:all": "yarn generate:client && yarn generate:admin",
+    "prepare:all":  "yarn prepare:client && yarn prepare:admin"
   },
   "workspaces": [
     "client",
