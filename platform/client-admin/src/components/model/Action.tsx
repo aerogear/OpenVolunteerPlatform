@@ -8,14 +8,14 @@ import {
   IonIcon,
   IonButtons
 } from '@ionic/react';
-import { helpBuoy, open } from 'ionicons/icons';
+import { codeWorking, open } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
 
 export const Action: React.FC<any> = ({ action }) => {
 
   return (
     <IonItem>
-      <IonIcon icon={helpBuoy} className='ion-margin-end ion-align-items-start' />
+      <IonIcon icon={codeWorking} className='ion-margin-end ion-align-items-start' />
       <IonLabel>
         <h2>{action.title}</h2>
         <IonNote item-start>

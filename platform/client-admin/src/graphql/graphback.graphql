@@ -1,0 +1,441 @@
+fragment DistributionCentreFields on DistributionCentre {
+   id
+   name
+   address1
+   address2
+   city
+   postcode
+   lat
+   long
+   createdAt
+   updatedAt
+
+} 
+
+fragment DistributionCentreExpandedFields on DistributionCentre {
+   id
+   name
+   address1
+   address2
+   city
+   postcode
+   lat
+   long
+   products {
+      id
+      label
+      description
+      createdAt
+      updatedAt
+   }
+   actions {
+      id
+      title
+      description
+      status
+      createdAt
+      assignedAt
+      completedAt
+      updatedAt
+   }   createdAt
+   updatedAt
+
+} 
+
+fragment ProductFields on Product {
+   id
+   label
+   description
+   createdAt
+   updatedAt
+
+} 
+
+fragment ProductExpandedFields on Product {
+   id
+   label
+   description
+   volunteerActionProducts {
+      id
+      createdAt
+      updatedAt
+   }
+   distributionCentre {
+      id
+      name
+      address1
+      address2
+      city
+      postcode
+      lat
+      long
+      createdAt
+      updatedAt
+   }   createdAt
+   updatedAt
+
+} 
+
+fragment VolunteerActionProductFields on VolunteerActionProduct {
+   id
+   createdAt
+   updatedAt
+
+} 
+
+fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
+   id
+   product {
+      id
+      label
+      description
+      createdAt
+      updatedAt
+   }
+   volunteerAction {
+      id
+      title
+      description
+      status
+      createdAt
+      assignedAt
+      completedAt
+      updatedAt
+   }   createdAt
+   updatedAt
+
+} 
+
+fragment VolunteerActionFields on VolunteerAction {
+   id
+   title
+   description
+   status
+   createdAt
+   assignedAt
+   completedAt
+   updatedAt
+
+} 
+
+fragment VolunteerActionExpandedFields on VolunteerAction {
+   id
+   title
+   description
+   status
+   createdAt
+   assignedAt
+   completedAt
+   updatedAt
+   volunteer {
+      id
+      firstName
+      lastName
+      email
+      username
+      address1
+      address2
+      city
+      postcode
+      dateOfBirth
+      lat
+      long
+      canDeliver
+      createdAt
+      updatedAt
+   }
+   distributionCentre {
+      id
+      name
+      address1
+      address2
+      city
+      postcode
+      lat
+      long
+      createdAt
+      updatedAt
+   }
+   products {
+      id
+      createdAt
+      updatedAt
+   }
+   recipient {
+      id
+      firstName
+      lastName
+      phone
+      address1
+      address2
+      postcode
+      city
+      lat
+      long
+      createdAt
+      prefferedProducts
+      updatedAt
+   }
+} 
+
+fragment VolunteerFields on Volunteer {
+   id
+   firstName
+   lastName
+   email
+   username
+   address1
+   address2
+   city
+   postcode
+   dateOfBirth
+   lat
+   long
+   canDeliver
+   createdAt
+   updatedAt
+
+} 
+
+fragment VolunteerExpandedFields on Volunteer {
+   id
+   firstName
+   lastName
+   email
+   username
+   address1
+   address2
+   city
+   postcode
+   dateOfBirth
+   lat
+   long
+   canDeliver
+   actions {
+      id
+      title
+      description
+      status
+      createdAt
+      assignedAt
+      completedAt
+      updatedAt
+   }   createdAt
+   updatedAt
+
+} 
+
+fragment RecipientFields on Recipient {
+   id
+   firstName
+   lastName
+   phone
+   address1
+   address2
+   postcode
+   city
+   lat
+   long
+   createdAt
+   prefferedProducts
+   updatedAt
+
+} 
+
+fragment RecipientExpandedFields on Recipient {
+   id
+   firstName
+   lastName
+   phone
+   address1
+   address2
+   postcode
+   city
+   lat
+   long
+   createdAt
+   prefferedProducts
+   actions {
+      id
+      title
+      description
+      status
+      createdAt
+      assignedAt
+      completedAt
+      updatedAt
+   }   updatedAt
+
+} 
+
+query findDistributionCentres($filter: DistributionCentreFilter, $page: PageRequest, $orderBy: OrderByInput) {
+    findDistributionCentres(filter: $filter, page: $page, orderBy: $orderBy) {
+      items {
+        ...DistributionCentreExpandedFields
+      }
+      offset
+      limit
+    }
+  }
+
+query getDistributionCentre($id: ID!) {
+    getDistributionCentre(id: $id) {
+      ...DistributionCentreExpandedFields
+    }
+  }
+
+query findProducts($filter: ProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
+    findProducts(filter: $filter, page: $page, orderBy: $orderBy) {
+      items {
+        ...ProductExpandedFields
+      }
+      offset
+      limit
+    }
+  }
+
+query getProduct($id: ID!) {
+    getProduct(id: $id) {
+      ...ProductExpandedFields
+    }
+  }
+
+query findVolunteerActionProducts($filter: VolunteerActionProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
+    findVolunteerActionProducts(filter: $filter, page: $page, orderBy: $orderBy) {
+      items {
+        ...VolunteerActionProductExpandedFields
+      }
+      offset
+      limit
+    }
+  }
+
+query getVolunteerActionProduct($id: ID!) {
+    getVolunteerActionProduct(id: $id) {
+      ...VolunteerActionProductExpandedFields
+    }
+  }
+
+query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $orderBy: OrderByInput) {
+    findVolunteerActions(filter: $filter, page: $page, orderBy: $orderBy) {
+      items {
+        ...VolunteerActionExpandedFields
+      }
+      offset
+      limit
+    }
+  }
+
+query getVolunteerAction($id: ID!) {
+    getVolunteerAction(id: $id) {
+      ...VolunteerActionExpandedFields
+    }
+  }
+
+query findVolunteers($filter: VolunteerFilter, $page: PageRequest, $orderBy: OrderByInput) {
+    findVolunteers(filter: $filter, page: $page, orderBy: $orderBy) {
+      items {
+        ...VolunteerExpandedFields
+      }
+      offset
+      limit
+    }
+  }
+
+query getVolunteer($id: ID!) {
+    getVolunteer(id: $id) {
+      ...VolunteerExpandedFields
+    }
+  }
+
+query findRecipients($filter: RecipientFilter, $page: PageRequest, $orderBy: OrderByInput) {
+    findRecipients(filter: $filter, page: $page, orderBy: $orderBy) {
+      items {
+        ...RecipientExpandedFields
+      }
+      offset
+      limit
+    }
+  }
+
+query getRecipient($id: ID!) {
+    getRecipient(id: $id) {
+      ...RecipientExpandedFields
+    }
+  }
+
+mutation createDistributionCentre($input: CreateDistributionCentreInput!) {
+  createDistributionCentre(input: $input) {
+      ...DistributionCentreFields
+  }
+}
+
+
+mutation updateDistributionCentre($input: MutateDistributionCentreInput!) {
+  updateDistributionCentre(input: $input) {
+      ...DistributionCentreFields
+  }
+}
+
+
+mutation createProduct($input: CreateProductInput!) {
+  createProduct(input: $input) {
+      ...ProductFields
+  }
+}
+
+
+mutation updateProduct($input: MutateProductInput!) {
+  updateProduct(input: $input) {
+      ...ProductFields
+  }
+}
+
+
+mutation createVolunteerActionProduct($input: CreateVolunteerActionProductInput!) {
+  createVolunteerActionProduct(input: $input) {
+      ...VolunteerActionProductFields
+  }
+}
+
+
+mutation createVolunteerAction($input: CreateVolunteerActionInput!) {
+  createVolunteerAction(input: $input) {
+      ...VolunteerActionFields
+  }
+}
+
+
+mutation updateVolunteerAction($input: MutateVolunteerActionInput!) {
+  updateVolunteerAction(input: $input) {
+      ...VolunteerActionFields
+  }
+}
+
+
+mutation createVolunteer($input: CreateVolunteerInput!) {
+  createVolunteer(input: $input) {
+      ...VolunteerFields
+  }
+}
+
+
+mutation updateVolunteer($input: MutateVolunteerInput!) {
+  updateVolunteer(input: $input) {
+      ...VolunteerFields
+  }
+}
+
+
+mutation createRecipient($input: CreateRecipientInput!) {
+  createRecipient(input: $input) {
+      ...RecipientFields
+  }
+}
+
+
+mutation updateRecipient($input: MutateRecipientInput!) {
+  updateRecipient(input: $input) {
+      ...RecipientFields
+  }
+}

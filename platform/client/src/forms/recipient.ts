@@ -1,7 +1,7 @@
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 
-const recieverSchema = new SimpleSchema({
+const recipientSchema = new SimpleSchema({
     name: {
         type: String,
         max: 220,
@@ -39,4 +39,4 @@ const recieverSchema = new SimpleSchema({
     }
 } as any);
 
-export default new SimpleSchema2Bridge(recieverSchema);
+export default new SimpleSchema2Bridge(recipientSchema);

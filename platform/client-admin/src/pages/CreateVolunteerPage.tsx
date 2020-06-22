@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Header } from '../components/Header';
 import { IUpdateMatchParams } from '../declarations';
@@ -9,9 +9,24 @@ import { IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ion
 import { useHistory } from 'react-router';
 
 export const CreateVolunteerPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const model = {};
   const history = useHistory()
   const [createVolunteer] = useCreateVolunteerMutation();
+  const [model, setModel] = useState({
+    lat: 0,
+    long: 0
+  });
+
+  if (navigator.geolocation) {
+    navigator.geolocation
+      .getCurrentPosition((location) => {
+        setModel({
+          lat: location.coords.latitude,
+          long: location.coords.longitude
+        });
+
+        // TODO - get city and address using Google Map API and put on map
+      }, console.error);
+  }
 
   return (
     <>
@@ -31,7 +46,6 @@ export const CreateVolunteerPage: React.FC<RouteComponentProps<IUpdateMatchParam
                   createVolunteer({
                     variables: {
                       input: {
-                        id: model.id,
                         city: model.city,
                         email: model.email,
                         username: model.username,
@@ -40,7 +54,10 @@ export const CreateVolunteerPage: React.FC<RouteComponentProps<IUpdateMatchParam
                         address1: model.address1,
                         address2: model.address2,
                         dateOfBirth: model.dateOfBirth,
-                        canDeliver: model.canDeliver
+                        canDeliver: model.canDeliver,
+                        postcode: model.postcode,
+                        lat: model.lat,
+                        long: model.long
                       }
                     }
                   }).then(({data}) => {

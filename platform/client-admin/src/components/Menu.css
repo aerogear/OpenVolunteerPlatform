@@ -85,3 +85,9 @@ ion-menu.ios ion-item ion-icon {
 ion-menu.ios ion-item.selected ion-icon {
   color: var(--ion-color-primary);
 }
+
+ion-col > div {
+  background-color: #f7f7f7;
+  border: solid 5px #ddd;
+  padding: 60px;
+}

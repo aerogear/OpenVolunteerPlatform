@@ -4,15 +4,15 @@ import {
   IonFooter,
   IonLoading,
   IonContent,
-  IonButton,
   IonIcon,
+  IonFab,
+  IonFabButton,
 } from '@ionic/react';
 import { Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { useFindProductsQuery } from '../dataFacade';
 import { ProductList } from '../components/model/ProductList';
-import { Link } from 'react-router-dom';
-import { open } from 'ionicons/icons';
+import { add } from 'ionicons/icons';
 
 
 export const ProductsPage: React.FC<RouteComponentProps> = ({ match }) => {
@@ -35,12 +35,11 @@ export const ProductsPage: React.FC<RouteComponentProps> = ({ match }) => {
       <Header title="List of Products" match={match} />
       <IonContent className="ion-padding" >
         {content}
-        <Link to={'createProduct'}>
-          <IonButton item-start color='primary' fill="outline">
-            <IonIcon icon={open} />
-              Create Product
-          </IonButton>
-        </Link>
+        <IonFab vertical="top" horizontal="center" slot="fixed">
+          <IonFabButton routerLink="createProduct">
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
       <IonFooter>
         <div>

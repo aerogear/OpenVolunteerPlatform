@@ -8,7 +8,7 @@ import {
   IonIcon,
   IonButtons
 } from '@ionic/react';
-import { helpBuoy, open } from 'ionicons/icons';
+import { peopleOutline, open } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
 import { VolunteerFieldsFragment } from '../../dataFacade';
 
@@ -16,7 +16,7 @@ export const Volunteer: React.FC<{ volunteer: VolunteerFieldsFragment }> = ({ vo
 
   return (
     <IonItem>
-      <IonIcon icon={helpBuoy} className='ion-margin-end ion-align-items-start' />
+      <IonIcon icon={peopleOutline} className='ion-margin-end ion-align-items-start' />
       <IonLabel>
         <h2>{volunteer.firstName} {volunteer.lastName}</h2>
         <IonNote item-start>

@@ -48,6 +48,20 @@ const volunteerForm = new SimpleSchema({
         type: Number,
         required: false,
     },
+    lat: {
+        type: Number,
+        required: false,
+        uniforms: {
+            label: "Latitude"
+        }
+    },
+    long: {
+        type: Number,
+        required: false,
+        uniforms: {
+            label: "Longitude"
+        }
+    },
     dateOfBirth: {
         type: Date,
         required: false,

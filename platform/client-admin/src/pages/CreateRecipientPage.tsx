@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { IUpdateMatchParams } from '../declarations';
@@ -11,8 +11,22 @@ import { useHistory } from 'react-router';
 export const CreateRecipientPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const history = useHistory()
   const [createRecipient] = useCreateRecipientMutation()
-  
-  const model = {};
+  const [model, setModel] = useState({
+    lat: 0,
+    long: 0
+  });
+
+  if (navigator.geolocation) {
+    navigator.geolocation
+      .getCurrentPosition((location) => {
+        setModel({
+          lat: location.coords.latitude,
+          long: location.coords.longitude
+        });
+
+        // TODO - get city and address using Google Map API and put on map
+      }, console.error);
+  }
 
   return (
     <>
@@ -32,7 +46,6 @@ export const CreateRecipientPage: React.FC<RouteComponentProps<IUpdateMatchParam
                   createRecipient({
                     variables: {
                       input: {
-                        id: model.id,
                         address1: model.address1,
                         address2: model.address2,
                         city: model.city,
@@ -41,7 +54,9 @@ export const CreateRecipientPage: React.FC<RouteComponentProps<IUpdateMatchParam
                         lastName: model.lastName,
                         prefferedProducts: model.prefferedProducts,
                         phone: model.phone,
-                        createdAt: new Date()
+                        createdAt: new Date(),
+                        lat: model.lat,
+                        long: model.long
                       }
                     }
                   }).then(({data}) => {

@@ -3,12 +3,12 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Header } from '../components/Header';
 import { Map } from '../components/Map';
 import { IUpdateMatchParams } from '../declarations';
-import { useGetVolunteerActionQuery, useUpdateVolunteerActionMutation } from '../dataFacade'
+import { useGetVolunteerActionQuery, useUpdateVolunteerActionMutation, ActionStatus } from '../dataFacade'
 import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic'
 import volunteerAction from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
 import recipient from '../forms/recipient';
-import distributionCentre from '../forms/distributionCentre';
+import distributionCentreForm from '../forms/distributionCentre';
 
 import { Marker } from 'google-maps-react';
 import { Empty } from '../components';
@@ -28,10 +28,11 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
   const model = data.getVolunteerAction;
 
   let mapContent = <Empty />;
-  let distributionCentreModel = {};
+  let distributionCentre;
 
   if (model.distributionCentre) {
-    const distributionCentre = model.distributionCentre;
+    // TODO add recipient to Map
+    distributionCentre = model.distributionCentre;
     const title = `${distributionCentre.address1} ${distributionCentre.address2} ${distributionCentre.city}`;
     mapContent = <Map center={{
       lat: distributionCentre.lat!,
@@ -45,11 +46,6 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
           lng: distributionCentre.long!
         }} />
     </Map>
-
-    distributionCentreModel = {
-      ...distributionCentre,
-      stockInformation: JSON.stringify(distributionCentre.stockInformation, null, '\t')
-    };
   }
 
   return (
@@ -71,7 +67,9 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                     variables: {
                       input: {
                         id: model.id,
-                        status: model.status
+                        status: model.status,
+                        assignedAt: model.status === ActionStatus.Assigned ? new Date(): undefined,
+                        completedAt: model.status === ActionStatus.Completed ? new Date(): undefined
                       }
                     }
                   }).then(() => {
@@ -106,8 +104,8 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                 <h2>Distribution Centre Details</h2>
               </IonItemDivider>
               <AutoForm
-                model={distributionCentreModel}
-                schema={distributionCentre}
+                model={distributionCentre}
+                schema={distributionCentreForm}
               >
                 <AutoFields />
                 <ErrorsField />

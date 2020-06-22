@@ -1,5 +1,0 @@
-query getProduct($id: ID!) {
-    getProduct(id: $id) {
-      ...ProductExpandedFields
-    }
-  }

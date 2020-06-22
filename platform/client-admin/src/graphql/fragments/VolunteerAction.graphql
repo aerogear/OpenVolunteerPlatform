@@ -1,8 +1,0 @@
-fragment VolunteerActionFields on VolunteerAction {
-   id
-   title
-   description
-   status
-   createdAt
-
-} 

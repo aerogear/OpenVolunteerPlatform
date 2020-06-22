@@ -41,10 +41,10 @@ export function buildKeycloakApolloConfig(app: Express, apolloConfig: any) {
             resolvers: apolloConfig.resolvers,
             playground: apolloConfig.playground,
             path: graphqlPath,
-            context: ({ req }) => {
+            context: (context: any) => {
                 return {
-                    ...apolloConfig.context,
-                    kauth: new KeycloakContext({ req }) // 3. add the KeycloakContext to `kauth`
+                    ...apolloConfig.context(context),
+                    kauth: new KeycloakContext(context) // 3. add the KeycloakContext to `kauth`
                 }
             },
             subscriptions: {
@@ -54,7 +54,7 @@ export function buildKeycloakApolloConfig(app: Express, apolloConfig: any) {
                         throw new Error("Cannot build keycloak token. Connection will be terminated")
                     }
                     return {
-                        ...apolloConfig.context,
+                        ...apolloConfig.context(connectionContext),
                         kauth: new KeycloakSubscriptionContext(token)
                     }
                 }

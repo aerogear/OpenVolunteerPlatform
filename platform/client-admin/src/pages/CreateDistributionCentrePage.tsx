@@ -11,10 +11,9 @@ import { useState } from 'react';
 
 export const CreateDistributionCentrePage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const history = useHistory();
-  const [createDistributionCentre] = useCreateDistributionCentreMutation()
+  const [createDistributionCentre] = useCreateDistributionCentreMutation();
 
   const [model, setModel] = useState({
-    stockInformation: "{}",
     lat: 0,
     long: 0
   });
@@ -24,8 +23,7 @@ export const CreateDistributionCentrePage: React.FC<RouteComponentProps<IUpdateM
       .getCurrentPosition((location) => {
         setModel({
           lat: location.coords.latitude,
-          long: location.coords.longitude,
-          stockInformation: model.stockInformation
+          long: location.coords.longitude
         });
 
         // TODO - get city and address using Google Map API and put on map
@@ -57,8 +55,7 @@ export const CreateDistributionCentrePage: React.FC<RouteComponentProps<IUpdateM
                         name: model.name,
                         address1: model.address1,
                         address2: model.address2,
-                        postcode: model.postcode,
-                        stockInformation: JSON.parse(model.stockInformation),
+                        postcode: model.postcode
                       }
                     }
                   }).then(({ data }) => {

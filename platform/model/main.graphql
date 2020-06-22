@@ -1,5 +1,6 @@
 """
 @model
+@versioned
 @crud.delete: false
 """
 type DistributionCentre implements Address {
@@ -11,8 +12,6 @@ type DistributionCentre implements Address {
   postcode: Int
   lat: Float
   long: Float
-  stockInformation: JSON,
-  
   """
   @oneToMany field: "distributionCentre"
   """
@@ -21,6 +20,7 @@ type DistributionCentre implements Address {
 
 """
 @model
+@versioned
 @crud.delete: false
 """
 type Volunteer implements Address {
@@ -34,6 +34,8 @@ type Volunteer implements Address {
   city: String
   postcode: Int
   dateOfBirth: DateTime
+  lat: Float
+  long: Float
   
   """
   This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
@@ -48,6 +50,7 @@ type Volunteer implements Address {
 
 """
 @model
+@versioned
 @crud.delete: false
 """
 type Recipient implements Address {
@@ -59,6 +62,8 @@ type Recipient implements Address {
   address2: String
   postcode: Int
   city: String
+  lat: Float
+  long: Float
   createdAt: DateTime
   """
   Comma separated list of preferrend products labels.
@@ -81,6 +86,12 @@ type VolunteerAction {
   description: String
   status: ActionStatus
   createdAt: DateTime
+  assignedAt: DateTime
+  completedAt: DateTime
+  """
+  @updatedAt
+  """
+  updatedAt: String
   """
   @manyToOne field: 'actions', key: 'volunteerId'
   """
@@ -100,6 +111,7 @@ type VolunteerAction {
 Represents a join model between a volunteer action and product
 
 @model
+@versioned
 @crud.create: true
 @crud.update: false
 @crud.delete: false
@@ -114,12 +126,15 @@ type VolunteerActionProduct {
 interface Address {
   address1: String
   address2: String
-  city: String,
+  city: String
   postcode: Int
+  lat: Float
+  long: Float
 }
 
 """
 @model
+@versioned
 @crud.delete: false
 """
 type Product {
@@ -139,5 +154,4 @@ enum ActionStatus {
 }
 
 scalar DateTime
-scalar JSON
 scalar ID
