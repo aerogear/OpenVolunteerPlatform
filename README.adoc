@@ -10,7 +10,15 @@
 OpenVolunteerPlatform works as starter that integrates with various OpenSource technologies to give organizations out of the box solution
 that they can modify to their needs.
 
-== Video
+== Motivation Video
+
+Why we build OpenVolunteer Platform:
+
+https://www.youtube.com/watch?v=mu9Rnu6Q9_o
+
+== Demo Video
+
+Demo of the system: 
 
 https://www.youtube.com/watch?v=mu9Rnu6Q9_o
 
