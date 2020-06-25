@@ -6,13 +6,12 @@
 [![PRs Welcome][prs-badge]][prs]
 [![Discord Chat](https://img.shields.io/discord/632220458137419776)](https://discord.gg/mJ7j84m)
 
-*OpenVolunteerPlatform* lets you automate and optimize work of volunteers for your orgranization or charity - helping them to deliver help when needed.
-OpenVolunteerPlatform works as starter that integrates with various OpenSource technologies to give organizations out of the box solution
-that they can modify to their needs.
+*OpenVolunteerPlatform* lets you automate and optimize the work of volunteers for your orgranization or charity - helping them to deliver help effectively when needed.
+OpenVolunteerPlatform is a starter application that integrates with various open source technologies to provide out of the box solutions that are customizable for your organization. 
 
 == Motivation Video
 
-Why we build OpenVolunteer Platform:
+Why we built OpenVolunteerPlatform:
 
 https://www.youtube.com/watch?v=mu9Rnu6Q9_o
 
@@ -28,15 +27,15 @@ https://openvolunteer.org
 
 == Features
 
-* Open Platform for Rapid Development of Volunteer Management Systems
-* Out of the box, secure API exposing your data using role based authorization.
+* Open platform for rapid development of volunteer management systems
+* Out of the box, secure API exposing of your data using role-based authorization
 * Reference implementations to cover basic use cases
-* Out of the box components for Forms, Communitation and Maps
-* Live updates and tracking thanks to GraphQL Subscriptions
-* Reports and statistics for admin
+* Ready to use components for forms, communication, and maps
+* Live updates and tracking thanks to GraphQL subscriptions
+* Reports and statistics for app administrators
 * Management panel for creating volunteer actions
-* Rule based, automatic scheduling and time management
-* Simplicity to produce reports and collect feedback from the field
+* Rule-based, automatic scheduling and time management
+* Simple methods for producing reports and collecting feedback from the field
 
 image::./website/static/img/app.png[Sunset,200,400]
 
@@ -44,14 +43,10 @@ image::./website/static/img/app.png[Sunset,200,400]
 
 The application includes:
 
-- Integration with http://graphback.dev[Graphback] helps you generate your backend and client side queries based on user provided business models
-- An example React application which uses the http://offix.dev[Offix client] to give you a fully featured offline experience
+- Integration with link:http://graphback.dev[Graphback] helps you generate your backend and client side queries based on user-provided business models
+- link:http://offix.dev[Offix client], gives you a fully featured offline experience
 - Integration with Keycloak (SSO) for server and client authentication and user management
 - GraphQL subscriptions backed by an MQTT broker(AMQ)
-
-== Source Code
-
-Go to ./platform[Platform folder]
 
 == License
 
@@ -59,8 +54,11 @@ This solution starter is made available under the Apache 2 License.
 
 == Authors
 
-- Joan Edwards
+- Wojciech Trocki
 - Enda Phelan
 - Manyanda Chitimbo
 - Gianluca Zuccarelli
-- Wojciech Trocki
+- Joan Edwards
+
+
+
