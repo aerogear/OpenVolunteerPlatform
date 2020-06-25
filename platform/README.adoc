@@ -1,9 +1,10 @@
 = OpenVolunteerPlatform Starter
 
 This project contains reference implementation for 
-volunteer and admin application
+volunteer and admin application.
 
 == Project structure
+
 - Volunteer Client application `/client`
 - Admin application `/client-admin`
 - Server application `/server`
@@ -20,7 +21,7 @@ Requirements:
 
 === Running Apps and Server
 
-. Install dependencies
+. Install yarn and project dependencies
 +
 ```shell
 npm install -g yarn
@@ -35,7 +36,6 @@ yarn
 yarn prepare:all
 ```
 +
-
 . Start the server
 +
 ```shell
@@ -58,6 +58,9 @@ By default, two users that can log into the application are created.
 - username: `admin`, password: `admin`
 
 Volunteers can register to the application in login screen
+
+
+=== Technical details
 
 ==== Keycloak integration
 
@@ -104,6 +107,9 @@ Project should stard in IDE and can be launched as any other native application
 
 == Using MQTT for GraphQL subscriptions
 
+By default platform will use in memory subscription mechanism that is not 
+recomended to production. For OpenShift deployment we are using AMQ MQTT protocol. On local machine this can be configured using following steps.
+
 1. Go to server/scripts ./mqtt
 2. Execute docker-compose up
 3. Set MQTT_HOST environment variable in .env file
@@ -114,11 +120,19 @@ MQTT_HOST=127.0.0.1
 
 Please check link:./.openshift[.openshift] folder for more information.
 
-
 == Development 
 
-The below command will generate resources i.e schema, resolvers, queries, mutations for the server and client sides.
+Starter template is basing on https://graphback.dev open source project.
+Please follow Getting Started guide for Graphback to learn how to modify OpenVolunteer platform:
+
+https://graphback.dev/docs/intro/datamodel
+
+=== Executing Graphback source generator
+
+The below command will generate client side queries, mutations for the client side
 
 ```sh
 yarn generate:all
 ```
+
+=== 
