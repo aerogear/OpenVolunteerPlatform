@@ -29,6 +29,7 @@ For more information watch our demo video:
 OpenVolunteerPlatform provides reference admin and volunteer applications that can be used to help on a national or regional scale.
 
 ## Features
+
 - Open platform for rapid development of volunteer management systems
 - Out of the box, secure API exposing your data using role based authorization
 - Reference implementations to cover basic use cases
