@@ -17,10 +17,11 @@ export function Hero({ siteConfig }) {
             <p className="hero__title">{siteConfig.tagline}</p>
             <ul>
               <li>Open Platform for Rapid Development of Volunteer Management Systems</li>
-              <li>Reference implementation to cover basic use cases</li>
-              <li>Out of the box components for Forms and Maps</li>
-              <li>Keycloak based security and Role based authentication</li>
-              <li>Live updates and tracking thanks to GraphQL subscriptions</li>
+              <li>Reference implementation to cover most of the use cases</li>
+              <li>Out of the box, GraphQL Compliant API</li>
+              <li>Components for Dynamic Forms and Maps</li>
+              <li>Keycloak based security and Role Based Authentication</li>
+              <li>Live updates using GraphQL subscriptions</li>
             </ul>
             <div className={styles.buttons}>
               <Link

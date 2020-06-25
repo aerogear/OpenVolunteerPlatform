@@ -37,8 +37,11 @@
 }
 
 .hero .hero__title {
+  text-align: center;
+
   line-height: 3rem;
-  font-weight: 900;
+  font-weight: 300;
+
   /* font-size: 5rem !important; */
 }
 
