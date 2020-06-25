@@ -49,6 +49,10 @@ The application includes:
 - Integration with Keycloak (SSO) for server and client authentication and user management
 - GraphQL subscriptions backed by an MQTT broker(AMQ)
 
+== Source Code
+
+Go to ./platform[Platform folder]
+
 == License
 
 This solution starter is made available under the Apache 2 License.
