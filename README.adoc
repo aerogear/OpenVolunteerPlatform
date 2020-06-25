@@ -1,10 +1,18 @@
 = OpenVolunteerPlatform
 
+[![TypeScript version][ts-badge]][typescript-30]
+[![Node.js version][nodejs-badge]][nodejs]
+[![APLv2][license-badge]][LICENSE]
+[![PRs Welcome][prs-badge]][prs]
+[![Discord Chat](https://img.shields.io/discord/632220458137419776)](https://discord.gg/mJ7j84m)
+
 *OpenVolunteerPlatform* lets you automate and optimize work of volunteers for your orgranization or charity - helping them to deliver help when needed.
+OpenVolunteerPlatform works as starter that integrates with various OpenSource technologies to give organizations out of the box solution
+that they can modify to their needs.
 
 == Video
 
-TODO
+https://www.youtube.com/watch?v=mu9Rnu6Q9_o
 
 == Documentation
 
@@ -16,8 +24,9 @@ https://openvolunteer.org
 * Out of the box, secure API exposing your data using role based authorization.
 * Reference implementations to cover basic use cases
 * Out of the box components for Forms, Communitation and Maps
-* Live updates and tracking thanks to GraphQL subscriptions
-* Optimalization of the volunteer assignments and various processes
+* Live updates and tracking thanks to GraphQL Subscriptions
+* Reports and statistics for admin
+* Management panel for creating volunteer actions
 * Rule based, automatic scheduling and time management
 * Simplicity to produce reports and collect feedback from the field
 
@@ -32,6 +41,14 @@ The application includes:
 - Integration with Keycloak (SSO) for server and client authentication and user management
 - GraphQL subscriptions backed by an MQTT broker(AMQ)
 
-
 == License
+
 This solution starter is made available under the Apache 2 License.
+
+== Authors
+
+- Joan Edwards
+- Enda Phelan
+- Manyanda Chitimbo
+- Gianluca Zuccarelli
+- Wojciech Trocki
