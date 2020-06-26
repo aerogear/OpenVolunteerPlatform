@@ -22,20 +22,6 @@ const distributionCentre = new SimpleSchema({
     postcode: {
         type: Number,
         required: false,
-    },
-    lat: {
-        type: Number,
-        required: false,
-        uniforms: {
-            label: "Latitude"
-        }
-    },
-    long: {
-        type: Number,
-        required: false,
-        uniforms: {
-            label: "Longitude"
-        }
     }
 } as any);
 
