@@ -12,6 +12,10 @@ import { AuthContext, AuthContextProvider } from '../context/AuthContext';
 import { useFindActiveVolunteerLazyQuery, VolunteerFieldsFragment } from '../dataFacade';
 import { Loading } from './Loading';
 import { volunteerTransformer } from '../transformer/volunteerTransformer';
+import { SimpleSchema } from 'simpl-schema';
+
+// Register uniforms auto forms generator
+SimpleSchema.extendOptions(['uniforms']);
 
 export const Router: React.FC = () => {
   const { profile, keycloak } = useContext(AuthContext);

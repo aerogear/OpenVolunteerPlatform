@@ -27,6 +27,10 @@ import { CreateVolunteerActionPage } from '../pages/CreateVolunteerAction';
 import { ViewDistributionCentrePage } from '../pages/ViewDistributionCentrePage';
 import { CreateDistributionCentrePage } from '../pages/CreateDistributionCentrePage';
 import { ActionReportPage } from '../pages/ActionReportPage';
+import { SimpleSchema } from 'simpl-schema';
+
+// Register uniforms auto forms generator
+SimpleSchema.extendOptions(['uniforms']);
 
 export const Router: React.FC = () => {
   return (
