@@ -1,7 +1,6 @@
 """
-@model
+@model(delete: false)
 @versioned
-@crud.delete: false
 """
 type DistributionCentre implements Address {
   id: ID!
@@ -13,15 +12,14 @@ type DistributionCentre implements Address {
   lat: Float
   long: Float
   """
-  @oneToMany field: "distributionCentre"
+  @oneToMany(field: "distributionCentre")
   """
   products: [Product]
 }
 
 """
-@model
+@model(delete: false)
 @versioned
-@crud.delete: false
 """
 type Volunteer implements Address {
   id: ID!
@@ -36,22 +34,16 @@ type Volunteer implements Address {
   dateOfBirth: DateTime
   lat: Float
   long: Float
-  
-  """
-  This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
-  @db.default: false
-  """
   canDeliver: Boolean
   """
-  @oneToMany field: 'volunteer'
+  @oneToMany(field: 'volunteer')
   """
   actions: [VolunteerAction]
 }
 
 """
-@model
+@model(delete: false)
 @versioned
-@crud.delete: false
 """
 type Recipient implements Address {
   id: ID!
@@ -71,13 +63,14 @@ type Recipient implements Address {
   """
   prefferedProducts: String
   """
-  @oneToMany field: 'recipient'
+  @oneToMany(field: 'recipient')
   """
   actions: [VolunteerAction]
 }
 
 """
 Represents action that is assigned to volunteer
+
 @model
 """
 type VolunteerAction {
@@ -93,15 +86,15 @@ type VolunteerAction {
   """
   updatedAt: String
   """
-  @manyToOne field: 'actions', key: 'volunteerId'
+  @manyToOne(field: 'actions', key: 'volunteerId')
   """
   volunteer: Volunteer
   """
-  @manyToOne field: 'actions', key: 'distributionCentreId'
+  @manyToOne(field: 'actions', key: 'distributionCentreId')
   """
   distributionCentre: DistributionCentre
   """
-  @oneToMany field: 'volunteerAction'
+  @oneToMany(field: 'volunteerAction')
   """
   products: [VolunteerActionProduct]
 }
@@ -110,14 +103,8 @@ type VolunteerAction {
 """
 Represents a join model between a volunteer action and product
 
-@model
+@model(create: true, update: false, delete: false, subCreate: false, subUpdate: false, subDelete: false)
 @versioned
-@crud.create: true
-@crud.update: false
-@crud.delete: false
-@crud.subCreate: false
-@crud.subUpdate: false
-@crud.subDelete: false
 """
 type VolunteerActionProduct {
   id: ID!
@@ -133,16 +120,15 @@ interface Address {
 }
 
 """
-@model
+@model(delete: false)
 @versioned
-@crud.delete: false
 """
 type Product {
   id: ID!
   label: String!
   description: String
   """
-  @oneToMany field: 'product'
+  @oneToMany(field: 'product')
   """
   volunteerActionProducts: [VolunteerActionProduct] 
 }
