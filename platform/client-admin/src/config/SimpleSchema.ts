@@ -1,4 +1,4 @@
-import SimpleSchema from '../config/SimpleSchema';
+import SimpleSchema from 'simpl-schema';
 import { filterDOMProps } from 'uniforms';
 
 // Register custom property.
