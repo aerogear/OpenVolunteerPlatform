@@ -1,0 +1,186 @@
+---
+
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: datasync-starter-server
+metadata:
+  name: datasync-starter-server
+  annotations:
+    openshift.io/display-name: DataSync Starter 
+    description: |-
+        This template allows for the deployment of the Data Sync Example DataSync Starter App.
+        The Data Sync Example App contains an example Node.js server implementation that 
+        connects to a MongoDB database.
+        For more information, see https://github.com/aerogear/datasync-starter/
+    tags: sync, mobile, nodejs
+    iconClass: icon-nodejs
+    openshift.io/provider-display-name: Red Hat, Inc.
+    openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html-single/developing_a_data_sync_app/index
+    openshift.io/support-url: https://access.redhat.com
+    template.openshift.io/bindable: 'false'
+    aerogear.org/datasync-template-version: '0.9.3'
+objects:
+
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: datasync-starter-server
+    name: datasync-starter-server
+  spec:
+    replicas: 1
+    selector:
+      app: datasync-starter-server
+      deploymentconfig: datasync-starter-server
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: datasync-starter-server
+          deploymentconfig: datasync-starter-server
+      spec:
+        containers:
+        - env:
+            - name: MONGO_HOST
+              value: "${DATABASE_HOST}"
+            - name: MONGO_USER
+              value: "${DATABASE_USER}"
+            - name: MONGO_PASSWORD
+              value: "${DATABASE_PASSWORD}"
+            - name: MQTT_HOST
+              value: mosquitto-mqtt-broker
+          image: docker.io/aerogear/datasync-starter:latest
+          name: datasync-starter-server
+          ports:
+          - containerPort: 4000
+            protocol: TCP
+          resources: {}
+    triggers:
+    - type: ConfigChange
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: datasync-starter-server
+    name: datasync-starter-server
+  spec:
+    ports:
+    - name: 4000-tcp
+      port: 4000
+      protocol: TCP
+      targetPort: 4000
+    selector:
+      app: datasync-starter-server
+      deploymentconfig: datasync-starter-server
+
+
+- apiVersion: v1
+  kind: Route
+  metadata:
+    labels:
+      app: datasync-starter-server
+    name: "${SERVER_SERVICE_NAME}"
+  spec:
+    host: ""
+    to:
+      kind: Service
+      name: "${SERVER_SERVICE_NAME}"
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Allow
+
+- kind: DeploymentConfig
+  apiVersion: v1
+  name: mosquitto-mqtt-broker
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: datasync-starter-server
+    name: mosquitto-mqtt-broker
+  spec:
+    replicas: 1
+    selector:
+      app: datasync-starter-server
+      deploymentconfig: mosquitto-mqtt-broker
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: datasync-starter-server
+          deploymentconfig: mosquitto-mqtt-broker
+      spec:
+        containers:
+          - name: mosquitto-mqtt-broker
+            image: eclipse-mosquitto:latest
+            ports:
+              - containerPort: 1883
+                protocol: TCP
+    strategy:
+      resources: {}
+      type: Rolling
+    paused: false 
+    revisionHistoryLimit: 2 
+    minReadySeconds: 0
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: datasync-starter-server
+    name: mosquitto-mqtt-broker
+  spec:
+    ports:
+    - name: 1883-tcp
+      port: 1883
+      protocol: TCP
+      targetPort: 1883
+    selector:
+      app: datasync-starter-server
+      deploymentconfig: mosquitto-mqtt-broker
+  status:
+    loadBalancer: {}
+
+parameters:
+- description: Maximum amount of memory the container can use.
+  displayName: Memory Limit
+  name: MEMORY_LIMIT
+  value: 512Mi
+- description: The OpenShift Namespace where the ImageStream resides.
+  displayName: Namespace
+  name: NAMESPACE
+  value: openshift
+- description: The name of the OpenShift Service exposed for the database.
+  displayName: Database Service Name
+  name: DATABASE_HOST
+  value: mongodb
+- description: Username for MongoDB user that will be used for accessing the database.
+  displayName: Mongo Connection Username
+  name: DATABASE_USER
+  value: 
+- description: Password for the MongoDB connection user.
+  displayName: MongoDB Connection Password
+  name: DATABASE_PASSWORD
+  value: postgres
+- description: The name of the OpenShift Service exposed for the Server.
+  displayName: Server Service name
+  name: SERVER_SERVICE_NAME
+  value: datasync-starter-server
