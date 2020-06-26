@@ -16,18 +16,18 @@ export async function connect(config: Config) {
 
   const backup = require('mongodb-backup');
 
-  /*
+
   backup({
     uri: url,
     root: resolve(__dirname, '../mongodump')
   });
-*/
 
-  const restore = require('mongodb-restore');
-  restore({
-    uri: url,
-    root: resolve(__dirname, '../mongodump/showcase')
-  });
+
+  // const restore = require('mongodb-restore');
+  // restore({
+  //   uri: url,
+  //   root: resolve(__dirname, '../mongodump/showcase')
+  // });
 
   // Use connect method to connect to the server
   const client = await MongoClient.connect(url, { useUnifiedTopology: true });
