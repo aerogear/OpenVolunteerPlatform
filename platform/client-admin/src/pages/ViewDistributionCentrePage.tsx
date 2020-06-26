@@ -10,7 +10,7 @@ import { Marker } from 'google-maps-react';
 import { Map } from '../components/Map';
 
 export const ViewDistributionCentrePage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const { data, loading, error } = useGetDistributionCentreQuery({ variables: { id: match.params.id } } );
+  const { data, loading, error } = useGetDistributionCentreQuery({ variables: { id: match.params.id } });
   const [updateDistributionCentre] = useUpdateDistributionCentreMutation()
   if (error) {
     console.log(error);
@@ -78,7 +78,9 @@ export const ViewDistributionCentrePage: React.FC<RouteComponentProps<IUpdateMat
                 submitField={undefined}
               >
               </AutoForm>
-              {mapContent}
+              <IonCard>
+                {mapContent}
+              </IonCard>
             </IonItemGroup>
           </IonCard>
         </IonList>

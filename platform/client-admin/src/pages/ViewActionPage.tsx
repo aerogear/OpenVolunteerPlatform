@@ -12,7 +12,7 @@ import { Marker } from 'google-maps-react';
 import { Empty } from '../components';
 
 export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
-  const { data, loading, error } = useFindVolunteerActionDetailsQuery({ variables: { id: match.params.id }});
+  const { data, loading, error } = useFindVolunteerActionDetailsQuery({ variables: { id: match.params.id } });
   const [updateAction] = useUpdateVolunteerActionMutation();
   if (error) {
     console.log(error);
@@ -26,17 +26,17 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
 
   if (loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
   const products = volunteerAction
-  .products?.map((volunteerActionProduct) => volunteerActionProduct?.product?.label)
-  .join(" , ");
+    .products?.map((volunteerActionProduct) => volunteerActionProduct?.product?.label)
+    .join(" , ");
 
   const model = {
     ...volunteerAction,
     products
   };
-  
+
 
   let mapContent = <Empty />;
-  
+
   if (model.distributionCentre) {
     const distributionCentre = model.distributionCentre;
     const title = `${distributionCentre.address1} ${distributionCentre.address2} ${distributionCentre.city}`;
@@ -53,7 +53,7 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
         }} />
     </Map>
   }
-  
+
   return (
     <>
       <Header title="Manage your action" match={match} />
@@ -74,8 +74,8 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                       input: {
                         id: model.id,
                         status: model.status,
-                        assignedAt: model.status === ActionStatus.Assigned ? new Date(): undefined,
-                        completedAt: model.status === ActionStatus.Completed ? new Date(): undefined
+                        assignedAt: model.status === ActionStatus.Assigned ? new Date() : undefined,
+                        completedAt: model.status === ActionStatus.Completed ? new Date() : undefined
                       }
                     }
                   }).then(() => {
@@ -107,7 +107,9 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
               <IonItemDivider color="light">
                 <h2>Distribution Centre Details</h2>
               </IonItemDivider>
-              {mapContent}
+              <IonCard>
+                {mapContent}
+              </IonCard>
             </IonItemGroup>
           </IonCard>
 
