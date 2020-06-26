@@ -1,49 +1,53 @@
-import { printSchema } from 'graphql';
-import { buildGraphbackAPI } from 'graphback';
+import { resolve } from 'path';
 import { connect } from './db';
-import path from 'path';
+import { Config } from './config/config';
+import { ApolloServer, ApolloServerExpressConfig } from "apollo-server-express";
+import { Express } from "express";
 import scalars from './resolvers/scalars';
 import customResolvers from './resolvers/custom-resolvers';
-import { getPubSub } from './pubsub'
-import { Config } from './config/config';
-import { loadConfigSync } from 'graphql-config';
-import { ApolloServer, ApolloServerExpressConfig } from "apollo-server-express";
 import { buildKeycloakApolloConfig } from './auth';
-import { createCRUDService, createMongoDbProvider } from '@graphback/runtime-mongo';
+import { createKeycloakAndAMQCRUDService } from './AMQCrudService'
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
+import { loadSchemaSync } from '@graphql-tools/load'
+import { buildGraphbackAPI } from "graphback"
+import { DataSyncPlugin, createDataSyncMongoDbProvider, createDataSyncCRUDService } from "@graphback/datasync"
+import { authConfig } from './config/auth';
 
 /**
  * Creates Apollo server
  */
-export const createApolloServer = async function (app: any, config: Config) {
+export const createApolloServer = async function (app: Express, config: Config) {
     const db = await connect(config);
-    
-    const projectConfig = loadConfigSync({
-        extensions: [
-            () => ({ name: 'graphback' }),
-        ]
-    }).getDefault()
 
-    const graphbackConfig = projectConfig.extension('graphback');
-    const model = projectConfig.loadSchemaSync(path.resolve(graphbackConfig.model));
-    const { typeDefs, resolvers, services} = buildGraphbackAPI(model, {
-        serviceCreator: createCRUDService({
-          pubSub:getPubSub()
-        }),
-        dataProviderCreator: createMongoDbProvider(db)
-      });
+    const modelDefs = loadSchemaSync(resolve(__dirname, '../model/main.graphql'), {
+        loaders: [
+            new GraphQLFileLoader()
+        ]
+    })
+
+    const { typeDefs, resolvers, contextCreator } = buildGraphbackAPI(modelDefs, {
+        serviceCreator: createKeycloakAndAMQCRUDService(authConfig),
+        dataProviderCreator: createDataSyncMongoDbProvider(db),
+        plugins: [
+            new DataSyncPlugin()
+        ]
+    });
 
     let apolloConfig: ApolloServerExpressConfig = {
-        typeDefs,
-        resolvers: { ...resolvers, ...scalars, ...customResolvers },
+        typeDefs: typeDefs,
+        // See https://github.com/aerogear/graphback/issues/1546
+        resolvers: Object.assign(resolvers, customResolvers, scalars),
         playground: true,
-        context: (context: any) => ({
-                ...context,
-                services
-        })
+        context: contextCreator
     }
 
-    apolloConfig = buildKeycloakApolloConfig(app, apolloConfig);
-    const apolloServer = new ApolloServer(apolloConfig);
+    if (config.keycloakConfig) {
+        apolloConfig = buildKeycloakApolloConfig(app, apolloConfig)
+    }
+
+    apolloConfig.resolvers = { ...apolloConfig.resolvers, ...scalars, ...customResolvers };
+
+    const apolloServer = new ApolloServer(apolloConfig)
     apolloServer.applyMiddleware({ app });
 
     return apolloServer;
