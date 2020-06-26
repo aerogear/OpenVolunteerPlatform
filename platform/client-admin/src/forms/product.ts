@@ -1,5 +1,5 @@
+import SimpleSchema from '../config/SimpleSchema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import SimpleSchema from 'simpl-schema';
 
 export default function createProductSchema(distributionCentres: string[], defaultDistributionCentre: string) {
     const productSchema = new SimpleSchema({

@@ -1,5 +1,5 @@
+import SimpleSchema from '../config/SimpleSchema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import SimpleSchema from 'simpl-schema';
 
 export default function createVolunteerActionForm(recipients: string[], volunteers: string[], distributionCentres: string[], products: string[]) {
     const volunteerActionForm = new SimpleSchema({

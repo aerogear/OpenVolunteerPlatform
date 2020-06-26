@@ -1,5 +1,5 @@
+import SimpleSchema from '../config/SimpleSchema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import SimpleSchema from 'simpl-schema';
 
 const adminForm = new SimpleSchema({
     firstName: {
