@@ -110,7 +110,9 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                 <AutoFields />
                 <ErrorsField />
               </AutoForm>
-              {mapContent}
+              <IonCard>
+                {mapContent}
+              </IonCard>
             </IonItemGroup>
           </IonCard>
 

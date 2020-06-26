@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFindDistributionCentresQuery } from '../dataFacade';
-import { IonLoading, IonPage, IonContent, IonFooter, IonIcon, IonFab, IonFabButton } from '@ionic/react';
+import { IonLoading, IonPage, IonContent, IonFooter, IonIcon, IonFab, IonFabButton, IonCard } from '@ionic/react';
 import { Header, Empty } from '../components';
 import { RouteComponentProps, useHistory } from 'react-router';
 import { Marker } from 'google-maps-react';
@@ -65,7 +65,9 @@ export const DistributionCentrePage: React.FC<RouteComponentProps> = ({ match })
     <IonPage>
       <Header title="Distribution Centers Map" match={match} />
       <IonContent className="ion-padding" >
-        {mapContent}
+        <IonCard>
+          {mapContent}
+        </IonCard>
         <IonFab vertical="top" horizontal="center" slot="fixed">
           <IonFabButton routerLink="createDistributionCentre">
             <IonIcon icon={add} />
