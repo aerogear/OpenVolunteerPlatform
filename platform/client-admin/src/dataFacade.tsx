@@ -98,8 +98,6 @@ export type CreateVolunteerInput = {
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
-  lat?: Maybe<Scalars['Float']>;
-  long?: Maybe<Scalars['Float']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
 };
 
@@ -116,9 +114,8 @@ export type DateTimeInput = {
 };
 
 /**
- * @model
+ * @model(delete: false)
  * @versioned
- * @crud.delete: false
  */
 export type DistributionCentre = Address & {
    __typename?: 'DistributionCentre';
@@ -130,27 +127,26 @@ export type DistributionCentre = Address & {
   postcode?: Maybe<Scalars['Int']>;
   lat?: Maybe<Scalars['Float']>;
   long?: Maybe<Scalars['Float']>;
-  /** @oneToMany field: 'distributionCentre', key: 'distributionCentreId' */
+  /** @oneToMany(field: 'distributionCentre', key: 'distributionCentreId') */
   products?: Maybe<Array<Maybe<Product>>>;
-  /** @oneToMany field: 'distributionCentre', key: 'distributionCentreId' */
+  /** @oneToMany(field: 'distributionCentre', key: 'distributionCentreId') */
   actions: Array<Maybe<VolunteerAction>>;
   /**
    * @createdAt
-   *             @db.type: 'timestamp'
+   * @db(type: 'timestamp')
    */
   createdAt?: Maybe<Scalars['String']>;
   /**
    * @updatedAt
-   *             @db.type: 'timestamp'
+   * @db(type: 'timestamp')
    */
   updatedAt?: Maybe<Scalars['String']>;
 };
 
 
 /**
- * @model
+ * @model(delete: false)
  * @versioned
- * @crud.delete: false
  */
 export type DistributionCentreProductsArgs = {
   filter?: Maybe<ProductFilter>;
@@ -158,9 +154,8 @@ export type DistributionCentreProductsArgs = {
 
 
 /**
- * @model
+ * @model(delete: false)
  * @versioned
- * @crud.delete: false
  */
 export type DistributionCentreActionsArgs = {
   filter?: Maybe<VolunteerActionFilter>;
@@ -280,8 +275,6 @@ export type MutateVolunteerInput = {
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
-  lat?: Maybe<Scalars['Float']>;
-  long?: Maybe<Scalars['Float']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
 };
 
@@ -366,36 +359,34 @@ export type PageRequest = {
 };
 
 /**
- * @model
+ * @model(delete: false)
  * @versioned
- * @crud.delete: false
  */
 export type Product = {
    __typename?: 'Product';
   id: Scalars['ID'];
   label: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  /** @oneToMany field: 'product', key: 'productId' */
+  /** @oneToMany(field: 'product', key: 'productId') */
   volunteerActionProducts?: Maybe<Array<Maybe<VolunteerActionProduct>>>;
-  /** @manyToOne field: 'products', key: 'distributionCentreId' */
+  /** @manyToOne(field: 'products', key: 'distributionCentreId') */
   distributionCentre?: Maybe<DistributionCentre>;
   /**
    * @createdAt
-   *             @db.type: 'timestamp'
+   * @db(type: 'timestamp')
    */
   createdAt?: Maybe<Scalars['String']>;
   /**
    * @updatedAt
-   *             @db.type: 'timestamp'
+   * @db(type: 'timestamp')
    */
   updatedAt?: Maybe<Scalars['String']>;
 };
 
 
 /**
- * @model
+ * @model(delete: false)
  * @versioned
- * @crud.delete: false
  */
 export type ProductVolunteerActionProductsArgs = {
   filter?: Maybe<VolunteerActionProductFilter>;
@@ -510,9 +501,8 @@ export type QueryFindRecipientsArgs = {
 };
 
 /**
- * @model
+ * @model(delete: false)
  * @versioned
- * @crud.delete: false
  */
 export type Recipient = Address & {
    __typename?: 'Recipient';
@@ -528,7 +518,7 @@ export type Recipient = Address & {
   long?: Maybe<Scalars['Float']>;
   /**
    * @createdAt
-   *             @db.type: 'timestamp'
+   * @db(type: 'timestamp')
    */
   createdAt?: Maybe<Scalars['String']>;
   /**
@@ -536,20 +526,19 @@ export type Recipient = Address & {
    * Easier to create volunteer actions when knowing what one really needs. 
    */
   prefferedProducts?: Maybe<Scalars['String']>;
-  /** @oneToMany field: 'recipient', key: 'recipientId' */
+  /** @oneToMany(field: 'recipient', key: 'recipientId') */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   /**
    * @updatedAt
-   *             @db.type: 'timestamp'
+   * @db(type: 'timestamp')
    */
   updatedAt?: Maybe<Scalars['String']>;
 };
 
 
 /**
- * @model
+ * @model(delete: false)
  * @versioned
- * @crud.delete: false
  */
 export type RecipientActionsArgs = {
   filter?: Maybe<VolunteerActionFilter>;
@@ -601,11 +590,10 @@ export type StringInput = {
 };
 
 /**
- * @model
+ * @model(delete: false)
  * @versioned
- * @crud.delete: false
  */
-export type Volunteer = Address & {
+export type Volunteer = {
    __typename?: 'Volunteer';
   id: Scalars['ID'];
   firstName?: Maybe<Scalars['String']>;
@@ -617,32 +605,25 @@ export type Volunteer = Address & {
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
-  lat?: Maybe<Scalars['Float']>;
-  long?: Maybe<Scalars['Float']>;
-  /**
-   * This does not work for MongoDB - https://github.com/aerogear/graphback/issues/1241
-   * @db.default: false
-   */
   canDeliver?: Maybe<Scalars['Boolean']>;
-  /** @oneToMany field: 'volunteer', key: 'volunteerId' */
+  /** @oneToMany(field: 'volunteer', key: 'volunteerId') */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   /**
    * @createdAt
-   *             @db.type: 'timestamp'
+   * @db(type: 'timestamp')
    */
   createdAt?: Maybe<Scalars['String']>;
   /**
    * @updatedAt
-   *             @db.type: 'timestamp'
+   * @db(type: 'timestamp')
    */
   updatedAt?: Maybe<Scalars['String']>;
 };
 
 
 /**
- * @model
+ * @model(delete: false)
  * @versioned
- * @crud.delete: false
  */
 export type VolunteerActionsArgs = {
   filter?: Maybe<VolunteerActionFilter>;
@@ -650,6 +631,7 @@ export type VolunteerActionsArgs = {
 
 /**
  * Represents action that is assigned to volunteer
+ * 
  * @model
  */
 export type VolunteerAction = {
@@ -663,19 +645,20 @@ export type VolunteerAction = {
   completedAt?: Maybe<Scalars['DateTime']>;
   /** @updatedAt */
   updatedAt?: Maybe<Scalars['String']>;
-  /** @manyToOne field: 'actions', key: 'volunteerId' */
+  /** @manyToOne(field: 'actions', key: 'volunteerId') */
   volunteer?: Maybe<Volunteer>;
-  /** @manyToOne field: 'actions', key: 'distributionCentreId' */
+  /** @manyToOne(field: 'actions', key: 'distributionCentreId') */
   distributionCentre?: Maybe<DistributionCentre>;
-  /** @oneToMany field: 'volunteerAction', key: 'volunteerActionId' */
+  /** @oneToMany(field: 'volunteerAction', key: 'volunteerActionId') */
   products?: Maybe<Array<Maybe<VolunteerActionProduct>>>;
-  /** @manyToOne field: 'actions', key: 'recipientId' */
+  /** @manyToOne(field: 'actions', key: 'recipientId') */
   recipient?: Maybe<Recipient>;
 };
 
 
 /**
  * Represents action that is assigned to volunteer
+ * 
  * @model
  */
 export type VolunteerActionProductsArgs = {
@@ -702,30 +685,24 @@ export type VolunteerActionFilter = {
 /**
  * Represents a join model between a volunteer action and product
  * 
- * @model
+ * @model(create: true, update: false, delete: false, subCreate: false, subUpdate: false, subDelete: false)
  * @versioned
- * @crud.create: true
- * @crud.update: false
- * @crud.delete: false
- * @crud.subCreate: false
- * @crud.subUpdate: false
- * @crud.subDelete: false
  */
 export type VolunteerActionProduct = {
    __typename?: 'VolunteerActionProduct';
   id: Scalars['ID'];
-  /** @manyToOne field: 'volunteerActionProducts', key: 'productId' */
+  /** @manyToOne(field: 'volunteerActionProducts', key: 'productId') */
   product?: Maybe<Product>;
-  /** @manyToOne field: 'products', key: 'volunteerActionId' */
+  /** @manyToOne(field: 'products', key: 'volunteerActionId') */
   volunteerAction?: Maybe<VolunteerAction>;
   /**
    * @createdAt
-   *             @db.type: 'timestamp'
+   * @db(type: 'timestamp')
    */
   createdAt?: Maybe<Scalars['String']>;
   /**
    * @updatedAt
-   *             @db.type: 'timestamp'
+   * @db(type: 'timestamp')
    */
   updatedAt?: Maybe<Scalars['String']>;
 };
@@ -768,8 +745,6 @@ export type VolunteerFilter = {
   city?: Maybe<StringInput>;
   postcode?: Maybe<IntInput>;
   dateOfBirth?: Maybe<DateTimeInput>;
-  lat?: Maybe<FloatInput>;
-  long?: Maybe<FloatInput>;
   canDeliver?: Maybe<BooleanInput>;
   and?: Maybe<Array<Maybe<VolunteerFilter>>>;
   or?: Maybe<Array<Maybe<VolunteerFilter>>>;
@@ -847,7 +822,7 @@ export type VolunteerActionExpandedFieldsFragment = (
   & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt' | 'updatedAt'>
   & { volunteer?: Maybe<(
     { __typename?: 'Volunteer' }
-    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'lat' | 'long' | 'canDeliver' | 'createdAt' | 'updatedAt'>
+    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'createdAt' | 'updatedAt'>
   )>, distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
     & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'createdAt' | 'updatedAt'>
@@ -862,12 +837,12 @@ export type VolunteerActionExpandedFieldsFragment = (
 
 export type VolunteerFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'lat' | 'long' | 'canDeliver' | 'createdAt' | 'updatedAt'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'createdAt' | 'updatedAt'>
 );
 
 export type VolunteerExpandedFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'lat' | 'long' | 'canDeliver' | 'createdAt' | 'updatedAt'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'createdAt' | 'updatedAt'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt' | 'updatedAt'>
@@ -899,7 +874,7 @@ export type FindDistributionCentresQuery = (
   { __typename?: 'Query' }
   & { findDistributionCentres: (
     { __typename?: 'DistributionCentreResultList' }
-    & Pick<DistributionCentreResultList, 'offset' | 'limit'>
+    & Pick<DistributionCentreResultList, 'offset' | 'limit' | 'count'>
     & { items: Array<Maybe<(
       { __typename?: 'DistributionCentre' }
       & DistributionCentreExpandedFieldsFragment
@@ -931,7 +906,7 @@ export type FindProductsQuery = (
   { __typename?: 'Query' }
   & { findProducts: (
     { __typename?: 'ProductResultList' }
-    & Pick<ProductResultList, 'offset' | 'limit'>
+    & Pick<ProductResultList, 'offset' | 'limit' | 'count'>
     & { items: Array<Maybe<(
       { __typename?: 'Product' }
       & ProductExpandedFieldsFragment
@@ -963,7 +938,7 @@ export type FindVolunteerActionProductsQuery = (
   { __typename?: 'Query' }
   & { findVolunteerActionProducts: (
     { __typename?: 'VolunteerActionProductResultList' }
-    & Pick<VolunteerActionProductResultList, 'offset' | 'limit'>
+    & Pick<VolunteerActionProductResultList, 'offset' | 'limit' | 'count'>
     & { items: Array<Maybe<(
       { __typename?: 'VolunteerActionProduct' }
       & VolunteerActionProductExpandedFieldsFragment
@@ -995,7 +970,7 @@ export type FindVolunteerActionsQuery = (
   { __typename?: 'Query' }
   & { findVolunteerActions: (
     { __typename?: 'VolunteerActionResultList' }
-    & Pick<VolunteerActionResultList, 'offset' | 'limit'>
+    & Pick<VolunteerActionResultList, 'offset' | 'limit' | 'count'>
     & { items: Array<Maybe<(
       { __typename?: 'VolunteerAction' }
       & VolunteerActionExpandedFieldsFragment
@@ -1027,7 +1002,7 @@ export type FindVolunteersQuery = (
   { __typename?: 'Query' }
   & { findVolunteers: (
     { __typename?: 'VolunteerResultList' }
-    & Pick<VolunteerResultList, 'offset' | 'limit'>
+    & Pick<VolunteerResultList, 'offset' | 'limit' | 'count'>
     & { items: Array<Maybe<(
       { __typename?: 'Volunteer' }
       & VolunteerExpandedFieldsFragment
@@ -1059,7 +1034,7 @@ export type FindRecipientsQuery = (
   { __typename?: 'Query' }
   & { findRecipients: (
     { __typename?: 'RecipientResultList' }
-    & Pick<RecipientResultList, 'offset' | 'limit'>
+    & Pick<RecipientResultList, 'offset' | 'limit' | 'count'>
     & { items: Array<Maybe<(
       { __typename?: 'Recipient' }
       & RecipientExpandedFieldsFragment
@@ -1539,8 +1514,6 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     city
     postcode
     dateOfBirth
-    lat
-    long
     canDeliver
     createdAt
     updatedAt
@@ -1591,8 +1564,6 @@ export const VolunteerFieldsFragmentDoc = gql`
   city
   postcode
   dateOfBirth
-  lat
-  long
   canDeliver
   createdAt
   updatedAt
@@ -1610,8 +1581,6 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
   city
   postcode
   dateOfBirth
-  lat
-  long
   canDeliver
   actions {
     id
@@ -1679,6 +1648,7 @@ export const FindDistributionCentresDocument = gql`
     }
     offset
     limit
+    count
   }
 }
     ${DistributionCentreExpandedFieldsFragmentDoc}`;
@@ -1751,6 +1721,7 @@ export const FindProductsDocument = gql`
     }
     offset
     limit
+    count
   }
 }
     ${ProductExpandedFieldsFragmentDoc}`;
@@ -1823,6 +1794,7 @@ export const FindVolunteerActionProductsDocument = gql`
     }
     offset
     limit
+    count
   }
 }
     ${VolunteerActionProductExpandedFieldsFragmentDoc}`;
@@ -1895,6 +1867,7 @@ export const FindVolunteerActionsDocument = gql`
     }
     offset
     limit
+    count
   }
 }
     ${VolunteerActionExpandedFieldsFragmentDoc}`;
@@ -1967,6 +1940,7 @@ export const FindVolunteersDocument = gql`
     }
     offset
     limit
+    count
   }
 }
     ${VolunteerExpandedFieldsFragmentDoc}`;
@@ -2039,6 +2013,7 @@ export const FindRecipientsDocument = gql`
     }
     offset
     limit
+    count
   }
 }
     ${RecipientExpandedFieldsFragmentDoc}`;

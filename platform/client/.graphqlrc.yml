@@ -17,7 +17,7 @@ extensions:
     plugins:
       graphback-schema:
         format: graphql
-        outputPath: ./build
+        outputPath: ./build/schema.graphql
       graphback-client:
         format: 'graphql'
         outputFile: ./src/graphql/graphback.graphql

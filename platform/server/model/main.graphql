@@ -21,7 +21,7 @@ type DistributionCentre implements Address {
 @model(delete: false)
 @versioned
 """
-type Volunteer implements Address {
+type Volunteer {
   id: ID!
   firstName: String
   lastName: String
@@ -32,8 +32,6 @@ type Volunteer implements Address {
   city: String
   postcode: Int
   dateOfBirth: DateTime
-  lat: Float
-  long: Float
   canDeliver: Boolean
   """
   @oneToMany(field: 'volunteer')

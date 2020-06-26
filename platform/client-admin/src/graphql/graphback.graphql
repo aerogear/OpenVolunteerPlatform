@@ -138,8 +138,6 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       city
       postcode
       dateOfBirth
-      lat
-      long
       canDeliver
       createdAt
       updatedAt
@@ -189,8 +187,6 @@ fragment VolunteerFields on Volunteer {
    city
    postcode
    dateOfBirth
-   lat
-   long
    canDeliver
    createdAt
    updatedAt
@@ -208,8 +204,6 @@ fragment VolunteerExpandedFields on Volunteer {
    city
    postcode
    dateOfBirth
-   lat
-   long
    canDeliver
    actions {
       id
@@ -275,6 +269,7 @@ query findDistributionCentres($filter: DistributionCentreFilter, $page: PageRequ
       }
       offset
       limit
+      count
     }
   }
 
@@ -291,6 +286,7 @@ query findProducts($filter: ProductFilter, $page: PageRequest, $orderBy: OrderBy
       }
       offset
       limit
+      count
     }
   }
 
@@ -307,6 +303,7 @@ query findVolunteerActionProducts($filter: VolunteerActionProductFilter, $page: 
       }
       offset
       limit
+      count
     }
   }
 
@@ -323,6 +320,7 @@ query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $
       }
       offset
       limit
+      count
     }
   }
 
@@ -339,6 +337,7 @@ query findVolunteers($filter: VolunteerFilter, $page: PageRequest, $orderBy: Ord
       }
       offset
       limit
+      count
     }
   }
 
@@ -355,6 +354,7 @@ query findRecipients($filter: RecipientFilter, $page: PageRequest, $orderBy: Ord
       }
       offset
       limit
+      count
     }
   }
 
