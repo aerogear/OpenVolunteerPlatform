@@ -14,7 +14,7 @@ interface MapProps {
 class MapContainer extends Component<Readonly<IMapProps> & MapProps> {
   render() {
     return (
-      <div style={{ width: "800px", height: "400px", margin: "0 auto", padding: "20px" }}>
+    <div style={{ width: "100%", height: "300pt" }}>
         <GoogleMap
           google={this.props.google}
           zoom={this.props.zoom || 16}
