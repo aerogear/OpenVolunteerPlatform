@@ -40,7 +40,7 @@ export const RecipientsPage: React.FC<RouteComponentProps> = ({ match }) => {
 
       <IonContent className="ion-padding" >
         {content}
-        <IonFab vertical="top" horizontal="center" slot="fixed">
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton routerLink="createRecipient">
             <IonIcon icon={add} />
           </IonFabButton>

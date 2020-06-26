@@ -68,7 +68,7 @@ export const DistributionCentrePage: React.FC<RouteComponentProps> = ({ match })
         <IonCard>
           {mapContent}
         </IonCard>
-        <IonFab vertical="top" horizontal="center" slot="fixed">
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton routerLink="createDistributionCentre">
             <IonIcon icon={add} />
           </IonFabButton>

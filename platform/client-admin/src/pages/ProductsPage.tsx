@@ -35,7 +35,7 @@ export const ProductsPage: React.FC<RouteComponentProps> = ({ match }) => {
       <Header title="List of Products" match={match} />
       <IonContent className="ion-padding" >
         {content}
-        <IonFab vertical="top" horizontal="center" slot="fixed">
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton routerLink="createProduct">
             <IonIcon icon={add} />
           </IonFabButton>
