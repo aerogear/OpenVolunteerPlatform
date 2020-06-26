@@ -11,7 +11,7 @@ const routes = {
   operationPages: [
     { title: 'Actions', path: '/actions', icon: codeWorking },
     { title: 'Action Map', path: '/map', icon: mapOutline },
-    { title: 'Optimizations', path: '/optimize', icon: optionsSharp },
+    { title: 'Scheduling', path: '/optimize', icon: optionsSharp },
     { title: 'Reports', path: '/reports', icon: textOutline },
   ],
   managementPages: [
