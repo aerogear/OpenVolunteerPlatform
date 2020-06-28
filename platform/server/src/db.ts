@@ -18,7 +18,7 @@ export async function connect(config: Config) {
 
 
   if (process.env.BACKUP_DEMO_DATA === 'true') {
-    const backup = require('mongodb-dump');
+    const backup = require('mongodb-backup');
     backup({
       uri: url,
       root: resolve(__dirname, '../mongodump')
