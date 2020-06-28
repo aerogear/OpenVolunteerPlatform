@@ -55,9 +55,7 @@ export const CreateVolunteerPage: React.FC<RouteComponentProps<IUpdateMatchParam
                         address2: model.address2,
                         dateOfBirth: model.dateOfBirth,
                         canDeliver: model.canDeliver,
-                        postcode: model.postcode,
-                        lat: model.lat,
-                        long: model.long
+                        postcode: model.postcode
                       }
                     }
                   }).then(({data}) => {
