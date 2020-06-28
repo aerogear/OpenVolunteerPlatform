@@ -33,6 +33,9 @@ type Volunteer {
   postcode: Int
   dateOfBirth: DateTime
   canDeliver: Boolean
+  actionsCompleted: Int
+  active: Boolean
+
   """
   @oneToMany(field: 'volunteer')
   """
@@ -54,10 +57,11 @@ type Recipient implements Address {
   city: String
   lat: Float
   long: Float
-  createdAt: DateTime
+  actionsCompleted: Int
+  deliveryDays: String
   """
   Comma separated list of preferrend products labels.
-  Easier to create volunteer actions when knowing what one really needs. 
+  Easier to create volunteer actions when knowing what one really needs.
   """
   prefferedProducts: String
   """
@@ -70,19 +74,15 @@ type Recipient implements Address {
 Represents action that is assigned to volunteer
 
 @model
+@versioned
 """
 type VolunteerAction {
   id: ID!
   title: String!
   description: String
   status: ActionStatus
-  createdAt: DateTime
   assignedAt: DateTime
   completedAt: DateTime
-  """
-  @updatedAt
-  """
-  updatedAt: String
   """
   @manyToOne(field: 'actions', key: 'volunteerId')
   """
@@ -96,7 +96,6 @@ type VolunteerAction {
   """
   products: [VolunteerActionProduct]
 }
-
 
 """
 Represents a join model between a volunteer action and product
@@ -128,7 +127,7 @@ type Product {
   """
   @oneToMany(field: 'product')
   """
-  volunteerActionProducts: [VolunteerActionProduct] 
+  volunteerActionProducts: [VolunteerActionProduct]
 }
 
 enum ActionStatus {
