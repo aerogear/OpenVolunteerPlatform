@@ -37,11 +37,11 @@ const volunteerForm = new SimpleSchema({
     },
     address2: {
         type: String,
+        required: false,
         max: 400
     },
     city: {
         type: String,
-        required: false,
         max: 100
     },
     postcode: {

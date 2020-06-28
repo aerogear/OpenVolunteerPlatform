@@ -26,6 +26,7 @@ const recipientSchema = new SimpleSchema({
     address2: {
         type: String,
         max: 220,
+        required: false,
         uniforms: {
             readonly: true
         }

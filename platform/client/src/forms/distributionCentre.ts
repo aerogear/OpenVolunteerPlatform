@@ -12,6 +12,7 @@ const distributionCentre = new SimpleSchema({
     },
     address2: {
         type: String,
+        required: false,
         max: 400
     },
     city: {
