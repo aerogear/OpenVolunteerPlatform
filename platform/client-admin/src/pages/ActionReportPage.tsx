@@ -4,7 +4,7 @@ import { Header } from '../components';
 import humanizeString from "humanize-string";
 import { RouteComponentProps } from 'react-router';
 import { useGetTodayActionReportLazyQuery } from '../dataFacade';
-import { IonPage, IonContent, IonFooter, IonGrid, IonRow, IonCol, IonLoading } from '@ionic/react';
+import { IonPage, IonContent, IonFooter, IonGrid, IonRow, IonCol, IonLoading, IonCard, IonLabel, IonBadge, IonCardContent, IonCardHeader } from '@ionic/react';
 
 
 const EARTH_RADIUS = 6378.137;
@@ -90,15 +90,27 @@ export const ActionReportPage: React.FC<RouteComponentProps> = ({ match }) => {
   const gridContent = reportsRows.map((reportRow, index) => {
     const columns = reportRow.map((column) => {
       return <IonCol key={column[0]}>
-        <div>
-          {humanizeString(column[0])}
-          <br />
-          {column[1]}
-        </div>
+        <IonCard>
+          <IonCardHeader>
+            {humanizeString(column[0])}
+          </IonCardHeader>
+
+          <IonCardContent style={{ margin: "0 auto", width: "30%" }}>
+            <IonBadge style={{ padding: "20px;" }} color={index === 2 ? "warning" : "primary"}>{column[1]}</IonBadge>
+          </IonCardContent>
+        </IonCard>
       </IonCol>
     });
 
-    return <IonRow key={index}> {columns}</IonRow>
+    return (
+      <div>
+        {index === 0 ? <h4>General stats</h4> : ""}
+        {index === 1 ? <h4>Todays stats</h4> : ""}
+        {index === 2 ? <h4>Incidents</h4> : ""}
+        {index === 3 ? <h4>Location based</h4> : ""}
+        <IonRow key={index}> {columns}</IonRow>
+      </div>
+    )
   });
 
   return (
