@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFindDistributionCentresQuery, useFindFlatDistributionCentresQuery } from '../dataFacade';
+import { useFindFlatDistributionCentresQuery } from '../dataFacade';
 import { IonLoading, IonPage, IonContent, IonFooter, IonIcon, IonFab, IonFabButton, IonCard } from '@ionic/react';
 import { Header, Empty } from '../components';
 import { RouteComponentProps, useHistory } from 'react-router';

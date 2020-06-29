@@ -4,7 +4,7 @@ import { Header } from '../components';
 import humanizeString from "humanize-string";
 import { RouteComponentProps } from 'react-router';
 import { useGetTodayActionReportLazyQuery } from '../dataFacade';
-import { IonPage, IonContent, IonFooter, IonGrid, IonRow, IonCol, IonLoading, IonCard, IonLabel, IonBadge, IonCardContent, IonCardHeader } from '@ionic/react';
+import { IonPage, IonContent, IonFooter, IonGrid, IonRow, IonCol, IonLoading, IonCard, IonBadge, IonCardContent, IonCardHeader } from '@ionic/react';
 
 
 const EARTH_RADIUS = 6378.137;

@@ -3,7 +3,6 @@ import {
   IonItem,
   IonButton,
   IonLabel,
-  IonNote,
   IonIcon,
   IonButtons,
   IonBadge
@@ -30,7 +29,7 @@ export const Recipient: React.FC<{ recipient: RecipientFieldsFragment }> = ({ re
         </IonBadge>
         </p>
        
-        <p> <IonIcon icon={callOutline}></IonIcon>: <a>{recipient.phone}</a></p>
+        <p> <IonIcon icon={callOutline}></IonIcon>: <a href={`tel://${recipient.phone}`}>{recipient.phone}</a></p>
       </IonLabel>
       <IonButtons>
 
