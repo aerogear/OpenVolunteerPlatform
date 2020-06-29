@@ -19,22 +19,27 @@ export const Volunteer: React.FC<{ volunteer: VolunteerFieldsFragment }> = ({ vo
       <IonIcon icon={peopleOutline} className='ion-margin-end ion-align-items-start' />
       <IonLabel>
         <h2>{volunteer.firstName} {volunteer.lastName}</h2>
-        <IonNote item-start>
-          {volunteer.canDeliver}
-        </IonNote>
         <br />
-        <IonNote>
-          {volunteer.canDeliver &&
+        {volunteer.canDeliver &&
+          <p>
+            Action Type
             <IonBadge style={{ margin: "5px" }} color='primary'>
               Delivery
-            </IonBadge>}
+            </IonBadge>
+          </p>}
+        <p>
+          Status
           <IonBadge style={{ margin: "5px" }} color='tertiary'>
             {volunteer.active ? "Active" : "Inactive"}
           </IonBadge>
-          <IonBadge style={{ margin: "5px" }} color='success'>
-            Actions completed: {volunteer.actionsCompleted}
+        </p>
+
+        <p>Actions Completed
+        <IonBadge style={{ margin: "5px" }} color='success'>
+            {volunteer.actionsCompleted}
           </IonBadge>
-        </IonNote>
+        </p>
+
       </IonLabel>
       <IonButtons>
 
