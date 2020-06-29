@@ -48,20 +48,6 @@ const volunteerForm = new SimpleSchema({
         type: Number,
         required: false,
     },
-    lat: {
-        type: Number,
-        required: false,
-        uniforms: {
-            label: "Latitude"
-        }
-    },
-    long: {
-        type: Number,
-        required: false,
-        uniforms: {
-            label: "Longitude"
-        }
-    },
     dateOfBirth: {
         type: Date,
         required: false,
@@ -72,7 +58,7 @@ const volunteerForm = new SimpleSchema({
     canDeliver: {
         type: Boolean,
         uniforms: {
-            label: "I volunteer to make phone calls to recipients"
+            label: "Volunteer can do delivers to recipients"
         }
     }
 } as any);
