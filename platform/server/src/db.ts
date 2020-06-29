@@ -14,9 +14,6 @@ export async function connect(config: Config) {
     url = `mongodb://${config.db.host}:${config.db.port}/${config.db.database}`
   }
 
-  const backup = require('mongodb-backup');
-
-
   if (process.env.BACKUP_DEMO_DATA === 'true') {
     const backup = require('mongodb-backup');
     backup({
