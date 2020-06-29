@@ -91,15 +91,17 @@ export const ActionReportPage: React.FC<RouteComponentProps> = ({ match }) => {
     const columns = reportRow.map((column) => {
       return <IonCol key={column[0]}>
         <IonCard>
-          <IonCardHeader>
-            {humanizeString(column[0])}
+          <IonCardHeader style={{ margin: "0 auto", width: "40%" }}>
+            <IonBadge style={{ padding: "1em" }} color={index === 2 ? "warning" : "primary"}>{column[1]}</IonBadge>
           </IonCardHeader>
 
-          <IonCardContent style={{ margin: "0 auto", width: "30%" }}>
-            <IonBadge style={{ padding: "20px" }} color={index === 2 ? "warning" : "primary"}>{column[1]}</IonBadge>
+          <IonCardContent>
+            <p style={{ textAlign: "center" }}>
+            {humanizeString(column[0])}
+            </p>
           </IonCardContent>
         </IonCard>
-      </IonCol>
+      </IonCol >
     });
 
     return (
