@@ -1,3 +1,8 @@
+---
+id: serverfullstack
+title: Out of the box Node.js server
+---
+
 # Open Volunteer Full Stack Server
 
 Node.js implementation for GraphQL based API

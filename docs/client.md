@@ -1,8 +1,7 @@
 ---
-id: commands
+id: client
 title: CLI commands
 ---
-
 
 # Open Volunteer Platform CLI
 
