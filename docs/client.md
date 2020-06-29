@@ -1,3 +1,9 @@
+---
+id: commands
+title: CLI commands
+---
+
+
 # Open Volunteer Platform CLI
 
 The command-line tool (CLI) helps you bootstrap your Open Volunteer Platform template.

@@ -1,5 +1,5 @@
 ---
-id: commands
+id: commands-graphback
 title: CLI commands
 ---
 

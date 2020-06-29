@@ -1,14 +1,9 @@
 ---
-id: deployment
-title: Deployment
-sidebar_label: Deployment
----
-
-## Deployment
----
 id: datamodel
 title: Data Model
 ---
+
+## Customization using data model
 
 Graphback processes your data model to generate a server and client side using best patterns for production ready applications and reduces amount of boilerplate code needed to be added by you.
 Developers can focus on data and application requirements by modeling them using a GraphQL SDL.

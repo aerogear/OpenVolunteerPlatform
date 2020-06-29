@@ -1,6 +1,11 @@
+---
+id: subscriptions
+title: Subscriptions
+---
+
 # Subscriptions
 
-To set up subscriptions in voyager server, these steps must be followed.
+To set up subscriptions in OpenVolunteer, these steps must be followed.
 
 * Configure SubscriptionServer using voyager-subscriptions
 * Configure a Publish Subscribe Mechanism
@@ -8,7 +13,7 @@ To set up subscriptions in voyager server, these steps must be followed.
 
 ## Configure SubscriptionServer using voyager-subscriptions
 
-A typical Voyager Server setup without subscriptions is shown below.
+A typical OpenVolunteer setup without subscriptions is shown below.
 
 ```js
 const apolloServer = VoyagerServer({

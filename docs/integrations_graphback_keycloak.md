@@ -1,5 +1,5 @@
 ---
-id: keycloak
+id: keycloak-authz
 title: Out of the box Keycloak based authentication
 sidebar_label: Keycloak Auth
 ---

@@ -1,3 +1,8 @@
+---
+id: liveupdates
+title: AMQ Live updates
+---
+
 # Configuring AMQ Online for MQTT Messaging
 
 Red Hat AMQ supports the MQTT protocol which makes it a suitable Pubsub technology for powering GraphQL subscriptions at scale. This document provides recommendations for 
