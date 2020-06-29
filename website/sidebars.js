@@ -1,9 +1,9 @@
 module.exports = {
   docs: {
     Introduction: ["gettingstarted"],
-    Introduction: ["gettingstartedref", "coding"],
+    "Reference Apps": ["gettingstartedref", "coding"],
     Development: ["clientref", "serverfullstack"],
     Customizations: ["datamodel", "keycloak-authz", "liveupdates"],
-    Client: ["client"],
+    Client: ["client"]
   },
 };
