@@ -75,7 +75,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
       username: profile.username,
       canDeliver: false
     } as any;
-    if (navigator.geolocation) {
+    if (navigator && navigator.geolocation) {
       navigator.geolocation
         .getCurrentPosition((location) => {
           setVolunteer({
@@ -83,8 +83,6 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
             lat: location.coords.latitude,
             long: location.coords.longitude
           } as any);
-  
-          // TODO - get city and address using Google Map API and put on map
         }, console.error);
     }
   }
