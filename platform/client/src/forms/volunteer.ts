@@ -58,7 +58,7 @@ const volunteerForm = new SimpleSchema({
     canDeliver: {
         type: Boolean,
         uniforms: {
-            label: "I volunteer to make phone calls to recipients",
+            label: "I volunteer to do delivery to recipients",
             defaultValue: false
         }
     }
