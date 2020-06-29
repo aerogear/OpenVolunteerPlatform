@@ -54,7 +54,6 @@ export const CreateRecipientPage: React.FC<RouteComponentProps<IUpdateMatchParam
                         lastName: model.lastName,
                         prefferedProducts: model.prefferedProducts,
                         phone: model.phone,
-                        createdAt: new Date(),
                         lat: model.lat,
                         long: model.long
                       }
