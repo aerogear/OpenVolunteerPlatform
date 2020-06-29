@@ -9,8 +9,9 @@ The command-line tool (CLI) helps you bootstrap your Open Volunteer Platform tem
 
 ## Usage
 
-Execute starter 
+1. Execute starter 
+
 ```
 npx openvp init yourproject
 ```
-Answer the question prompts and pick the template that suits your needs.
+2. Answer the question prompts and pick the template that suits your needs.
