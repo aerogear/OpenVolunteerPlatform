@@ -1,10 +1,10 @@
 import React from 'react';
 import { useCreateDailyActionPlanMutation, useFindDailyActionPlansQuery, ActionStatus } from '../dataFacade';
-import { IonLoading, IonPage, IonContent, IonFooter, IonItemDivider, IonCard } from '@ionic/react';
+import { IonLoading, IonPage, IonContent, IonFooter, IonItemDivider, IonCard, IonButton } from '@ionic/react';
 import { Header } from '../components';
-import dailyActionForm from '../forms/recipient'
+import dailyActionForm from '../forms/dailyAction'
 import { RouteComponentProps } from 'react-router-dom';
-import { AutoForm } from 'uniforms';
+import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic';
 
 export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
   const { data, loading, error } = useFindDailyActionPlansQuery();
@@ -14,7 +14,7 @@ export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
     console.log(error);
   }
 
-  const submit = (model: any) => {
+  const submit = () => {
     createDailyAction({ variables: { input: { date: new Date, owner: "admin", numberOfCasesCreated: 12, numberOfVolunteersAssigned: 31 } } }).then((result) => {
       console.log("success");
       window.location.reload(false);
@@ -22,14 +22,28 @@ export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
       console.log("Failure", error);
     })
   }
-
+  let content = (<h4>No scheduler run today</h4>)
   if (loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
   let dailyAction: any = {};
   if (data?.findDailyActionPlans && data?.findDailyActionPlans.items && data?.findDailyActionPlans.items.length !== 0) {
     dailyAction = data?.findDailyActionPlans.items.pop();
+    content = (
+      <AutoForm
+        placeholder
+        model={{ ...dailyAction }}
+        schema={dailyActionForm}
+        showInlineError
+      >
+        <AutoFields />
+        <ErrorsField />
+
+
+      </AutoForm>
+    )
   }
 
-  console.log("test ", dailyAction)
+
+
   return (
     <IonPage>
       <Header title="OpenVolunteer Admin App" match={match} />
@@ -39,14 +53,11 @@ export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
           <h2>Last scheduled daily assignments</h2>
         </IonItemDivider>
         <IonCard>
-          <AutoForm
-            placeholder
-            // model={{ ...dailyAction }}
-            schema={dailyActionForm}
-            onSubmit={(model: any) => submit(model)}
-            showInlineError
-          ></AutoForm>
+          {content}
+        
         </IonCard>
+        <IonButton onClick={() => submit()}>Schedule daily assignments</IonButton>
+
       </IonContent>
       <IonFooter>
         <div>

@@ -30,26 +30,25 @@ export const createApolloServer = async function (app: Express, config: Config) 
         serviceCreator: createKeycloakAndAMQCRUDService(authConfig),
         dataProviderCreator: createMongoDbProvider(db)
     });
-
+    // TODO enable custom resolvers
     const mergedResolvers: any = GMR.merge([resolvers, customResolvers, scalars]);
     let apolloConfig: ApolloServerExpressConfig = {
         typeDefs: typeDefs,
         resolvers: mergedResolvers,
         playground: true,
-        context: (context) => {
-            return {
-                ...contextCreator(context),
-                db: db
-            }
-        }
+        context: contextCreator
+        // context: (context) => {
+        //     return {
+        //         ...contextCreator(context),
+        //         db: db
+        //     }
+        // }
     }
 
     if (config.keycloakConfig) {
         apolloConfig = buildKeycloakApolloConfig(app, apolloConfig)
     }
-
-    apolloConfig.resolvers = { ...apolloConfig.resolvers, ...scalars, ...customResolvers };
-
+    
     const apolloServer = new ApolloServer(apolloConfig)
     apolloServer.applyMiddleware({ app });
 
