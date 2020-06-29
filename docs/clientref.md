@@ -1,8 +1,8 @@
 ---
-id: backendref
-title: OVP backend reference
+id: clientref
+title: OVP client reference
 ---
-# OpenVolunteer React Client
+# OpenVolunteer React Client and Admin
 
 Example React Web application using AeroGear Open Volunteer Platform
 
