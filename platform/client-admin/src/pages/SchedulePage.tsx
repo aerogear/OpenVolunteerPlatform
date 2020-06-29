@@ -15,7 +15,16 @@ export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
   }
 
   const submit = () => {
-    createDailyAction({ variables: { input: { date: new Date, owner: "admin", numberOfCasesCreated: 12, numberOfVolunteersAssigned: 31 } } }).then((result) => {
+    createDailyAction({
+      variables: {
+        input: {
+          date: new Date,
+          owner: "admin",
+          numberOfCasesCreated: 10 + new Date().getTime() % 6,
+          numberOfVolunteersAssigned: 10 + new Date().getTime() % 6
+        }
+      }
+    }).then((result) => {
       console.log("success");
       window.location.reload(false);
     }).catch((error) => {
@@ -54,7 +63,7 @@ export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
         </IonItemDivider>
         <IonCard>
           {content}
-        
+
         </IonCard>
         <IonButton onClick={() => submit()}>Schedule daily assignments</IonButton>
 

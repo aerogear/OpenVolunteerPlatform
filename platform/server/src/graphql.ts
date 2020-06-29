@@ -36,19 +36,18 @@ export const createApolloServer = async function (app: Express, config: Config) 
         typeDefs: typeDefs,
         resolvers: mergedResolvers,
         playground: true,
-        context: contextCreator
-        // context: (context) => {
-        //     return {
-        //         ...contextCreator(context),
-        //         db: db
-        //     }
-        // }
+        context: (context) => {
+            return {
+                ...contextCreator(context),
+                db: db
+            }
+        }
     }
 
     if (config.keycloakConfig) {
         apolloConfig = buildKeycloakApolloConfig(app, apolloConfig)
     }
-    
+
     const apolloServer = new ApolloServer(apolloConfig)
     apolloServer.applyMiddleware({ app });
 
