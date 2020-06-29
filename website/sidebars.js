@@ -2,7 +2,7 @@ module.exports = {
   docs: {
     Introduction: ["gettingstarted"],
     "Reference applications": ["gettingstartedref"],
-    Integrations: ["integrations", "keycloak"],
+    Integrations: ["integrations"],
     Customizations: [
       "datamodel",
       " keycloak-authz",
