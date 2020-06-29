@@ -16,7 +16,7 @@ export const CreateVolunteerPage: React.FC<RouteComponentProps<IUpdateMatchParam
     long: 0
   });
 
-  if (navigator.geolocation) {
+  if (navigator?.geolocation) {
     navigator.geolocation
       .getCurrentPosition((location) => {
         setModel({
