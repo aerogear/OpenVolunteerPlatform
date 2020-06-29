@@ -1,5 +1,5 @@
 ---
-id: client
+id: commands
 title: CLI commands
 ---
 

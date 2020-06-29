@@ -4,7 +4,7 @@ title: Out of the box Keycloak based authentication
 sidebar_label: Keycloak Auth
 ---
 
-## Graphback Keycloak Authz
+## Authorization using Keycloak
 
 Graphback Keycloak Authz enables [Keycloak](https://www.keycloak.org/) integration in [Graphback](https://graphback.dev) based applications. This enables you to declaratively add authorization capabilities like role based access on top of the CRUD model that is used within Graphback.
 

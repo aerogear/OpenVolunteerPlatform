@@ -3,14 +3,14 @@ id: datamodel
 title: Data Model
 ---
 
-## Customization using data model
+## Customization of OVP server using data model
 
-Graphback processes your data model to generate a server and client side using best patterns for production ready applications and reduces amount of boilerplate code needed to be added by you.
-Developers can focus on data and application requirements by modeling them using a GraphQL SDL.
+OVP processes your data model to generate a server and client side using best patterns for production ready applications and reduces amount of boilerplate code needed to be added by you.
+Developers can focus on data and application requirements by modeling them using a GraphQL SDL. You can view your data model in `./server/model` folder
 
 ## Model
 
-Graphback operates on GraphQL Schema types annotated with `@model`. Refer to [this](../metadata.md) page for complete documentation of `@model` and other annotations.
+OVP (Graphback) operates on GraphQL Schema types annotated with `@model`. Refer to [this](../metadata.md) page for complete documentation of `@model` and other annotations.
 Adding this annotation to your type will enable Graphback to add additional elements to the schema and generate related code in JavaScript or TypeScript.
 
 ```graphql
@@ -53,8 +53,9 @@ type Note {
 }
 ```
 
-Your data models can also contain custom types that are not Graphback models as shown below. 
+Your data models can also contain custom types that are not Graphback models as shown below.
 However, it is expected that you provide the custom resolvers for your custom type as Graphback will not generate one for you.
+
 ```graphql
 """
 @model
@@ -156,8 +157,8 @@ type Profile {
 To create a many-to-many relationship, add a model for your join table and use two one-to-many relationship mappings to create the relationship.
 
 ```graphql
-""" 
-@model 
+"""
+@model
 """
 type Note {
   id: ID!
@@ -188,4 +189,3 @@ type User {
   notes: [NoteAuthor]
 }
 ```
-
