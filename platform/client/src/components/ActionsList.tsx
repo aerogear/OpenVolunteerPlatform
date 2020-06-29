@@ -5,7 +5,7 @@ import { Empty } from './Empty';
 
 export const ActionsList: React.FC<any> = ({ actions }) => {
   if(!actions || actions.length < 1) {
-    const message = (<p>You currently have no tasks.</p>);
+    const message = (<p>You currently have no actions.</p>);
     return <Empty message={message} />
   };
 

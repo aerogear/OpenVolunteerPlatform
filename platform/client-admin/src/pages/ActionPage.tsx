@@ -29,7 +29,7 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   if (data?.findVolunteerActions?.items.length !== 0) {
     content = <ActionsList actions={data?.findVolunteerActions?.items} />
   } else {
-    content = <Empty message={<p>No tasks!</p>} />;
+    content = <Empty message={<p>No actions!</p>} />;
   }
 
 
