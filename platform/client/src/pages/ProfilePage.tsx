@@ -79,9 +79,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
       navigator.geolocation
         .getCurrentPosition((location) => {
           setVolunteer({
-            ...volunteer,
-            lat: location.coords.latitude,
-            long: location.coords.longitude
+            ...volunteer
           } as any);
         }, console.error);
     }

@@ -53,7 +53,7 @@ export const Menu: React.FC<MenuProps> = () => {
   }
 
   return (
-    <IonMenu type="overlay" contentId="main">
+    <IonMenu type="push" contentId="main">
       <IonContent forceOverscroll={false}>
         <IonList lines="none">
           <IonListHeader>Operations</IonListHeader>
