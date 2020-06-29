@@ -26,7 +26,7 @@ export const ViewDistributionCentrePage: React.FC<RouteComponentProps<IUpdateMat
 
   const title = `${distributionCentre.address1} ${distributionCentre.address2} ${distributionCentre.city}`;
   let mapContent = <Map
-    zoom={14}
+    zoom={12}
     center={{
       lat: distributionCentre.lat!,
       lng: distributionCentre.long!

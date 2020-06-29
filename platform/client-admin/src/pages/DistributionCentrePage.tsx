@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFindDistributionCentresQuery } from '../dataFacade';
+import { useFindDistributionCentresQuery, useFindFlatDistributionCentresQuery } from '../dataFacade';
 import { IonLoading, IonPage, IonContent, IonFooter, IonIcon, IonFab, IonFabButton, IonCard } from '@ionic/react';
 import { Header, Empty } from '../components';
 import { RouteComponentProps, useHistory } from 'react-router';
@@ -9,7 +9,7 @@ import { add } from 'ionicons/icons';
 
 export const DistributionCentrePage: React.FC<RouteComponentProps> = ({ match }) => {
   const history = useHistory();
-  let { data, loading, error } = useFindDistributionCentresQuery();
+  let { data, loading, error } = useFindFlatDistributionCentresQuery();
 
   if (error) {
     console.log(error);
@@ -52,7 +52,7 @@ export const DistributionCentrePage: React.FC<RouteComponentProps> = ({ match })
       });
 
     mapContent = <Map
-      zoom={2}
+      zoom={12}
       center={{
         lat: totalLatLong.lat / size,
         lng: totalLatLong.lng / size
