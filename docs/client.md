@@ -1,8 +1,4 @@
-## Open Volunteer Platform Client 
-
-**Website**: https://openvolunteer.org
-
-**Repository**: https://github.com/aerogear/openvolunteerplatform/
+# Open Volunteer Platform Client 
 
 The command-line tool (CLI) helps you bootstrap your Open Volunteer Platform template
 
