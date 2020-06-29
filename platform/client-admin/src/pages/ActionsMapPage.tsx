@@ -69,7 +69,7 @@ export const ActionsMapPage: React.FC<RouteComponentProps> = ({ match }) => {
       return <Marker
         key={index}
         title={title}
-        label={recipient?.firstName! + " " + recipient?.lastName!}
+        label={recipient?.firstName}
         icon={{
           url: RED_DOT
         }}

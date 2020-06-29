@@ -20,6 +20,14 @@ input BooleanInput {
   eq: Boolean
 }
 
+input CreateDailyActionPlanInput {
+  id: ID
+  owner: String
+  date: DateTime
+  numberOfCasesCreated: Int
+  numberOfVolunteersAssigned: Int
+}
+
 input CreateDistributionCentreInput {
   id: ID
   name: String
@@ -61,6 +69,7 @@ input CreateVolunteerActionInput {
   status: ActionStatus
   assignedAt: DateTime
   completedAt: DateTime
+  _createdAt: DateTime
   volunteerId: ID
   distributionCentreId: ID
   recipientId: ID
@@ -85,7 +94,43 @@ input CreateVolunteerInput {
   dateOfBirth: DateTime
   canDeliver: Boolean
   actionsCompleted: Int
+  actionsActive: Int
   active: Boolean
+}
+
+""" @model """
+type DailyActionPlan {
+  id: ID!
+  owner: String
+  date: DateTime
+  numberOfCasesCreated: Int
+  numberOfVolunteersAssigned: Int
+}
+
+input DailyActionPlanFilter {
+  id: IDInput
+  owner: StringInput
+  date: DateTimeInput
+  numberOfCasesCreated: IntInput
+  numberOfVolunteersAssigned: IntInput
+  and: [DailyActionPlanFilter]
+  or: [DailyActionPlanFilter]
+  not: DailyActionPlanFilter
+}
+
+type DailyActionPlanResultList {
+  items: [DailyActionPlan]!
+  offset: Int
+  limit: Int
+  count: Int
+}
+
+input DailyActionPlanSubscriptionFilter {
+  id: ID
+  owner: String
+  date: DateTime
+  numberOfCasesCreated: Int
+  numberOfVolunteersAssigned: Int
 }
 
 scalar DateTime
@@ -101,10 +146,7 @@ input DateTimeInput {
   between: [DateTime]
 }
 
-"""
-@model(delete: false)
-@versioned
-"""
+"""@model(delete: false)"""
 type DistributionCentre implements Address {
   id: ID!
   name: String
@@ -120,18 +162,6 @@ type DistributionCentre implements Address {
 
   """@oneToMany(field: 'distributionCentre', key: 'distributionCentreId')"""
   actions(filter: VolunteerActionFilter): [VolunteerAction]!
-
-  """
-  @createdAt
-  @db(type: 'timestamp')
-  """
-  createdAt: String
-
-  """
-  @updatedAt
-  @db(type: 'timestamp')
-  """
-  updatedAt: String
 }
 
 input DistributionCentreFilter {
@@ -146,8 +176,6 @@ input DistributionCentreFilter {
   and: [DistributionCentreFilter]
   or: [DistributionCentreFilter]
   not: DistributionCentreFilter
-  createdAt: StringInput
-  updatedAt: StringInput
 }
 
 type DistributionCentreResultList {
@@ -200,6 +228,14 @@ input IntInput {
   between: [Int]
 }
 
+input MutateDailyActionPlanInput {
+  id: ID!
+  owner: String
+  date: DateTime
+  numberOfCasesCreated: Int
+  numberOfVolunteersAssigned: Int
+}
+
 input MutateDistributionCentreInput {
   id: ID!
   name: String
@@ -241,6 +277,7 @@ input MutateVolunteerActionInput {
   status: ActionStatus
   assignedAt: DateTime
   completedAt: DateTime
+  _createdAt: DateTime
   volunteerId: ID
   distributionCentreId: ID
   recipientId: ID
@@ -259,10 +296,16 @@ input MutateVolunteerInput {
   dateOfBirth: DateTime
   canDeliver: Boolean
   actionsCompleted: Int
+  actionsActive: Int
   active: Boolean
 }
 
 type Mutation {
+  """Automatically create actions for the day of the month specified"""
+  assignVolunteers(dayOfTheMonth: Int): DailyActionPlan
+  createDailyActionPlan(input: CreateDailyActionPlanInput!): DailyActionPlan!
+  updateDailyActionPlan(input: MutateDailyActionPlanInput!): DailyActionPlan!
+  deleteDailyActionPlan(input: MutateDailyActionPlanInput!): DailyActionPlan!
   createDistributionCentre(input: CreateDistributionCentreInput!): DistributionCentre!
   updateDistributionCentre(input: MutateDistributionCentreInput!): DistributionCentre!
   createProduct(input: CreateProductInput!): Product!
@@ -287,10 +330,7 @@ input PageRequest {
   offset: Int
 }
 
-"""
-@model(delete: false)
-@versioned
-"""
+"""@model(delete: false)"""
 type Product {
   id: ID!
   label: String!
@@ -301,18 +341,6 @@ type Product {
 
   """@manyToOne(field: 'products', key: 'distributionCentreId')"""
   distributionCentre: DistributionCentre
-
-  """
-  @createdAt
-  @db(type: 'timestamp')
-  """
-  createdAt: String
-
-  """
-  @updatedAt
-  @db(type: 'timestamp')
-  """
-  updatedAt: String
 }
 
 input ProductFilter {
@@ -323,8 +351,6 @@ input ProductFilter {
   and: [ProductFilter]
   or: [ProductFilter]
   not: ProductFilter
-  createdAt: StringInput
-  updatedAt: StringInput
 }
 
 type ProductResultList {
@@ -341,6 +367,8 @@ input ProductSubscriptionFilter {
 }
 
 type Query {
+  getDailyActionPlan(id: ID!): DailyActionPlan
+  findDailyActionPlans(filter: DailyActionPlanFilter, page: PageRequest, orderBy: OrderByInput): DailyActionPlanResultList!
   getDistributionCentre(id: ID!): DistributionCentre
   findDistributionCentres(filter: DistributionCentreFilter, page: PageRequest, orderBy: OrderByInput): DistributionCentreResultList!
   getProduct(id: ID!): Product
@@ -355,10 +383,7 @@ type Query {
   findRecipients(filter: RecipientFilter, page: PageRequest, orderBy: OrderByInput): RecipientResultList!
 }
 
-"""
-@model(delete: false)
-@versioned
-"""
+"""@model(delete: false)"""
 type Recipient implements Address {
   id: ID!
   firstName: String
@@ -375,24 +400,12 @@ type Recipient implements Address {
 
   """
   Comma separated list of preferrend products labels.
-  Easier to create volunteer actions when knowing what one really needs. 
+  Easier to create volunteer actions when knowing what one really needs.
   """
   prefferedProducts: String
 
   """@oneToMany(field: 'recipient', key: 'recipientId')"""
   actions(filter: VolunteerActionFilter): [VolunteerAction]
-
-  """
-  @createdAt
-  @db(type: 'timestamp')
-  """
-  createdAt: String
-
-  """
-  @updatedAt
-  @db(type: 'timestamp')
-  """
-  updatedAt: String
 }
 
 input RecipientFilter {
@@ -412,8 +425,6 @@ input RecipientFilter {
   and: [RecipientFilter]
   or: [RecipientFilter]
   not: RecipientFilter
-  createdAt: StringInput
-  updatedAt: StringInput
 }
 
 type RecipientResultList {
@@ -458,6 +469,9 @@ input StringInput {
 }
 
 type Subscription {
+  newDailyActionPlan(filter: DailyActionPlanSubscriptionFilter): DailyActionPlan!
+  updatedDailyActionPlan(filter: DailyActionPlanSubscriptionFilter): DailyActionPlan!
+  deletedDailyActionPlan(filter: DailyActionPlanSubscriptionFilter): DailyActionPlan!
   newDistributionCentre(filter: DistributionCentreSubscriptionFilter): DistributionCentre!
   updatedDistributionCentre(filter: DistributionCentreSubscriptionFilter): DistributionCentre!
   newProduct(filter: ProductSubscriptionFilter): Product!
@@ -471,10 +485,7 @@ type Subscription {
   updatedRecipient(filter: RecipientSubscriptionFilter): Recipient!
 }
 
-"""
-@model(delete: false)
-@versioned
-"""
+"""@model(delete: false)"""
 type Volunteer {
   id: ID!
   firstName: String
@@ -488,29 +499,17 @@ type Volunteer {
   dateOfBirth: DateTime
   canDeliver: Boolean
   actionsCompleted: Int
+  actionsActive: Int
   active: Boolean
 
   """@oneToMany(field: 'volunteer', key: 'volunteerId')"""
   actions(filter: VolunteerActionFilter): [VolunteerAction]
-
-  """
-  @createdAt
-  @db(type: 'timestamp')
-  """
-  createdAt: String
-
-  """
-  @updatedAt
-  @db(type: 'timestamp')
-  """
-  updatedAt: String
 }
 
 """
 Represents action that is assigned to volunteer
 
 @model
-@versioned
 """
 type VolunteerAction {
   id: ID!
@@ -519,6 +518,7 @@ type VolunteerAction {
   status: ActionStatus
   assignedAt: DateTime
   completedAt: DateTime
+  _createdAt: DateTime
 
   """@manyToOne(field: 'actions', key: 'volunteerId')"""
   volunteer: Volunteer
@@ -531,18 +531,6 @@ type VolunteerAction {
 
   """@manyToOne(field: 'actions', key: 'recipientId')"""
   recipient: Recipient
-
-  """
-  @createdAt
-  @db(type: 'timestamp')
-  """
-  createdAt: String
-
-  """
-  @updatedAt
-  @db(type: 'timestamp')
-  """
-  updatedAt: String
 }
 
 input VolunteerActionFilter {
@@ -552,21 +540,19 @@ input VolunteerActionFilter {
   status: StringInput
   assignedAt: DateTimeInput
   completedAt: DateTimeInput
+  _createdAt: DateTimeInput
   volunteerId: IDInput
   distributionCentreId: IDInput
   recipientId: IDInput
   and: [VolunteerActionFilter]
   or: [VolunteerActionFilter]
   not: VolunteerActionFilter
-  createdAt: StringInput
-  updatedAt: StringInput
 }
 
 """
 Represents a join model between a volunteer action and product
 
 @model(create: true, update: false, delete: false, subCreate: false, subUpdate: false, subDelete: false)
-@versioned
 """
 type VolunteerActionProduct {
   id: ID!
@@ -576,18 +562,6 @@ type VolunteerActionProduct {
 
   """@manyToOne(field: 'products', key: 'volunteerActionId')"""
   volunteerAction: VolunteerAction
-
-  """
-  @createdAt
-  @db(type: 'timestamp')
-  """
-  createdAt: String
-
-  """
-  @updatedAt
-  @db(type: 'timestamp')
-  """
-  updatedAt: String
 }
 
 input VolunteerActionProductFilter {
@@ -597,8 +571,6 @@ input VolunteerActionProductFilter {
   and: [VolunteerActionProductFilter]
   or: [VolunteerActionProductFilter]
   not: VolunteerActionProductFilter
-  createdAt: StringInput
-  updatedAt: StringInput
 }
 
 type VolunteerActionProductResultList {
@@ -622,6 +594,7 @@ input VolunteerActionSubscriptionFilter {
   status: ActionStatus
   assignedAt: DateTime
   completedAt: DateTime
+  _createdAt: DateTime
 }
 
 input VolunteerFilter {
@@ -637,12 +610,11 @@ input VolunteerFilter {
   dateOfBirth: DateTimeInput
   canDeliver: BooleanInput
   actionsCompleted: IntInput
+  actionsActive: IntInput
   active: BooleanInput
   and: [VolunteerFilter]
   or: [VolunteerFilter]
   not: VolunteerFilter
-  createdAt: StringInput
-  updatedAt: StringInput
 }
 
 type VolunteerResultList {
@@ -665,5 +637,6 @@ input VolunteerSubscriptionFilter {
   dateOfBirth: DateTime
   canDeliver: Boolean
   actionsCompleted: Int
+  actionsActive: Int
   active: Boolean
 }

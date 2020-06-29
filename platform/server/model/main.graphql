@@ -126,6 +126,15 @@ type Product {
   volunteerActionProducts: [VolunteerActionProduct]
 }
 
+""" @model """
+type DailyActionPlan {
+  id: ID!
+  owner: String
+  date: DateTime
+  numberOfCasesCreated: Int
+  numberOfVolunteersAssigned: Int
+}
+
 enum ActionStatus {
   CREATED
   ASSIGNED
@@ -134,3 +143,13 @@ enum ActionStatus {
 
 scalar DateTime
 scalar ID
+
+## Custom logic
+type Mutation {
+  """
+  Automatically create actions for the day of the month specified
+  """
+  assignVolunteers(dayOfTheMonth: Int): DailyActionPlan
+}
+
+

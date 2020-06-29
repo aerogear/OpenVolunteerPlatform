@@ -12,6 +12,7 @@ import { loadSchemaSync } from '@graphql-tools/load'
 import { buildGraphbackAPI } from "graphback"
 import { createMongoDbProvider } from "@graphback/runtime-mongo"
 import { authConfig } from './config/auth';
+import GMR from 'graphql-merge-resolvers';
 
 /**
  * Creates Apollo server
@@ -30,12 +31,17 @@ export const createApolloServer = async function (app: Express, config: Config) 
         dataProviderCreator: createMongoDbProvider(db)
     });
 
+    const mergedResolvers: any = GMR.merge([resolvers, customResolvers, scalars]);
     let apolloConfig: ApolloServerExpressConfig = {
         typeDefs: typeDefs,
-        // See https://github.com/aerogear/graphback/issues/1546
-        resolvers: Object.assign(resolvers, customResolvers, scalars),
+        resolvers: mergedResolvers,
         playground: true,
-        context: contextCreator
+        context: (context) => {
+            return {
+                ...contextCreator(context),
+                db: db
+            }
+        }
     }
 
     if (config.keycloakConfig) {
