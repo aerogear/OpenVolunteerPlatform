@@ -22,7 +22,7 @@ export const ActionReportPage: React.FC<RouteComponentProps> = ({ match }) => {
   const [getTodayActionReport, { data, loading, error, called }] = useGetTodayActionReportLazyQuery();
 
   if (!called) {
-    if (navigator.geolocation) {
+    if (navigator?.geolocation) {
       navigator.geolocation
         .getCurrentPosition((location) => {
           getTodayActionReport({
