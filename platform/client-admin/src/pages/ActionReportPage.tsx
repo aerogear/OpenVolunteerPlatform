@@ -90,14 +90,14 @@ export const ActionReportPage: React.FC<RouteComponentProps> = ({ match }) => {
   const gridContent = reportsRows.map((reportRow, index) => {
     const columns = reportRow.map((column) => {
       return <IonCol key={column[0]}>
-        <IonCard>
+        <IonCard key={"card-" + column[0]}>
           <IonCardHeader style={{ margin: "0 auto", width: "40%" }}>
             <IonBadge style={{ padding: "1em" }} color={index === 2 ? "warning" : "primary"}>{column[1]}</IonBadge>
           </IonCardHeader>
 
           <IonCardContent>
             <p style={{ textAlign: "center" }}>
-            {humanizeString(column[0])}
+              {humanizeString(column[0])}
             </p>
           </IonCardContent>
         </IonCard>
@@ -105,12 +105,12 @@ export const ActionReportPage: React.FC<RouteComponentProps> = ({ match }) => {
     });
 
     return (
-      <div>
+      <div key={index}>
         {index === 0 ? <h4>General stats</h4> : ""}
         {index === 1 ? <h4>Todays stats</h4> : ""}
         {index === 2 ? <h4>Incidents</h4> : ""}
         {index === 3 ? <h4>Location based</h4> : ""}
-        <IonRow key={index}> {columns}</IonRow>
+        <IonRow> {columns}</IonRow>
       </div>
     )
   });
