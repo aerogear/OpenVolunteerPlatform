@@ -70,7 +70,7 @@ yarn keycloak:init
 This command creates the necessary resources in Keycloak and prints instructions *you must follow to enable the integration.* 
 
 Follow the instructions and copy the JSON configurations to the appropriate locations.
-The DataSync Starter app and server will read these configurations and the integration will be enabled when they are started.
+The  Starter app and server will read these configurations and the integration will be enabled when they are started.
 
 By default, two users that can log into the application are created.
 

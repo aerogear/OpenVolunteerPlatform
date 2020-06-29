@@ -1,6 +1,6 @@
 ## OpenShift templates
 
-### DataSync Starter App template
+### Starter App template
 
 Name: `datasync-app-template.yml`
 
