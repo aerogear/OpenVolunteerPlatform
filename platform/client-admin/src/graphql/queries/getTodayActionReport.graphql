@@ -18,7 +18,7 @@ query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime
   }
 
   ActionsCreatedToday: findVolunteerActions(
-    filter: { status: { eq: "CREATED" }, createdAt: { ge: $todayMidnight } }
+    filter: { status: { eq: "CREATED" }, _createdAt: { ge: $todayMidnight } }
   ) {
     items {
       ...VolunteerActionFields
@@ -63,7 +63,7 @@ query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime
   ActionsCreatedTodayButNotAssigned: findVolunteerActions(
     filter: {
       status: { eq: "CREATED" }
-      createdAt: { ge: $todayMidnight }
+      _createdAt: { ge: $todayMidnight }
       assignedAt: { eq: null }
     }
   ) {
@@ -87,7 +87,7 @@ query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime
   ActionsCreatedAssignedAndCompletedToday: findVolunteerActions(
     filter: {
       status: { eq: "COMPLETED" }
-      createdAt: { ge: $todayMidnight, lt: $tomorrowMidnight }
+      _createdAt: { ge: $todayMidnight, lt: $tomorrowMidnight }
       assignedAt: { ge: $todayMidnight, lt: $tomorrowMidnight }
       completedAt: { ge: $todayMidnight, lt: $tomorrowMidnight }
     }

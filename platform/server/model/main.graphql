@@ -1,6 +1,5 @@
 """
 @model(delete: false)
-@versioned
 """
 type DistributionCentre implements Address {
   id: ID!
@@ -19,7 +18,6 @@ type DistributionCentre implements Address {
 
 """
 @model(delete: false)
-@versioned
 """
 type Volunteer {
   id: ID!
@@ -44,7 +42,6 @@ type Volunteer {
 
 """
 @model(delete: false)
-@versioned
 """
 type Recipient implements Address {
   id: ID!
@@ -74,7 +71,6 @@ type Recipient implements Address {
 Represents action that is assigned to volunteer
 
 @model
-@versioned
 """
 type VolunteerAction {
   id: ID!
@@ -83,6 +79,7 @@ type VolunteerAction {
   status: ActionStatus
   assignedAt: DateTime
   completedAt: DateTime
+  _createdAt: DateTime
   """
   @manyToOne(field: 'actions', key: 'volunteerId')
   """
@@ -101,7 +98,6 @@ type VolunteerAction {
 Represents a join model between a volunteer action and product
 
 @model(create: true, update: false, delete: false, subCreate: false, subUpdate: false, subDelete: false)
-@versioned
 """
 type VolunteerActionProduct {
   id: ID!
@@ -118,7 +114,6 @@ interface Address {
 
 """
 @model(delete: false)
-@versioned
 """
 type Product {
   id: ID!

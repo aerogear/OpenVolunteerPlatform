@@ -82,6 +82,7 @@ export const CreateVolunteerActionPage: React.FC<RouteComponentProps<IUpdateMatc
                         title: model.title,
                         description: model.description,
                         status: ActionStatus.Created,
+                        _createdAt: new Date(),
                         distributionCentreId: retrieveDistributionCentreId(model.distributionCentreName, distributionCentres),
                         recipientId: retrieveIdFromSelectedName(model.recipientName, recipients),
                         volunteerId: retrieveIdFromSelectedName(model.volunteerName, volunteers)

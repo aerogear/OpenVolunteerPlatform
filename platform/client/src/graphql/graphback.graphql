@@ -7,8 +7,6 @@ fragment DistributionCentreFields on DistributionCentre {
    postcode
    lat
    long
-   createdAt
-   updatedAt
 
 } 
 
@@ -25,8 +23,6 @@ fragment DistributionCentreExpandedFields on DistributionCentre {
       id
       label
       description
-      createdAt
-      updatedAt
    }
    actions {
       id
@@ -35,19 +31,14 @@ fragment DistributionCentreExpandedFields on DistributionCentre {
       status
       assignedAt
       completedAt
-      createdAt
-      updatedAt
-   }   createdAt
-   updatedAt
-
+      _createdAt
+   }
 } 
 
 fragment ProductFields on Product {
    id
    label
    description
-   createdAt
-   updatedAt
 
 } 
 
@@ -57,8 +48,6 @@ fragment ProductExpandedFields on Product {
    description
    volunteerActionProducts {
       id
-      createdAt
-      updatedAt
    }
    distributionCentre {
       id
@@ -69,17 +58,11 @@ fragment ProductExpandedFields on Product {
       postcode
       lat
       long
-      createdAt
-      updatedAt
-   }   createdAt
-   updatedAt
-
+   }
 } 
 
 fragment VolunteerActionProductFields on VolunteerActionProduct {
    id
-   createdAt
-   updatedAt
 
 } 
 
@@ -89,8 +72,6 @@ fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
       id
       label
       description
-      createdAt
-      updatedAt
    }
    volunteerAction {
       id
@@ -99,11 +80,8 @@ fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
       status
       assignedAt
       completedAt
-      createdAt
-      updatedAt
-   }   createdAt
-   updatedAt
-
+      _createdAt
+   }
 } 
 
 fragment VolunteerActionFields on VolunteerAction {
@@ -113,8 +91,7 @@ fragment VolunteerActionFields on VolunteerAction {
    status
    assignedAt
    completedAt
-   createdAt
-   updatedAt
+   _createdAt
 
 } 
 
@@ -125,6 +102,7 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
    status
    assignedAt
    completedAt
+   _createdAt
    volunteer {
       id
       firstName
@@ -139,8 +117,6 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       canDeliver
       actionsCompleted
       active
-      createdAt
-      updatedAt
    }
    distributionCentre {
       id
@@ -151,13 +127,9 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       postcode
       lat
       long
-      createdAt
-      updatedAt
    }
    products {
       id
-      createdAt
-      updatedAt
    }
    recipient {
       id
@@ -173,11 +145,7 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       actionsCompleted
       deliveryDays
       prefferedProducts
-      createdAt
-      updatedAt
-   }   createdAt
-   updatedAt
-
+   }
 } 
 
 fragment VolunteerFields on Volunteer {
@@ -194,8 +162,6 @@ fragment VolunteerFields on Volunteer {
    canDeliver
    actionsCompleted
    active
-   createdAt
-   updatedAt
 
 } 
 
@@ -220,11 +186,8 @@ fragment VolunteerExpandedFields on Volunteer {
       status
       assignedAt
       completedAt
-      createdAt
-      updatedAt
-   }   createdAt
-   updatedAt
-
+      _createdAt
+   }
 } 
 
 fragment RecipientFields on Recipient {
@@ -241,8 +204,6 @@ fragment RecipientFields on Recipient {
    actionsCompleted
    deliveryDays
    prefferedProducts
-   createdAt
-   updatedAt
 
 } 
 
@@ -267,11 +228,8 @@ fragment RecipientExpandedFields on Recipient {
       status
       assignedAt
       completedAt
-      createdAt
-      updatedAt
-   }   createdAt
-   updatedAt
-
+      _createdAt
+   }
 } 
 
 query findDistributionCentres($filter: DistributionCentreFilter, $page: PageRequest, $orderBy: OrderByInput) {
