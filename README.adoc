@@ -1,10 +1,10 @@
 = OpenVolunteerPlatform
 
-[![TypeScript version][ts-badge]][typescript-30]
-[![Node.js version][nodejs-badge]][nodejs]
-[![APLv2][license-badge]][LICENSE]
-[![PRs Welcome][prs-badge]][prs]
-[![Discord Chat](https://img.shields.io/discord/632220458137419776)](https://discord.gg/mJ7j84m)
+//[![TypeScript version][ts-badge]][typescript-30]
+//[![Node.js version][nodejs-badge]][nodejs]
+//[![APLv2][license-badge]][LICENSE]
+//[![PRs Welcome][prs-badge]][prs]
+//[![Discord Chat](https://img.shields.io/discord/632220458137419776)](https://discord.gg/mJ7j84m)
 
 *OpenVolunteerPlatform* lets you automate and optimize the work of volunteers for your orgranization or charity - helping them to deliver help effectively when needed.
 OpenVolunteerPlatform is a starter application that integrates with various open source technologies to provide out of the box solutions that are customizable for your organization. 
