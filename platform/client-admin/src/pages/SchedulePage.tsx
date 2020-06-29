@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCreateDailyActionPlanMutation, useFindDailyActionPlansQuery, ActionStatus } from '../dataFacade';
+import { useCreateDailyActionPlanMutation, useFindDailyActionPlansQuery } from '../dataFacade';
 import { IonLoading, IonPage, IonContent, IonFooter, IonItemDivider, IonCard, IonButton } from '@ionic/react';
 import { Header } from '../components';
 import dailyActionForm from '../forms/dailyAction'
@@ -18,7 +18,7 @@ export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
     createDailyAction({
       variables: {
         input: {
-          date: new Date,
+          date: new Date(),
           owner: "admin",
           numberOfCasesCreated: 10 + new Date().getTime() % 6,
           numberOfVolunteersAssigned: 10 + new Date().getTime() % 6
