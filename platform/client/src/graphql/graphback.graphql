@@ -33,9 +33,9 @@ fragment DistributionCentreExpandedFields on DistributionCentre {
       title
       description
       status
-      createdAt
       assignedAt
       completedAt
+      createdAt
       updatedAt
    }   createdAt
    updatedAt
@@ -97,9 +97,9 @@ fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
       title
       description
       status
-      createdAt
       assignedAt
       completedAt
+      createdAt
       updatedAt
    }   createdAt
    updatedAt
@@ -111,9 +111,9 @@ fragment VolunteerActionFields on VolunteerAction {
    title
    description
    status
-   createdAt
    assignedAt
    completedAt
+   createdAt
    updatedAt
 
 } 
@@ -123,10 +123,8 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
    title
    description
    status
-   createdAt
    assignedAt
    completedAt
-   updatedAt
    volunteer {
       id
       firstName
@@ -139,6 +137,8 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       postcode
       dateOfBirth
       canDeliver
+      actionsCompleted
+      active
       createdAt
       updatedAt
    }
@@ -170,10 +170,14 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       city
       lat
       long
-      createdAt
+      actionsCompleted
+      deliveryDays
       prefferedProducts
+      createdAt
       updatedAt
-   }
+   }   createdAt
+   updatedAt
+
 } 
 
 fragment VolunteerFields on Volunteer {
@@ -188,6 +192,8 @@ fragment VolunteerFields on Volunteer {
    postcode
    dateOfBirth
    canDeliver
+   actionsCompleted
+   active
    createdAt
    updatedAt
 
@@ -205,14 +211,16 @@ fragment VolunteerExpandedFields on Volunteer {
    postcode
    dateOfBirth
    canDeliver
+   actionsCompleted
+   active
    actions {
       id
       title
       description
       status
-      createdAt
       assignedAt
       completedAt
+      createdAt
       updatedAt
    }   createdAt
    updatedAt
@@ -230,8 +238,10 @@ fragment RecipientFields on Recipient {
    city
    lat
    long
-   createdAt
+   actionsCompleted
+   deliveryDays
    prefferedProducts
+   createdAt
    updatedAt
 
 } 
@@ -247,18 +257,20 @@ fragment RecipientExpandedFields on Recipient {
    city
    lat
    long
-   createdAt
+   actionsCompleted
+   deliveryDays
    prefferedProducts
    actions {
       id
       title
       description
       status
-      createdAt
       assignedAt
       completedAt
+      createdAt
       updatedAt
-   }   updatedAt
+   }   createdAt
+   updatedAt
 
 } 
 

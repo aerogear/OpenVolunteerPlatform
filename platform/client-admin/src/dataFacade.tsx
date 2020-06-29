@@ -63,7 +63,8 @@ export type CreateRecipientInput = {
   city?: Maybe<Scalars['String']>;
   lat?: Maybe<Scalars['Float']>;
   long?: Maybe<Scalars['Float']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
+  actionsCompleted?: Maybe<Scalars['Int']>;
+  deliveryDays?: Maybe<Scalars['String']>;
   prefferedProducts?: Maybe<Scalars['String']>;
 };
 
@@ -72,10 +73,8 @@ export type CreateVolunteerActionInput = {
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
-  createdAt?: Maybe<Scalars['DateTime']>;
   assignedAt?: Maybe<Scalars['DateTime']>;
   completedAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['String']>;
   volunteerId?: Maybe<Scalars['ID']>;
   distributionCentreId?: Maybe<Scalars['ID']>;
   recipientId?: Maybe<Scalars['ID']>;
@@ -99,6 +98,8 @@ export type CreateVolunteerInput = {
   postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
+  actionsCompleted?: Maybe<Scalars['Int']>;
+  active?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -246,7 +247,8 @@ export type MutateRecipientInput = {
   city?: Maybe<Scalars['String']>;
   lat?: Maybe<Scalars['Float']>;
   long?: Maybe<Scalars['Float']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
+  actionsCompleted?: Maybe<Scalars['Int']>;
+  deliveryDays?: Maybe<Scalars['String']>;
   prefferedProducts?: Maybe<Scalars['String']>;
 };
 
@@ -255,10 +257,8 @@ export type MutateVolunteerActionInput = {
   title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
-  createdAt?: Maybe<Scalars['DateTime']>;
   assignedAt?: Maybe<Scalars['DateTime']>;
   completedAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['String']>;
   volunteerId?: Maybe<Scalars['ID']>;
   distributionCentreId?: Maybe<Scalars['ID']>;
   recipientId?: Maybe<Scalars['ID']>;
@@ -276,6 +276,8 @@ export type MutateVolunteerInput = {
   postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
+  actionsCompleted?: Maybe<Scalars['Int']>;
+  active?: Maybe<Scalars['Boolean']>;
 };
 
 export type Mutation = {
@@ -516,18 +518,20 @@ export type Recipient = Address & {
   city?: Maybe<Scalars['String']>;
   lat?: Maybe<Scalars['Float']>;
   long?: Maybe<Scalars['Float']>;
+  actionsCompleted?: Maybe<Scalars['Int']>;
+  deliveryDays?: Maybe<Scalars['String']>;
+  /**
+   * Comma separated list of preferrend products labels.
+   * Easier to create volunteer actions when knowing what one really needs.
+   */
+  prefferedProducts?: Maybe<Scalars['String']>;
+  /** @oneToMany(field: 'recipient', key: 'recipientId') */
+  actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   /**
    * @createdAt
    * @db(type: 'timestamp')
    */
   createdAt?: Maybe<Scalars['String']>;
-  /**
-   * Comma separated list of preferrend products labels.
-   * Easier to create volunteer actions when knowing what one really needs. 
-   */
-  prefferedProducts?: Maybe<Scalars['String']>;
-  /** @oneToMany(field: 'recipient', key: 'recipientId') */
-  actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   /**
    * @updatedAt
    * @db(type: 'timestamp')
@@ -555,11 +559,13 @@ export type RecipientFilter = {
   city?: Maybe<StringInput>;
   lat?: Maybe<FloatInput>;
   long?: Maybe<FloatInput>;
-  createdAt?: Maybe<StringInput>;
+  actionsCompleted?: Maybe<IntInput>;
+  deliveryDays?: Maybe<StringInput>;
   prefferedProducts?: Maybe<StringInput>;
   and?: Maybe<Array<Maybe<RecipientFilter>>>;
   or?: Maybe<Array<Maybe<RecipientFilter>>>;
   not?: Maybe<RecipientFilter>;
+  createdAt?: Maybe<StringInput>;
   updatedAt?: Maybe<StringInput>;
 };
 
@@ -606,6 +612,8 @@ export type Volunteer = {
   postcode?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['DateTime']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
+  actionsCompleted?: Maybe<Scalars['Int']>;
+  active?: Maybe<Scalars['Boolean']>;
   /** @oneToMany(field: 'volunteer', key: 'volunteerId') */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
   /**
@@ -633,6 +641,7 @@ export type VolunteerActionsArgs = {
  * Represents action that is assigned to volunteer
  * 
  * @model
+ * @versioned
  */
 export type VolunteerAction = {
    __typename?: 'VolunteerAction';
@@ -640,11 +649,8 @@ export type VolunteerAction = {
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
-  createdAt?: Maybe<Scalars['DateTime']>;
   assignedAt?: Maybe<Scalars['DateTime']>;
   completedAt?: Maybe<Scalars['DateTime']>;
-  /** @updatedAt */
-  updatedAt?: Maybe<Scalars['String']>;
   /** @manyToOne(field: 'actions', key: 'volunteerId') */
   volunteer?: Maybe<Volunteer>;
   /** @manyToOne(field: 'actions', key: 'distributionCentreId') */
@@ -653,6 +659,16 @@ export type VolunteerAction = {
   products?: Maybe<Array<Maybe<VolunteerActionProduct>>>;
   /** @manyToOne(field: 'actions', key: 'recipientId') */
   recipient?: Maybe<Recipient>;
+  /**
+   * @createdAt
+   * @db(type: 'timestamp')
+   */
+  createdAt?: Maybe<Scalars['String']>;
+  /**
+   * @updatedAt
+   * @db(type: 'timestamp')
+   */
+  updatedAt?: Maybe<Scalars['String']>;
 };
 
 
@@ -660,6 +676,7 @@ export type VolunteerAction = {
  * Represents action that is assigned to volunteer
  * 
  * @model
+ * @versioned
  */
 export type VolunteerActionProductsArgs = {
   filter?: Maybe<VolunteerActionProductFilter>;
@@ -670,16 +687,16 @@ export type VolunteerActionFilter = {
   title?: Maybe<StringInput>;
   description?: Maybe<StringInput>;
   status?: Maybe<StringInput>;
-  createdAt?: Maybe<DateTimeInput>;
   assignedAt?: Maybe<DateTimeInput>;
   completedAt?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<StringInput>;
   volunteerId?: Maybe<IdInput>;
   distributionCentreId?: Maybe<IdInput>;
   recipientId?: Maybe<IdInput>;
   and?: Maybe<Array<Maybe<VolunteerActionFilter>>>;
   or?: Maybe<Array<Maybe<VolunteerActionFilter>>>;
   not?: Maybe<VolunteerActionFilter>;
+  createdAt?: Maybe<StringInput>;
+  updatedAt?: Maybe<StringInput>;
 };
 
 /**
@@ -746,6 +763,8 @@ export type VolunteerFilter = {
   postcode?: Maybe<IntInput>;
   dateOfBirth?: Maybe<DateTimeInput>;
   canDeliver?: Maybe<BooleanInput>;
+  actionsCompleted?: Maybe<IntInput>;
+  active?: Maybe<BooleanInput>;
   and?: Maybe<Array<Maybe<VolunteerFilter>>>;
   or?: Maybe<Array<Maybe<VolunteerFilter>>>;
   not?: Maybe<VolunteerFilter>;
@@ -774,7 +793,7 @@ export type DistributionCentreExpandedFieldsFragment = (
     & Pick<Product, 'id' | 'label' | 'description' | 'createdAt' | 'updatedAt'>
   )>>>, actions: Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt' | 'updatedAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | 'createdAt' | 'updatedAt'>
   )>> }
 );
 
@@ -808,21 +827,21 @@ export type VolunteerActionProductExpandedFieldsFragment = (
     & Pick<Product, 'id' | 'label' | 'description' | 'createdAt' | 'updatedAt'>
   )>, volunteerAction?: Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt' | 'updatedAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | 'createdAt' | 'updatedAt'>
   )> }
 );
 
 export type VolunteerActionFieldsFragment = (
   { __typename?: 'VolunteerAction' }
-  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt' | 'updatedAt'>
+  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | 'createdAt' | 'updatedAt'>
 );
 
 export type VolunteerActionExpandedFieldsFragment = (
   { __typename?: 'VolunteerAction' }
-  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt' | 'updatedAt'>
+  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | 'createdAt' | 'updatedAt'>
   & { volunteer?: Maybe<(
     { __typename?: 'Volunteer' }
-    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'createdAt' | 'updatedAt'>
+    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'active' | 'createdAt' | 'updatedAt'>
   )>, distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
     & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long' | 'createdAt' | 'updatedAt'>
@@ -831,35 +850,35 @@ export type VolunteerActionExpandedFieldsFragment = (
     & Pick<VolunteerActionProduct, 'id' | 'createdAt' | 'updatedAt'>
   )>>>, recipient?: Maybe<(
     { __typename?: 'Recipient' }
-    & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'createdAt' | 'prefferedProducts' | 'updatedAt'>
+    & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'actionsCompleted' | 'deliveryDays' | 'prefferedProducts' | 'createdAt' | 'updatedAt'>
   )> }
 );
 
 export type VolunteerFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'createdAt' | 'updatedAt'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'active' | 'createdAt' | 'updatedAt'>
 );
 
 export type VolunteerExpandedFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'createdAt' | 'updatedAt'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'active' | 'createdAt' | 'updatedAt'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt' | 'updatedAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | 'createdAt' | 'updatedAt'>
   )>>> }
 );
 
 export type RecipientFieldsFragment = (
   { __typename?: 'Recipient' }
-  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'createdAt' | 'prefferedProducts' | 'updatedAt'>
+  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'actionsCompleted' | 'deliveryDays' | 'prefferedProducts' | 'createdAt' | 'updatedAt'>
 );
 
 export type RecipientExpandedFieldsFragment = (
   { __typename?: 'Recipient' }
-  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'createdAt' | 'prefferedProducts' | 'updatedAt'>
+  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'actionsCompleted' | 'deliveryDays' | 'prefferedProducts' | 'createdAt' | 'updatedAt'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'assignedAt' | 'completedAt' | 'updatedAt'>
+    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | 'createdAt' | 'updatedAt'>
   )>>> }
 );
 
@@ -1198,6 +1217,24 @@ export type UpdateRecipientMutation = (
   ) }
 );
 
+export type FindFlatDistributionCentresQueryVariables = {
+  page?: Maybe<PageRequest>;
+  orderBy?: Maybe<OrderByInput>;
+};
+
+
+export type FindFlatDistributionCentresQuery = (
+  { __typename?: 'Query' }
+  & { findDistributionCentres: (
+    { __typename?: 'DistributionCentreResultList' }
+    & Pick<DistributionCentreResultList, 'offset' | 'limit' | 'count'>
+    & { items: Array<Maybe<(
+      { __typename?: 'DistributionCentre' }
+      & DistributionCentreFieldsFragment
+    )>> }
+  ) }
+);
+
 export type FindIdAndNamesOfAllDistributionCentresQueryVariables = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -1406,9 +1443,9 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
     title
     description
     status
-    createdAt
     assignedAt
     completedAt
+    createdAt
     updatedAt
   }
   createdAt
@@ -1472,9 +1509,9 @@ export const VolunteerActionProductExpandedFieldsFragmentDoc = gql`
     title
     description
     status
-    createdAt
     assignedAt
     completedAt
+    createdAt
     updatedAt
   }
   createdAt
@@ -1487,9 +1524,9 @@ export const VolunteerActionFieldsFragmentDoc = gql`
   title
   description
   status
-  createdAt
   assignedAt
   completedAt
+  createdAt
   updatedAt
 }
     `;
@@ -1499,10 +1536,8 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
   title
   description
   status
-  createdAt
   assignedAt
   completedAt
-  updatedAt
   volunteer {
     id
     firstName
@@ -1515,6 +1550,8 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     postcode
     dateOfBirth
     canDeliver
+    actionsCompleted
+    active
     createdAt
     updatedAt
   }
@@ -1546,10 +1583,14 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     city
     lat
     long
-    createdAt
+    actionsCompleted
+    deliveryDays
     prefferedProducts
+    createdAt
     updatedAt
   }
+  createdAt
+  updatedAt
 }
     `;
 export const VolunteerFieldsFragmentDoc = gql`
@@ -1565,6 +1606,8 @@ export const VolunteerFieldsFragmentDoc = gql`
   postcode
   dateOfBirth
   canDeliver
+  actionsCompleted
+  active
   createdAt
   updatedAt
 }
@@ -1582,14 +1625,16 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
   postcode
   dateOfBirth
   canDeliver
+  actionsCompleted
+  active
   actions {
     id
     title
     description
     status
-    createdAt
     assignedAt
     completedAt
+    createdAt
     updatedAt
   }
   createdAt
@@ -1608,8 +1653,10 @@ export const RecipientFieldsFragmentDoc = gql`
   city
   lat
   long
-  createdAt
+  actionsCompleted
+  deliveryDays
   prefferedProducts
+  createdAt
   updatedAt
 }
     `;
@@ -1625,18 +1672,20 @@ export const RecipientExpandedFieldsFragmentDoc = gql`
   city
   lat
   long
-  createdAt
+  actionsCompleted
+  deliveryDays
   prefferedProducts
   actions {
     id
     title
     description
     status
-    createdAt
     assignedAt
     completedAt
+    createdAt
     updatedAt
   }
+  createdAt
   updatedAt
 }
     `;
@@ -2430,6 +2479,45 @@ export function useUpdateRecipientMutation(baseOptions?: ApolloReactHooks.Mutati
 export type UpdateRecipientMutationHookResult = ReturnType<typeof useUpdateRecipientMutation>;
 export type UpdateRecipientMutationResult = ApolloReactCommon.MutationResult<UpdateRecipientMutation>;
 export type UpdateRecipientMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateRecipientMutation, UpdateRecipientMutationVariables>;
+export const FindFlatDistributionCentresDocument = gql`
+    query findFlatDistributionCentres($page: PageRequest, $orderBy: OrderByInput) {
+  findDistributionCentres(page: $page, orderBy: $orderBy) {
+    items {
+      ...DistributionCentreFields
+    }
+    offset
+    limit
+    count
+  }
+}
+    ${DistributionCentreFieldsFragmentDoc}`;
+
+/**
+ * __useFindFlatDistributionCentresQuery__
+ *
+ * To run a query within a React component, call `useFindFlatDistributionCentresQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindFlatDistributionCentresQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindFlatDistributionCentresQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *      orderBy: // value for 'orderBy'
+ *   },
+ * });
+ */
+export function useFindFlatDistributionCentresQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>(FindFlatDistributionCentresDocument, baseOptions);
+      }
+export function useFindFlatDistributionCentresLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>(FindFlatDistributionCentresDocument, baseOptions);
+        }
+export type FindFlatDistributionCentresQueryHookResult = ReturnType<typeof useFindFlatDistributionCentresQuery>;
+export type FindFlatDistributionCentresLazyQueryHookResult = ReturnType<typeof useFindFlatDistributionCentresLazyQuery>;
+export type FindFlatDistributionCentresQueryResult = ApolloReactCommon.QueryResult<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>;
 export const FindIdAndNamesOfAllDistributionCentresDocument = gql`
     query findIdAndNamesOfAllDistributionCentres($limit: Int, $offset: Int) {
   findDistributionCentres(page: {limit: $limit, offset: $offset}) {

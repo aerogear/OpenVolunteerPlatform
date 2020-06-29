@@ -1,0 +1,11 @@
+
+query findFlatDistributionCentres($page: PageRequest, $orderBy: OrderByInput) {
+    findDistributionCentres(page: $page, orderBy: $orderBy) {
+      items {
+        ...DistributionCentreFields
+      }
+      offset
+      limit
+      count
+    }
+  }
