@@ -1,15 +1,15 @@
-## Open Volunteer Platform Cli 
+## Open Volunteer Platform Client 
 
 **Website**: https://openvolunteer.org
 
 **Repository**: https://github.com/aerogear/openvolunteerplatform/
 
-Command line tool that will help you to bootstrap your OpenVolunteer template
+The command-line tool (CLI) helps you bootstrap your Open Volunteer Platform template
 
 ## Requirements
 
-Node.JS > 10.x
-Docker and Docker compose
+* [Node.js 10.0.0](https://nodejs.org/en/download/) or later version
+* Docker and Docker compose
 
 ## Usage
 
@@ -17,5 +17,4 @@ Execute starter
 ```
 npx openvp init yourproject
 ```
-
-Follow the questions and pick the right template that suits your needs.
+Answer the question prompts and pick the template that suits your needs.
