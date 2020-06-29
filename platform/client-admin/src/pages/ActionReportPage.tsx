@@ -96,7 +96,7 @@ export const ActionReportPage: React.FC<RouteComponentProps> = ({ match }) => {
           </IonCardHeader>
 
           <IonCardContent style={{ margin: "0 auto", width: "30%" }}>
-            <IonBadge style={{ padding: "20px;" }} color={index === 2 ? "warning" : "primary"}>{column[1]}</IonBadge>
+            <IonBadge style={{ padding: "20px" }} color={index === 2 ? "warning" : "primary"}>{column[1]}</IonBadge>
           </IonCardContent>
         </IonCard>
       </IonCol>
