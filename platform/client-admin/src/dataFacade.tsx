@@ -100,6 +100,7 @@ export type CreateVolunteerInput = {
   dateOfBirth?: Maybe<Scalars['DateTime']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
   actionsCompleted?: Maybe<Scalars['Int']>;
+  actionsActive?: Maybe<Scalars['Int']>;
   active?: Maybe<Scalars['Boolean']>;
 };
 
@@ -258,6 +259,7 @@ export type MutateVolunteerInput = {
   dateOfBirth?: Maybe<Scalars['DateTime']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
   actionsCompleted?: Maybe<Scalars['Int']>;
+  actionsActive?: Maybe<Scalars['Int']>;
   active?: Maybe<Scalars['Boolean']>;
 };
 
@@ -555,6 +557,7 @@ export type Volunteer = {
   dateOfBirth?: Maybe<Scalars['DateTime']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
   actionsCompleted?: Maybe<Scalars['Int']>;
+  actionsActive?: Maybe<Scalars['Int']>;
   active?: Maybe<Scalars['Boolean']>;
   /** @oneToMany(field: 'volunteer', key: 'volunteerId') */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
@@ -668,6 +671,7 @@ export type VolunteerFilter = {
   dateOfBirth?: Maybe<DateTimeInput>;
   canDeliver?: Maybe<BooleanInput>;
   actionsCompleted?: Maybe<IntInput>;
+  actionsActive?: Maybe<IntInput>;
   active?: Maybe<BooleanInput>;
   and?: Maybe<Array<Maybe<VolunteerFilter>>>;
   or?: Maybe<Array<Maybe<VolunteerFilter>>>;
@@ -743,7 +747,7 @@ export type VolunteerActionExpandedFieldsFragment = (
   & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
   & { volunteer?: Maybe<(
     { __typename?: 'Volunteer' }
-    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'active'>
+    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'actionsActive' | 'active'>
   )>, distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
     & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
@@ -758,12 +762,12 @@ export type VolunteerActionExpandedFieldsFragment = (
 
 export type VolunteerFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'active'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'actionsActive' | 'active'>
 );
 
 export type VolunteerExpandedFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'active'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'actionsActive' | 'active'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
@@ -1431,6 +1435,7 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     dateOfBirth
     canDeliver
     actionsCompleted
+    actionsActive
     active
   }
   distributionCentre {
@@ -1477,6 +1482,7 @@ export const VolunteerFieldsFragmentDoc = gql`
   dateOfBirth
   canDeliver
   actionsCompleted
+  actionsActive
   active
 }
     `;
@@ -1494,6 +1500,7 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
   dateOfBirth
   canDeliver
   actionsCompleted
+  actionsActive
   active
   actions {
     id

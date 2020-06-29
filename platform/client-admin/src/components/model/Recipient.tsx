@@ -5,9 +5,10 @@ import {
   IonLabel,
   IonNote,
   IonIcon,
-  IonButtons
+  IonButtons,
+  IonBadge
 } from '@ionic/react';
-import { peopleCircleSharp, open } from 'ionicons/icons';
+import { peopleCircleSharp, open, callOutline } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
 import { RecipientFieldsFragment } from '../../dataFacade';
 
@@ -18,9 +19,18 @@ export const Recipient: React.FC<{ recipient: RecipientFieldsFragment }> = ({ re
       <IonIcon icon={peopleCircleSharp} className='ion-margin-end ion-align-items-start' />
       <IonLabel>
         <h2>{recipient.firstName} {recipient.lastName}</h2>
-        <IonNote item-start>
-          {recipient.phone}
-        </IonNote>
+        <p>Deliveries
+        <IonBadge style={{ margin: "5px" }} color='tertiary'>
+          {recipient.deliveryDays}
+        </IonBadge>
+        </p>
+        <p>Actions Completed
+        <IonBadge style={{ margin: "5px" }} color='success'>
+         {recipient.actionsCompleted}
+        </IonBadge>
+        </p>
+       
+        <p> <IonIcon icon={callOutline}></IonIcon>: <a>{recipient.phone}</a></p>
       </IonLabel>
       <IonButtons>
 

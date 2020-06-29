@@ -32,6 +32,7 @@ type Volunteer {
   dateOfBirth: DateTime
   canDeliver: Boolean
   actionsCompleted: Int
+  actionsActive: Int
   active: Boolean
 
   """

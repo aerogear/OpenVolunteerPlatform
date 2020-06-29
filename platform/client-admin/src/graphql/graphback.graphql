@@ -116,6 +116,7 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       dateOfBirth
       canDeliver
       actionsCompleted
+      actionsActive
       active
    }
    distributionCentre {
@@ -161,6 +162,7 @@ fragment VolunteerFields on Volunteer {
    dateOfBirth
    canDeliver
    actionsCompleted
+   actionsActive
    active
 
 } 
@@ -178,6 +180,7 @@ fragment VolunteerExpandedFields on Volunteer {
    dateOfBirth
    canDeliver
    actionsCompleted
+   actionsActive
    active
    actions {
       id

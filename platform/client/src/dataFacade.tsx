@@ -100,6 +100,7 @@ export type CreateVolunteerInput = {
   dateOfBirth?: Maybe<Scalars['DateTime']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
   actionsCompleted?: Maybe<Scalars['Int']>;
+  actionsActive?: Maybe<Scalars['Int']>;
   active?: Maybe<Scalars['Boolean']>;
 };
 
@@ -258,6 +259,7 @@ export type MutateVolunteerInput = {
   dateOfBirth?: Maybe<Scalars['DateTime']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
   actionsCompleted?: Maybe<Scalars['Int']>;
+  actionsActive?: Maybe<Scalars['Int']>;
   active?: Maybe<Scalars['Boolean']>;
 };
 
@@ -555,6 +557,7 @@ export type Volunteer = {
   dateOfBirth?: Maybe<Scalars['DateTime']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
   actionsCompleted?: Maybe<Scalars['Int']>;
+  actionsActive?: Maybe<Scalars['Int']>;
   active?: Maybe<Scalars['Boolean']>;
   /** @oneToMany(field: 'volunteer', key: 'volunteerId') */
   actions?: Maybe<Array<Maybe<VolunteerAction>>>;
@@ -668,6 +671,7 @@ export type VolunteerFilter = {
   dateOfBirth?: Maybe<DateTimeInput>;
   canDeliver?: Maybe<BooleanInput>;
   actionsCompleted?: Maybe<IntInput>;
+  actionsActive?: Maybe<IntInput>;
   active?: Maybe<BooleanInput>;
   and?: Maybe<Array<Maybe<VolunteerFilter>>>;
   or?: Maybe<Array<Maybe<VolunteerFilter>>>;
@@ -743,7 +747,7 @@ export type VolunteerActionExpandedFieldsFragment = (
   & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
   & { volunteer?: Maybe<(
     { __typename?: 'Volunteer' }
-    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'active'>
+    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'actionsActive' | 'active'>
   )>, distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
     & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
@@ -758,12 +762,12 @@ export type VolunteerActionExpandedFieldsFragment = (
 
 export type VolunteerFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'active'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'actionsActive' | 'active'>
 );
 
 export type VolunteerExpandedFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'active'>
+  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'actionsActive' | 'active'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
     & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
@@ -1119,6 +1123,13 @@ export type UpdateRecipientMutation = (
   ) }
 );
 
+export type AssignVolunteersMutationVariables = {
+  dayOfTheMonth?: Maybe<Scalars['Int']>;
+};
+
+
+export type AssignVolunteersMutation = { __typename?: 'Mutation' };
+
 export type FindActiveVolunteerQueryVariables = {
   username: Scalars['String'];
 };
@@ -1274,6 +1285,7 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     dateOfBirth
     canDeliver
     actionsCompleted
+    actionsActive
     active
   }
   distributionCentre {
@@ -1320,6 +1332,7 @@ export const VolunteerFieldsFragmentDoc = gql`
   dateOfBirth
   canDeliver
   actionsCompleted
+  actionsActive
   active
 }
     `;
@@ -1337,6 +1350,7 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
   dateOfBirth
   canDeliver
   actionsCompleted
+  actionsActive
   active
   actions {
     id
@@ -2182,6 +2196,39 @@ export function useUpdateRecipientMutation(baseOptions?: ApolloReactHooks.Mutati
 export type UpdateRecipientMutationHookResult = ReturnType<typeof useUpdateRecipientMutation>;
 export type UpdateRecipientMutationResult = ApolloReactCommon.MutationResult<UpdateRecipientMutation>;
 export type UpdateRecipientMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateRecipientMutation, UpdateRecipientMutationVariables>;
+export const AssignVolunteersDocument = gql`
+    mutation assignVolunteers($dayOfTheMonth: Int) {
+  assignVolunteers(dayOfTheMonth: $dayOfTheMonth) {
+    numberOfVolunteersAssigned
+    numberOfCasesCreated
+  }
+}
+    `;
+export type AssignVolunteersMutationFn = ApolloReactCommon.MutationFunction<AssignVolunteersMutation, AssignVolunteersMutationVariables>;
+
+/**
+ * __useAssignVolunteersMutation__
+ *
+ * To run a mutation, you first call `useAssignVolunteersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAssignVolunteersMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [assignVolunteersMutation, { data, loading, error }] = useAssignVolunteersMutation({
+ *   variables: {
+ *      dayOfTheMonth: // value for 'dayOfTheMonth'
+ *   },
+ * });
+ */
+export function useAssignVolunteersMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AssignVolunteersMutation, AssignVolunteersMutationVariables>) {
+        return ApolloReactHooks.useMutation<AssignVolunteersMutation, AssignVolunteersMutationVariables>(AssignVolunteersDocument, baseOptions);
+      }
+export type AssignVolunteersMutationHookResult = ReturnType<typeof useAssignVolunteersMutation>;
+export type AssignVolunteersMutationResult = ApolloReactCommon.MutationResult<AssignVolunteersMutation>;
+export type AssignVolunteersMutationOptions = ApolloReactCommon.BaseMutationOptions<AssignVolunteersMutation, AssignVolunteersMutationVariables>;
 export const FindActiveVolunteerDocument = gql`
     query findActiveVolunteer($username: String!) {
   findVolunteers(filter: {username: {eq: $username}}, page: {limit: 1}) {
