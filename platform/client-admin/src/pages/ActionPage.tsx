@@ -7,11 +7,14 @@ import {
   IonIcon,
   IonFab,
   IonFabButton,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel,
 } from '@ionic/react';
 import { Empty, ActionsList, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindVolunteerActionsQuery } from '../dataFacade';
-import { add } from 'ionicons/icons';
+import { useFindVolunteerActionsQuery, ActionStatus } from '../dataFacade';
+import { add, filter } from 'ionicons/icons';
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   const { data, loading, error } = useFindVolunteerActionsQuery();
@@ -38,6 +41,21 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
       <Header title="OpenVolunteer Admin App" match={match} />
 
       <IonContent className="ion-padding" >
+      <IonFab vertical="top" horizontal="end" slot="fixed">
+          {/* TODO add handling */}
+          <IonFabButton>
+            <IonIcon icon={filter} />
+          </IonFabButton>
+        </IonFab>
+        <IonSegment>
+          {/* TODO add closed/open */}
+          <IonSegmentButton value={ActionStatus.Assigned}>
+            <IonLabel>Open Actions</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value={ActionStatus.Completed}>
+            <IonLabel>Finished Actions</IonLabel>
+          </IonSegmentButton>
+        </IonSegment>
         {content}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton routerLink="createAction">
