@@ -954,7 +954,7 @@ export type FindProductsQuery = (
     & Pick<ProductResultList, 'offset' | 'limit' | 'count'>
     & { items: Array<Maybe<(
       { __typename?: 'Product' }
-      & ProductExpandedFieldsFragment
+      & ProductFieldsFragment
     )>> }
   ) }
 );
@@ -1870,14 +1870,14 @@ export const FindProductsDocument = gql`
     query findProducts($filter: ProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
   findProducts(filter: $filter, page: $page, orderBy: $orderBy) {
     items {
-      ...ProductExpandedFields
+      ...ProductFields
     }
     offset
     limit
     count
   }
 }
-    ${ProductExpandedFieldsFragmentDoc}`;
+    ${ProductFieldsFragmentDoc}`;
 
 /**
  * __useFindProductsQuery__
