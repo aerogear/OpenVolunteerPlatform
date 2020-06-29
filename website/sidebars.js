@@ -5,7 +5,7 @@ module.exports = {
     Integrations: ["integrations"],
     Customizations: [
       "datamodel",
-      " keycloak-authz",
+      "keycloak-authz",
       "subscriptions",
       "liveupdates",
     ],
