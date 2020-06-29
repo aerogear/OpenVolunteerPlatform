@@ -90,7 +90,7 @@ export const ActionsMapPage: React.FC<RouteComponentProps> = ({ match }) => {
     }
 
     mapContent = <Map
-      zoom={2}
+      zoom={11}
       center={{
         lat: totalLatLong.lat / markersCounter,
         lng: totalLatLong.lng / markersCounter
