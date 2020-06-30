@@ -1,6 +1,6 @@
 ---
 id: clientref
-title: OVP Client Side
+title: Client Mobile and Admin Apps
 ---
 # React Client
 
