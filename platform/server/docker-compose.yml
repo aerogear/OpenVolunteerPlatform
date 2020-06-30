@@ -16,5 +16,5 @@ services:
       - "8080:8080"
     environment:
       DB_VENDOR: h2
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_USER: ovp-admin
+      KEYCLOAK_PASSWORD: ovp-admin
