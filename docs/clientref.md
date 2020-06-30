@@ -1,6 +1,6 @@
 ---
 id: clientref
-title: OVP client reference
+title: OVP Client Side
 ---
 # React Client
 

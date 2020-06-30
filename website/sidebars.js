@@ -4,6 +4,6 @@ module.exports = {
     "Reference Apps": ["gettingstartedref", "coding"],
     Development: ["clientref", "serverfullstack"],
     Customizations: ["datamodel", "keycloak-authz", "liveupdates"],
-    Client: ["client"]
+    Tools: ["client"]
   },
 };
