@@ -1,9 +1,7 @@
 ---
 id: coding
-title: OVP reference development
+title: Reference app guide
 ---
-
-# OpenVolunteerPlatform Server Starter
 
 ## Project Structure
 - Volunteer Client Application `/client`
