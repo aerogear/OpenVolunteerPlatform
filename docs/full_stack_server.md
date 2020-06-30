@@ -1,6 +1,6 @@
 ---
 id: serverfullstack
-title: Out of the box Node.js server
+title: Node.js server
 ---
 
 # Open Volunteer Full Stack Server

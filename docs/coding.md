@@ -1,6 +1,6 @@
 ---
 id: coding
-title: Reference app guide
+title: Running reference application
 ---
 
 ## Project Structure
