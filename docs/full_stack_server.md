@@ -82,9 +82,11 @@ services:
             - MONGO_PASSWORD=password
             - MONGO_ADMIN_PASSWORD=password
             - MONGO_DATABASE=showcase
-            - MONGO_HOST=
+            - MONGO_HOST=mongodb
             - BACKUP_DEMO_DATA=false
             - USE_DEMO_DATA=true
+        ports: 
+            - 4000:4000    
   mongodb:
         image: centos/mongodb-34-centos7
         container_name: "mongodb"
@@ -104,5 +106,7 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
 ```
+You can save the above configuration
+The use the following command to start the server `docker-compose up`
 
 > NOTE: You need to execute `npm run keycloak:init` or import realm from `./integrations/keycloak/realm-export.json` in your local machine to be able to use docker compose.
