@@ -9,6 +9,7 @@ module.exports = {
   organizationName: 'aerogear', // Usually your GitHub org/user name.
   projectName: 'OpenVolunteerPlatform', // Usually your repo name.
   themeConfig: {
+    sidebarCollapsible: false,
     disableDarkMode: true,
     prism: {
       // eslint-disable-next-line
