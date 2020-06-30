@@ -8,7 +8,7 @@ volunteer and admin application.
 - Volunteer Client application `/client`
 - Admin application `/client-admin`
 - Server application `/server`
-- Data model representing system api `./model`
+- Data model representing system api `./server/model`
 - OpenShift deployment `./.openshift`
 
 ## Getting Started

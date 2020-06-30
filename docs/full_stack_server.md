@@ -105,4 +105,4 @@ services:
       KEYCLOAK_PASSWORD: admin
 ```
 
-> NOTE: You need to execute `npm run keycloak:config` or import realm from `./integrations/keycloak/realm-export.json` in your local machine to be able to use docker compose.
+> NOTE: You need to execute `npm run keycloak:init` or import realm from `./integrations/keycloak/realm-export.json` in your local machine to be able to use docker compose.
