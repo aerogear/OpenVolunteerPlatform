@@ -24,8 +24,8 @@ const APP_REALM = 'open-volunteer-platform'
 const ADMIN_REALM = 'master'
 
 const RESOURCE = 'admin-cli'
-const ADMIN_USERNAME = 'admin'
-const ADMIN_PASSWORD = 'admin'
+const ADMIN_USERNAME = 'ovp-admin'
+const ADMIN_PASSWORD = 'ovp-admin'
 let token = ''
 
 // The keycloak client used by the sample app
@@ -33,16 +33,110 @@ const PUBLIC_CLIENT_NAME = 'open-volunteer-platform-public'
 const BEARER_CLIENT_NAME = 'open-volunteer-platform-bearer'
 let PUBLIC_CLIENT
 
+let demoUsers = process.env.USE_DEMO_DATA !== 'true' ? []: [
+  {
+    name: 'msash',
+    password: 'msash',
+    email: "msash@gmail.com",
+    firstName: "Martina",
+    lastName: "Sash",
+    realmRoles: [
+      'users'
+    ],
+    clientRoles: [
+      'users'
+    ]
+  },
+  {
+    name: 'kudi',
+    password: 'kudi',
+    email: "kudilauper@gmail.com",
+    firstName: "Kudi",
+    lastName: "Lauper",
+    realmRoles: [
+      'users'
+    ],
+    clientRoles: [
+      'users'
+    ]
+  },
+  {
+    name: 'tmaure',
+    password: 'tmaure',
+    email: "tmaure@gmail.com",
+    firstName: "Thomas",
+    lastName: "Mauer",
+    realmRoles: [
+      'users'
+    ],
+    clientRoles: [
+      'users'
+    ]
+  },
+  {
+    name: 'tgers',
+    password: 'tgers',
+    email: "tgerst@gmail.com",
+    firstName: "Toya",
+    lastName: "Gerst",
+    realmRoles: [
+      'users'
+    ],
+    clientRoles: [
+      'users'
+    ]
+  },
+  {
+    name: 'hzaub',
+    password: 'hzaub',
+    email: "hansza542@gmail.com",
+    firstName: "Hans",
+    lastName: "Zauber",
+    realmRoles: [
+      'users'
+    ],
+    clientRoles: [
+      'users'
+    ]
+  },
+  {
+    name: 'ukon',
+    password: 'ukon',
+    email: "ukonth@gmail.com",
+    firstName: "Uwe",
+    lastName: "Konth",
+    realmRoles: [
+      'users'
+    ],
+    clientRoles: [
+      'users'
+    ]
+  },
+  {
+    name: 'wtrocki',
+    password: 'wtrocki',
+    email: "wtrocki@gmail.com",
+    firstName: "Wojciech",
+    lastName: "Trocki",
+    realmRoles: [
+      'users'
+    ],
+    clientRoles: [
+      'users'
+    ]
+  }
+];
+
 // The client roles you want created for the BEARER_CLIENT_NAME client
 const clientRoleNames = [
   'admin',
-  'developer'
+  'users'
 ]
 
 // The realm roles we want for the realm
 const realmRoleNames = [
   'admin',
-  'developer'
+  'users'
 ]
 
 let realmRoles
@@ -51,8 +145,8 @@ let clientRoles
 // The users we want to create
 const users = [
   {
-    name: 'admin',
-    password: 'admin',
+    name: 'ovp-admin',
+    password: 'ovp-admin',
     realmRoles: [
       'admin'
     ],
@@ -64,12 +158,13 @@ const users = [
     name: 'developer',
     password: 'developer',
     realmRoles: [
-      'developer'
+      'users'
     ],
     clientRoles: [
-      'developer'
+      'users'
     ]
-  }
+  },
+  ...demoUsers
 ]
 
 // This is called by an immediately invoked function expression
@@ -112,7 +207,7 @@ async function prepareKeycloak() {
     for (let user of users) {
       // Create a new user
       console.log(`creating user ${user.name} with password ${user.password}`)
-      const userIdUrl = await createUser(user.name, user.password)
+      const userIdUrl = await createUser(user)
 
       // Assign roles to the user
       await assignRealmRolesToUser(user, userIdUrl)
@@ -259,12 +354,15 @@ async function getClientRoles(client) {
   return res.data
 }
 
-async function createUser(name, password) {
+async function createUser({name, password, email, firstName, lastName}) {
   const res = await axios({
     method: 'post',
     url: `${KEYCLOAK_URL}/admin/realms/${APP_REALM}/users`,
     data: {
       'username': name,
+      email,
+      firstName,
+      lastName,
       'credentials': [{ 'type': 'password', 'value': password, 'temporary': false }],
       'enabled': true
     },

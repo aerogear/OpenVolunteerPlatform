@@ -96,8 +96,28 @@ services:
       - "8080:8080"
     environment:
       DB_VENDOR: h2
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_USER: ovp-admin
+      KEYCLOAK_PASSWORD: ovp-admin
 ```
 
 > NOTE: You need to execute `npm run keycloak:init` or import realm from ./integrations/keycloak/realm-export.json as in local machine to be able to use docker compose.
+If you'd like to use demo data users and have them automatically imported in keycloak, run the keycloak init script as below: 
+```shell
+USE_DEMO_DATA=false npm run keycloak:init
+``` 
+
+This command will create the following usernames:
+
+```log
+hzaub	
+kudi
+msash
+tgers
+tmaure
+ukon
+wtrocki
+```
+
+The password is the same as the username.
+
+You can use these user names to login into the volunteer client application. 
