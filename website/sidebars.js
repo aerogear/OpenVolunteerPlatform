@@ -3,7 +3,7 @@ module.exports = {
     Introduction: ["gettingstarted", "features", "architecture"],
     "Reference Apps": ["gettingstartedref", "coding"],
     Development: ["clientref", "serverfullstack"],
-    Customizations: ["datamodel", "keycloak-authz", "liveupdates"],
-    Tools: ["client"],
+    Customizations: ["datamodel", "keycloak-authz", "liveupdates", "adding-and-customizing-forms"],
+    Tools: ["client"]
   },
 };
