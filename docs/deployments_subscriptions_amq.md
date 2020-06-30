@@ -146,100 +146,30 @@ The service hostname can be retrieved using the terminal.
 oc get addressspace <addressspace name> -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].serviceHost
 ```
 
-The following code can be used to connect.
+Once you have the AMQ address and credentials, open the `server/.env` file and update the MQTT section accordingly.
 
-```js
-const mqtt = require('mqtt')
-const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
-
-const client = mqtt.connect({
-  host: '<internal host name>',
-  username: '<MessagingUser name>',
-  password: '<MessagingUser password>',
-  port: 5762,
-})
-
-const pubsub = new MQTTPubSub({ client })
+```
+## MQTT
+MQTT_HOST=
+MQTT_PORT=
+MQTT_PASSWORD=
+MQTT_USERNAME=
+MQTT_PROTOCOL= 
 ```
 
-### Connecting using TLS
-
-When connecting via TLS, all messages between your application and the AMQ Online broker are encrypted.
-
-```js
-const mqtt = require('mqtt')
-const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
-
-const host = '<internal host name>'
-
-const client = mqtt.connect({
-  host: host,
-  servername: host,
-  username: '<MessagingUser name>',
-  password: '<MessagingUser password>',
-  port: 5761,
-  protocol: 'tls',
-  rejectUnauthorized: false,
-})
-
-const pubsub = new MQTTPubSub({ client })
-```
-
-There are some additional options passed into `mqtt.connect`
-
-* `servername` - When connecting to a message broker in OpenShift using TLS, this property must be set otherwise the connection will fail. The reason for this is because the messages are being routed through a proxy resulting in the client being presented with multiple certificates. By setting the `servername`, the client will use [Server Name Indication (SNI)](https://en.wikipedia.org/wiki/Server_Name_Indication) to request the correct certificate as part of the TLS connection setup.
-* `protocol` - Must be set to `'tls'`
-* `rejectUnauthorizated` - Must be set to false, otherwise the connection will fail. This tells the client to ignore certificate errors. Again, this is needed because the client is presented with multiple certificates and one of the certificates is for a different hostname than the one being requested, which normally results in an error.
-* `port` - must be set to 5761 for tls connections to the service hostname.
-
-## Connecting to an AMQ Online Address Using the External Hostname
-
-The external hostname allows connections from outside the OpenShift cluster. This is useful for the following cases.
-
-* Production applications running outside of OpenShift connecting and publishing messages.
-* Quick Prototyping and local development. A non-production Address Space could be created, allowing developers to connect applications from their local environments.
-
-The external hostname is typically TLS only for security reasons. It can be retrieved using the terminal.
-
-```bash
-oc get addressspace <addressspace name> -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].externalHost
-```
-
-Connect to the external hostname using the same sample code in [Connecting using TLS](#connecting-using-tls). The only difference is that the `port` property must be set to `443`.
-
-## Recommended Configuration Using Environment Variables
-
-Using environment variables for the connection is the recommended approach.
-
-```js
-const mqtt = require('mqtt')
-const { MQTTPubSub } = require('@aerogear/graphql-mqtt-subscriptions')
-
-const host = process.env.MQTT_HOST || 'localhost'
-
-const client = mqtt.connect({
-  host: host,
-  servername: host,
-  username: process.env.MQTT_USERNAME,
-  password: process.env.MQTT_PASSWORD,
-  port: process.env.MQTT_PORT || 1883,
-  protocol: process.env.MQTT_PROTOCOL || 'mqtt',
-  rejectUnauthorized: false,
-})
-
-const pubsub = new MQTTPubSub({ client })
-```
-
-In this example, the connection options can be configured using environment variables, but sensible defaults for the `host`, `port` and `protocol` are provided for local development.
 
 ## Troubleshooting MQTT Connection Issues
+
+The `server/src/pubsub.ts` contains code that creates connection to MQTT or an in memory pub sub topic.
+
+In this section we are going to see how to log events and fixing configuration issues by modifying the source code in the mentioned file. 
 
 ### Events
 
 The `mqtt` module emits various events during runtime.
 It recommended to add listeners for these events for regular operation and for troubleshooting.
 
-```js
+```ts
 client.on('connect', () => {
   console.log('client has connected')
 })
@@ -267,7 +197,7 @@ The Node.js `mqtt` module does not report any errors if parameters such as `host
 
 It may be necessary to handle this scenario in your application. The following workaround can be used.
 
-```js
+```ts
 const TIMEOUT = 10 // number of seconds to wait before checking if the client is connected
 
 setTimeout(() => {
