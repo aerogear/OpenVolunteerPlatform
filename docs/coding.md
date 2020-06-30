@@ -49,12 +49,10 @@ yarn start
     🎮 Ionic PWA application available at http://localhost:4000
     🎮 Admin PWA application available at http://localhost:4000/admin
 ```
-
-By default, the two users that can log into the application are created:
-- username: `developer`; password: `developer`
-- username: `admin`; password: `admin`
-
-Volunteers can register to the application in the login screen. 
+  By default, the two users that can log into the application are created:
+  - username: `developer`; password: `developer`
+  - username: `admin`; password: `admin`
+   Volunteers can register to the application in the login screen. 
 
 
 ### Technical Details
@@ -65,18 +63,18 @@ Follow these instructions to set up Keycloak for Authentication/Authorization.
 
 1. Configure the Keycloak Server
 
-```shell
-cd ./server
-yarn keycloak:init
-```
-This command creates the necessary resources in Keycloak and prints instructions you must follow to enable the integration.
+    ```shell
+    cd ./server
+    yarn keycloak:init
+    ```
+   This command creates the necessary resources in Keycloak and prints instructions you must follow to enable the integration.
 
 2. Follow the printed instructions and copy the JSON configurations to the appropriate locations.
-The Starter app and server will read these configurations and the integration will be enabled when they are started.
-By default, the two users that can log into the application are created:
+   The Starter app and server will read these configurations and the integration will be enabled when they are started.
 
-- username: `developer`, password: `developer`
-- username: `admin`, password: `admin`
+   By default, the two users that can log into the application are created:
+   - username: `developer`, password: `developer`
+   - username: `admin`, password: `admin`
 
 
 ### Running Clients as Mobile Applications
@@ -102,18 +100,16 @@ The project should start in IDE and can be launched as any other native applicat
 
 ## Using MQTT for GraphQL Subscriptions
 
-By default, the platform uses an in memory subscription mechanism that is not 
-recomended for production. For OpenShift deployment, the AMQ MQTT protocol is used. On local machine this can be configured using the following steps:
+By default, the platform uses an in memory subscription mechanism that is not recommended for production. For OpenShift deployment, the AMQ MQTT protocol is used. On your local machine, this can be configured using the following steps:
 
 1. Go to server/scripts ./mqtt
-2. Execute docker-compose upS
-3. Set MQTT_HOST enviedmen thet variable in .env file
-
-MQTT_HOST#127.0.0.1
+2. Execute docker-compose
+3. Set the MQTT_HOST variable in the `.env` file. 
+   `MQTT_HOST#127.0.0.1`
 
 ### Running On OpenShift
 
-Please check link:./.openshift[.openshift] folder for more information.
+Please check out the [.openshift](platform/.openshift/README.md) folder for more information.
 
 ## Development 
 
