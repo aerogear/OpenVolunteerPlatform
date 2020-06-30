@@ -49,7 +49,7 @@ yarn start
 By default, two users that can log into the application are created.
 
 - username: `developer`, password: `developer`
-- username: `admin`, password: `admin`
+- username: `ovp-admin`, password: `ovp-admin`
 
 Volunteers can register to the application in login screen
 
@@ -75,8 +75,7 @@ The  Starter app and server will read these configurations and the integration w
 By default, two users that can log into the application are created.
 
 - username: `developer`, password: `developer`
-- username: `admin`, password: `admin`
-
+- username: `ovp-admin`, password: `ovp-admin`
 
 ### Running clients as Mobile Applications
 
