@@ -1,7 +1,7 @@
 ---
 id: features
 title: Platform features
-sidebar_label: Feature
+sidebar_label: Features
 ---
 
 ![](/img/features.png)
