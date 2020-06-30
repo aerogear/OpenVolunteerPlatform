@@ -19,19 +19,19 @@ Node.js implementation for GraphQL based API
 This project has been created using Graphback. 
 Run the project using the following steps:
 
-- Install
 
+1. Install
 ```sh
 yarn install
 ```
 
-- Start the Mongo database and MQTT client
+2. Start the Mongo database and MQTT client
 
 ```sh
 docker-compose up -d
 ```
 
-- Start the server
+3. Start the server
 
 ```sh
 yarn start:server
@@ -105,4 +105,4 @@ services:
       KEYCLOAK_PASSWORD: admin
 ```
 
-> NOTE: You need to execute npm run keycloak:config or import realm from ./integrations/keycloak/realm-export.json as in local machine to be able to use docker compose.
+> NOTE: You need to execute `npm run keycloak:config` or import realm from `./integrations/keycloak/realm-export.json` in your local machine to be able to use docker compose.
