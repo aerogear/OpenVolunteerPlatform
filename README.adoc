@@ -50,15 +50,17 @@ The application includes:
 
 == License
 
-This solution starter is made available under the Apache 2 License.
+This solution starter is made available under the MIT License.
 
-== Authors
+== History
 
-- Wojciech Trocki
-- Enda Phelan
-- Manyanda Chitimbo
-- Gianluca Zuccarelli
-- Joan Edwards
+Repository is based on https://github.com/aerogear/datasync-starter project that our team build over the years.
+All development on the repository started around March 2020 after we started to see problems with the isolation and looked for 
+more comprehensive and flexible solutions to resolve this problems. Instead of building an App - we decided to reach out to organizations and 
+local communities to see what problems they facing. In most of the cases those problems were really specific to the community and almost always
+required certain level of customization on top of the very well known model of Workforce Management systems. 
+This is why OpenVolunteerPlatform was started and going to be continously evolving to help organizations to fight crisises like COVID19.
+
 
 
 
