@@ -19,8 +19,17 @@ It eases the customization of reference implementations for your own use cases a
 
 By empowering communities to collaborate through software, our volunteers can easily organize the collection and delivery of goods while practicing effective social distancing.
 
-For more information watch our demo video:
+For more information watch our motivation video:
+
 [![OpenVolunteer](https://img.youtube.com/vi/mu9Rnu6Q9_o/0.jpg)](https://www.youtube.com/watch?v=mu9Rnu6Q9_o)
+
+Open Volunteer in action:
+
+[![OpenVolunteer Demo](https://img.youtube.com/vi/_cn_ZoZLq5g/0.jpg)](https://www.youtube.com/watch?v=_cn_ZoZLq5g)
+
+
+Are you interested in deploying OpenVolunteer for your organization
+feel free to reach out to us for free training sessions.
 
 ## Reference implementation
 
