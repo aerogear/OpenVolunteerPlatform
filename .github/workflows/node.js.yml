@@ -24,6 +24,9 @@ jobs:
       uses: actions/setup-node@v1
       with:  
         node-version: ${{ matrix.node-version }}
-    - run: cd platform/server && npm run build
-    - run: npm run prepare:client
+    - run: npm install  -g yarn
+    - run: cd platform && yarn
+    - run: cd platform/server && yarn build
+    - run: cd platform && yarn prepare:client
+
    
