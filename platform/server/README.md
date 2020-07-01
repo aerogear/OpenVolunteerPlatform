@@ -101,10 +101,6 @@ services:
 ```
 
 > NOTE: You need to execute `npm run keycloak:init` or import realm from ./integrations/keycloak/realm-export.json as in local machine to be able to use docker compose.
-If you'd like to use demo data users and have them automatically imported in keycloak, run the keycloak init script as below: 
-```shell
-USE_DEMO_DATA=false npm run keycloak:init
-``` 
 
 This command will create the following usernames:
 

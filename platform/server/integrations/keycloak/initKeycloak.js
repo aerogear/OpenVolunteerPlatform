@@ -33,7 +33,7 @@ const PUBLIC_CLIENT_NAME = 'open-volunteer-platform-public'
 const BEARER_CLIENT_NAME = 'open-volunteer-platform-bearer'
 let PUBLIC_CLIENT
 
-let demoUsers = process.env.USE_DEMO_DATA !== 'true' ? []: [
+const demoUsers = [
   {
     name: 'msash',
     password: 'msash',
