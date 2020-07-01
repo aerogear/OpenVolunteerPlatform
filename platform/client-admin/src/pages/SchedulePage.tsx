@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCreateDailyActionPlanMutation, useFindDailyActionPlansQuery, useAssignVolunteersMutation } from '../dataFacade';
+import { useFindDailyActionPlansQuery, useAssignVolunteersMutation } from '../dataFacade';
 import { IonLoading, IonPage, IonContent, IonFooter, IonItemDivider, IonCard, IonButton } from '@ionic/react';
 import { Header } from '../components';
 import dailyActionForm from '../forms/dailyAction'
@@ -28,7 +28,7 @@ export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
   let dailyAction: any = {};
   if (data?.findDailyActionPlans && data?.findDailyActionPlans.items && data?.findDailyActionPlans.items.length !== 0) {
     dailyAction = data?.findDailyActionPlans.items.pop();
-    // setDailyPlan(dailyAction);
+    setDailyPlan(dailyAction);
     content = (
       <AutoForm
         placeholder
@@ -54,7 +54,6 @@ export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
         </IonItemDivider>
         <IonCard>
           {content}
-
         </IonCard>
         <IonButton onClick={() => submit()}>Schedule daily assignments</IonButton>
 
