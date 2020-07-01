@@ -74,6 +74,8 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                       input: {
                         id: model.id,
                         status: model.status,
+                        title: model.title,
+                        description: model.description,
                         assignedAt: model.status === ActionStatus.Assigned ? new Date() : undefined,
                         completedAt: model.status === ActionStatus.Completed ? new Date() : undefined
                       }
