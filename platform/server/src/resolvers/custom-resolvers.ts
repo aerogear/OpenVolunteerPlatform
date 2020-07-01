@@ -75,6 +75,7 @@ export default {
         
             // Let's do created automatic actions based on recipients needs.
             // Volunteers will be picked randomly. 
+            const pickedVolunteers = new Set<string>();
             for (const recipient of newRecipients!) {
                 const labels = recipient.productsLabels;
                 
@@ -107,7 +108,7 @@ export default {
                     }
 
                     const volunteerId = volunteerIds[volunteerIndex].toString();
-
+                    pickedVolunteers.add(volunteerId);
                     const volunteerAction = {
                         title,
                         description: `Delivery of ${productsLabels}`,
@@ -138,7 +139,7 @@ export default {
                 date: now,
                 owner: "ovp-admin", // TODO retrieve this info from Keycloak context
                 numberOfCasesCreated,
-                numberOfVolunteersAssigned: newVolunteers!.length,
+                numberOfVolunteersAssigned: pickedVolunteers.size,
                 numberOfRecipients: newRecipients!.length
             }, context)
         }
