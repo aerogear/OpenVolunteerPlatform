@@ -1,4 +1,4 @@
-query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime, $lat: [Float], $long:[Float]) {
+query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime, $lat: [Float!], $long:[Float!]) {
   CreatedActions: findVolunteerActions(filter: { status: { eq: "CREATED" } }) {
     items {
       ...VolunteerActionFields

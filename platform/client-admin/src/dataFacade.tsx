@@ -1363,8 +1363,8 @@ export type FindVolunteerActionDetailsQuery = (
 export type GetTodayActionReportQueryVariables = {
   todayMidnight?: Maybe<Scalars['DateTime']>;
   tomorrowMidnight?: Maybe<Scalars['DateTime']>;
-  lat?: Maybe<Array<Maybe<Scalars['Float']>>>;
-  long?: Maybe<Array<Maybe<Scalars['Float']>>>;
+  lat?: Maybe<Array<Scalars['Float']>>;
+  long?: Maybe<Array<Scalars['Float']>>;
 };
 
 
@@ -2861,7 +2861,7 @@ export type FindVolunteerActionDetailsQueryHookResult = ReturnType<typeof useFin
 export type FindVolunteerActionDetailsLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionDetailsLazyQuery>;
 export type FindVolunteerActionDetailsQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>;
 export const GetTodayActionReportDocument = gql`
-    query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime, $lat: [Float], $long: [Float]) {
+    query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime, $lat: [Float!], $long: [Float!]) {
   CreatedActions: findVolunteerActions(filter: {status: {eq: "CREATED"}}) {
     items {
       ...VolunteerActionFields
