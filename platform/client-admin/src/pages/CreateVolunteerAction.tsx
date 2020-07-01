@@ -76,20 +76,22 @@ export const CreateVolunteerActionPage: React.FC<RouteComponentProps<IUpdateMatc
                 model={model}
                 schema={createVolunteerActionFormSchema}
                 onSubmit={(model: any) => {
+                  const volunteerId = retrieveIdFromSelectedName(model.volunteerName, volunteers)
                   createVolunteerAction({
                     variables: {
                       input: {
                         title: model.title,
                         description: model.description,
-                        status: ActionStatus.Created,
+                        status: volunteerId? ActionStatus.Assigned : ActionStatus.Created,
                         _createdAt: new Date(),
+                        assignedAt: volunteerId ? new Date(): undefined,
                         distributionCentreId: retrieveDistributionCentreId(model.distributionCentreName, distributionCentres),
                         recipientId: retrieveIdFromSelectedName(model.recipientName, recipients),
                         volunteerId: retrieveIdFromSelectedName(model.volunteerName, volunteers)
                       }
                     }
                   }).then(({ data }) => {
-                    const volunteerActionId = data?.createVolunteerAction.id;
+                    const volunteerActionId = data?.createVolunteerAction?.id;
                     // TODO - retrieve products labels from form
                     // See https://github.com/aerogear/OpenVolunteerPlatform/pull/67#discussion_r426658820                    
                     const productsLabels = model.products || [];

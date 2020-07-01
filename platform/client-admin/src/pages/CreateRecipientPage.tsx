@@ -59,7 +59,7 @@ export const CreateRecipientPage: React.FC<RouteComponentProps<IUpdateMatchParam
                       }
                     }
                   }).then(({data}) => {
-                    history.push(`/manageRecipient/${data?.createRecipient.id}`);
+                    history.push(`/manageRecipient/${data?.createRecipient?.id}`);
                   }).catch(console.error);
                 }}
                 showInlineError

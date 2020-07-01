@@ -16,43 +16,21 @@ export default {
             // find volunteers and recipients with ongoing actions
             // and store their ids somewhere so that they will not be picked as candidates
             // for automatic scheduling
-            const { items } = await services.VolunteerAction.findBy({
-                status: {
-                    in: ["CREATED", "ASSIGNED"]
-                }
-            }, 
-            {
-                ...context, graphback: {
-                    services: services, 
-                    options: {
-                        selectedFields: ["id", "volunteerId", "recipientId"]                    
-                    }
-                }}, undefined, undefined);
+            const { items } = await services.VolunteerAction.findBy({ status: { in: ["CREATED", "ASSIGNED"] } }, context);
                 
-                
-                const volunteerIds: any = [];
-                const recipientIds: any = [];
-                const notCompletedVolunteerActions: any = items || [];
-                for ( const action of notCompletedVolunteerActions) {
-                    volunteerIds.push(new ObjectId(action.volunteerId));
-                    recipientIds.push(new ObjectId(action.recipientId));
-                }
-                
-                // let's retrieve volunteers who are deemed free
-                const findVolunteers = services.Volunteer.findBy(buildFilter(volunteerIds), {...context, graphback: {
-                    services: services, 
-                    options: {
-                        selectedFields: ["id"]                    
-                    }
-                }}, undefined, undefined);
-                
-                // let's retrieve recipients who do not have action
-                const findRecipients = services.Recipient.findBy(buildFilter(recipientIds), {...context, graphback: {
-                    services: services, 
-                    options: {
-                        selectedFields: ["id", "prefferedProducts", "firstName", "lastName"]                    
-                    }
-                }}, undefined, undefined);
+            const volunteerIds: any = [];
+            const recipientIds: any = [];
+            const notCompletedVolunteerActions: any = items || [];
+            for ( const action of notCompletedVolunteerActions) {
+                volunteerIds.push(new ObjectId(action.volunteerId));
+                recipientIds.push(new ObjectId(action.recipientId));
+            }
+            
+            // let's retrieve volunteers who are deemed free
+            const findVolunteers = services.Volunteer.findBy(buildFilter(volunteerIds), context);
+            
+            // let's retrieve recipients who do not have action
+            const findRecipients = services.Recipient.findBy(buildFilter(recipientIds), context);
                 
             const [{items: newVolunteers}, {items: newRecipients}] = await Promise.all([findVolunteers, findRecipients]);
             
@@ -62,7 +40,8 @@ export default {
                     date: now,
                     owner: "ovp-admin", // TODO retrieve this info from Keycloak context
                     numberOfCasesCreated,
-                    numberOfVolunteersAssigned: 0
+                    numberOfVolunteersAssigned: 0,
+                    numberOfRecipients: 0
                 }, context);
             }
 
@@ -91,15 +70,7 @@ export default {
                         }
                     }
                 })
-            }, {
-                ...context, 
-                graphback: {
-                    services: services, 
-                    options: {
-                        selectedFields: ["id", "distributionCentreId", "label", "description"]                    
-                    }
-                }
-            })
+            }, context)
 
         
             // Let's do created automatic actions based on recipients needs.
@@ -130,13 +101,20 @@ export default {
                     const title = `Automatic Daily Delivery to ${recipient.firstName} ${recipient.lastName}`; 
                     
                     // action to be created
+                    let volunteerIndex = Math.round(Math.random() * volunteerIds.length);
+                    if (volunteerIndex >= volunteerIds.length) {
+                        volunteerIndex = volunteerIds.length - 1;
+                    }
+
+                    const volunteerId = volunteerIds[volunteerIndex].toString();
+
                     const volunteerAction = {
                         title,
                         description: `${title} of ${productsLabels}`,
                         status: "ASSIGNED",
                         assignedAt: now,
                         _createdAt: now,
-                        volunteerId: volunteerIds[Math.min(volunteerIds.length - 1, Math.round(Math.random() * volunteerIds.length))].toString(),
+                        volunteerId,
                         distributionCentreId,
                         recipientId: recipient.id.toString()
                     }
@@ -160,7 +138,8 @@ export default {
                 date: now,
                 owner: "ovp-admin", // TODO retrieve this info from Keycloak context
                 numberOfCasesCreated,
-                numberOfVolunteersAssigned: numberOfCasesCreated > 0 ? newVolunteers!.length : 0
+                numberOfVolunteersAssigned: newVolunteers!.length,
+                numberOfRecipients: newRecipients!.length
             }, context)
         }
 

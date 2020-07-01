@@ -133,6 +133,7 @@ type DailyActionPlan {
   date: DateTime
   numberOfCasesCreated: Int
   numberOfVolunteersAssigned: Int
+  numberOfRecipients: Int
 }
 
 enum ActionStatus {

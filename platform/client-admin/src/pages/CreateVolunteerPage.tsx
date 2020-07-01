@@ -59,7 +59,7 @@ export const CreateVolunteerPage: React.FC<RouteComponentProps<IUpdateMatchParam
                       }
                     }
                   }).then(({data}) => {
-                    history.push(`/manageVolunteer/${data?.createVolunteer.id}`);
+                    history.push(`/manageVolunteer/${data?.createVolunteer?.id}`);
                   }).catch(console.error);
                 }}
                 showInlineError

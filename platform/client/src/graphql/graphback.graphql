@@ -4,6 +4,7 @@ fragment DailyActionPlanFields on DailyActionPlan {
    date
    numberOfCasesCreated
    numberOfVolunteersAssigned
+   numberOfRecipients
 
 } 
 
@@ -13,6 +14,7 @@ fragment DailyActionPlanExpandedFields on DailyActionPlan {
    date
    numberOfCasesCreated
    numberOfVolunteersAssigned
+   numberOfRecipients
 
 } 
 

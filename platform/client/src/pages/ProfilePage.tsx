@@ -46,7 +46,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
       }).then(({ data }) => {
         setVolunteer({
           ...model, 
-          id: data?.createVolunteer.id
+          id: data?.createVolunteer?.id
         });
         history.push("/actions")
       }).catch((e: any) => {

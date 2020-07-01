@@ -40,6 +40,7 @@ export type CreateDailyActionPlanInput = {
   date?: Maybe<Scalars['DateTime']>;
   numberOfCasesCreated?: Maybe<Scalars['Int']>;
   numberOfVolunteersAssigned?: Maybe<Scalars['Int']>;
+  numberOfRecipients?: Maybe<Scalars['Int']>;
 };
 
 export type CreateDistributionCentreInput = {
@@ -120,6 +121,7 @@ export type DailyActionPlan = {
   date?: Maybe<Scalars['DateTime']>;
   numberOfCasesCreated?: Maybe<Scalars['Int']>;
   numberOfVolunteersAssigned?: Maybe<Scalars['Int']>;
+  numberOfRecipients?: Maybe<Scalars['Int']>;
 };
 
 export type DailyActionPlanFilter = {
@@ -128,8 +130,9 @@ export type DailyActionPlanFilter = {
   date?: Maybe<DateTimeInput>;
   numberOfCasesCreated?: Maybe<IntInput>;
   numberOfVolunteersAssigned?: Maybe<IntInput>;
-  and?: Maybe<Array<Maybe<DailyActionPlanFilter>>>;
-  or?: Maybe<Array<Maybe<DailyActionPlanFilter>>>;
+  numberOfRecipients?: Maybe<IntInput>;
+  and?: Maybe<Array<DailyActionPlanFilter>>;
+  or?: Maybe<Array<DailyActionPlanFilter>>;
   not?: Maybe<DailyActionPlanFilter>;
 };
 
@@ -149,8 +152,8 @@ export type DateTimeInput = {
   lt?: Maybe<Scalars['DateTime']>;
   ge?: Maybe<Scalars['DateTime']>;
   gt?: Maybe<Scalars['DateTime']>;
-  in?: Maybe<Array<Maybe<Scalars['DateTime']>>>;
-  between?: Maybe<Array<Maybe<Scalars['DateTime']>>>;
+  in?: Maybe<Array<Scalars['DateTime']>>;
+  between?: Maybe<Array<Scalars['DateTime']>>;
 };
 
 /** @model(delete: false) */
@@ -191,8 +194,8 @@ export type DistributionCentreFilter = {
   postcode?: Maybe<IntInput>;
   lat?: Maybe<FloatInput>;
   long?: Maybe<FloatInput>;
-  and?: Maybe<Array<Maybe<DistributionCentreFilter>>>;
-  or?: Maybe<Array<Maybe<DistributionCentreFilter>>>;
+  and?: Maybe<Array<DistributionCentreFilter>>;
+  or?: Maybe<Array<DistributionCentreFilter>>;
   not?: Maybe<DistributionCentreFilter>;
 };
 
@@ -211,8 +214,8 @@ export type FloatInput = {
   lt?: Maybe<Scalars['Float']>;
   ge?: Maybe<Scalars['Float']>;
   gt?: Maybe<Scalars['Float']>;
-  in?: Maybe<Array<Maybe<Scalars['Float']>>>;
-  between?: Maybe<Array<Maybe<Scalars['Float']>>>;
+  in?: Maybe<Array<Scalars['Float']>>;
+  between?: Maybe<Array<Scalars['Float']>>;
 };
 
 export type IdInput = {
@@ -222,7 +225,7 @@ export type IdInput = {
   lt?: Maybe<Scalars['ID']>;
   ge?: Maybe<Scalars['ID']>;
   gt?: Maybe<Scalars['ID']>;
-  in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  in?: Maybe<Array<Scalars['ID']>>;
 };
 
 export type IntInput = {
@@ -232,8 +235,8 @@ export type IntInput = {
   lt?: Maybe<Scalars['Int']>;
   ge?: Maybe<Scalars['Int']>;
   gt?: Maybe<Scalars['Int']>;
-  in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  between?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  in?: Maybe<Array<Scalars['Int']>>;
+  between?: Maybe<Array<Scalars['Int']>>;
 };
 
 export type MutateDailyActionPlanInput = {
@@ -242,6 +245,7 @@ export type MutateDailyActionPlanInput = {
   date?: Maybe<Scalars['DateTime']>;
   numberOfCasesCreated?: Maybe<Scalars['Int']>;
   numberOfVolunteersAssigned?: Maybe<Scalars['Int']>;
+  numberOfRecipients?: Maybe<Scalars['Int']>;
 };
 
 export type MutateDistributionCentreInput = {
@@ -312,19 +316,19 @@ export type Mutation = {
    __typename?: 'Mutation';
   /** Automatically create actions for the day of the month specified */
   assignVolunteers?: Maybe<DailyActionPlan>;
-  createDailyActionPlan: DailyActionPlan;
-  updateDailyActionPlan: DailyActionPlan;
-  createDistributionCentre: DistributionCentre;
-  updateDistributionCentre: DistributionCentre;
-  createProduct: Product;
-  updateProduct: Product;
-  createVolunteerActionProduct: VolunteerActionProduct;
-  createVolunteer: Volunteer;
-  updateVolunteer: Volunteer;
-  createVolunteerAction: VolunteerAction;
-  updateVolunteerAction: VolunteerAction;
-  createRecipient: Recipient;
-  updateRecipient: Recipient;
+  createDailyActionPlan?: Maybe<DailyActionPlan>;
+  updateDailyActionPlan?: Maybe<DailyActionPlan>;
+  createDistributionCentre?: Maybe<DistributionCentre>;
+  updateDistributionCentre?: Maybe<DistributionCentre>;
+  createProduct?: Maybe<Product>;
+  updateProduct?: Maybe<Product>;
+  createVolunteerActionProduct?: Maybe<VolunteerActionProduct>;
+  createVolunteer?: Maybe<Volunteer>;
+  updateVolunteer?: Maybe<Volunteer>;
+  createVolunteerAction?: Maybe<VolunteerAction>;
+  updateVolunteerAction?: Maybe<VolunteerAction>;
+  createRecipient?: Maybe<Recipient>;
+  updateRecipient?: Maybe<Recipient>;
 };
 
 
@@ -425,8 +429,8 @@ export type ProductFilter = {
   label?: Maybe<StringInput>;
   description?: Maybe<StringInput>;
   distributionCentreId?: Maybe<IdInput>;
-  and?: Maybe<Array<Maybe<ProductFilter>>>;
-  or?: Maybe<Array<Maybe<ProductFilter>>>;
+  and?: Maybe<Array<ProductFilter>>;
+  or?: Maybe<Array<ProductFilter>>;
   not?: Maybe<ProductFilter>;
 };
 
@@ -584,8 +588,8 @@ export type RecipientFilter = {
   actionsCompleted?: Maybe<IntInput>;
   deliveryDays?: Maybe<StringInput>;
   prefferedProducts?: Maybe<StringInput>;
-  and?: Maybe<Array<Maybe<RecipientFilter>>>;
-  or?: Maybe<Array<Maybe<RecipientFilter>>>;
+  and?: Maybe<Array<RecipientFilter>>;
+  or?: Maybe<Array<RecipientFilter>>;
   not?: Maybe<RecipientFilter>;
 };
 
@@ -609,7 +613,7 @@ export type StringInput = {
   lt?: Maybe<Scalars['String']>;
   ge?: Maybe<Scalars['String']>;
   gt?: Maybe<Scalars['String']>;
-  in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  in?: Maybe<Array<Scalars['String']>>;
   contains?: Maybe<Scalars['String']>;
   startsWith?: Maybe<Scalars['String']>;
   endsWith?: Maybe<Scalars['String']>;
@@ -687,8 +691,8 @@ export type VolunteerActionFilter = {
   volunteerId?: Maybe<IdInput>;
   distributionCentreId?: Maybe<IdInput>;
   recipientId?: Maybe<IdInput>;
-  and?: Maybe<Array<Maybe<VolunteerActionFilter>>>;
-  or?: Maybe<Array<Maybe<VolunteerActionFilter>>>;
+  and?: Maybe<Array<VolunteerActionFilter>>;
+  or?: Maybe<Array<VolunteerActionFilter>>;
   not?: Maybe<VolunteerActionFilter>;
 };
 
@@ -710,8 +714,8 @@ export type VolunteerActionProductFilter = {
   id?: Maybe<IdInput>;
   productId?: Maybe<IdInput>;
   volunteerActionId?: Maybe<IdInput>;
-  and?: Maybe<Array<Maybe<VolunteerActionProductFilter>>>;
-  or?: Maybe<Array<Maybe<VolunteerActionProductFilter>>>;
+  and?: Maybe<Array<VolunteerActionProductFilter>>;
+  or?: Maybe<Array<VolunteerActionProductFilter>>;
   not?: Maybe<VolunteerActionProductFilter>;
 };
 
@@ -746,8 +750,8 @@ export type VolunteerFilter = {
   actionsCompleted?: Maybe<IntInput>;
   actionsActive?: Maybe<IntInput>;
   active?: Maybe<BooleanInput>;
-  and?: Maybe<Array<Maybe<VolunteerFilter>>>;
-  or?: Maybe<Array<Maybe<VolunteerFilter>>>;
+  and?: Maybe<Array<VolunteerFilter>>;
+  or?: Maybe<Array<VolunteerFilter>>;
   not?: Maybe<VolunteerFilter>;
 };
 
@@ -761,12 +765,12 @@ export type VolunteerResultList = {
 
 export type DailyActionPlanFieldsFragment = (
   { __typename?: 'DailyActionPlan' }
-  & Pick<DailyActionPlan, 'id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned'>
+  & Pick<DailyActionPlan, 'id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned' | 'numberOfRecipients'>
 );
 
 export type DailyActionPlanExpandedFieldsFragment = (
   { __typename?: 'DailyActionPlan' }
-  & Pick<DailyActionPlan, 'id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned'>
+  & Pick<DailyActionPlan, 'id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned' | 'numberOfRecipients'>
 );
 
 export type DistributionCentreFieldsFragment = (
@@ -1102,10 +1106,10 @@ export type CreateDailyActionPlanMutationVariables = {
 
 export type CreateDailyActionPlanMutation = (
   { __typename?: 'Mutation' }
-  & { createDailyActionPlan: (
+  & { createDailyActionPlan?: Maybe<(
     { __typename?: 'DailyActionPlan' }
     & DailyActionPlanFieldsFragment
-  ) }
+  )> }
 );
 
 export type UpdateDailyActionPlanMutationVariables = {
@@ -1115,10 +1119,10 @@ export type UpdateDailyActionPlanMutationVariables = {
 
 export type UpdateDailyActionPlanMutation = (
   { __typename?: 'Mutation' }
-  & { updateDailyActionPlan: (
+  & { updateDailyActionPlan?: Maybe<(
     { __typename?: 'DailyActionPlan' }
     & DailyActionPlanFieldsFragment
-  ) }
+  )> }
 );
 
 export type CreateDistributionCentreMutationVariables = {
@@ -1128,10 +1132,10 @@ export type CreateDistributionCentreMutationVariables = {
 
 export type CreateDistributionCentreMutation = (
   { __typename?: 'Mutation' }
-  & { createDistributionCentre: (
+  & { createDistributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
     & DistributionCentreFieldsFragment
-  ) }
+  )> }
 );
 
 export type UpdateDistributionCentreMutationVariables = {
@@ -1141,10 +1145,10 @@ export type UpdateDistributionCentreMutationVariables = {
 
 export type UpdateDistributionCentreMutation = (
   { __typename?: 'Mutation' }
-  & { updateDistributionCentre: (
+  & { updateDistributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
     & DistributionCentreFieldsFragment
-  ) }
+  )> }
 );
 
 export type CreateProductMutationVariables = {
@@ -1154,10 +1158,10 @@ export type CreateProductMutationVariables = {
 
 export type CreateProductMutation = (
   { __typename?: 'Mutation' }
-  & { createProduct: (
+  & { createProduct?: Maybe<(
     { __typename?: 'Product' }
     & ProductFieldsFragment
-  ) }
+  )> }
 );
 
 export type UpdateProductMutationVariables = {
@@ -1167,10 +1171,10 @@ export type UpdateProductMutationVariables = {
 
 export type UpdateProductMutation = (
   { __typename?: 'Mutation' }
-  & { updateProduct: (
+  & { updateProduct?: Maybe<(
     { __typename?: 'Product' }
     & ProductFieldsFragment
-  ) }
+  )> }
 );
 
 export type CreateVolunteerActionProductMutationVariables = {
@@ -1180,10 +1184,10 @@ export type CreateVolunteerActionProductMutationVariables = {
 
 export type CreateVolunteerActionProductMutation = (
   { __typename?: 'Mutation' }
-  & { createVolunteerActionProduct: (
+  & { createVolunteerActionProduct?: Maybe<(
     { __typename?: 'VolunteerActionProduct' }
     & VolunteerActionProductFieldsFragment
-  ) }
+  )> }
 );
 
 export type CreateVolunteerActionMutationVariables = {
@@ -1193,10 +1197,10 @@ export type CreateVolunteerActionMutationVariables = {
 
 export type CreateVolunteerActionMutation = (
   { __typename?: 'Mutation' }
-  & { createVolunteerAction: (
+  & { createVolunteerAction?: Maybe<(
     { __typename?: 'VolunteerAction' }
     & VolunteerActionFieldsFragment
-  ) }
+  )> }
 );
 
 export type UpdateVolunteerActionMutationVariables = {
@@ -1206,10 +1210,10 @@ export type UpdateVolunteerActionMutationVariables = {
 
 export type UpdateVolunteerActionMutation = (
   { __typename?: 'Mutation' }
-  & { updateVolunteerAction: (
+  & { updateVolunteerAction?: Maybe<(
     { __typename?: 'VolunteerAction' }
     & VolunteerActionFieldsFragment
-  ) }
+  )> }
 );
 
 export type CreateVolunteerMutationVariables = {
@@ -1219,10 +1223,10 @@ export type CreateVolunteerMutationVariables = {
 
 export type CreateVolunteerMutation = (
   { __typename?: 'Mutation' }
-  & { createVolunteer: (
+  & { createVolunteer?: Maybe<(
     { __typename?: 'Volunteer' }
     & VolunteerFieldsFragment
-  ) }
+  )> }
 );
 
 export type UpdateVolunteerMutationVariables = {
@@ -1232,10 +1236,10 @@ export type UpdateVolunteerMutationVariables = {
 
 export type UpdateVolunteerMutation = (
   { __typename?: 'Mutation' }
-  & { updateVolunteer: (
+  & { updateVolunteer?: Maybe<(
     { __typename?: 'Volunteer' }
     & VolunteerFieldsFragment
-  ) }
+  )> }
 );
 
 export type CreateRecipientMutationVariables = {
@@ -1245,10 +1249,10 @@ export type CreateRecipientMutationVariables = {
 
 export type CreateRecipientMutation = (
   { __typename?: 'Mutation' }
-  & { createRecipient: (
+  & { createRecipient?: Maybe<(
     { __typename?: 'Recipient' }
     & RecipientFieldsFragment
-  ) }
+  )> }
 );
 
 export type UpdateRecipientMutationVariables = {
@@ -1258,10 +1262,10 @@ export type UpdateRecipientMutationVariables = {
 
 export type UpdateRecipientMutation = (
   { __typename?: 'Mutation' }
-  & { updateRecipient: (
+  & { updateRecipient?: Maybe<(
     { __typename?: 'Recipient' }
     & RecipientFieldsFragment
-  ) }
+  )> }
 );
 
 export type AssignVolunteersMutationVariables = {};
@@ -1271,7 +1275,7 @@ export type AssignVolunteersMutation = (
   { __typename?: 'Mutation' }
   & { assignVolunteers?: Maybe<(
     { __typename?: 'DailyActionPlan' }
-    & Pick<DailyActionPlan, 'id' | 'owner' | 'date' | 'numberOfVolunteersAssigned' | 'numberOfCasesCreated'>
+    & Pick<DailyActionPlan, 'id' | 'owner' | 'date' | 'numberOfVolunteersAssigned' | 'numberOfCasesCreated' | 'numberOfRecipients'>
   )> }
 );
 
@@ -1472,6 +1476,7 @@ export const DailyActionPlanFieldsFragmentDoc = gql`
   date
   numberOfCasesCreated
   numberOfVolunteersAssigned
+  numberOfRecipients
 }
     `;
 export const DailyActionPlanExpandedFieldsFragmentDoc = gql`
@@ -1481,6 +1486,7 @@ export const DailyActionPlanExpandedFieldsFragmentDoc = gql`
   date
   numberOfCasesCreated
   numberOfVolunteersAssigned
+  numberOfRecipients
 }
     `;
 export const DistributionCentreFieldsFragmentDoc = gql`
@@ -2661,6 +2667,7 @@ export const AssignVolunteersDocument = gql`
     date
     numberOfVolunteersAssigned
     numberOfCasesCreated
+    numberOfRecipients
   }
 }
     `;

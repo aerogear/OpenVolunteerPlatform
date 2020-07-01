@@ -9,37 +9,37 @@ import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic';
 export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
   const { data, loading, error } = useFindDailyActionPlansQuery();
   const [dailyPlan, setDailyPlan] = useState({})
-  const [assignVolunteer] = useAssignVolunteersMutation()
+  const [assignVolunteer] = useAssignVolunteersMutation();
   if (error) {
     console.log(error);
   }
-
+  
+  let content = (<h4>No scheduler run today</h4>)
   const submit = () => {
     assignVolunteer().then((result) => {
-      console.log("success");
-      // setDailyPlan(result);
-      // window.location.reload(false);
+      setDailyPlan({...result.data?.assignVolunteers});
     }).catch((error) => {
       console.log("Failure", error);
     })
   }
-  let content = (<h4>No scheduler run today</h4>)
   if (loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
-  let dailyAction: any = {};
-  if (data?.findDailyActionPlans && data?.findDailyActionPlans.items && data?.findDailyActionPlans.items.length !== 0) {
-    dailyAction = data?.findDailyActionPlans.items.pop();
-    setDailyPlan(dailyAction);
+  if (!Object.keys(dailyPlan).length && data?.findDailyActionPlans && data?.findDailyActionPlans.items && data?.findDailyActionPlans.items.length !== 0) {
+    const items = data?.findDailyActionPlans.items
+    setDailyPlan({...items[items.length - 1]});
+  }
+  
+  if (Object.keys(dailyPlan)) {
     content = (
       <AutoForm
         placeholder
-        model={{ ...dailyPlan }}
+        model={{...dailyPlan}}
         schema={dailyActionForm}
         showInlineError
       >
         <AutoFields />
         <ErrorsField />
-
-
+  
+  
       </AutoForm>
     )
   }

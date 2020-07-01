@@ -23,6 +23,13 @@ const dailyAction = new SimpleSchema({
             readonly: true
         }
     },
+    numberOfRecipients: {
+        type: Number,
+        max: 220,
+        uniforms: {
+            readonly: true
+        }
+    },
     numberOfVolunteersAssigned: {
         type: Number,
         max: 220,

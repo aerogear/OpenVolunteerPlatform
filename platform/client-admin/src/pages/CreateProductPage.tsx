@@ -48,7 +48,7 @@ export const CreateProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>
                       }
                     }
                   }).then(({data}) => {
-                    history.push(`/manageProduct/${data?.createProduct.id}`)
+                    history.push(`/manageProduct/${data?.createProduct?.id}`)
                   }).catch(console.error);
                 }}
                 showInlineError

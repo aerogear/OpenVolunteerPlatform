@@ -59,7 +59,7 @@ export const CreateDistributionCentrePage: React.FC<RouteComponentProps<IUpdateM
                       }
                     }
                   }).then(({ data }) => {
-                    history.push(`/manageDistributionCentre/${data?.createDistributionCentre.id}`);
+                    history.push(`/manageDistributionCentre/${data?.createDistributionCentre?.id}`);
                   }).catch(console.error);
                 }}
                 showInlineError
