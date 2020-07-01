@@ -110,7 +110,7 @@ export default {
 
                     const volunteerAction = {
                         title,
-                        description: `${title} of ${productsLabels}`,
+                        description: `Delivery of ${productsLabels}`,
                         status: "ASSIGNED",
                         assignedAt: now,
                         _createdAt: now,
@@ -125,8 +125,8 @@ export default {
                     // create volunteer action product
                     for (const product of products) {
                         const volunteerActionProduct = {
-                           volunteerActionId: volunteerActionId,
-                           productId: product.id
+                           volunteerActionId: volunteerActionId.toString(),
+                           productId: product.id.toString()
                         }
 
                         await services.VolunteerActionProduct.create(volunteerActionProduct, context);
