@@ -20,7 +20,7 @@
     "test": "jest"
   },
   "engines": {
-    "node": ">=10.15.3"
+    "node": "14.5.0"
   },
   "devDependencies": {
     "@types/chalk": "0.4.31",
