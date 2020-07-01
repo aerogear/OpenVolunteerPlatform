@@ -1,0 +1,9 @@
+mutation assignVolunteers{
+  assignVolunteers{
+    id
+    owner
+    date
+    numberOfVolunteersAssigned
+    numberOfCasesCreated
+  }
+}

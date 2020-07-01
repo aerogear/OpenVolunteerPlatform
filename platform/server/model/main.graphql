@@ -149,7 +149,7 @@ type Mutation {
   """
   Automatically create actions for the day of the month specified
   """
-  assignVolunteers(dayOfTheMonth: Int): DailyActionPlan
+  assignVolunteers: DailyActionPlan
 }
 
 

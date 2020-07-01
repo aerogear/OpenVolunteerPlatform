@@ -1,3 +1,5 @@
+import { GraphbackContext } from "graphback"
+
 export default {
     Address: {
         __resolveType() {
@@ -6,36 +8,25 @@ export default {
     },
 
     Mutation: {
-        assignVolunteers: (parent, variables, context, info) => {
-            // console.log("entering")
-            // const graphback = {
-            //     services: context.graphback.services,
-            //     options: {
-            //         selectedFields: [
-            //             "id",
-            //             "owner",
-            //             "date",
-            //             "numberOfCasesCreated",
-            //             "numberOfVolunteersAssigned"],
-            //         aggregations: {
-            //             count: false
-            //         }
-            //     }
-            // };
-            // console.log(Object.keys(context.graphback));
-            // const newContext = { ...context, graphback };
-            // const srv = context.graphback.services;
-            // // TODO iterate thru all volunteers
-            // const volunteers = srv.Volunteer.findBy(undefined,
-            //     newContext, undefined, { limit: 10, offset: 0 });
-            // const recipients = srv.Recipient.findBy({},
-            //     newContext, undefined, { limit: 10, offset: 0 });
-            // const distributionCenters = srv.DistributionCenter.find({},
-            //     newContext, undefined, { limit: 10, offset: 0 })
-            // console.log(recipients)
-            // console.log(distributionCenters)
+        assignVolunteers: (parent, variables, context: GraphbackContext, info) => {
+            console.log("entering")
+            const srv = context.graphback.services;
+            // TODO iterate thru all volunteers
+            const volunteers = srv.Volunteer.findBy({},
+                context, undefined, { limit: 10, offset: 0 });
+            const recipients = srv.Recipient.findBy({},
+                context, undefined, { limit: 10, offset: 0 });
+            const distributionCenters = srv.DistributionCenter.findBy({},
+                context, undefined, { limit: 10, offset: 0 })
+
+            console.log(volunteers)
+            console.log(recipients)
+            console.log(distributionCenters)
             // TODO 
             return {
+                id: "whatever",
+                date: new Date(),
+                owner: "temp guy",
                 numberOfCasesCreated: 0,
                 numberOfVolunteersAssigned: 0
             }

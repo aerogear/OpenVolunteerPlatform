@@ -290,7 +290,7 @@ query getDistributionCentre($id: ID!) {
 query findProducts($filter: ProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findProducts(filter: $filter, page: $page, orderBy: $orderBy) {
       items {
-        ...ProductFields
+        ...ProductExpandedFields
       }
       offset
       limit

@@ -1,5 +1,5 @@
-import React from 'react';
-import { useCreateDailyActionPlanMutation, useFindDailyActionPlansQuery } from '../dataFacade';
+import React, { useState } from 'react';
+import { useCreateDailyActionPlanMutation, useFindDailyActionPlansQuery, useAssignVolunteersMutation } from '../dataFacade';
 import { IonLoading, IonPage, IonContent, IonFooter, IonItemDivider, IonCard, IonButton } from '@ionic/react';
 import { Header } from '../components';
 import dailyActionForm from '../forms/dailyAction'
@@ -8,25 +8,17 @@ import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic';
 
 export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
   const { data, loading, error } = useFindDailyActionPlansQuery();
-
-  const [createDailyAction] = useCreateDailyActionPlanMutation();
+  const [dailyPlan, setDailyPlan] = useState({})
+  const [assignVolunteer] = useAssignVolunteersMutation()
   if (error) {
     console.log(error);
   }
 
   const submit = () => {
-    createDailyAction({
-      variables: {
-        input: {
-          date: new Date(),
-          owner: "admin",
-          numberOfCasesCreated: 10 + new Date().getTime() % 6,
-          numberOfVolunteersAssigned: 10 + new Date().getTime() % 6
-        }
-      }
-    }).then((result) => {
+    assignVolunteer().then((result) => {
       console.log("success");
-      window.location.reload(false);
+      // setDailyPlan(result);
+      // window.location.reload(false);
     }).catch((error) => {
       console.log("Failure", error);
     })
@@ -36,10 +28,11 @@ export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
   let dailyAction: any = {};
   if (data?.findDailyActionPlans && data?.findDailyActionPlans.items && data?.findDailyActionPlans.items.length !== 0) {
     dailyAction = data?.findDailyActionPlans.items.pop();
+    // setDailyPlan(dailyAction);
     content = (
       <AutoForm
         placeholder
-        model={{ ...dailyAction }}
+        model={{ ...dailyPlan }}
         schema={dailyActionForm}
         showInlineError
       >
@@ -50,8 +43,6 @@ export const SchedulePage: React.FC<RouteComponentProps> = ({ match }) => {
       </AutoForm>
     )
   }
-
-
 
   return (
     <IonPage>

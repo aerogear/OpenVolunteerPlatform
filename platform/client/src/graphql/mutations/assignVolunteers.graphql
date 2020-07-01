@@ -1,6 +1,0 @@
-mutation assignVolunteers($dayOfTheMonth: Int){
-  assignVolunteers(dayOfTheMonth: $dayOfTheMonth){
-    numberOfVolunteersAssigned
-    numberOfCasesCreated
-  }
-}

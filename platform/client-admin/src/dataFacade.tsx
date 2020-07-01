@@ -328,11 +328,6 @@ export type Mutation = {
 };
 
 
-export type MutationAssignVolunteersArgs = {
-  dayOfTheMonth?: Maybe<Scalars['Int']>;
-};
-
-
 export type MutationCreateDailyActionPlanArgs = {
   input: CreateDailyActionPlanInput;
 };
@@ -954,7 +949,7 @@ export type FindProductsQuery = (
     & Pick<ProductResultList, 'offset' | 'limit' | 'count'>
     & { items: Array<Maybe<(
       { __typename?: 'Product' }
-      & ProductFieldsFragment
+      & ProductExpandedFieldsFragment
     )>> }
   ) }
 );
@@ -1267,6 +1262,17 @@ export type UpdateRecipientMutation = (
     { __typename?: 'Recipient' }
     & RecipientFieldsFragment
   ) }
+);
+
+export type AssignVolunteersMutationVariables = {};
+
+
+export type AssignVolunteersMutation = (
+  { __typename?: 'Mutation' }
+  & { assignVolunteers?: Maybe<(
+    { __typename?: 'DailyActionPlan' }
+    & Pick<DailyActionPlan, 'id' | 'owner' | 'date' | 'numberOfVolunteersAssigned' | 'numberOfCasesCreated'>
+  )> }
 );
 
 export type FindFlatDistributionCentresQueryVariables = {
@@ -1870,14 +1876,14 @@ export const FindProductsDocument = gql`
     query findProducts($filter: ProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
   findProducts(filter: $filter, page: $page, orderBy: $orderBy) {
     items {
-      ...ProductFields
+      ...ProductExpandedFields
     }
     offset
     limit
     count
   }
 }
-    ${ProductFieldsFragmentDoc}`;
+    ${ProductExpandedFieldsFragmentDoc}`;
 
 /**
  * __useFindProductsQuery__
@@ -2647,6 +2653,41 @@ export function useUpdateRecipientMutation(baseOptions?: ApolloReactHooks.Mutati
 export type UpdateRecipientMutationHookResult = ReturnType<typeof useUpdateRecipientMutation>;
 export type UpdateRecipientMutationResult = ApolloReactCommon.MutationResult<UpdateRecipientMutation>;
 export type UpdateRecipientMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateRecipientMutation, UpdateRecipientMutationVariables>;
+export const AssignVolunteersDocument = gql`
+    mutation assignVolunteers {
+  assignVolunteers {
+    id
+    owner
+    date
+    numberOfVolunteersAssigned
+    numberOfCasesCreated
+  }
+}
+    `;
+export type AssignVolunteersMutationFn = ApolloReactCommon.MutationFunction<AssignVolunteersMutation, AssignVolunteersMutationVariables>;
+
+/**
+ * __useAssignVolunteersMutation__
+ *
+ * To run a mutation, you first call `useAssignVolunteersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAssignVolunteersMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [assignVolunteersMutation, { data, loading, error }] = useAssignVolunteersMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAssignVolunteersMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AssignVolunteersMutation, AssignVolunteersMutationVariables>) {
+        return ApolloReactHooks.useMutation<AssignVolunteersMutation, AssignVolunteersMutationVariables>(AssignVolunteersDocument, baseOptions);
+      }
+export type AssignVolunteersMutationHookResult = ReturnType<typeof useAssignVolunteersMutation>;
+export type AssignVolunteersMutationResult = ApolloReactCommon.MutationResult<AssignVolunteersMutation>;
+export type AssignVolunteersMutationOptions = ApolloReactCommon.BaseMutationOptions<AssignVolunteersMutation, AssignVolunteersMutationVariables>;
 export const FindFlatDistributionCentresDocument = gql`
     query findFlatDistributionCentres($page: PageRequest, $orderBy: OrderByInput) {
   findDistributionCentres(page: $page, orderBy: $orderBy) {
