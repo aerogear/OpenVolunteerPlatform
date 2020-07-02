@@ -36,20 +36,32 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
 
 
   let mapContent = <Empty />;
-
+ 
   if (model.distributionCentre) {
     const distributionCentre = model.distributionCentre;
-    const title = `${distributionCentre.address1} ${distributionCentre.address2} ${distributionCentre.city}`;
+    const recipient = model.recipient!;
+
+    const distributionTitle = `${distributionCentre.address1} ${distributionCentre.address2} ${distributionCentre.city}`;
+
+    const title = `${recipient.address1} ${recipient.address2} ${recipient?.city}`;
     mapContent = <Map center={{
       lat: distributionCentre.lat!,
       lng: distributionCentre.long!
     }}>
       <Marker
         label={distributionCentre.name!}
-        title={title}
+        title={distributionTitle}
         position={{
           lat: distributionCentre.lat!,
           lng: distributionCentre.long!
+        }} />
+
+    <Marker
+        label={recipient.firstName!}
+        title={title}
+        position={{
+          lat: recipient.lat!,
+          lng: recipient.long!
         }} />
     </Map>
   }
