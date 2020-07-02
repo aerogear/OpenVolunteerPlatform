@@ -8,7 +8,7 @@ export const authConfig: CrudServicesAuthConfig = {
     delete: { roles: ['admin'] },
   },
   Volunteer: {
-    create: { roles: ['admin'] },
+    create: { roles: [] },
     read: { roles: [] },
     update: { roles: [] },
     delete: { roles: ['admin'] },
@@ -22,7 +22,7 @@ export const authConfig: CrudServicesAuthConfig = {
   VolunteerAction: {
     create: { roles: ['admin'] },
     read: { roles: [] },
-    update: { roles: ['admin'] },
+    update: {roles: [] },
     delete: { roles: ['admin'] },
   },
   VolunteerActionProduct: {
