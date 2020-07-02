@@ -2,7 +2,7 @@
   "realm": "open-volunteer-platform",
   "auth-server-url": "http://localhost:8080/auth",
   "ssl-required": "none",
-  "resource": "open-volunteer-platform-public",
+  "resource": "open-volunteer-platform-bearer",
   "public-client": true,
   "use-resource-role-mappings": true,
   "confidential-port": 0
