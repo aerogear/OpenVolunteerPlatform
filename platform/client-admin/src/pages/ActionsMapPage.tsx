@@ -5,9 +5,8 @@ import { IonLoading, IonPage, IonContent, IonFooter, IonCard } from '@ionic/reac
 import { Header, Empty } from '../components';
 import { Marker } from 'google-maps-react';
 import { Map } from '../components/Map';
+import { YELLOW_ICON, RED_ICON } from '../config/MarkerIcons';
 
-const RED_DOT = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
-const YELLOW_DOT = "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
 
 export const ActionsMapPage: React.FC<RouteComponentProps> = ({ match }) => {
   const history = useHistory();
@@ -47,7 +46,7 @@ export const ActionsMapPage: React.FC<RouteComponentProps> = ({ match }) => {
         title={title}
         label={distributionCentre?.name!}
         icon={{
-          url: YELLOW_DOT
+          url: YELLOW_ICON
         }}
         onClick={() => history.push(`/manageDistributionCentre/${distributionCentre?.id}`)}
         position={{
@@ -71,29 +70,28 @@ export const ActionsMapPage: React.FC<RouteComponentProps> = ({ match }) => {
         title={title}
         label={recipient?.firstName}
         icon={{
-          url: RED_DOT
+          url: RED_ICON
         }}
         onClick={() => history.push(`/manageRecipient/${recipient?.id}`)}
         position={{
           lat,
           lng
         }} />
-
     }
 
-    let markersCounter = 0;
+    let uniqueIndex = 0;
     for (const volunteerAction of volunteerActions) {
       const recipient = volunteerAction?.recipient;
       const distributionCentre = volunteerAction?.distributionCentre;
-      markers.push(getRecipientMarker(recipient, markersCounter++));
-      markers.push(getDistributionCentreMarker(distributionCentre, markersCounter++));
+      markers.push(getRecipientMarker(recipient, uniqueIndex++));
+      markers.push(getDistributionCentreMarker(distributionCentre, uniqueIndex++));
     }
 
     mapContent = <Map
       zoom={13}
       center={{
-        lat: totalLatLong.lat / markersCounter,
-        lng: totalLatLong.lng / markersCounter
+        lat: totalLatLong.lat / uniqueIndex,
+        lng: totalLatLong.lng / uniqueIndex
       }}>
       {markers}
     </Map>

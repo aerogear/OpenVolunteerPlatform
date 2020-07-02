@@ -1,16 +1,16 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Header } from '../components/Header';
-import { Map } from '../components/Map';
+import { Map, Direction } from '../components/Map';
 import { IUpdateMatchParams } from '../declarations';
 import { useGetVolunteerActionQuery, useUpdateVolunteerActionMutation, ActionStatus } from '../dataFacade'
 import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic'
 import volunteerAction from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
-import recipient from '../forms/recipient';
+import recipientForm from '../forms/recipient';
 import distributionCentreForm from '../forms/distributionCentre';
 
-import { Marker } from 'google-maps-react';
+// import { Marker } from 'google-maps-react';
 import { Empty } from '../components';
 
 export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
@@ -29,22 +29,41 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
 
   let mapContent = <Empty />;
   let distributionCentre;
+  let recipient;
 
-  if (model.distributionCentre) {
-    // TODO add recipient to Map
+  if (model.distributionCentre && model.recipient) {
     distributionCentre = model.distributionCentre;
-    const title = `${distributionCentre.address1} ${distributionCentre.address2} ${distributionCentre.city}`;
+    recipient = model.recipient;
+
+    // const distributionTitle = `${distributionCentre.address1} ${distributionCentre.address2} ${distributionCentre.city}`;
+
+    // const title = `${recipient.address1} ${recipient.address2} ${recipient?.city}`;
+
+    const origin = [distributionCentre?.lat!, distributionCentre?.long];
+    const destination = [recipient?.lat!, recipient?.long!];
+    
     mapContent = <Map center={{
       lat: distributionCentre.lat!,
       lng: distributionCentre.long!
     }}>
-      <Marker
+      {/**
+       *  <Marker
         label={distributionCentre.name!}
-        title={title}
+        title={distributionTitle}
         position={{
           lat: distributionCentre.lat!,
           lng: distributionCentre.long!
         }} />
+
+    <Marker
+        label={recipient.firstName!}
+        title={title}
+        position={{
+          lat: recipient.lat!,
+          lng: recipient.long!
+        }} /> 
+       */}
+    <Direction origin={origin} destination={destination}/>
     </Map>
   }
 
@@ -90,8 +109,8 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                 <h2>Recipient information</h2>
               </IonItemDivider>
               <AutoForm
-                model={model.recipient}
-                schema={recipient}
+                model={recipient}
+                schema={recipientForm}
               >
                 <AutoFields />
                 <ErrorsField />
