@@ -1,5 +1,7 @@
 import { GraphbackContext } from "graphback";
 import {ObjectId} from "mongodb";
+import { isAuthorizedByRole } from 'keycloak-connect-graphql';
+import { UnauthorizedError } from "@graphback/keycloak-authz/dist/utils";
 
 export default {
     Address: {
@@ -10,6 +12,10 @@ export default {
 
     Mutation: {
         assignVolunteers: async (parent, variables, context: GraphbackContext, info) => {
+            if (!isAuthorizedByRole(["admin"], context)) { // only admin are allowed to create volunteer actions
+                throw new UnauthorizedError()
+            }
+        
             const now = new Date();
             const services = context.graphback.services;
             
