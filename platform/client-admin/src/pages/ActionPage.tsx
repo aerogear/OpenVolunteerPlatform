@@ -6,14 +6,11 @@ import {
   IonContent,
   IonIcon,
   IonFab,
-  IonFabButton,
-  IonSegment,
-  IonSegmentButton,
-  IonLabel,
+  IonFabButton
 } from '@ionic/react';
 import { Empty, ActionsList, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindVolunteerActionsQuery, ActionStatus } from '../dataFacade';
+import { useFindVolunteerActionsQuery } from '../dataFacade';
 import { add, filter } from 'ionicons/icons';
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
@@ -46,16 +43,7 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
           <IonFabButton>
             <IonIcon icon={filter} />
           </IonFabButton>
-        </IonFab>
-        <IonSegment>
-          {/* TODO add closed/open */}
-          <IonSegmentButton value={ActionStatus.Assigned}>
-            <IonLabel>Open Actions</IonLabel>
-          </IonSegmentButton>
-          <IonSegmentButton value={ActionStatus.Completed}>
-            <IonLabel>Finished Actions</IonLabel>
-          </IonSegmentButton>
-        </IonSegment>
+        </IonFab> 
         {content}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton routerLink="createAction">
