@@ -70,9 +70,24 @@ Follow these instructions to set up Keycloak for Authentication/Authorization.
 2. Follow the printed instructions and copy the JSON configurations to the appropriate locations.
    The Starter app and server will read these configurations and the integration will be enabled when they are started.
 
-   By default, the two users that can log into the application are created:
-   - username: `developer`, password: `developer`
-   - username: `admin`, password: `admin`
+Volunteer accounts for logging to voulnteer app that can be used:
+
+```log
+hzaub	
+kudi
+msash
+tgers
+tmaure
+ukon
+wtrocki
+```
+
+Admin application user:
+
+`ovp-admin`
+
+The password is the same as the username.
+
 
 > NOTE: If you'd like to use demo data users and have them automatically imported in keycloak, run the keycloak init script as below: 
 ```shell
