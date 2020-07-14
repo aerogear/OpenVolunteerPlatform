@@ -1,6 +1,6 @@
 ---
 id: clientref
-title: Client Mobile and Admin Apps
+title: Mobile and Admin Apps
 ---
 # React Client
 
