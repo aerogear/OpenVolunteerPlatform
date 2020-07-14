@@ -45,11 +45,23 @@ yarn start
     🎮 Ionic PWA application available at http://localhost:4000
     🎮 Admin PWA application available at http://localhost:4000/admin
 ```
+Volunteer accounts for logging to voulnteer app that can be used:
 
-By default, two users that can log into the application are created.
+```log
+hzaub	
+kudi
+msash
+tgers
+tmaure
+ukon
+wtrocki
+```
 
-- username: `developer`, password: `developer`
-- username: `ovp-admin`, password: `ovp-admin`
+Admin application user:
+
+`ovp-admin`
+
+The password is the same as the username.
 
 Volunteers can register to the application in login screen
 
@@ -71,11 +83,6 @@ This command creates the necessary resources in Keycloak and prints instructions
 
 Follow the instructions and copy the JSON configurations to the appropriate locations.
 The  Starter app and server will read these configurations and the integration will be enabled when they are started.
-
-By default, two users that can log into the application are created.
-
-- username: `developer`, password: `developer`
-- username: `ovp-admin`, password: `ovp-admin`
 
 ### Running clients as Mobile Applications
 
