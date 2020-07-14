@@ -30,7 +30,7 @@ export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
   // return container with keycloak provider
   return (
     <AuthContext.Provider value={{ keycloak, profile: keycloak.profile }}>
-        <ApolloProvider client={apolloClient}>
+        <ApolloProvider client={apolloClient as any}>
           <App />
         </ApolloProvider>
     </AuthContext.Provider>
