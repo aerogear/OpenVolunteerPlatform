@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/react-hooks": "3.1.5",
-    "@capacitor/core": "2.2.1",
+    "@capacitor/core": "2.4.0",
     "@ionic/react": "5.0.7",
     "@ionic/react-router": "5.0.7",
     "apollo-client": "2.6.10",
@@ -55,7 +55,7 @@
     "uniforms": "v3.0.0-alpha.5"
   },
   "devDependencies": {
-    "@capacitor/cli": "2.2.1",
+    "@capacitor/cli": "2.4.0",
     "@graphql-codegen/add": "1.17.0",
     "@graphql-codegen/typescript": "1.17.0",
     "@graphql-codegen/typescript-operations": "1.17.0",
