@@ -1,6 +1,6 @@
 mutation assignVolunteers{
   assignVolunteers{
-    id
+    _id
     owner
     date
     numberOfVolunteersAssigned

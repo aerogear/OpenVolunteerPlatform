@@ -85,7 +85,7 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                   updateAction({
                     variables: {
                       input: {
-                        id: model.id,
+                        _id: model._id,
                         status: model.status,
                         assignedAt: model.status === ActionStatus.Assigned ? new Date(): undefined,
                         completedAt: model.status === ActionStatus.Completed ? new Date(): undefined

@@ -44,7 +44,7 @@ export const DistributionCentrePage: React.FC<RouteComponentProps> = ({ match })
           key={index}
           title={title}
           label={distributionCentre?.name!}
-          onClick={() => history.push(`/manageDistributionCentre/${distributionCentre?.id}`)}
+          onClick={() => history.push(`/manageDistributionCentre/${distributionCentre?._id}`)}
           position={{
             lat,
             lng

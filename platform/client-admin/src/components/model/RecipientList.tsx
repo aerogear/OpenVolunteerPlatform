@@ -15,7 +15,7 @@ export const RecipientList: React.FC<{ recipients: [RecipientFieldsFragment] }> 
       <IonList>
         {
           recipients.map((recipient: RecipientFieldsFragment) => {
-            return <Recipient key={recipient.id} recipient={recipient} />;
+            return <Recipient key={recipient._id} recipient={recipient} />;
           })
         }
       </IonList>

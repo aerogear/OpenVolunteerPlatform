@@ -24,7 +24,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
   const [updateVolunteerMutation] = useUpdateVolunteerMutation();
   const history = useHistory();
   
-  const createVolunteer = volunteer?.id === undefined;
+  const createVolunteer = volunteer?._id === undefined;
 
   if (!keycloak || !profile) return (
     <IonCard>
@@ -46,7 +46,7 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
       }).then(({ data }) => {
         setVolunteer({
           ...model, 
-          id: data?.createVolunteer?.id
+          _id: data?.createVolunteer?._id
         });
         history.push("/actions")
       }).catch((e: any) => {

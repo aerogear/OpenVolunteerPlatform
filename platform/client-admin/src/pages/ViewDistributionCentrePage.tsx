@@ -60,7 +60,7 @@ export const ViewDistributionCentrePage: React.FC<RouteComponentProps<IUpdateMat
                   updateDistributionCentre({
                     variables: {
                       input: {
-                        id: model.id,
+                        _id: model._id,
                         city: model.city,
                         lat: model.lat,
                         long: model.long,

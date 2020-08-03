@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] };
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -11,7 +12,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  DateTime: any;
+  GraphbackObjectID: string;
+  GraphbackDateTime: Date;
 };
 
 export enum ActionStatus {
@@ -35,16 +37,16 @@ export type BooleanInput = {
 };
 
 export type CreateDailyActionPlanInput = {
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['GraphbackObjectID']>;
   owner?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['DateTime']>;
+  date?: Maybe<Scalars['GraphbackDateTime']>;
   numberOfCasesCreated?: Maybe<Scalars['Int']>;
   numberOfVolunteersAssigned?: Maybe<Scalars['Int']>;
   numberOfRecipients?: Maybe<Scalars['Int']>;
 };
 
 export type CreateDistributionCentreInput = {
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['GraphbackObjectID']>;
   name?: Maybe<Scalars['String']>;
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
@@ -55,14 +57,14 @@ export type CreateDistributionCentreInput = {
 };
 
 export type CreateProductInput = {
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['GraphbackObjectID']>;
   label: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  distributionCentreId?: Maybe<Scalars['ID']>;
+  distributionCentreId?: Maybe<Scalars['GraphbackObjectID']>;
 };
 
 export type CreateRecipientInput = {
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['GraphbackObjectID']>;
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
@@ -78,26 +80,26 @@ export type CreateRecipientInput = {
 };
 
 export type CreateVolunteerActionInput = {
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['GraphbackObjectID']>;
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
-  assignedAt?: Maybe<Scalars['DateTime']>;
-  completedAt?: Maybe<Scalars['DateTime']>;
-  _createdAt?: Maybe<Scalars['DateTime']>;
-  volunteerId?: Maybe<Scalars['ID']>;
-  distributionCentreId?: Maybe<Scalars['ID']>;
-  recipientId?: Maybe<Scalars['ID']>;
+  assignedAt?: Maybe<Scalars['GraphbackDateTime']>;
+  completedAt?: Maybe<Scalars['GraphbackDateTime']>;
+  _createdAt?: Maybe<Scalars['GraphbackDateTime']>;
+  volunteerId?: Maybe<Scalars['GraphbackObjectID']>;
+  distributionCentreId?: Maybe<Scalars['GraphbackObjectID']>;
+  recipientId?: Maybe<Scalars['GraphbackObjectID']>;
 };
 
 export type CreateVolunteerActionProductInput = {
-  id?: Maybe<Scalars['ID']>;
-  productId?: Maybe<Scalars['ID']>;
-  volunteerActionId?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['GraphbackObjectID']>;
+  productId?: Maybe<Scalars['GraphbackObjectID']>;
+  volunteerActionId?: Maybe<Scalars['GraphbackObjectID']>;
 };
 
 export type CreateVolunteerInput = {
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['GraphbackObjectID']>;
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -106,7 +108,7 @@ export type CreateVolunteerInput = {
   address2?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
-  dateOfBirth?: Maybe<Scalars['DateTime']>;
+  dateOfBirth?: Maybe<Scalars['GraphbackDateTime']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
   actionsCompleted?: Maybe<Scalars['Int']>;
   actionsActive?: Maybe<Scalars['Int']>;
@@ -115,19 +117,19 @@ export type CreateVolunteerInput = {
 
 /**  @model  */
 export type DailyActionPlan = {
-   __typename?: 'DailyActionPlan';
-  id: Scalars['ID'];
+  __typename?: 'DailyActionPlan';
+  _id: Scalars['GraphbackObjectID'];
   owner?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['DateTime']>;
+  date?: Maybe<Scalars['GraphbackDateTime']>;
   numberOfCasesCreated?: Maybe<Scalars['Int']>;
   numberOfVolunteersAssigned?: Maybe<Scalars['Int']>;
   numberOfRecipients?: Maybe<Scalars['Int']>;
 };
 
 export type DailyActionPlanFilter = {
-  id?: Maybe<IdInput>;
+  _id?: Maybe<GraphbackObjectIdInput>;
   owner?: Maybe<StringInput>;
-  date?: Maybe<DateTimeInput>;
+  date?: Maybe<GraphbackDateTimeInput>;
   numberOfCasesCreated?: Maybe<IntInput>;
   numberOfVolunteersAssigned?: Maybe<IntInput>;
   numberOfRecipients?: Maybe<IntInput>;
@@ -137,29 +139,17 @@ export type DailyActionPlanFilter = {
 };
 
 export type DailyActionPlanResultList = {
-   __typename?: 'DailyActionPlanResultList';
+  __typename?: 'DailyActionPlanResultList';
   items: Array<Maybe<DailyActionPlan>>;
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   count?: Maybe<Scalars['Int']>;
 };
 
-
-export type DateTimeInput = {
-  ne?: Maybe<Scalars['DateTime']>;
-  eq?: Maybe<Scalars['DateTime']>;
-  le?: Maybe<Scalars['DateTime']>;
-  lt?: Maybe<Scalars['DateTime']>;
-  ge?: Maybe<Scalars['DateTime']>;
-  gt?: Maybe<Scalars['DateTime']>;
-  in?: Maybe<Array<Scalars['DateTime']>>;
-  between?: Maybe<Array<Scalars['DateTime']>>;
-};
-
 /** @model(delete: false) */
 export type DistributionCentre = Address & {
-   __typename?: 'DistributionCentre';
-  id: Scalars['ID'];
+  __typename?: 'DistributionCentre';
+  _id: Scalars['GraphbackObjectID'];
   name?: Maybe<Scalars['String']>;
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
@@ -186,7 +176,7 @@ export type DistributionCentreActionsArgs = {
 };
 
 export type DistributionCentreFilter = {
-  id?: Maybe<IdInput>;
+  _id?: Maybe<GraphbackObjectIdInput>;
   name?: Maybe<StringInput>;
   address1?: Maybe<StringInput>;
   address2?: Maybe<StringInput>;
@@ -200,7 +190,7 @@ export type DistributionCentreFilter = {
 };
 
 export type DistributionCentreResultList = {
-   __typename?: 'DistributionCentreResultList';
+  __typename?: 'DistributionCentreResultList';
   items: Array<Maybe<DistributionCentre>>;
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
@@ -218,14 +208,28 @@ export type FloatInput = {
   between?: Maybe<Array<Scalars['Float']>>;
 };
 
-export type IdInput = {
-  ne?: Maybe<Scalars['ID']>;
-  eq?: Maybe<Scalars['ID']>;
-  le?: Maybe<Scalars['ID']>;
-  lt?: Maybe<Scalars['ID']>;
-  ge?: Maybe<Scalars['ID']>;
-  gt?: Maybe<Scalars['ID']>;
-  in?: Maybe<Array<Scalars['ID']>>;
+
+export type GraphbackDateTimeInput = {
+  ne?: Maybe<Scalars['GraphbackDateTime']>;
+  eq?: Maybe<Scalars['GraphbackDateTime']>;
+  le?: Maybe<Scalars['GraphbackDateTime']>;
+  lt?: Maybe<Scalars['GraphbackDateTime']>;
+  ge?: Maybe<Scalars['GraphbackDateTime']>;
+  gt?: Maybe<Scalars['GraphbackDateTime']>;
+  in?: Maybe<Array<Scalars['GraphbackDateTime']>>;
+  between?: Maybe<Array<Scalars['GraphbackDateTime']>>;
+};
+
+
+export type GraphbackObjectIdInput = {
+  ne?: Maybe<Scalars['GraphbackObjectID']>;
+  eq?: Maybe<Scalars['GraphbackObjectID']>;
+  le?: Maybe<Scalars['GraphbackObjectID']>;
+  lt?: Maybe<Scalars['GraphbackObjectID']>;
+  ge?: Maybe<Scalars['GraphbackObjectID']>;
+  gt?: Maybe<Scalars['GraphbackObjectID']>;
+  in?: Maybe<Array<Scalars['GraphbackObjectID']>>;
+  between?: Maybe<Array<Scalars['GraphbackObjectID']>>;
 };
 
 export type IntInput = {
@@ -240,16 +244,16 @@ export type IntInput = {
 };
 
 export type MutateDailyActionPlanInput = {
-  id: Scalars['ID'];
+  _id: Scalars['GraphbackObjectID'];
   owner?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['DateTime']>;
+  date?: Maybe<Scalars['GraphbackDateTime']>;
   numberOfCasesCreated?: Maybe<Scalars['Int']>;
   numberOfVolunteersAssigned?: Maybe<Scalars['Int']>;
   numberOfRecipients?: Maybe<Scalars['Int']>;
 };
 
 export type MutateDistributionCentreInput = {
-  id: Scalars['ID'];
+  _id: Scalars['GraphbackObjectID'];
   name?: Maybe<Scalars['String']>;
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
@@ -260,14 +264,14 @@ export type MutateDistributionCentreInput = {
 };
 
 export type MutateProductInput = {
-  id: Scalars['ID'];
+  _id: Scalars['GraphbackObjectID'];
   label?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
-  distributionCentreId?: Maybe<Scalars['ID']>;
+  distributionCentreId?: Maybe<Scalars['GraphbackObjectID']>;
 };
 
 export type MutateRecipientInput = {
-  id: Scalars['ID'];
+  _id: Scalars['GraphbackObjectID'];
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
@@ -283,20 +287,20 @@ export type MutateRecipientInput = {
 };
 
 export type MutateVolunteerActionInput = {
-  id: Scalars['ID'];
+  _id: Scalars['GraphbackObjectID'];
   title?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
-  assignedAt?: Maybe<Scalars['DateTime']>;
-  completedAt?: Maybe<Scalars['DateTime']>;
-  _createdAt?: Maybe<Scalars['DateTime']>;
-  volunteerId?: Maybe<Scalars['ID']>;
-  distributionCentreId?: Maybe<Scalars['ID']>;
-  recipientId?: Maybe<Scalars['ID']>;
+  assignedAt?: Maybe<Scalars['GraphbackDateTime']>;
+  completedAt?: Maybe<Scalars['GraphbackDateTime']>;
+  _createdAt?: Maybe<Scalars['GraphbackDateTime']>;
+  volunteerId?: Maybe<Scalars['GraphbackObjectID']>;
+  distributionCentreId?: Maybe<Scalars['GraphbackObjectID']>;
+  recipientId?: Maybe<Scalars['GraphbackObjectID']>;
 };
 
 export type MutateVolunteerInput = {
-  id: Scalars['ID'];
+  _id: Scalars['GraphbackObjectID'];
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -305,7 +309,7 @@ export type MutateVolunteerInput = {
   address2?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
-  dateOfBirth?: Maybe<Scalars['DateTime']>;
+  dateOfBirth?: Maybe<Scalars['GraphbackDateTime']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
   actionsCompleted?: Maybe<Scalars['Int']>;
   actionsActive?: Maybe<Scalars['Int']>;
@@ -313,7 +317,7 @@ export type MutateVolunteerInput = {
 };
 
 export type Mutation = {
-   __typename?: 'Mutation';
+  __typename?: 'Mutation';
   /** Automatically create actions for the day of the month specified */
   assignVolunteers?: Maybe<DailyActionPlan>;
   createDailyActionPlan?: Maybe<DailyActionPlan>;
@@ -408,8 +412,8 @@ export type PageRequest = {
 
 /** @model(delete: false) */
 export type Product = {
-   __typename?: 'Product';
-  id: Scalars['ID'];
+  __typename?: 'Product';
+  _id: Scalars['GraphbackObjectID'];
   label: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   /** @oneToMany(field: 'product', key: 'productId') */
@@ -425,17 +429,17 @@ export type ProductVolunteerActionProductsArgs = {
 };
 
 export type ProductFilter = {
-  id?: Maybe<IdInput>;
+  _id?: Maybe<GraphbackObjectIdInput>;
   label?: Maybe<StringInput>;
   description?: Maybe<StringInput>;
-  distributionCentreId?: Maybe<IdInput>;
+  distributionCentreId?: Maybe<GraphbackObjectIdInput>;
   and?: Maybe<Array<ProductFilter>>;
   or?: Maybe<Array<ProductFilter>>;
   not?: Maybe<ProductFilter>;
 };
 
 export type ProductResultList = {
-   __typename?: 'ProductResultList';
+  __typename?: 'ProductResultList';
   items: Array<Maybe<Product>>;
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
@@ -443,7 +447,7 @@ export type ProductResultList = {
 };
 
 export type Query = {
-   __typename?: 'Query';
+  __typename?: 'Query';
   getDailyActionPlan?: Maybe<DailyActionPlan>;
   findDailyActionPlans: DailyActionPlanResultList;
   getDistributionCentre?: Maybe<DistributionCentre>;
@@ -462,7 +466,7 @@ export type Query = {
 
 
 export type QueryGetDailyActionPlanArgs = {
-  id: Scalars['ID'];
+  id: Scalars['GraphbackObjectID'];
 };
 
 
@@ -474,7 +478,7 @@ export type QueryFindDailyActionPlansArgs = {
 
 
 export type QueryGetDistributionCentreArgs = {
-  id: Scalars['ID'];
+  id: Scalars['GraphbackObjectID'];
 };
 
 
@@ -486,7 +490,7 @@ export type QueryFindDistributionCentresArgs = {
 
 
 export type QueryGetProductArgs = {
-  id: Scalars['ID'];
+  id: Scalars['GraphbackObjectID'];
 };
 
 
@@ -498,7 +502,7 @@ export type QueryFindProductsArgs = {
 
 
 export type QueryGetVolunteerActionProductArgs = {
-  id: Scalars['ID'];
+  id: Scalars['GraphbackObjectID'];
 };
 
 
@@ -510,7 +514,7 @@ export type QueryFindVolunteerActionProductsArgs = {
 
 
 export type QueryGetVolunteerArgs = {
-  id: Scalars['ID'];
+  id: Scalars['GraphbackObjectID'];
 };
 
 
@@ -522,7 +526,7 @@ export type QueryFindVolunteersArgs = {
 
 
 export type QueryGetVolunteerActionArgs = {
-  id: Scalars['ID'];
+  id: Scalars['GraphbackObjectID'];
 };
 
 
@@ -534,7 +538,7 @@ export type QueryFindVolunteerActionsArgs = {
 
 
 export type QueryGetRecipientArgs = {
-  id: Scalars['ID'];
+  id: Scalars['GraphbackObjectID'];
 };
 
 
@@ -546,8 +550,8 @@ export type QueryFindRecipientsArgs = {
 
 /** @model(delete: false) */
 export type Recipient = Address & {
-   __typename?: 'Recipient';
-  id: Scalars['ID'];
+  __typename?: 'Recipient';
+  _id: Scalars['GraphbackObjectID'];
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
@@ -575,7 +579,7 @@ export type RecipientActionsArgs = {
 };
 
 export type RecipientFilter = {
-  id?: Maybe<IdInput>;
+  _id?: Maybe<GraphbackObjectIdInput>;
   firstName?: Maybe<StringInput>;
   lastName?: Maybe<StringInput>;
   phone?: Maybe<StringInput>;
@@ -594,7 +598,7 @@ export type RecipientFilter = {
 };
 
 export type RecipientResultList = {
-   __typename?: 'RecipientResultList';
+  __typename?: 'RecipientResultList';
   items: Array<Maybe<Recipient>>;
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
@@ -621,8 +625,8 @@ export type StringInput = {
 
 /** @model(delete: false) */
 export type Volunteer = {
-   __typename?: 'Volunteer';
-  id: Scalars['ID'];
+  __typename?: 'Volunteer';
+  _id: Scalars['GraphbackObjectID'];
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -631,7 +635,7 @@ export type Volunteer = {
   address2?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   postcode?: Maybe<Scalars['Int']>;
-  dateOfBirth?: Maybe<Scalars['DateTime']>;
+  dateOfBirth?: Maybe<Scalars['GraphbackDateTime']>;
   canDeliver?: Maybe<Scalars['Boolean']>;
   actionsCompleted?: Maybe<Scalars['Int']>;
   actionsActive?: Maybe<Scalars['Int']>;
@@ -652,14 +656,14 @@ export type VolunteerActionsArgs = {
  * @model
  */
 export type VolunteerAction = {
-   __typename?: 'VolunteerAction';
-  id: Scalars['ID'];
+  __typename?: 'VolunteerAction';
+  _id: Scalars['GraphbackObjectID'];
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
-  assignedAt?: Maybe<Scalars['DateTime']>;
-  completedAt?: Maybe<Scalars['DateTime']>;
-  _createdAt?: Maybe<Scalars['DateTime']>;
+  assignedAt?: Maybe<Scalars['GraphbackDateTime']>;
+  completedAt?: Maybe<Scalars['GraphbackDateTime']>;
+  _createdAt?: Maybe<Scalars['GraphbackDateTime']>;
   /** @manyToOne(field: 'actions', key: 'volunteerId') */
   volunteer?: Maybe<Volunteer>;
   /** @manyToOne(field: 'actions', key: 'distributionCentreId') */
@@ -681,16 +685,16 @@ export type VolunteerActionProductsArgs = {
 };
 
 export type VolunteerActionFilter = {
-  id?: Maybe<IdInput>;
+  _id?: Maybe<GraphbackObjectIdInput>;
   title?: Maybe<StringInput>;
   description?: Maybe<StringInput>;
   status?: Maybe<StringInput>;
-  assignedAt?: Maybe<DateTimeInput>;
-  completedAt?: Maybe<DateTimeInput>;
-  _createdAt?: Maybe<DateTimeInput>;
-  volunteerId?: Maybe<IdInput>;
-  distributionCentreId?: Maybe<IdInput>;
-  recipientId?: Maybe<IdInput>;
+  assignedAt?: Maybe<GraphbackDateTimeInput>;
+  completedAt?: Maybe<GraphbackDateTimeInput>;
+  _createdAt?: Maybe<GraphbackDateTimeInput>;
+  volunteerId?: Maybe<GraphbackObjectIdInput>;
+  distributionCentreId?: Maybe<GraphbackObjectIdInput>;
+  recipientId?: Maybe<GraphbackObjectIdInput>;
   and?: Maybe<Array<VolunteerActionFilter>>;
   or?: Maybe<Array<VolunteerActionFilter>>;
   not?: Maybe<VolunteerActionFilter>;
@@ -702,8 +706,8 @@ export type VolunteerActionFilter = {
  * @model(create: true, update: false, delete: false, subCreate: false, subUpdate: false, subDelete: false)
  */
 export type VolunteerActionProduct = {
-   __typename?: 'VolunteerActionProduct';
-  id: Scalars['ID'];
+  __typename?: 'VolunteerActionProduct';
+  _id: Scalars['GraphbackObjectID'];
   /** @manyToOne(field: 'volunteerActionProducts', key: 'productId') */
   product?: Maybe<Product>;
   /** @manyToOne(field: 'products', key: 'volunteerActionId') */
@@ -711,16 +715,16 @@ export type VolunteerActionProduct = {
 };
 
 export type VolunteerActionProductFilter = {
-  id?: Maybe<IdInput>;
-  productId?: Maybe<IdInput>;
-  volunteerActionId?: Maybe<IdInput>;
+  _id?: Maybe<GraphbackObjectIdInput>;
+  productId?: Maybe<GraphbackObjectIdInput>;
+  volunteerActionId?: Maybe<GraphbackObjectIdInput>;
   and?: Maybe<Array<VolunteerActionProductFilter>>;
   or?: Maybe<Array<VolunteerActionProductFilter>>;
   not?: Maybe<VolunteerActionProductFilter>;
 };
 
 export type VolunteerActionProductResultList = {
-   __typename?: 'VolunteerActionProductResultList';
+  __typename?: 'VolunteerActionProductResultList';
   items: Array<Maybe<VolunteerActionProduct>>;
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
@@ -728,7 +732,7 @@ export type VolunteerActionProductResultList = {
 };
 
 export type VolunteerActionResultList = {
-   __typename?: 'VolunteerActionResultList';
+  __typename?: 'VolunteerActionResultList';
   items: Array<Maybe<VolunteerAction>>;
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
@@ -736,7 +740,7 @@ export type VolunteerActionResultList = {
 };
 
 export type VolunteerFilter = {
-  id?: Maybe<IdInput>;
+  _id?: Maybe<GraphbackObjectIdInput>;
   firstName?: Maybe<StringInput>;
   lastName?: Maybe<StringInput>;
   email?: Maybe<StringInput>;
@@ -745,7 +749,7 @@ export type VolunteerFilter = {
   address2?: Maybe<StringInput>;
   city?: Maybe<StringInput>;
   postcode?: Maybe<IntInput>;
-  dateOfBirth?: Maybe<DateTimeInput>;
+  dateOfBirth?: Maybe<GraphbackDateTimeInput>;
   canDeliver?: Maybe<BooleanInput>;
   actionsCompleted?: Maybe<IntInput>;
   actionsActive?: Maybe<IntInput>;
@@ -756,7 +760,7 @@ export type VolunteerFilter = {
 };
 
 export type VolunteerResultList = {
-   __typename?: 'VolunteerResultList';
+  __typename?: 'VolunteerResultList';
   items: Array<Maybe<Volunteer>>;
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
@@ -765,121 +769,121 @@ export type VolunteerResultList = {
 
 export type DailyActionPlanFieldsFragment = (
   { __typename?: 'DailyActionPlan' }
-  & Pick<DailyActionPlan, 'id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned' | 'numberOfRecipients'>
+  & Pick<DailyActionPlan, '_id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned' | 'numberOfRecipients'>
 );
 
 export type DailyActionPlanExpandedFieldsFragment = (
   { __typename?: 'DailyActionPlan' }
-  & Pick<DailyActionPlan, 'id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned' | 'numberOfRecipients'>
+  & Pick<DailyActionPlan, '_id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned' | 'numberOfRecipients'>
 );
 
 export type DistributionCentreFieldsFragment = (
   { __typename?: 'DistributionCentre' }
-  & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
+  & Pick<DistributionCentre, '_id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
 );
 
 export type DistributionCentreExpandedFieldsFragment = (
   { __typename?: 'DistributionCentre' }
-  & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
+  & Pick<DistributionCentre, '_id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
   & { products?: Maybe<Array<Maybe<(
     { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'label' | 'description'>
+    & Pick<Product, '_id' | 'label' | 'description'>
   )>>>, actions: Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
+    & Pick<VolunteerAction, '_id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
   )>> }
 );
 
 export type ProductFieldsFragment = (
   { __typename?: 'Product' }
-  & Pick<Product, 'id' | 'label' | 'description'>
+  & Pick<Product, '_id' | 'label' | 'description'>
 );
 
 export type ProductExpandedFieldsFragment = (
   { __typename?: 'Product' }
-  & Pick<Product, 'id' | 'label' | 'description'>
+  & Pick<Product, '_id' | 'label' | 'description'>
   & { volunteerActionProducts?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerActionProduct' }
-    & Pick<VolunteerActionProduct, 'id'>
+    & Pick<VolunteerActionProduct, '_id'>
   )>>>, distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
-    & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
+    & Pick<DistributionCentre, '_id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
   )> }
 );
 
 export type VolunteerActionProductFieldsFragment = (
   { __typename?: 'VolunteerActionProduct' }
-  & Pick<VolunteerActionProduct, 'id'>
+  & Pick<VolunteerActionProduct, '_id'>
 );
 
 export type VolunteerActionProductExpandedFieldsFragment = (
   { __typename?: 'VolunteerActionProduct' }
-  & Pick<VolunteerActionProduct, 'id'>
+  & Pick<VolunteerActionProduct, '_id'>
   & { product?: Maybe<(
     { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'label' | 'description'>
+    & Pick<Product, '_id' | 'label' | 'description'>
   )>, volunteerAction?: Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
+    & Pick<VolunteerAction, '_id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
   )> }
 );
 
 export type VolunteerActionFieldsFragment = (
   { __typename?: 'VolunteerAction' }
-  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
+  & Pick<VolunteerAction, '_id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
 );
 
 export type VolunteerActionExpandedFieldsFragment = (
   { __typename?: 'VolunteerAction' }
-  & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
+  & Pick<VolunteerAction, '_id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
   & { volunteer?: Maybe<(
     { __typename?: 'Volunteer' }
-    & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'actionsActive' | 'active'>
+    & Pick<Volunteer, '_id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'actionsActive' | 'active'>
   )>, distributionCentre?: Maybe<(
     { __typename?: 'DistributionCentre' }
-    & Pick<DistributionCentre, 'id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
+    & Pick<DistributionCentre, '_id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
   )>, products?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerActionProduct' }
-    & Pick<VolunteerActionProduct, 'id'>
+    & Pick<VolunteerActionProduct, '_id'>
   )>>>, recipient?: Maybe<(
     { __typename?: 'Recipient' }
-    & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'actionsCompleted' | 'deliveryDays' | 'prefferedProducts'>
+    & Pick<Recipient, '_id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'actionsCompleted' | 'deliveryDays' | 'prefferedProducts'>
   )> }
 );
 
 export type VolunteerFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'actionsActive' | 'active'>
+  & Pick<Volunteer, '_id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'actionsActive' | 'active'>
 );
 
 export type VolunteerExpandedFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'actionsActive' | 'active'>
+  & Pick<Volunteer, '_id' | 'firstName' | 'lastName' | 'email' | 'username' | 'address1' | 'address2' | 'city' | 'postcode' | 'dateOfBirth' | 'canDeliver' | 'actionsCompleted' | 'actionsActive' | 'active'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
+    & Pick<VolunteerAction, '_id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
   )>>> }
 );
 
 export type RecipientFieldsFragment = (
   { __typename?: 'Recipient' }
-  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'actionsCompleted' | 'deliveryDays' | 'prefferedProducts'>
+  & Pick<Recipient, '_id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'actionsCompleted' | 'deliveryDays' | 'prefferedProducts'>
 );
 
 export type RecipientExpandedFieldsFragment = (
   { __typename?: 'Recipient' }
-  & Pick<Recipient, 'id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'actionsCompleted' | 'deliveryDays' | 'prefferedProducts'>
+  & Pick<Recipient, '_id' | 'firstName' | 'lastName' | 'phone' | 'address1' | 'address2' | 'postcode' | 'city' | 'lat' | 'long' | 'actionsCompleted' | 'deliveryDays' | 'prefferedProducts'>
   & { actions?: Maybe<Array<Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
+    & Pick<VolunteerAction, '_id' | 'title' | 'description' | 'status' | 'assignedAt' | 'completedAt' | '_createdAt'>
   )>>> }
 );
 
-export type FindDailyActionPlansQueryVariables = {
+export type FindDailyActionPlansQueryVariables = Exact<{
   filter?: Maybe<DailyActionPlanFilter>;
   page?: Maybe<PageRequest>;
   orderBy?: Maybe<OrderByInput>;
-};
+}>;
 
 
 export type FindDailyActionPlansQuery = (
@@ -894,9 +898,9 @@ export type FindDailyActionPlansQuery = (
   ) }
 );
 
-export type GetDailyActionPlanQueryVariables = {
-  id: Scalars['ID'];
-};
+export type GetDailyActionPlanQueryVariables = Exact<{
+  id: Scalars['GraphbackObjectID'];
+}>;
 
 
 export type GetDailyActionPlanQuery = (
@@ -907,11 +911,11 @@ export type GetDailyActionPlanQuery = (
   )> }
 );
 
-export type FindDistributionCentresQueryVariables = {
+export type FindDistributionCentresQueryVariables = Exact<{
   filter?: Maybe<DistributionCentreFilter>;
   page?: Maybe<PageRequest>;
   orderBy?: Maybe<OrderByInput>;
-};
+}>;
 
 
 export type FindDistributionCentresQuery = (
@@ -926,9 +930,9 @@ export type FindDistributionCentresQuery = (
   ) }
 );
 
-export type GetDistributionCentreQueryVariables = {
-  id: Scalars['ID'];
-};
+export type GetDistributionCentreQueryVariables = Exact<{
+  id: Scalars['GraphbackObjectID'];
+}>;
 
 
 export type GetDistributionCentreQuery = (
@@ -939,11 +943,11 @@ export type GetDistributionCentreQuery = (
   )> }
 );
 
-export type FindProductsQueryVariables = {
+export type FindProductsQueryVariables = Exact<{
   filter?: Maybe<ProductFilter>;
   page?: Maybe<PageRequest>;
   orderBy?: Maybe<OrderByInput>;
-};
+}>;
 
 
 export type FindProductsQuery = (
@@ -958,9 +962,9 @@ export type FindProductsQuery = (
   ) }
 );
 
-export type GetProductQueryVariables = {
-  id: Scalars['ID'];
-};
+export type GetProductQueryVariables = Exact<{
+  id: Scalars['GraphbackObjectID'];
+}>;
 
 
 export type GetProductQuery = (
@@ -971,11 +975,11 @@ export type GetProductQuery = (
   )> }
 );
 
-export type FindVolunteerActionProductsQueryVariables = {
+export type FindVolunteerActionProductsQueryVariables = Exact<{
   filter?: Maybe<VolunteerActionProductFilter>;
   page?: Maybe<PageRequest>;
   orderBy?: Maybe<OrderByInput>;
-};
+}>;
 
 
 export type FindVolunteerActionProductsQuery = (
@@ -990,9 +994,9 @@ export type FindVolunteerActionProductsQuery = (
   ) }
 );
 
-export type GetVolunteerActionProductQueryVariables = {
-  id: Scalars['ID'];
-};
+export type GetVolunteerActionProductQueryVariables = Exact<{
+  id: Scalars['GraphbackObjectID'];
+}>;
 
 
 export type GetVolunteerActionProductQuery = (
@@ -1003,11 +1007,11 @@ export type GetVolunteerActionProductQuery = (
   )> }
 );
 
-export type FindVolunteerActionsQueryVariables = {
+export type FindVolunteerActionsQueryVariables = Exact<{
   filter?: Maybe<VolunteerActionFilter>;
   page?: Maybe<PageRequest>;
   orderBy?: Maybe<OrderByInput>;
-};
+}>;
 
 
 export type FindVolunteerActionsQuery = (
@@ -1022,9 +1026,9 @@ export type FindVolunteerActionsQuery = (
   ) }
 );
 
-export type GetVolunteerActionQueryVariables = {
-  id: Scalars['ID'];
-};
+export type GetVolunteerActionQueryVariables = Exact<{
+  id: Scalars['GraphbackObjectID'];
+}>;
 
 
 export type GetVolunteerActionQuery = (
@@ -1035,11 +1039,11 @@ export type GetVolunteerActionQuery = (
   )> }
 );
 
-export type FindVolunteersQueryVariables = {
+export type FindVolunteersQueryVariables = Exact<{
   filter?: Maybe<VolunteerFilter>;
   page?: Maybe<PageRequest>;
   orderBy?: Maybe<OrderByInput>;
-};
+}>;
 
 
 export type FindVolunteersQuery = (
@@ -1054,9 +1058,9 @@ export type FindVolunteersQuery = (
   ) }
 );
 
-export type GetVolunteerQueryVariables = {
-  id: Scalars['ID'];
-};
+export type GetVolunteerQueryVariables = Exact<{
+  id: Scalars['GraphbackObjectID'];
+}>;
 
 
 export type GetVolunteerQuery = (
@@ -1067,11 +1071,11 @@ export type GetVolunteerQuery = (
   )> }
 );
 
-export type FindRecipientsQueryVariables = {
+export type FindRecipientsQueryVariables = Exact<{
   filter?: Maybe<RecipientFilter>;
   page?: Maybe<PageRequest>;
   orderBy?: Maybe<OrderByInput>;
-};
+}>;
 
 
 export type FindRecipientsQuery = (
@@ -1086,9 +1090,9 @@ export type FindRecipientsQuery = (
   ) }
 );
 
-export type GetRecipientQueryVariables = {
-  id: Scalars['ID'];
-};
+export type GetRecipientQueryVariables = Exact<{
+  id: Scalars['GraphbackObjectID'];
+}>;
 
 
 export type GetRecipientQuery = (
@@ -1099,9 +1103,9 @@ export type GetRecipientQuery = (
   )> }
 );
 
-export type CreateDailyActionPlanMutationVariables = {
+export type CreateDailyActionPlanMutationVariables = Exact<{
   input: CreateDailyActionPlanInput;
-};
+}>;
 
 
 export type CreateDailyActionPlanMutation = (
@@ -1112,9 +1116,9 @@ export type CreateDailyActionPlanMutation = (
   )> }
 );
 
-export type UpdateDailyActionPlanMutationVariables = {
+export type UpdateDailyActionPlanMutationVariables = Exact<{
   input: MutateDailyActionPlanInput;
-};
+}>;
 
 
 export type UpdateDailyActionPlanMutation = (
@@ -1125,9 +1129,9 @@ export type UpdateDailyActionPlanMutation = (
   )> }
 );
 
-export type CreateDistributionCentreMutationVariables = {
+export type CreateDistributionCentreMutationVariables = Exact<{
   input: CreateDistributionCentreInput;
-};
+}>;
 
 
 export type CreateDistributionCentreMutation = (
@@ -1138,9 +1142,9 @@ export type CreateDistributionCentreMutation = (
   )> }
 );
 
-export type UpdateDistributionCentreMutationVariables = {
+export type UpdateDistributionCentreMutationVariables = Exact<{
   input: MutateDistributionCentreInput;
-};
+}>;
 
 
 export type UpdateDistributionCentreMutation = (
@@ -1151,9 +1155,9 @@ export type UpdateDistributionCentreMutation = (
   )> }
 );
 
-export type CreateProductMutationVariables = {
+export type CreateProductMutationVariables = Exact<{
   input: CreateProductInput;
-};
+}>;
 
 
 export type CreateProductMutation = (
@@ -1164,9 +1168,9 @@ export type CreateProductMutation = (
   )> }
 );
 
-export type UpdateProductMutationVariables = {
+export type UpdateProductMutationVariables = Exact<{
   input: MutateProductInput;
-};
+}>;
 
 
 export type UpdateProductMutation = (
@@ -1177,9 +1181,9 @@ export type UpdateProductMutation = (
   )> }
 );
 
-export type CreateVolunteerActionProductMutationVariables = {
+export type CreateVolunteerActionProductMutationVariables = Exact<{
   input: CreateVolunteerActionProductInput;
-};
+}>;
 
 
 export type CreateVolunteerActionProductMutation = (
@@ -1190,9 +1194,9 @@ export type CreateVolunteerActionProductMutation = (
   )> }
 );
 
-export type CreateVolunteerActionMutationVariables = {
+export type CreateVolunteerActionMutationVariables = Exact<{
   input: CreateVolunteerActionInput;
-};
+}>;
 
 
 export type CreateVolunteerActionMutation = (
@@ -1203,9 +1207,9 @@ export type CreateVolunteerActionMutation = (
   )> }
 );
 
-export type UpdateVolunteerActionMutationVariables = {
+export type UpdateVolunteerActionMutationVariables = Exact<{
   input: MutateVolunteerActionInput;
-};
+}>;
 
 
 export type UpdateVolunteerActionMutation = (
@@ -1216,9 +1220,9 @@ export type UpdateVolunteerActionMutation = (
   )> }
 );
 
-export type CreateVolunteerMutationVariables = {
+export type CreateVolunteerMutationVariables = Exact<{
   input: CreateVolunteerInput;
-};
+}>;
 
 
 export type CreateVolunteerMutation = (
@@ -1229,9 +1233,9 @@ export type CreateVolunteerMutation = (
   )> }
 );
 
-export type UpdateVolunteerMutationVariables = {
+export type UpdateVolunteerMutationVariables = Exact<{
   input: MutateVolunteerInput;
-};
+}>;
 
 
 export type UpdateVolunteerMutation = (
@@ -1242,9 +1246,9 @@ export type UpdateVolunteerMutation = (
   )> }
 );
 
-export type CreateRecipientMutationVariables = {
+export type CreateRecipientMutationVariables = Exact<{
   input: CreateRecipientInput;
-};
+}>;
 
 
 export type CreateRecipientMutation = (
@@ -1255,9 +1259,9 @@ export type CreateRecipientMutation = (
   )> }
 );
 
-export type UpdateRecipientMutationVariables = {
+export type UpdateRecipientMutationVariables = Exact<{
   input: MutateRecipientInput;
-};
+}>;
 
 
 export type UpdateRecipientMutation = (
@@ -1268,21 +1272,21 @@ export type UpdateRecipientMutation = (
   )> }
 );
 
-export type AssignVolunteersMutationVariables = {};
+export type AssignVolunteersMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AssignVolunteersMutation = (
   { __typename?: 'Mutation' }
   & { assignVolunteers?: Maybe<(
     { __typename?: 'DailyActionPlan' }
-    & Pick<DailyActionPlan, 'id' | 'owner' | 'date' | 'numberOfVolunteersAssigned' | 'numberOfCasesCreated' | 'numberOfRecipients'>
+    & Pick<DailyActionPlan, '_id' | 'owner' | 'date' | 'numberOfVolunteersAssigned' | 'numberOfCasesCreated' | 'numberOfRecipients'>
   )> }
 );
 
-export type FindFlatDistributionCentresQueryVariables = {
+export type FindFlatDistributionCentresQueryVariables = Exact<{
   page?: Maybe<PageRequest>;
   orderBy?: Maybe<OrderByInput>;
-};
+}>;
 
 
 export type FindFlatDistributionCentresQuery = (
@@ -1297,10 +1301,10 @@ export type FindFlatDistributionCentresQuery = (
   ) }
 );
 
-export type FindIdAndNamesOfAllDistributionCentresQueryVariables = {
+export type FindIdAndNamesOfAllDistributionCentresQueryVariables = Exact<{
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-};
+}>;
 
 
 export type FindIdAndNamesOfAllDistributionCentresQuery = (
@@ -1309,14 +1313,14 @@ export type FindIdAndNamesOfAllDistributionCentresQuery = (
     { __typename?: 'DistributionCentreResultList' }
     & { items: Array<Maybe<(
       { __typename?: 'DistributionCentre' }
-      & Pick<DistributionCentre, 'id' | 'name'>
+      & Pick<DistributionCentre, '_id' | 'name'>
     )>> }
   ) }
 );
 
-export type FindActiveVolunteerQueryVariables = {
+export type FindActiveVolunteerQueryVariables = Exact<{
   username: Scalars['String'];
-};
+}>;
 
 
 export type FindActiveVolunteerQuery = (
@@ -1330,16 +1334,16 @@ export type FindActiveVolunteerQuery = (
   ) }
 );
 
-export type FindVolunteerActionDetailsQueryVariables = {
-  id: Scalars['ID'];
-};
+export type FindVolunteerActionDetailsQueryVariables = Exact<{
+  id: Scalars['GraphbackObjectID'];
+}>;
 
 
 export type FindVolunteerActionDetailsQuery = (
   { __typename?: 'Query' }
   & { getVolunteerAction?: Maybe<(
     { __typename?: 'VolunteerAction' }
-    & Pick<VolunteerAction, 'id' | 'title' | 'description' | 'status'>
+    & Pick<VolunteerAction, '_id' | 'title' | 'description' | 'status'>
     & { distributionCentre?: Maybe<(
       { __typename?: 'DistributionCentre' }
       & DistributionCentreFieldsFragment
@@ -1351,7 +1355,7 @@ export type FindVolunteerActionDetailsQuery = (
       & VolunteerFieldsFragment
     )>, products?: Maybe<Array<Maybe<(
       { __typename?: 'VolunteerActionProduct' }
-      & Pick<VolunteerActionProduct, 'id'>
+      & Pick<VolunteerActionProduct, '_id'>
       & { product?: Maybe<(
         { __typename?: 'Product' }
         & ProductFieldsFragment
@@ -1360,12 +1364,12 @@ export type FindVolunteerActionDetailsQuery = (
   )> }
 );
 
-export type GetTodayActionReportQueryVariables = {
-  todayMidnight?: Maybe<Scalars['DateTime']>;
-  tomorrowMidnight?: Maybe<Scalars['DateTime']>;
+export type GetTodayActionReportQueryVariables = Exact<{
+  todayMidnight?: Maybe<Scalars['GraphbackDateTime']>;
+  tomorrowMidnight?: Maybe<Scalars['GraphbackDateTime']>;
   lat?: Maybe<Array<Scalars['Float']>>;
   long?: Maybe<Array<Scalars['Float']>>;
-};
+}>;
 
 
 export type GetTodayActionReportQuery = (
@@ -1440,7 +1444,7 @@ export type GetTodayActionReportQuery = (
     { __typename?: 'RecipientResultList' }
     & { items: Array<Maybe<(
       { __typename?: 'Recipient' }
-      & Pick<Recipient, 'id'>
+      & Pick<Recipient, '_id'>
       & { actions?: Maybe<Array<Maybe<(
         { __typename?: 'VolunteerAction' }
         & VolunteerActionFieldsFragment
@@ -1450,7 +1454,7 @@ export type GetTodayActionReportQuery = (
     { __typename?: 'RecipientResultList' }
     & { items: Array<Maybe<(
       { __typename?: 'Recipient' }
-      & Pick<Recipient, 'id'>
+      & Pick<Recipient, '_id'>
       & { actions?: Maybe<Array<Maybe<(
         { __typename?: 'VolunteerAction' }
         & VolunteerActionFieldsFragment
@@ -1460,7 +1464,7 @@ export type GetTodayActionReportQuery = (
     { __typename?: 'RecipientResultList' }
     & { items: Array<Maybe<(
       { __typename?: 'Recipient' }
-      & Pick<Recipient, 'id'>
+      & Pick<Recipient, '_id'>
       & { actions?: Maybe<Array<Maybe<(
         { __typename?: 'VolunteerAction' }
         & VolunteerActionFieldsFragment
@@ -1471,7 +1475,7 @@ export type GetTodayActionReportQuery = (
 
 export const DailyActionPlanFieldsFragmentDoc = gql`
     fragment DailyActionPlanFields on DailyActionPlan {
-  id
+  _id
   owner
   date
   numberOfCasesCreated
@@ -1481,7 +1485,7 @@ export const DailyActionPlanFieldsFragmentDoc = gql`
     `;
 export const DailyActionPlanExpandedFieldsFragmentDoc = gql`
     fragment DailyActionPlanExpandedFields on DailyActionPlan {
-  id
+  _id
   owner
   date
   numberOfCasesCreated
@@ -1491,7 +1495,7 @@ export const DailyActionPlanExpandedFieldsFragmentDoc = gql`
     `;
 export const DistributionCentreFieldsFragmentDoc = gql`
     fragment DistributionCentreFields on DistributionCentre {
-  id
+  _id
   name
   address1
   address2
@@ -1503,7 +1507,7 @@ export const DistributionCentreFieldsFragmentDoc = gql`
     `;
 export const DistributionCentreExpandedFieldsFragmentDoc = gql`
     fragment DistributionCentreExpandedFields on DistributionCentre {
-  id
+  _id
   name
   address1
   address2
@@ -1512,12 +1516,12 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
   lat
   long
   products {
-    id
+    _id
     label
     description
   }
   actions {
-    id
+    _id
     title
     description
     status
@@ -1529,21 +1533,21 @@ export const DistributionCentreExpandedFieldsFragmentDoc = gql`
     `;
 export const ProductFieldsFragmentDoc = gql`
     fragment ProductFields on Product {
-  id
+  _id
   label
   description
 }
     `;
 export const ProductExpandedFieldsFragmentDoc = gql`
     fragment ProductExpandedFields on Product {
-  id
+  _id
   label
   description
   volunteerActionProducts {
-    id
+    _id
   }
   distributionCentre {
-    id
+    _id
     name
     address1
     address2
@@ -1556,19 +1560,19 @@ export const ProductExpandedFieldsFragmentDoc = gql`
     `;
 export const VolunteerActionProductFieldsFragmentDoc = gql`
     fragment VolunteerActionProductFields on VolunteerActionProduct {
-  id
+  _id
 }
     `;
 export const VolunteerActionProductExpandedFieldsFragmentDoc = gql`
     fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
-  id
+  _id
   product {
-    id
+    _id
     label
     description
   }
   volunteerAction {
-    id
+    _id
     title
     description
     status
@@ -1580,7 +1584,7 @@ export const VolunteerActionProductExpandedFieldsFragmentDoc = gql`
     `;
 export const VolunteerActionFieldsFragmentDoc = gql`
     fragment VolunteerActionFields on VolunteerAction {
-  id
+  _id
   title
   description
   status
@@ -1591,7 +1595,7 @@ export const VolunteerActionFieldsFragmentDoc = gql`
     `;
 export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     fragment VolunteerActionExpandedFields on VolunteerAction {
-  id
+  _id
   title
   description
   status
@@ -1599,7 +1603,7 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
   completedAt
   _createdAt
   volunteer {
-    id
+    _id
     firstName
     lastName
     email
@@ -1615,7 +1619,7 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     active
   }
   distributionCentre {
-    id
+    _id
     name
     address1
     address2
@@ -1625,10 +1629,10 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     long
   }
   products {
-    id
+    _id
   }
   recipient {
-    id
+    _id
     firstName
     lastName
     phone
@@ -1646,7 +1650,7 @@ export const VolunteerActionExpandedFieldsFragmentDoc = gql`
     `;
 export const VolunteerFieldsFragmentDoc = gql`
     fragment VolunteerFields on Volunteer {
-  id
+  _id
   firstName
   lastName
   email
@@ -1664,7 +1668,7 @@ export const VolunteerFieldsFragmentDoc = gql`
     `;
 export const VolunteerExpandedFieldsFragmentDoc = gql`
     fragment VolunteerExpandedFields on Volunteer {
-  id
+  _id
   firstName
   lastName
   email
@@ -1679,7 +1683,7 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
   actionsActive
   active
   actions {
-    id
+    _id
     title
     description
     status
@@ -1691,7 +1695,7 @@ export const VolunteerExpandedFieldsFragmentDoc = gql`
     `;
 export const RecipientFieldsFragmentDoc = gql`
     fragment RecipientFields on Recipient {
-  id
+  _id
   firstName
   lastName
   phone
@@ -1708,7 +1712,7 @@ export const RecipientFieldsFragmentDoc = gql`
     `;
 export const RecipientExpandedFieldsFragmentDoc = gql`
     fragment RecipientExpandedFields on Recipient {
-  id
+  _id
   firstName
   lastName
   phone
@@ -1722,7 +1726,7 @@ export const RecipientExpandedFieldsFragmentDoc = gql`
   deliveryDays
   prefferedProducts
   actions {
-    id
+    _id
     title
     description
     status
@@ -1749,7 +1753,7 @@ export const FindDailyActionPlansDocument = gql`
  * __useFindDailyActionPlansQuery__
  *
  * To run a query within a React component, call `useFindDailyActionPlansQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindDailyActionPlansQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useFindDailyActionPlansQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1773,7 +1777,7 @@ export type FindDailyActionPlansQueryHookResult = ReturnType<typeof useFindDaily
 export type FindDailyActionPlansLazyQueryHookResult = ReturnType<typeof useFindDailyActionPlansLazyQuery>;
 export type FindDailyActionPlansQueryResult = ApolloReactCommon.QueryResult<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>;
 export const GetDailyActionPlanDocument = gql`
-    query getDailyActionPlan($id: ID!) {
+    query getDailyActionPlan($id: GraphbackObjectID!) {
   getDailyActionPlan(id: $id) {
     ...DailyActionPlanExpandedFields
   }
@@ -1784,7 +1788,7 @@ export const GetDailyActionPlanDocument = gql`
  * __useGetDailyActionPlanQuery__
  *
  * To run a query within a React component, call `useGetDailyActionPlanQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetDailyActionPlanQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGetDailyActionPlanQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1822,7 +1826,7 @@ export const FindDistributionCentresDocument = gql`
  * __useFindDistributionCentresQuery__
  *
  * To run a query within a React component, call `useFindDistributionCentresQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindDistributionCentresQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useFindDistributionCentresQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1846,7 +1850,7 @@ export type FindDistributionCentresQueryHookResult = ReturnType<typeof useFindDi
 export type FindDistributionCentresLazyQueryHookResult = ReturnType<typeof useFindDistributionCentresLazyQuery>;
 export type FindDistributionCentresQueryResult = ApolloReactCommon.QueryResult<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>;
 export const GetDistributionCentreDocument = gql`
-    query getDistributionCentre($id: ID!) {
+    query getDistributionCentre($id: GraphbackObjectID!) {
   getDistributionCentre(id: $id) {
     ...DistributionCentreExpandedFields
   }
@@ -1857,7 +1861,7 @@ export const GetDistributionCentreDocument = gql`
  * __useGetDistributionCentreQuery__
  *
  * To run a query within a React component, call `useGetDistributionCentreQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetDistributionCentreQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGetDistributionCentreQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1895,7 +1899,7 @@ export const FindProductsDocument = gql`
  * __useFindProductsQuery__
  *
  * To run a query within a React component, call `useFindProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useFindProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1919,7 +1923,7 @@ export type FindProductsQueryHookResult = ReturnType<typeof useFindProductsQuery
 export type FindProductsLazyQueryHookResult = ReturnType<typeof useFindProductsLazyQuery>;
 export type FindProductsQueryResult = ApolloReactCommon.QueryResult<FindProductsQuery, FindProductsQueryVariables>;
 export const GetProductDocument = gql`
-    query getProduct($id: ID!) {
+    query getProduct($id: GraphbackObjectID!) {
   getProduct(id: $id) {
     ...ProductExpandedFields
   }
@@ -1930,7 +1934,7 @@ export const GetProductDocument = gql`
  * __useGetProductQuery__
  *
  * To run a query within a React component, call `useGetProductQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetProductQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGetProductQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1968,7 +1972,7 @@ export const FindVolunteerActionProductsDocument = gql`
  * __useFindVolunteerActionProductsQuery__
  *
  * To run a query within a React component, call `useFindVolunteerActionProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindVolunteerActionProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useFindVolunteerActionProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -1992,7 +1996,7 @@ export type FindVolunteerActionProductsQueryHookResult = ReturnType<typeof useFi
 export type FindVolunteerActionProductsLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionProductsLazyQuery>;
 export type FindVolunteerActionProductsQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionProductsQuery, FindVolunteerActionProductsQueryVariables>;
 export const GetVolunteerActionProductDocument = gql`
-    query getVolunteerActionProduct($id: ID!) {
+    query getVolunteerActionProduct($id: GraphbackObjectID!) {
   getVolunteerActionProduct(id: $id) {
     ...VolunteerActionProductExpandedFields
   }
@@ -2003,7 +2007,7 @@ export const GetVolunteerActionProductDocument = gql`
  * __useGetVolunteerActionProductQuery__
  *
  * To run a query within a React component, call `useGetVolunteerActionProductQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetVolunteerActionProductQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGetVolunteerActionProductQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -2041,7 +2045,7 @@ export const FindVolunteerActionsDocument = gql`
  * __useFindVolunteerActionsQuery__
  *
  * To run a query within a React component, call `useFindVolunteerActionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindVolunteerActionsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useFindVolunteerActionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -2065,7 +2069,7 @@ export type FindVolunteerActionsQueryHookResult = ReturnType<typeof useFindVolun
 export type FindVolunteerActionsLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionsLazyQuery>;
 export type FindVolunteerActionsQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionsQuery, FindVolunteerActionsQueryVariables>;
 export const GetVolunteerActionDocument = gql`
-    query getVolunteerAction($id: ID!) {
+    query getVolunteerAction($id: GraphbackObjectID!) {
   getVolunteerAction(id: $id) {
     ...VolunteerActionExpandedFields
   }
@@ -2076,7 +2080,7 @@ export const GetVolunteerActionDocument = gql`
  * __useGetVolunteerActionQuery__
  *
  * To run a query within a React component, call `useGetVolunteerActionQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetVolunteerActionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGetVolunteerActionQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -2114,7 +2118,7 @@ export const FindVolunteersDocument = gql`
  * __useFindVolunteersQuery__
  *
  * To run a query within a React component, call `useFindVolunteersQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindVolunteersQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useFindVolunteersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -2138,7 +2142,7 @@ export type FindVolunteersQueryHookResult = ReturnType<typeof useFindVolunteersQ
 export type FindVolunteersLazyQueryHookResult = ReturnType<typeof useFindVolunteersLazyQuery>;
 export type FindVolunteersQueryResult = ApolloReactCommon.QueryResult<FindVolunteersQuery, FindVolunteersQueryVariables>;
 export const GetVolunteerDocument = gql`
-    query getVolunteer($id: ID!) {
+    query getVolunteer($id: GraphbackObjectID!) {
   getVolunteer(id: $id) {
     ...VolunteerExpandedFields
   }
@@ -2149,7 +2153,7 @@ export const GetVolunteerDocument = gql`
  * __useGetVolunteerQuery__
  *
  * To run a query within a React component, call `useGetVolunteerQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetVolunteerQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGetVolunteerQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -2187,7 +2191,7 @@ export const FindRecipientsDocument = gql`
  * __useFindRecipientsQuery__
  *
  * To run a query within a React component, call `useFindRecipientsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindRecipientsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useFindRecipientsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -2211,7 +2215,7 @@ export type FindRecipientsQueryHookResult = ReturnType<typeof useFindRecipientsQ
 export type FindRecipientsLazyQueryHookResult = ReturnType<typeof useFindRecipientsLazyQuery>;
 export type FindRecipientsQueryResult = ApolloReactCommon.QueryResult<FindRecipientsQuery, FindRecipientsQueryVariables>;
 export const GetRecipientDocument = gql`
-    query getRecipient($id: ID!) {
+    query getRecipient($id: GraphbackObjectID!) {
   getRecipient(id: $id) {
     ...RecipientExpandedFields
   }
@@ -2222,7 +2226,7 @@ export const GetRecipientDocument = gql`
  * __useGetRecipientQuery__
  *
  * To run a query within a React component, call `useGetRecipientQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetRecipientQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGetRecipientQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -2662,7 +2666,7 @@ export type UpdateRecipientMutationOptions = ApolloReactCommon.BaseMutationOptio
 export const AssignVolunteersDocument = gql`
     mutation assignVolunteers {
   assignVolunteers {
-    id
+    _id
     owner
     date
     numberOfVolunteersAssigned
@@ -2712,7 +2716,7 @@ export const FindFlatDistributionCentresDocument = gql`
  * __useFindFlatDistributionCentresQuery__
  *
  * To run a query within a React component, call `useFindFlatDistributionCentresQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindFlatDistributionCentresQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useFindFlatDistributionCentresQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -2738,7 +2742,7 @@ export const FindIdAndNamesOfAllDistributionCentresDocument = gql`
     query findIdAndNamesOfAllDistributionCentres($limit: Int, $offset: Int) {
   findDistributionCentres(page: {limit: $limit, offset: $offset}) {
     items {
-      id
+      _id
       name
     }
   }
@@ -2749,7 +2753,7 @@ export const FindIdAndNamesOfAllDistributionCentresDocument = gql`
  * __useFindIdAndNamesOfAllDistributionCentresQuery__
  *
  * To run a query within a React component, call `useFindIdAndNamesOfAllDistributionCentresQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindIdAndNamesOfAllDistributionCentresQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useFindIdAndNamesOfAllDistributionCentresQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -2785,7 +2789,7 @@ export const FindActiveVolunteerDocument = gql`
  * __useFindActiveVolunteerQuery__
  *
  * To run a query within a React component, call `useFindActiveVolunteerQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindActiveVolunteerQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useFindActiveVolunteerQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -2807,9 +2811,9 @@ export type FindActiveVolunteerQueryHookResult = ReturnType<typeof useFindActive
 export type FindActiveVolunteerLazyQueryHookResult = ReturnType<typeof useFindActiveVolunteerLazyQuery>;
 export type FindActiveVolunteerQueryResult = ApolloReactCommon.QueryResult<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>;
 export const FindVolunteerActionDetailsDocument = gql`
-    query findVolunteerActionDetails($id: ID!) {
+    query findVolunteerActionDetails($id: GraphbackObjectID!) {
   getVolunteerAction(id: $id) {
-    id
+    _id
     title
     description
     status
@@ -2823,7 +2827,7 @@ export const FindVolunteerActionDetailsDocument = gql`
       ...VolunteerFields
     }
     products {
-      id
+      _id
       product {
         ...ProductFields
       }
@@ -2839,7 +2843,7 @@ ${ProductFieldsFragmentDoc}`;
  * __useFindVolunteerActionDetailsQuery__
  *
  * To run a query within a React component, call `useFindVolunteerActionDetailsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindVolunteerActionDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useFindVolunteerActionDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -2861,7 +2865,7 @@ export type FindVolunteerActionDetailsQueryHookResult = ReturnType<typeof useFin
 export type FindVolunteerActionDetailsLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionDetailsLazyQuery>;
 export type FindVolunteerActionDetailsQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>;
 export const GetTodayActionReportDocument = gql`
-    query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime, $lat: [Float!], $long: [Float!]) {
+    query getTodayActionReport($todayMidnight: GraphbackDateTime, $tomorrowMidnight: GraphbackDateTime, $lat: [Float!], $long: [Float!]) {
   CreatedActions: findVolunteerActions(filter: {status: {eq: "CREATED"}}) {
     items {
       ...VolunteerActionFields
@@ -2919,7 +2923,7 @@ export const GetTodayActionReportDocument = gql`
   }
   CreatedActionsNearbyCurrentLocation: findRecipients(filter: {lat: {between: $lat}, long: {between: $long}}) {
     items {
-      id
+      _id
       actions(filter: {status: {eq: "CREATED"}}) {
         ...VolunteerActionFields
       }
@@ -2927,7 +2931,7 @@ export const GetTodayActionReportDocument = gql`
   }
   AssignedActionsNearbyCurrentLocation: findRecipients(filter: {lat: {between: $lat}, long: {between: $long}}) {
     items {
-      id
+      _id
       actions(filter: {status: {eq: "ASSIGNED"}}) {
         ...VolunteerActionFields
       }
@@ -2935,7 +2939,7 @@ export const GetTodayActionReportDocument = gql`
   }
   CompletedActionsNearbyCurrentLocation: findRecipients(filter: {lat: {between: $lat}, long: {between: $long}}) {
     items {
-      id
+      _id
       actions(filter: {status: {eq: "COMPLETED"}}) {
         ...VolunteerActionFields
       }
@@ -2948,7 +2952,7 @@ export const GetTodayActionReportDocument = gql`
  * __useGetTodayActionReportQuery__
  *
  * To run a query within a React component, call `useGetTodayActionReportQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetTodayActionReportQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGetTodayActionReportQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;

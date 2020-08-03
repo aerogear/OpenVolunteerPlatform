@@ -20,7 +20,7 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   const isOnline = useNetworkStatus();
 
   if (volunteer && !called) {
-    findActions({ variables: { volunteerId: volunteer.id, status: ActionStatus.Assigned } })
+    findActions({ variables: { volunteerId: volunteer._id, status: ActionStatus.Assigned } })
   }
   if (error) {
     console.log(error);
@@ -40,7 +40,7 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
 
   const updateFilter = (e: CustomEvent) => {
     if (volunteer) {
-      refetch({ volunteerId: volunteer.id, status: e.detail.value })
+      refetch({ volunteerId: volunteer._id, status: e.detail.value })
     }
   }
 

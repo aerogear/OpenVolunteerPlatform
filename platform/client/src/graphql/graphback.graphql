@@ -1,5 +1,5 @@
 fragment DailyActionPlanFields on DailyActionPlan {
-   id
+   _id
    owner
    date
    numberOfCasesCreated
@@ -9,7 +9,7 @@ fragment DailyActionPlanFields on DailyActionPlan {
 } 
 
 fragment DailyActionPlanExpandedFields on DailyActionPlan {
-   id
+   _id
    owner
    date
    numberOfCasesCreated
@@ -19,7 +19,7 @@ fragment DailyActionPlanExpandedFields on DailyActionPlan {
 } 
 
 fragment DistributionCentreFields on DistributionCentre {
-   id
+   _id
    name
    address1
    address2
@@ -31,7 +31,7 @@ fragment DistributionCentreFields on DistributionCentre {
 } 
 
 fragment DistributionCentreExpandedFields on DistributionCentre {
-   id
+   _id
    name
    address1
    address2
@@ -40,12 +40,12 @@ fragment DistributionCentreExpandedFields on DistributionCentre {
    lat
    long
    products {
-      id
+      _id
       label
       description
    }
    actions {
-      id
+      _id
       title
       description
       status
@@ -56,21 +56,21 @@ fragment DistributionCentreExpandedFields on DistributionCentre {
 } 
 
 fragment ProductFields on Product {
-   id
+   _id
    label
    description
 
 } 
 
 fragment ProductExpandedFields on Product {
-   id
+   _id
    label
    description
    volunteerActionProducts {
-      id
+      _id
    }
    distributionCentre {
-      id
+      _id
       name
       address1
       address2
@@ -82,19 +82,19 @@ fragment ProductExpandedFields on Product {
 } 
 
 fragment VolunteerActionProductFields on VolunteerActionProduct {
-   id
+   _id
 
 } 
 
 fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
-   id
+   _id
    product {
-      id
+      _id
       label
       description
    }
    volunteerAction {
-      id
+      _id
       title
       description
       status
@@ -105,7 +105,7 @@ fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
 } 
 
 fragment VolunteerActionFields on VolunteerAction {
-   id
+   _id
    title
    description
    status
@@ -116,7 +116,7 @@ fragment VolunteerActionFields on VolunteerAction {
 } 
 
 fragment VolunteerActionExpandedFields on VolunteerAction {
-   id
+   _id
    title
    description
    status
@@ -124,7 +124,7 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
    completedAt
    _createdAt
    volunteer {
-      id
+      _id
       firstName
       lastName
       email
@@ -140,7 +140,7 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       active
    }
    distributionCentre {
-      id
+      _id
       name
       address1
       address2
@@ -150,10 +150,10 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       long
    }
    products {
-      id
+      _id
    }
    recipient {
-      id
+      _id
       firstName
       lastName
       phone
@@ -170,7 +170,7 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
 } 
 
 fragment VolunteerFields on Volunteer {
-   id
+   _id
    firstName
    lastName
    email
@@ -188,7 +188,7 @@ fragment VolunteerFields on Volunteer {
 } 
 
 fragment VolunteerExpandedFields on Volunteer {
-   id
+   _id
    firstName
    lastName
    email
@@ -203,7 +203,7 @@ fragment VolunteerExpandedFields on Volunteer {
    actionsActive
    active
    actions {
-      id
+      _id
       title
       description
       status
@@ -214,7 +214,7 @@ fragment VolunteerExpandedFields on Volunteer {
 } 
 
 fragment RecipientFields on Recipient {
-   id
+   _id
    firstName
    lastName
    phone
@@ -231,7 +231,7 @@ fragment RecipientFields on Recipient {
 } 
 
 fragment RecipientExpandedFields on Recipient {
-   id
+   _id
    firstName
    lastName
    phone
@@ -245,7 +245,7 @@ fragment RecipientExpandedFields on Recipient {
    deliveryDays
    prefferedProducts
    actions {
-      id
+      _id
       title
       description
       status
@@ -266,7 +266,7 @@ query findDailyActionPlans($filter: DailyActionPlanFilter, $page: PageRequest, $
     }
   }
 
-query getDailyActionPlan($id: ID!) {
+query getDailyActionPlan($id: GraphbackObjectID!) {
     getDailyActionPlan(id: $id) {
       ...DailyActionPlanExpandedFields
     }
@@ -283,7 +283,7 @@ query findDistributionCentres($filter: DistributionCentreFilter, $page: PageRequ
     }
   }
 
-query getDistributionCentre($id: ID!) {
+query getDistributionCentre($id: GraphbackObjectID!) {
     getDistributionCentre(id: $id) {
       ...DistributionCentreExpandedFields
     }
@@ -300,7 +300,7 @@ query findProducts($filter: ProductFilter, $page: PageRequest, $orderBy: OrderBy
     }
   }
 
-query getProduct($id: ID!) {
+query getProduct($id: GraphbackObjectID!) {
     getProduct(id: $id) {
       ...ProductExpandedFields
     }
@@ -317,7 +317,7 @@ query findVolunteerActionProducts($filter: VolunteerActionProductFilter, $page: 
     }
   }
 
-query getVolunteerActionProduct($id: ID!) {
+query getVolunteerActionProduct($id: GraphbackObjectID!) {
     getVolunteerActionProduct(id: $id) {
       ...VolunteerActionProductExpandedFields
     }
@@ -334,7 +334,7 @@ query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $
     }
   }
 
-query getVolunteerAction($id: ID!) {
+query getVolunteerAction($id: GraphbackObjectID!) {
     getVolunteerAction(id: $id) {
       ...VolunteerActionExpandedFields
     }
@@ -351,7 +351,7 @@ query findVolunteers($filter: VolunteerFilter, $page: PageRequest, $orderBy: Ord
     }
   }
 
-query getVolunteer($id: ID!) {
+query getVolunteer($id: GraphbackObjectID!) {
     getVolunteer(id: $id) {
       ...VolunteerExpandedFields
     }
@@ -368,7 +368,7 @@ query findRecipients($filter: RecipientFilter, $page: PageRequest, $orderBy: Ord
     }
   }
 
-query getRecipient($id: ID!) {
+query getRecipient($id: GraphbackObjectID!) {
     getRecipient(id: $id) {
       ...RecipientExpandedFields
     }

@@ -1,6 +1,6 @@
-query findVolunteerActionDetails($id: ID!) {
+query findVolunteerActionDetails($id: GraphbackObjectID!) {
   getVolunteerAction(id: $id ) {
-    id,
+    _id,
     title,
     description,
     status,
@@ -14,7 +14,7 @@ query findVolunteerActionDetails($id: ID!) {
       ...VolunteerFields
     },
     products {
-      id,
+      _id,
       product {
         ...ProductFields
       }

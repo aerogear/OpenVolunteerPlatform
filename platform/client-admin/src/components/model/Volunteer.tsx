@@ -42,7 +42,7 @@ export const Volunteer: React.FC<{ volunteer: VolunteerFieldsFragment }> = ({ vo
       </IonLabel>
       <IonButtons>
 
-        <Link to={`manageVolunteer/${volunteer.id}`}>
+        <Link to={`manageVolunteer/${volunteer._id}`}>
           <IonButton item-start color='primary' fill="outline">
             <IonIcon icon={open} />
           </IonButton>

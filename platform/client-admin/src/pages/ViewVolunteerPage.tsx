@@ -42,7 +42,7 @@ export const ViewVolunteerPage: React.FC<RouteComponentProps<IUpdateMatchParams>
                   updateVolunteer({
                     variables: {
                       input: {
-                        id: model.id,
+                        _id: model._id,
                         city: model.city,
                         address1: model.address1,
                         address2: model.address2,

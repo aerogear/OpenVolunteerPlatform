@@ -14,7 +14,7 @@ export const ActionsList: React.FC<any> = ({ actions }) => {
       <IonList>
         {
           actions.map((action : any) => {
-            return <Action key={action.id} action={action} />;
+            return <Action key={action._id} action={action} />;
           })
         }
       </IonList>

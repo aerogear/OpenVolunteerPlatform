@@ -16,8 +16,8 @@ const LATITUDE_INCREMENT = NEARBY_MAX_DISTANCE * ONE_KILOMETER_IN_EARTH_DEGREES;
 
 export const ActionReportPage: React.FC<RouteComponentProps> = ({ match }) => {
   const now = moment();
-  const todayMidnight = now.startOf(DAY_UNIT_OF_TIME);
-  const tomorrowMidnight = now.add(1, DAY_UNIT_OF_TIME).startOf(DAY_UNIT_OF_TIME);
+  const todayMidnight = now.startOf(DAY_UNIT_OF_TIME).toDate();
+  const tomorrowMidnight = now.add(1, DAY_UNIT_OF_TIME).startOf(DAY_UNIT_OF_TIME).toDate();
 
   const [getTodayActionReport, { data, loading, error, called }] = useGetTodayActionReportLazyQuery();
 
@@ -76,7 +76,7 @@ export const ActionReportPage: React.FC<RouteComponentProps> = ({ match }) => {
         const uniqueActions: Set<string> = new Set();
         for (const recipient of entry[1].items) {
           for (const action of recipient.actions) {
-            uniqueActions.add(action.id);
+            uniqueActions.add(action._id);
           }
         }
         count = uniqueActions.size;

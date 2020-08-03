@@ -48,7 +48,7 @@ export const ActionsMapPage: React.FC<RouteComponentProps> = ({ match }) => {
         icon={{
           url: YELLOW_ICON
         }}
-        onClick={() => history.push(`/manageDistributionCentre/${distributionCentre?.id}`)}
+        onClick={() => history.push(`/manageDistributionCentre/${distributionCentre?._id}`)}
         position={{
           lat,
           lng
@@ -72,7 +72,7 @@ export const ActionsMapPage: React.FC<RouteComponentProps> = ({ match }) => {
         icon={{
           url: RED_ICON
         }}
-        onClick={() => history.push(`/manageRecipient/${recipient?.id}`)}
+        onClick={() => history.push(`/manageRecipient/${recipient?._id}`)}
         position={{
           lat,
           lng

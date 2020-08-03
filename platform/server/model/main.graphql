@@ -2,7 +2,7 @@
 @model(delete: false)
 """
 type DistributionCentre implements Address {
-  id: ID!
+  _id: GraphbackObjectID!
   name: String
   address1: String
   address2: String
@@ -20,7 +20,7 @@ type DistributionCentre implements Address {
 @model(delete: false)
 """
 type Volunteer {
-  id: ID!
+  _id: GraphbackObjectID!
   firstName: String
   lastName: String
   email: String
@@ -29,7 +29,7 @@ type Volunteer {
   address2: String
   city: String
   postcode: Int
-  dateOfBirth: DateTime
+  dateOfBirth: GraphbackDateTime
   canDeliver: Boolean
   actionsCompleted: Int
   actionsActive: Int
@@ -45,7 +45,7 @@ type Volunteer {
 @model(delete: false)
 """
 type Recipient implements Address {
-  id: ID!
+  _id: GraphbackObjectID!
   firstName: String
   lastName: String
   phone: String
@@ -74,13 +74,13 @@ Represents action that is assigned to volunteer
 @model
 """
 type VolunteerAction {
-  id: ID!
+  _id: GraphbackObjectID!
   title: String!
   description: String
   status: ActionStatus
-  assignedAt: DateTime
-  completedAt: DateTime
-  _createdAt: DateTime
+  assignedAt: GraphbackDateTime
+  completedAt: GraphbackDateTime
+  _createdAt: GraphbackDateTime
   """
   @manyToOne(field: 'actions', key: 'volunteerId')
   """
@@ -101,7 +101,7 @@ Represents a join model between a volunteer action and product
 @model(create: true, update: false, delete: false, subCreate: false, subUpdate: false, subDelete: false)
 """
 type VolunteerActionProduct {
-  id: ID!
+  _id: GraphbackObjectID!
 }
 
 interface Address {
@@ -117,7 +117,7 @@ interface Address {
 @model(delete: false)
 """
 type Product {
-  id: ID!
+  _id: GraphbackObjectID!
   label: String!
   description: String
   """
@@ -128,9 +128,9 @@ type Product {
 
 """ @model """
 type DailyActionPlan {
-  id: ID!
+  _id: GraphbackObjectID!
   owner: String
-  date: DateTime
+  date: GraphbackDateTime
   numberOfCasesCreated: Int
   numberOfVolunteersAssigned: Int
   numberOfRecipients: Int
@@ -142,8 +142,8 @@ enum ActionStatus {
   COMPLETED
 }
 
-scalar DateTime
-scalar ID
+scalar GraphbackDateTime
+scalar GraphbackObjectID
 
 ## Custom logic
 type Mutation {

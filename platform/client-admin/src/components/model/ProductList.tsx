@@ -15,7 +15,7 @@ export const ProductList: React.FC<{ products: [ProductFieldsFragment] }> = ({ p
       <IonList>
         {
           products.map((product: ProductFieldsFragment) => {
-            return <Product key={product.id} product={product} />;
+            return <Product key={product._id} product={product} />;
           })
         }
       </IonList>

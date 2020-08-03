@@ -48,7 +48,7 @@ export const CreateProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>
                       }
                     }
                   }).then(({data}) => {
-                    history.push(`/manageProduct/${data?.createProduct?.id}`)
+                    history.push(`/manageProduct/${data?.createProduct?._id}`)
                   }).catch(console.error);
                 }}
                 showInlineError
@@ -77,5 +77,5 @@ function retrieveDistributionCentreId(distributionCentreName: string, distributi
     return name.includes(distributionCentreName);
   });
 
-  return distributionCentre?.id;
+  return distributionCentre?._id;
 }

@@ -30,6 +30,9 @@ extensions:
           withHOC: false
           withHooks: true
           skipDocumentsValidation: true
+          scalars:
+            GraphbackDateTime: Date
+            GraphbackObjectID: string
         plugins:
           - add: '/* tslint:disable */'
           - typescript

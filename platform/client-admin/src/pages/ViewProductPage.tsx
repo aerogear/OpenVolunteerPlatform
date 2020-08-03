@@ -25,7 +25,7 @@ export const ViewProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>> 
   if (loading || distibutionCentresQuery.loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
 
   const model = {
-    id: product.id,
+    id: product._id,
     label: product.label,
     description: product.description,
     distributionCentre: product.distributionCentre?.name
@@ -62,12 +62,12 @@ export const ViewProductPage: React.FC<RouteComponentProps<IUpdateMatchParams>> 
 
                   distributionCentre = distributionCentre || product.distributionCentre
 
-                  const distributionCentreId = distributionCentre?.id;
+                  const distributionCentreId = distributionCentre?._id;
 
                   updateProduct({
                     variables: {
                       input: {
-                        id: model.id,
+                        _id: model._id,
                         label: model.label,
                         description: model.description,
                         distributionCentreId

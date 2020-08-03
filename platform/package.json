@@ -6,7 +6,7 @@
   "main": "index.js",
   "devDependencies": {
     "del-cli": "3.0.0",
-    "graphback-cli": "0.14.0-alpha14"
+    "graphback-cli": "0.16.0-alpha2"
   },
   "scripts": {
     "start:server": "cd server && yarn start",

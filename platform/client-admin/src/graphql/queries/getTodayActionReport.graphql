@@ -1,4 +1,4 @@
-query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime, $lat: [Float!], $long:[Float!]) {
+query getTodayActionReport($todayMidnight: GraphbackDateTime, $tomorrowMidnight: GraphbackDateTime, $lat: [Float!], $long:[Float!]) {
   CreatedActions: findVolunteerActions(filter: { status: { eq: "CREATED" } }) {
     items {
       ...VolunteerActionFields
@@ -106,7 +106,7 @@ query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime
     }
   }) {
     items {
-      id,
+      _id,
       actions(filter: {status: {eq: "CREATED"}}) {
         ...VolunteerActionFields
       }
@@ -122,7 +122,7 @@ query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime
     }
   }) {
     items {
-      id,
+      _id,
       actions(filter: {status: {eq: "ASSIGNED"}}) {
        ...VolunteerActionFields
       }
@@ -138,7 +138,7 @@ query getTodayActionReport($todayMidnight: DateTime, $tomorrowMidnight: DateTime
     }
   }) {
     items {
-      id,
+      _id,
       actions(filter: {status: {eq: "COMPLETED"}}) {
        ...VolunteerActionFields
       }
