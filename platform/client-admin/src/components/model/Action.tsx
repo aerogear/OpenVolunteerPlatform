@@ -30,7 +30,7 @@ export const Action: React.FC<any> = ({ action }) => {
       </IonLabel>
       <IonButtons>
 
-        <Link to={`viewAction/${action.id}`}>
+        <Link to={`viewAction/${action._id}`}>
           <IonButton item-start color='primary' fill="outline">
             <IonIcon icon={open} />
           </IonButton>

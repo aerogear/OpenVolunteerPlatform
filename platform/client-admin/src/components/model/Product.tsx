@@ -24,7 +24,7 @@ export const Product: React.FC<{ product: ProductFieldsFragment }> = ({ product 
       </IonLabel>
       <IonButtons>
 
-        <Link to={`manageProduct/${product.id}`}>
+        <Link to={`manageProduct/${product._id}`}>
           <IonButton item-start color='primary' fill="outline">
             <IonIcon icon={open} />
           </IonButton>

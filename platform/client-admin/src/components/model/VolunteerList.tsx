@@ -15,7 +15,7 @@ export const VolunteersList: React.FC<{ volunteers: [VolunteerFieldsFragment] }>
       <IonList>
         {
           volunteers.map((volunteer: any) => {
-            return <Volunteer key={volunteer.id} volunteer={volunteer} />;
+            return <Volunteer key={volunteer._id} volunteer={volunteer} />;
           })
         }
       </IonList>

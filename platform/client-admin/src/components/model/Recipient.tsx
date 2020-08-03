@@ -33,7 +33,7 @@ export const Recipient: React.FC<{ recipient: RecipientFieldsFragment }> = ({ re
       </IonLabel>
       <IonButtons>
 
-        <Link to={`manageRecipient/${recipient.id}`}>
+        <Link to={`manageRecipient/${recipient._id}`}>
           <IonButton item-start color='primary' fill="outline">
             <IonIcon icon={open} />
           </IonButton>

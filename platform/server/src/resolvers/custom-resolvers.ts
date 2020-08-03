@@ -18,7 +18,7 @@ export default {
         
             const now = new Date();
             const services = context.graphback.services;
-            
+
             // find volunteers and recipients with ongoing actions
             // and store their ids somewhere so that they will not be picked as candidates
             // for automatic scheduling
@@ -28,8 +28,8 @@ export default {
             const recipientIds: any = [];
             const notCompletedVolunteerActions: any = items || [];
             for ( const action of notCompletedVolunteerActions) {
-                volunteerIds.push(new ObjectId(action.volunteerId));
-                recipientIds.push(new ObjectId(action.recipientId));
+                volunteerIds.push(action.volunteerId);
+                recipientIds.push(action.recipientId);
             }
             
             // let's retrieve volunteers who are deemed free
@@ -91,9 +91,9 @@ export default {
                         return product.label.indexOf(label) > -1 || product.description?.indexOf(label) > -1
                     });
                     if (foundProduct) {
-                        const distributionCentreProducts = acc[foundProduct.distributionCentreId] || [];
+                        const distributionCentreProducts = acc[foundProduct.distributionCentreId.toString()] || [];
                         distributionCentreProducts.push(foundProduct);
-                        acc[foundProduct.distributionCentreId] = distributionCentreProducts;
+                        acc[foundProduct.distributionCentreId.toString()] = distributionCentreProducts;
                     }
 
                     return acc;
@@ -113,7 +113,7 @@ export default {
                         volunteerIndex = volunteerIds.length - 1;
                     }
 
-                    const volunteerId = volunteerIds[volunteerIndex].toString();
+                    const volunteerId = volunteerIds[volunteerIndex];
                     pickedVolunteers.add(volunteerId);
                     const volunteerAction = {
                         title,
@@ -122,8 +122,8 @@ export default {
                         assignedAt: now,
                         _createdAt: now,
                         volunteerId,
-                        distributionCentreId,
-                        recipientId: recipient.id.toString()
+                        distributionCentreId: new ObjectId(distributionCentreId),
+                        recipientId: recipient._id
                     }
 
                     const {id: volunteerActionId} = await services.VolunteerAction.create(volunteerAction, context);
@@ -132,8 +132,8 @@ export default {
                     // create volunteer action product
                     for (const product of products) {
                         const volunteerActionProduct = {
-                           volunteerActionId: volunteerActionId.toString(),
-                           productId: product.id.toString()
+                           volunteerActionId: volunteerActionId,
+                           productId: product._id
                         }
 
                         await services.VolunteerActionProduct.create(volunteerActionProduct, context);
@@ -141,13 +141,7 @@ export default {
                 }
             }    
                 // TODO 
-            return services.DailyActionPlan.create({
-                date: now,
-                owner: "ovp-admin", // TODO retrieve this info from Keycloak context
-                numberOfCasesCreated,
-                numberOfVolunteersAssigned: pickedVolunteers.size,
-                numberOfRecipients: newRecipients!.length
-            }, context)
+            return {}
         }
 
     }

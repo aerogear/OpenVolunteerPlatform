@@ -42,7 +42,7 @@ export const ViewRecipientPage: React.FC<RouteComponentProps<IUpdateMatchParams>
                   updateRecipient({
                     variables: {
                       input: {
-                        id: model.id,
+                        _id: model._id,
                         address1: model.address1,
                         address2: model.address2,
                         city: model.city,

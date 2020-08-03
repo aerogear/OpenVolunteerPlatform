@@ -91,7 +91,7 @@ export const CreateVolunteerActionPage: React.FC<RouteComponentProps<IUpdateMatc
                       }
                     }
                   }).then(({ data }) => {
-                    const volunteerActionId = data?.createVolunteerAction?.id;
+                    const volunteerActionId = data?.createVolunteerAction?._id;
                     // TODO - retrieve products labels from form
                     // See https://github.com/aerogear/OpenVolunteerPlatform/pull/67#discussion_r426658820                    
                     const productsLabels = model.products || [];
@@ -141,7 +141,7 @@ function retrieveDistributionCentreId(distributionCentreName: string, distributi
     return name.includes(distributionCentreName);
   });
 
-  return distributionCentre?.id;
+  return distributionCentre?._id;
 }
 
 
@@ -152,7 +152,7 @@ function retrieveIdFromSelectedName(selectedName: string, persons: any[]) {
   const correspondingPerson = persons
     .find(({ firstName, lastName }) => `${firstName} ${lastName}` === selectedName);
 
-  return correspondingPerson?.id;
+  return correspondingPerson?._id;
 }
 
 function retrieveProductIds(products: any[], productsLabels: string[]): string[] {

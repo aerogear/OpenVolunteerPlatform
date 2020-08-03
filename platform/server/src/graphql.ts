@@ -3,7 +3,6 @@ import { connect } from './db';
 import { Config } from './config/config';
 import { ApolloServer, ApolloServerExpressConfig } from "apollo-server-express";
 import { Express } from "express";
-import scalars from './resolvers/scalars';
 import customResolvers from './resolvers/custom-resolvers';
 import { buildKeycloakApolloConfig } from './auth';
 import { createKeycloakAndAMQCRUDService } from './AMQCrudService'
@@ -31,7 +30,7 @@ export const createApolloServer = async function (app: Express, config: Config) 
         dataProviderCreator: createMongoDbProvider(db)
     });
     // TODO enable custom resolvers
-    const mergedResolvers: any = GMR.merge([resolvers, customResolvers, scalars]);
+    const mergedResolvers: any = GMR.merge([resolvers, customResolvers]);
     let apolloConfig: ApolloServerExpressConfig = {
         typeDefs: typeDefs,
         resolvers: mergedResolvers,
