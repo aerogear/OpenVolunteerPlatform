@@ -11,7 +11,7 @@
     "apollo-link-ws": "1.0.20",
     "google-maps-react": "2.0.6",
     "graphql": "14.6.0",
-    "graphql-tag": "2.10.4",
+    "graphql-tag": "2.11.0",
     "ionicons": "5.0.1",
     "keycloak-js": "9.0.2",
     "offix-cache": "0.15.0",
