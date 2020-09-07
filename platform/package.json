@@ -5,8 +5,8 @@
   "description": "Mono repository for OVP Starter",
   "main": "index.js",
   "devDependencies": {
-    "del-cli": "3.0.0",
-    "graphback-cli": "0.16.0-alpha2"
+    "del-cli": "3.0.1",
+    "graphback-cli": "0.16.2"
   },
   "scripts": {
     "start:server": "cd server && yarn start",
@@ -33,6 +33,6 @@
     "server"
   ],
   "resolutions": {
-    "@types/react": "16.9.41"
+    "@types/react": "16.9.49"
   }
 }
