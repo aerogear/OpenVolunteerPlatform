@@ -62,7 +62,7 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
       <IonFooter>
         <div>
           OpenVolunteer Platform
-          <NetworkBadge isOnline={isOnline} />
+          <NetworkBadge isOnline={!!isOnline} />
         </div>
       </IonFooter>
     </IonPage >

@@ -5,7 +5,7 @@ import { ApolloServer, ApolloServerExpressConfig } from "apollo-server-express";
 import { Express } from "express";
 import customResolvers from './resolvers/custom-resolvers';
 import { buildKeycloakApolloConfig } from './auth';
-import { createKeycloakAndAMQCRUDService } from './AMQCrudService'
+import { createKeycloakCRUDService } from './CrudService'
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { loadSchemaSync } from '@graphql-tools/load'
 import { buildGraphbackAPI } from "graphback"
@@ -26,7 +26,7 @@ export const createApolloServer = async function (app: Express, config: Config) 
     })
 
     const { typeDefs, resolvers, contextCreator } = buildGraphbackAPI(modelDefs, {
-        serviceCreator: createKeycloakAndAMQCRUDService(authConfig),
+        serviceCreator: createKeycloakCRUDService(authConfig),
         dataProviderCreator: createMongoDbProvider(db)
     });
     // TODO enable custom resolvers
