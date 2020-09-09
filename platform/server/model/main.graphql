@@ -81,14 +81,11 @@ type VolunteerAction {
   assignedAt: GraphbackDateTime
   completedAt: GraphbackDateTime
   _createdAt: GraphbackDateTime
-  """
-  @manyToOne(field: 'actions', key: 'volunteerId')
-  """
+
   volunteer: Volunteer
-  """
-  @manyToOne(field: 'actions', key: 'distributionCentreId')
-  """
+
   distributionCentre: DistributionCentre
+  
   """
   @oneToMany(field: 'volunteerAction')
   """
@@ -126,7 +123,9 @@ type Product {
   volunteerActionProducts: [VolunteerActionProduct]
 }
 
-""" @model """
+"""
+@model
+"""
 type DailyActionPlan {
   _id: GraphbackObjectID!
   owner: String
@@ -152,5 +151,3 @@ type Mutation {
   """
   assignVolunteers: DailyActionPlan
 }
-
-
