@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@apollo/react-hooks": "3.1.5",
+    "@apollo/react-hooks": "4.0.0",
     "@capacitor/core": "2.4.0",
     "@ionic/react": "5.0.7",
     "@ionic/react-router": "5.0.7",
