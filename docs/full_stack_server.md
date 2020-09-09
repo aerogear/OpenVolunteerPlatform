@@ -39,12 +39,12 @@ yarn start:server
 
 ## Docker Image
 
-Server comes with docker file that can be used to build ready to use image.
-Reference application is actively tracked and pushed to docker registry
+Server comes with docker files that can be used to build ready to use images.
+Reference application is actively tracked and pushed to the docker registry
 
 `docker.io/wtrocki/openvolunteer`
 
-Docker image supports following environment variables:
+Docker image supports the following environment variables:
 
 ```
 ## MongoDB connection
@@ -70,7 +70,7 @@ USE_DEMO_DATA=false
 ```
 ### Running together with required services
 
-Example docker-compose that can be used to launch OpenVolunter application
+Example docker-compose that can be used to launch the OpenVolunteer application:
 
 ```yaml
 version: '3'
@@ -107,6 +107,6 @@ services:
       KEYCLOAK_PASSWORD: admin
 ```
 You can save the above configuration
-The use the following command to start the server `docker-compose up`
+The use of the following command to start the server `docker-compose up`
 
 > NOTE: You need to execute `npm run keycloak:init` or import realm from `./integrations/keycloak/realm-export.json` in your local machine to be able to use docker compose.
