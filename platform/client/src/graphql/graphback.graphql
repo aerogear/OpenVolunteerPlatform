@@ -1,23 +1,3 @@
-fragment DailyActionPlanFields on DailyActionPlan {
-   _id
-   owner
-   date
-   numberOfCasesCreated
-   numberOfVolunteersAssigned
-   numberOfRecipients
-
-} 
-
-fragment DailyActionPlanExpandedFields on DailyActionPlan {
-   _id
-   owner
-   date
-   numberOfCasesCreated
-   numberOfVolunteersAssigned
-   numberOfRecipients
-
-} 
-
 fragment DistributionCentreFields on DistributionCentre {
    _id
    name
@@ -43,15 +23,6 @@ fragment DistributionCentreExpandedFields on DistributionCentre {
       _id
       label
       description
-   }
-   actions {
-      _id
-      title
-      description
-      status
-      assignedAt
-      completedAt
-      _createdAt
    }
 } 
 
@@ -92,80 +63,6 @@ fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
       _id
       label
       description
-   }
-   volunteerAction {
-      _id
-      title
-      description
-      status
-      assignedAt
-      completedAt
-      _createdAt
-   }
-} 
-
-fragment VolunteerActionFields on VolunteerAction {
-   _id
-   title
-   description
-   status
-   assignedAt
-   completedAt
-   _createdAt
-
-} 
-
-fragment VolunteerActionExpandedFields on VolunteerAction {
-   _id
-   title
-   description
-   status
-   assignedAt
-   completedAt
-   _createdAt
-   volunteer {
-      _id
-      firstName
-      lastName
-      email
-      username
-      address1
-      address2
-      city
-      postcode
-      dateOfBirth
-      canDeliver
-      actionsCompleted
-      actionsActive
-      active
-   }
-   distributionCentre {
-      _id
-      name
-      address1
-      address2
-      city
-      postcode
-      lat
-      long
-   }
-   products {
-      _id
-   }
-   recipient {
-      _id
-      firstName
-      lastName
-      phone
-      address1
-      address2
-      postcode
-      city
-      lat
-      long
-      actionsCompleted
-      deliveryDays
-      prefferedProducts
    }
 } 
 
@@ -213,6 +110,58 @@ fragment VolunteerExpandedFields on Volunteer {
    }
 } 
 
+fragment VolunteerActionFields on VolunteerAction {
+   _id
+   title
+   description
+   status
+   assignedAt
+   completedAt
+   _createdAt
+
+} 
+
+fragment VolunteerActionExpandedFields on VolunteerAction {
+   _id
+   title
+   description
+   status
+   assignedAt
+   completedAt
+   _createdAt
+   volunteer {
+      _id
+      firstName
+      lastName
+      email
+      username
+      address1
+      address2
+      city
+      postcode
+      dateOfBirth
+      canDeliver
+      actionsCompleted
+      actionsActive
+      active
+   }
+   recipient {
+      _id
+      firstName
+      lastName
+      phone
+      address1
+      address2
+      postcode
+      city
+      lat
+      long
+      actionsCompleted
+      deliveryDays
+      prefferedProducts
+   }
+} 
+
 fragment RecipientFields on Recipient {
    _id
    firstName
@@ -255,22 +204,25 @@ fragment RecipientExpandedFields on Recipient {
    }
 } 
 
-query findDailyActionPlans($filter: DailyActionPlanFilter, $page: PageRequest, $orderBy: OrderByInput) {
-    findDailyActionPlans(filter: $filter, page: $page, orderBy: $orderBy) {
-      items {
-        ...DailyActionPlanExpandedFields
-      }
-      offset
-      limit
-      count
-    }
-  }
+fragment DailyActionPlanFields on DailyActionPlan {
+   _id
+   owner
+   date
+   numberOfCasesCreated
+   numberOfVolunteersAssigned
+   numberOfRecipients
 
-query getDailyActionPlan($id: GraphbackObjectID!) {
-    getDailyActionPlan(id: $id) {
-      ...DailyActionPlanExpandedFields
-    }
-  }
+} 
+
+fragment DailyActionPlanExpandedFields on DailyActionPlan {
+   _id
+   owner
+   date
+   numberOfCasesCreated
+   numberOfVolunteersAssigned
+   numberOfRecipients
+
+} 
 
 query findDistributionCentres($filter: DistributionCentreFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findDistributionCentres(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -323,23 +275,6 @@ query getVolunteerActionProduct($id: GraphbackObjectID!) {
     }
   }
 
-query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $orderBy: OrderByInput) {
-    findVolunteerActions(filter: $filter, page: $page, orderBy: $orderBy) {
-      items {
-        ...VolunteerActionExpandedFields
-      }
-      offset
-      limit
-      count
-    }
-  }
-
-query getVolunteerAction($id: GraphbackObjectID!) {
-    getVolunteerAction(id: $id) {
-      ...VolunteerActionExpandedFields
-    }
-  }
-
 query findVolunteers($filter: VolunteerFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findVolunteers(filter: $filter, page: $page, orderBy: $orderBy) {
       items {
@@ -354,6 +289,23 @@ query findVolunteers($filter: VolunteerFilter, $page: PageRequest, $orderBy: Ord
 query getVolunteer($id: GraphbackObjectID!) {
     getVolunteer(id: $id) {
       ...VolunteerExpandedFields
+    }
+  }
+
+query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $orderBy: OrderByInput) {
+    findVolunteerActions(filter: $filter, page: $page, orderBy: $orderBy) {
+      items {
+        ...VolunteerActionExpandedFields
+      }
+      offset
+      limit
+      count
+    }
+  }
+
+query getVolunteerAction($id: GraphbackObjectID!) {
+    getVolunteerAction(id: $id) {
+      ...VolunteerActionExpandedFields
     }
   }
 
@@ -374,19 +326,22 @@ query getRecipient($id: GraphbackObjectID!) {
     }
   }
 
-mutation createDailyActionPlan($input: CreateDailyActionPlanInput!) {
-  createDailyActionPlan(input: $input) {
-      ...DailyActionPlanFields
+query findDailyActionPlans($filter: DailyActionPlanFilter, $page: PageRequest, $orderBy: OrderByInput) {
+    findDailyActionPlans(filter: $filter, page: $page, orderBy: $orderBy) {
+      items {
+        ...DailyActionPlanExpandedFields
+      }
+      offset
+      limit
+      count
+    }
   }
-}
 
-
-mutation updateDailyActionPlan($input: MutateDailyActionPlanInput!) {
-  updateDailyActionPlan(input: $input) {
-      ...DailyActionPlanFields
+query getDailyActionPlan($id: GraphbackObjectID!) {
+    getDailyActionPlan(id: $id) {
+      ...DailyActionPlanExpandedFields
+    }
   }
-}
-
 
 mutation createDistributionCentre($input: CreateDistributionCentreInput!) {
   createDistributionCentre(input: $input) {
@@ -423,20 +378,6 @@ mutation createVolunteerActionProduct($input: CreateVolunteerActionProductInput!
 }
 
 
-mutation createVolunteerAction($input: CreateVolunteerActionInput!) {
-  createVolunteerAction(input: $input) {
-      ...VolunteerActionFields
-  }
-}
-
-
-mutation updateVolunteerAction($input: MutateVolunteerActionInput!) {
-  updateVolunteerAction(input: $input) {
-      ...VolunteerActionFields
-  }
-}
-
-
 mutation createVolunteer($input: CreateVolunteerInput!) {
   createVolunteer(input: $input) {
       ...VolunteerFields
@@ -451,6 +392,20 @@ mutation updateVolunteer($input: MutateVolunteerInput!) {
 }
 
 
+mutation createVolunteerAction($input: CreateVolunteerActionInput!) {
+  createVolunteerAction(input: $input) {
+      ...VolunteerActionFields
+  }
+}
+
+
+mutation updateVolunteerAction($input: MutateVolunteerActionInput!) {
+  updateVolunteerAction(input: $input) {
+      ...VolunteerActionFields
+  }
+}
+
+
 mutation createRecipient($input: CreateRecipientInput!) {
   createRecipient(input: $input) {
       ...RecipientFields
@@ -461,5 +416,19 @@ mutation createRecipient($input: CreateRecipientInput!) {
 mutation updateRecipient($input: MutateRecipientInput!) {
   updateRecipient(input: $input) {
       ...RecipientFields
+  }
+}
+
+
+mutation createDailyActionPlan($input: CreateDailyActionPlanInput!) {
+  createDailyActionPlan(input: $input) {
+      ...DailyActionPlanFields
+  }
+}
+
+
+mutation updateDailyActionPlan($input: MutateDailyActionPlanInput!) {
+  updateDailyActionPlan(input: $input) {
+      ...DailyActionPlanFields
   }
 }
