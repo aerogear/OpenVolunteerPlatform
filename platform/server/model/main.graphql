@@ -14,6 +14,11 @@ type DistributionCentre implements Address {
   @oneToMany(field: "distributionCentre")
   """
   products: [Product]
+
+  """
+  @oneToMany(field: "distributionCentre")
+  """
+  actions: [VolunteerAction]
 }
 
 """
@@ -81,13 +86,22 @@ type VolunteerAction {
   assignedAt: GraphbackDateTime
   completedAt: GraphbackDateTime
   _createdAt: GraphbackDateTime
-  
-  """@manyToOne(field: 'actions')"""
+
+  """
+  @manyToOne(field: 'actions')
+  """
   volunteer: Volunteer
 
-  """@manyToOne(field: 'actions')"""
+  """
+  @manyToOne(field: 'actions')
+  """
   recipient: Recipient
-  
+
+  """
+  @manyToOne(field: 'actions')
+  """
+  distributionCentre: DistributionCentre
+
   """
   @oneToMany(field: 'volunteerAction')
   """

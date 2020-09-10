@@ -24,6 +24,15 @@ fragment DistributionCentreExpandedFields on DistributionCentre {
       label
       description
    }
+   actions {
+      _id
+      title
+      description
+      status
+      assignedAt
+      completedAt
+      _createdAt
+   }
 } 
 
 fragment ProductFields on Product {
@@ -59,47 +68,7 @@ fragment VolunteerActionProductFields on VolunteerActionProduct {
 
 fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
    _id
-   product {
-      _id
-      label
-      description
-   }
-} 
-
-fragment VolunteerFields on Volunteer {
-   _id
-   firstName
-   lastName
-   email
-   username
-   address1
-   address2
-   city
-   postcode
-   dateOfBirth
-   canDeliver
-   actionsCompleted
-   actionsActive
-   active
-
-} 
-
-fragment VolunteerExpandedFields on Volunteer {
-   _id
-   firstName
-   lastName
-   email
-   username
-   address1
-   address2
-   city
-   postcode
-   dateOfBirth
-   canDeliver
-   actionsCompleted
-   actionsActive
-   active
-   actions {
+   volunteerAction {
       _id
       title
       description
@@ -107,6 +76,11 @@ fragment VolunteerExpandedFields on Volunteer {
       assignedAt
       completedAt
       _createdAt
+   }
+   product {
+      _id
+      label
+      description
    }
 } 
 
@@ -159,6 +133,63 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
       actionsCompleted
       deliveryDays
       prefferedProducts
+   }
+   distributionCentre {
+      _id
+      name
+      address1
+      address2
+      city
+      postcode
+      lat
+      long
+   }
+   products {
+      _id
+   }
+} 
+
+fragment VolunteerFields on Volunteer {
+   _id
+   firstName
+   lastName
+   email
+   username
+   address1
+   address2
+   city
+   postcode
+   dateOfBirth
+   canDeliver
+   actionsCompleted
+   actionsActive
+   active
+
+} 
+
+fragment VolunteerExpandedFields on Volunteer {
+   _id
+   firstName
+   lastName
+   email
+   username
+   address1
+   address2
+   city
+   postcode
+   dateOfBirth
+   canDeliver
+   actionsCompleted
+   actionsActive
+   active
+   actions {
+      _id
+      title
+      description
+      status
+      assignedAt
+      completedAt
+      _createdAt
    }
 } 
 
@@ -275,23 +306,6 @@ query getVolunteerActionProduct($id: GraphbackObjectID!) {
     }
   }
 
-query findVolunteers($filter: VolunteerFilter, $page: PageRequest, $orderBy: OrderByInput) {
-    findVolunteers(filter: $filter, page: $page, orderBy: $orderBy) {
-      items {
-        ...VolunteerExpandedFields
-      }
-      offset
-      limit
-      count
-    }
-  }
-
-query getVolunteer($id: GraphbackObjectID!) {
-    getVolunteer(id: $id) {
-      ...VolunteerExpandedFields
-    }
-  }
-
 query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findVolunteerActions(filter: $filter, page: $page, orderBy: $orderBy) {
       items {
@@ -306,6 +320,23 @@ query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $
 query getVolunteerAction($id: GraphbackObjectID!) {
     getVolunteerAction(id: $id) {
       ...VolunteerActionExpandedFields
+    }
+  }
+
+query findVolunteers($filter: VolunteerFilter, $page: PageRequest, $orderBy: OrderByInput) {
+    findVolunteers(filter: $filter, page: $page, orderBy: $orderBy) {
+      items {
+        ...VolunteerExpandedFields
+      }
+      offset
+      limit
+      count
+    }
+  }
+
+query getVolunteer($id: GraphbackObjectID!) {
+    getVolunteer(id: $id) {
+      ...VolunteerExpandedFields
     }
   }
 
@@ -378,20 +409,6 @@ mutation createVolunteerActionProduct($input: CreateVolunteerActionProductInput!
 }
 
 
-mutation createVolunteer($input: CreateVolunteerInput!) {
-  createVolunteer(input: $input) {
-      ...VolunteerFields
-  }
-}
-
-
-mutation updateVolunteer($input: MutateVolunteerInput!) {
-  updateVolunteer(input: $input) {
-      ...VolunteerFields
-  }
-}
-
-
 mutation createVolunteerAction($input: CreateVolunteerActionInput!) {
   createVolunteerAction(input: $input) {
       ...VolunteerActionFields
@@ -402,6 +419,20 @@ mutation createVolunteerAction($input: CreateVolunteerActionInput!) {
 mutation updateVolunteerAction($input: MutateVolunteerActionInput!) {
   updateVolunteerAction(input: $input) {
       ...VolunteerActionFields
+  }
+}
+
+
+mutation createVolunteer($input: CreateVolunteerInput!) {
+  createVolunteer(input: $input) {
+      ...VolunteerFields
+  }
+}
+
+
+mutation updateVolunteer($input: MutateVolunteerInput!) {
+  updateVolunteer(input: $input) {
+      ...VolunteerFields
   }
 }
 
