@@ -79,10 +79,12 @@ input CreateVolunteerActionInput {
   _createdAt: GraphbackDateTime
   volunteerId: GraphbackObjectID
   recipientId: GraphbackObjectID
+  distributionCentreId: GraphbackObjectID
 }
 
 input CreateVolunteerActionProductInput {
   _id: GraphbackObjectID
+  volunteerActionId: GraphbackObjectID
   productId: GraphbackObjectID
 }
 
@@ -103,7 +105,7 @@ input CreateVolunteerInput {
   active: Boolean
 }
 
-""" @model """
+"""@model"""
 type DailyActionPlan {
   _id: GraphbackObjectID!
   owner: String
@@ -148,6 +150,12 @@ type DistributionCentre implements Address {
   @oneToMany(field: "distributionCentre")
   """
   products(filter: ProductFilter): [Product]
+
+  """
+  @oneToMany(field: 'distributionCentre', key: 'distributionCentreId')
+  @oneToMany(field: "distributionCentre")
+  """
+  actions(filter: VolunteerActionFilter): [VolunteerAction]
 }
 
 input DistributionCentreFilter {
@@ -272,6 +280,7 @@ input MutateVolunteerActionInput {
   _createdAt: GraphbackDateTime
   volunteerId: GraphbackObjectID
   recipientId: GraphbackObjectID
+  distributionCentreId: GraphbackObjectID
 }
 
 input MutateVolunteerInput {
@@ -479,11 +488,29 @@ type VolunteerAction {
   completedAt: GraphbackDateTime
   _createdAt: GraphbackDateTime
 
-  """@manyToOne(field: 'actions', key: 'volunteerId')"""
+  """
+  @manyToOne(field: 'actions', key: 'volunteerId')
+  @manyToOne(field: 'actions')
+  """
   volunteer: Volunteer
 
-  """@manyToOne(field: 'actions', key: 'recipientId')"""
+  """
+  @manyToOne(field: 'actions', key: 'recipientId')
+  @manyToOne(field: 'actions')
+  """
   recipient: Recipient
+
+  """
+  @manyToOne(field: 'actions', key: 'distributionCentreId')
+  @manyToOne(field: 'actions')
+  """
+  distributionCentre: DistributionCentre
+
+  """
+  @oneToMany(field: 'volunteerAction', key: 'volunteerActionId')
+  @oneToMany(field: 'volunteerAction')
+  """
+  products(filter: VolunteerActionProductFilter): [VolunteerActionProduct]
 }
 
 input VolunteerActionFilter {
@@ -496,6 +523,7 @@ input VolunteerActionFilter {
   _createdAt: GraphbackDateTimeInput
   volunteerId: GraphbackObjectIDInput
   recipientId: GraphbackObjectIDInput
+  distributionCentreId: GraphbackObjectIDInput
   and: [VolunteerActionFilter!]
   or: [VolunteerActionFilter!]
   not: VolunteerActionFilter
@@ -509,12 +537,16 @@ Represents a join model between a volunteer action and product
 type VolunteerActionProduct {
   _id: GraphbackObjectID!
 
+  """@manyToOne(field: 'products', key: 'volunteerActionId')"""
+  volunteerAction: VolunteerAction
+
   """@manyToOne(field: 'volunteerActionProducts', key: 'productId')"""
   product: Product
 }
 
 input VolunteerActionProductFilter {
   _id: GraphbackObjectIDInput
+  volunteerActionId: GraphbackObjectIDInput
   productId: GraphbackObjectIDInput
   and: [VolunteerActionProductFilter!]
   or: [VolunteerActionProductFilter!]
