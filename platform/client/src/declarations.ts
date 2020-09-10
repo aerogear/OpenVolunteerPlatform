@@ -1,7 +1,4 @@
-import { KeycloakInstance } from "keycloak-js";
-import { ApolloOfflineClient } from "offix-client";
-
-
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 
 export interface IContainerProps {
   app: React.FC
@@ -23,5 +20,5 @@ export interface IAuthHeaders {
 
 export interface ILogoutParams {
   keycloak: Keycloak.KeycloakInstance | undefined,
-  client: ApolloOfflineClient
+  client: ApolloClient<object>
 }

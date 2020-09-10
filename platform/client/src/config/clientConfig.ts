@@ -1,11 +1,10 @@
-import { ApolloLink } from 'apollo-link';
-import { HttpLink } from 'apollo-link-http';
-import { WebSocketLink } from 'apollo-link-ws';
-import { setContext } from 'apollo-link-context';
+
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { setContext } from '@apollo/client/link/context'
 import { getMainDefinition } from 'apollo-utilities';
 import { getAuthHeader } from '../keycloakAuth';
 import { Capacitor } from '@capacitor/core';
-import { InMemoryCache, ApolloClientOptions } from '@apollo/client';
+import { InMemoryCache, FetchPolicy, ApolloLink, HttpLink } from '@apollo/client';
 
 let httpUri = 'http://localhost:4000/graphql';
 let wsUri = 'ws://localhost:4000/graphql';
@@ -70,15 +69,22 @@ const splitLink = ApolloLink.split(
   httpLink,
 );
 
-/**
- * Instantiate cache object
- * and define cache redirect queries
- * 
- */
-const cache = new InMemoryCache();
+const noCache: FetchPolicy = 'no-cache';
 
-export const clientConfig: ApolloClientOptions<InMemoryCache> = {
-  link: splitLink,
-  cache: cache,
-   
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: noCache,
+  },
+  query: {
+    fetchPolicy: noCache,
+  },
+  mutate: {
+    fetchPolicy: noCache
+  }
+}
+
+export const clientConfig = {
+  defaultOptions,
+  cache: new InMemoryCache(),
+  link: authLink.concat(splitLink)
 };

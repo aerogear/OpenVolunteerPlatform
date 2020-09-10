@@ -4,7 +4,7 @@ import { Loading } from './components/Loading';
 import { IContainerProps } from './declarations';
 import { getKeycloakInstance } from './keycloakAuth';
 import { AuthContextProvider } from './context/AuthContext';
-import { ApolloClient } from '@apollo/client'
+import { ApolloClient, ApolloProvider } from '@apollo/client'
 
 let keycloak: any;
 const apolloClient = new ApolloClient(clientConfig);
@@ -16,7 +16,6 @@ export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
   useEffect(() => {
     const init = async () => {
       keycloak = await getKeycloakInstance();
-      await apolloClient.init();
       if (keycloak) {
         await keycloak?.loadUserProfile();
       }
