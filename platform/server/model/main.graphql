@@ -81,10 +81,12 @@ type VolunteerAction {
   assignedAt: GraphbackDateTime
   completedAt: GraphbackDateTime
   _createdAt: GraphbackDateTime
-
+  
+  """@manyToOne(field: 'actions')"""
   volunteer: Volunteer
 
-  distributionCentre: DistributionCentre
+  """@manyToOne(field: 'actions')"""
+  recipient: Recipient
   
   """
   @oneToMany(field: 'volunteerAction')
