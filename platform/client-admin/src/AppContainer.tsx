@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloProvider, ApolloClient } from '@apollo/client';
 import { clientConfig } from './config';
 import { Loading } from './components/generic/Loading';
 import { IContainerProps } from './declarations';
