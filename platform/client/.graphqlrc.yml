@@ -31,8 +31,13 @@ extensions:
           withHooks: true
           skipDocumentsValidation: true
           scalars:
+            GraphbackTime: string
+            GraphbackDate: Date
             GraphbackDateTime: Date
+            GraphbackTimestamp: number
             GraphbackObjectID: string
+            GraphbackJSON: any
+            GraphbackJSONObject: "{ [key: string]: any }"
         plugins:
           - add: 
               content: '/* tslint:disable */'
