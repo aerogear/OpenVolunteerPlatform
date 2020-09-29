@@ -98,7 +98,7 @@ services:
         ports:
             - 27017:27017
   keycloak:
-    image: jboss/keycloak:3.4.3.Final
+    image: quay.io/keycloak/keycloak:9.0.3
     ports:
       - "8080:8080"
     environment:

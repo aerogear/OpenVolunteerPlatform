@@ -26,6 +26,7 @@ import { CreateVolunteerActionPage } from '../pages/CreateVolunteerAction';
 import { ViewDistributionCentrePage } from '../pages/ViewDistributionCentrePage';
 import { CreateDistributionCentrePage } from '../pages/CreateDistributionCentrePage';
 import { ActionReportPage } from '../pages/ActionReportPage';
+import { VolunteerEntryPage } from '../pages/VolunteerEntryPage';
 
 export const Router: React.FC = () => {
   return (
@@ -37,6 +38,7 @@ export const Router: React.FC = () => {
             <Switch>
               <Route path="/viewAction/:id" component={ViewActionPage} exact />
               <Route path="/createAction" component={CreateVolunteerActionPage} exact />
+              <Route path="/volunteerEntry/:id" component={VolunteerEntryPage} exact />
               <Route path="/actions" component={ActionPage} exact />
               <Route path="/map" component={ActionsMapPage} exact />
               <Route path="/schedule" component={SchedulePage} exact />

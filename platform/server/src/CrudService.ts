@@ -2,7 +2,9 @@
 import { KeycloakCrudService, CrudServiceAuthConfig } from '@graphback/keycloak-authz'
 import { ModelDefinition, GraphbackDataProvider, GraphbackCRUDService } from 'graphback';
 import { createDataSyncCRUDService } from '@graphback/datasync';
-import { getPubSub } from './pubsub';
+import { KafkaSubEngine } from './KafkaSubEngine';
+import { config } from './config/config';
+
 
 /**
  * Creates Graphback service with following capabilities:
@@ -14,12 +16,15 @@ import { getPubSub } from './pubsub';
  * @param authConfig 
  */
 export function createKeycloakCRUDService(authConfig: CrudServiceAuthConfig) {
-    const pubSub = getPubSub();
     return (model: ModelDefinition, dataProvider: GraphbackDataProvider): GraphbackCRUDService => {
         const service = createDataSyncCRUDService({
-            pubSub
+            pubSub: new KafkaSubEngine({
+                ...config.kafka,
+                topic: `dbserver1.${config.db.database}.${model.graphqlType.name.toLowerCase()}`,
+                port: config.kafka.port.toString(),
+                modelName: model.graphqlType.name
+            })
         })(model, dataProvider);
-        const objConfig = authConfig[model.graphqlType.name];
         const authService = new KeycloakCrudService(model, { service, authConfig });
 
         return authService;

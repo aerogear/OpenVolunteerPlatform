@@ -5,12 +5,15 @@ module.exports = {
   tagline: 'Optimize and Organize Work of Volunteers',
   url: 'https://openvolunteer.org',
   baseUrl: '/',
+  onBrokenLinks: "ignore",
   favicon: 'img/favicon.ico',
   organizationName: 'aerogear', // Usually your GitHub org/user name.
   projectName: 'OpenVolunteerPlatform', // Usually your repo name.
   themeConfig: {
     sidebarCollapsible: false,
-    disableDarkMode: true,
+    colorMode: {
+      disableSwitch: true
+    },
     prism: {
       // eslint-disable-next-line
       theme: require('prism-react-renderer/themes/github'),
@@ -23,7 +26,7 @@ module.exports = {
         alt: 'OpenVolunteerPlatform Logo',
         src: 'img/logo.png',
       },
-      links: [
+      items: [
         {
           to: 'docs/gettingstarted',
           label: `Docs`,

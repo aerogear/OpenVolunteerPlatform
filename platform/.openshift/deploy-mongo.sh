@@ -1,0 +1,1 @@
+oc process -f mongodb.yml | oc create -f -

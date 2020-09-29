@@ -151,14 +151,66 @@ type DailyActionPlan {
   numberOfRecipients: Int
 }
 
+
+"""
+@model(create: true, update: true, delete: false, find: false, subCreate: true, subUpdate: true, subDelete: false)
+"""
+type VolunteerEntry {
+  _id: GraphbackObjectID!
+
+  """
+  Volunteer details. This is a partial volunteer object so that we have the info in one go in the UI
+  """
+  volunteer: PartialVolunteer!
+
+
+
+  """
+  Distribution centre details. This is a partial object so that we have the info in one go in the UI
+  """
+  distributionCentre: PartialDistributionCentre!
+
+  """
+  Objects representing the number of deliveries that will be done following this entry.
+  """
+  volunteerActions: [GraphbackJSON]
+
+
+  """
+  The time the volunteer checked in the distribution centre
+  """
+  checkedInAt: GraphbackDateTime!
+
+  """
+  The time the volunteer checked out the distribution centre
+  """
+  checkedOutAt: GraphbackDateTime
+}
+
+type PartialDistributionCentre {
+  _id: GraphbackObjectID!
+  name: String!
+}
+
+type PartialVolunteer {
+  _id: GraphbackObjectID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  username: String!
+}
+
+type PartialVolunteerAction {
+  _id: GraphbackObjectID!
+  title: String!
+}
+
 enum ActionStatus {
   CREATED
   ASSIGNED
   COMPLETED
 }
 
-scalar GraphbackDateTime
-scalar GraphbackObjectID
 
 ## Custom logic
 type Mutation {
@@ -167,3 +219,7 @@ type Mutation {
   """
   assignVolunteers: DailyActionPlan
 }
+
+scalar GraphbackDateTime
+scalar GraphbackObjectID
+scalar GraphbackJSON

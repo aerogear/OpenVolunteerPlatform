@@ -6,7 +6,7 @@ export class Config {
   public db: { database: string; user?: string; password?: string; host: string, port: number | string }
   public keycloakConfigPath: string
   public keycloakConfig: any
-  public playgroundConfig: { tabs: { endpoint: string; variables: {}; query: string }[] }
+  public kafka: any;
 
   constructor() {
     this.port = process.env.PORT || 4000
@@ -19,18 +19,15 @@ export class Config {
       port: process.env.MONGO_PORT || 27017
     }
 
+    this.kafka = {
+      host: process.env.KAFKA_HOST || '127.0.0.1',
+      port: process.env.KAFKA_PORT || 9092,
+      globalConfig: {
+      }
+    };
+
     this.keycloakConfigPath = process.env.KEYCLOAK_CONFIG || path.resolve(__dirname, './keycloak.json')
     this.keycloakConfig = readConfig(this.keycloakConfigPath)
-
-    this.playgroundConfig = {
-      tabs: [
-        {
-          endpoint: `/graphql`,
-          variables: {},
-          query: fs.readFileSync(path.resolve(__dirname, './playground.gql'), 'utf8')
-        }
-      ]
-    }
   }
 }
 

@@ -46,6 +46,19 @@ input CreateDistributionCentreInput {
   long: Float
 }
 
+input CreatePartialDistributionCentreInput {
+  _id: GraphbackObjectID!
+  name: String!
+}
+
+input CreatePartialVolunteerInput {
+  _id: GraphbackObjectID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  username: String!
+}
+
 input CreateProductInput {
   _id: GraphbackObjectID
   label: String!
@@ -86,6 +99,15 @@ input CreateVolunteerActionProductInput {
   _id: GraphbackObjectID
   volunteerActionId: GraphbackObjectID
   productId: GraphbackObjectID
+}
+
+input CreateVolunteerEntryInput {
+  _id: GraphbackObjectID
+  volunteer: CreatePartialVolunteerInput!
+  distributionCentre: CreatePartialDistributionCentreInput!
+  volunteerActions: [GraphbackJSON]
+  checkedInAt: GraphbackDateTime!
+  checkedOutAt: GraphbackDateTime
 }
 
 input CreateVolunteerInput {
@@ -203,6 +225,8 @@ input GraphbackDateTimeInput {
   between: [GraphbackDateTime!]
 }
 
+scalar GraphbackJSON
+
 scalar GraphbackObjectID
 
 input GraphbackObjectIDInput {
@@ -247,6 +271,19 @@ input MutateDistributionCentreInput {
   long: Float
 }
 
+input MutatePartialDistributionCentreInput {
+  _id: GraphbackObjectID
+  name: String
+}
+
+input MutatePartialVolunteerInput {
+  _id: GraphbackObjectID
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+}
+
 input MutateProductInput {
   _id: GraphbackObjectID!
   label: String
@@ -283,6 +320,15 @@ input MutateVolunteerActionInput {
   distributionCentreId: GraphbackObjectID
 }
 
+input MutateVolunteerEntryInput {
+  _id: GraphbackObjectID!
+  volunteer: MutatePartialVolunteerInput
+  distributionCentre: MutatePartialDistributionCentreInput
+  volunteerActions: GraphbackJSON
+  checkedInAt: GraphbackDateTime
+  checkedOutAt: GraphbackDateTime
+}
+
 input MutateVolunteerInput {
   _id: GraphbackObjectID!
   firstName: String
@@ -316,6 +362,8 @@ type Mutation {
   updateProduct(input: MutateProductInput!): Product
   createDailyActionPlan(input: CreateDailyActionPlanInput!): DailyActionPlan
   updateDailyActionPlan(input: MutateDailyActionPlanInput!): DailyActionPlan
+  createVolunteerEntry(input: CreateVolunteerEntryInput!): VolunteerEntry
+  updateVolunteerEntry(input: MutateVolunteerEntryInput!): VolunteerEntry
 }
 
 input OrderByInput {
@@ -326,6 +374,19 @@ input OrderByInput {
 input PageRequest {
   limit: Int
   offset: Int
+}
+
+type PartialDistributionCentre {
+  _id: GraphbackObjectID!
+  name: String!
+}
+
+type PartialVolunteer {
+  _id: GraphbackObjectID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  username: String!
 }
 
 """@model(delete: false)"""
@@ -376,6 +437,7 @@ type Query {
   findProducts(filter: ProductFilter, page: PageRequest, orderBy: OrderByInput): ProductResultList!
   getDailyActionPlan(id: GraphbackObjectID!): DailyActionPlan
   findDailyActionPlans(filter: DailyActionPlanFilter, page: PageRequest, orderBy: OrderByInput): DailyActionPlanResultList!
+  getVolunteerEntry(id: GraphbackObjectID!): VolunteerEntry
 }
 
 """@model(delete: false)"""
@@ -448,6 +510,11 @@ input StringInput {
   contains: String
   startsWith: String
   endsWith: String
+}
+
+type Subscription {
+  newVolunteerEntry(filter: VolunteerEntrySubscriptionFilter): VolunteerEntry!
+  updatedVolunteerEntry(filter: VolunteerEntrySubscriptionFilter): VolunteerEntry!
 }
 
 """@model(delete: false)"""
@@ -565,6 +632,43 @@ type VolunteerActionResultList {
   offset: Int
   limit: Int
   count: Int
+}
+
+"""
+@model(create: true, update: true, delete: false, find: false, subCreate: true, subUpdate: true, subDelete: false)
+"""
+type VolunteerEntry {
+  _id: GraphbackObjectID!
+
+  """
+  Volunteer details. This is a partial volunteer object so that we have the info in one go in the UI
+  """
+  volunteer: PartialVolunteer!
+
+  """
+  Distribution centre details. This is a partial object so that we have the info in one go in the UI
+  """
+  distributionCentre: PartialDistributionCentre!
+
+  """
+  Objects representing the number of deliveries that will be done following this entry.
+  """
+  volunteerActions: [GraphbackJSON]
+
+  """The time the volunteer checked in the distribution centre"""
+  checkedInAt: GraphbackDateTime!
+
+  """The time the volunteer checked out the distribution centre"""
+  checkedOutAt: GraphbackDateTime
+}
+
+input VolunteerEntrySubscriptionFilter {
+  and: [VolunteerEntrySubscriptionFilter!]
+  or: [VolunteerEntrySubscriptionFilter!]
+  not: VolunteerEntrySubscriptionFilter
+  _id: GraphbackObjectIDInput
+  checkedInAt: GraphbackDateTimeInput
+  checkedOutAt: GraphbackDateTimeInput
 }
 
 input VolunteerFilter {

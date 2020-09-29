@@ -1,0 +1,5 @@
+subscription onNewVolunteerEntry($filter: VolunteerEntrySubscriptionFilter) {
+  newVolunteerEntry(filter: $filter) {
+      ...VolunteerEntryExpandedFields
+  }
+} 

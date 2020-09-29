@@ -1,5 +1,4 @@
 import { Config } from './config/config';
-import e = require('express');
 import { resolve } from 'path';
 
 const MongoClient = require('mongodb').MongoClient;

@@ -1,0 +1,302 @@
+---
+
+    apiVersion: template.openshift.io/v1
+    kind: Template
+    labels:
+      template: open-volunteer-platform-kafka
+    metadata:
+      name: open-volunteer-platform-kafka
+      annotations:
+        openshift.io/display-name: Kafka Debezium 
+        description: |-
+          Template for Debezium and Kafka deployment
+        tags: graphback, graphql, debezium, kafka,  nodejs
+        iconClass: icon-nodejs
+        openshift.io/provider-display-name: Red Hat, Inc.
+        openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html-single/developing_a_data_sync_app/index
+        openshift.io/support-url: https://access.redhat.com
+        template.openshift.io/bindable: 'false'
+        aerogear.org/datasync-template-version: '0.9.3'
+    objects:  
+    - apiVersion: v1
+      kind: DeploymentConfig
+      metadata:
+        labels:
+          app: open-volunteer-platform
+        annotations:
+          template.alpha.openshift.io/wait-for-ready: 'true'
+        name: zookeeper
+      spec:
+        replicas: 1
+        selector:
+          name: zookeeper
+        strategy:
+          type: Recreate
+        template:
+          metadata:
+            labels:
+              name: zookeeper
+          spec:
+            containers:
+            - capabilities: {}
+              image: debezium/zookeeper:1.3
+              imagePullPolicy: IfNotPresent
+              name: zookeeper
+              ports:
+              - containerPort: 3888
+                protocol: TCP
+              - containerPort: 2888
+                protocol: TCP
+              - containerPort: 2181
+                protocol: TCP
+              securityContext:
+                capabilities: {}
+                privileged: false
+              terminationMessagePath: "/dev/termination-log"
+            dnsPolicy: ClusterFirst
+            restartPolicy: Always
+        triggers:
+        - type: ConfigChange
+      status: {}
+    
+    - apiVersion: v1
+      kind: DeploymentConfig
+      metadata:
+        labels:
+          app: open-volunteer-platform
+        annotations:
+          template.alpha.openshift.io/wait-for-ready: 'true'
+        name: kafka
+      spec:
+        replicas: 1
+        selector:
+          name: kafka
+        strategy:
+          type: Recreate
+        template:
+          metadata:
+            labels:
+              name: kafka
+          spec:
+            containers:
+            - capabilities: {}
+              env:
+              - name: ZOOKEEPER_CONNECT
+                value: zookeeper:2181
+              - name: KAFKA_PORT
+                value: "9092"
+              image: debezium/kafka:1.3
+              imagePullPolicy: IfNotPresent
+              name: kafka     
+              ports:
+              - containerPort: 9092
+                protocol: TCP
+              securityContext:
+                capabilities: {}
+                privileged: false
+              terminationMessagePath: "/dev/termination-log"
+            dnsPolicy: ClusterFirst
+            restartPolicy: Always
+        triggers:
+        - type: ConfigChange
+      status: {}  
+    
+    - apiVersion: v1
+      kind: DeploymentConfig
+      metadata:
+        labels:
+          app: open-volunteer-platform
+        annotations:
+          template.alpha.openshift.io/wait-for-ready: 'true'
+        name: kafdrop
+      spec:
+        replicas: 1
+        selector:
+          name: kafdrop
+        strategy:
+          type: Recreate
+        template:
+          metadata:
+            labels:
+              name: kafdrop
+          spec:
+            containers:
+            - capabilities: {}
+              env:
+              - name: KAFKA_BROKERCONNECT
+                value: kafka:9092
+              - name: SERVER_SERVLET_CONTEXTPATH
+                value: /
+              - name: JVM_OPTS
+                value: -Xms32M -Xmx64M
+              image: obsidiandynamics/kafdrop:latest
+              imagePullPolicy: IfNotPresent
+              name: kafdrop
+              ports:
+              - containerPort: 9000
+                protocol: TCP
+              securityContext:
+                capabilities: {}
+                privileged: false
+            dnsPolicy: ClusterFirst
+            restartPolicy: Always
+        triggers:
+        - type: ConfigChange
+      status: {}
+    
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        labels:
+          app: open-volunteer-platform
+        name: kafdrop
+      spec:
+        ports:
+        - name: kafdrop
+          port: 9000
+          protocol: TCP
+          targetPort: 9000
+        selector:
+          name: kafdrop
+        sessionAffinity: None
+        type: ClusterIP
+      status:
+        loadBalancer: {}  
+
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        labels:
+          app: open-volunteer-platform
+        name: debezium-connect
+      spec:
+        ports:
+        - name: debezium-connect
+          port: 8083
+          protocol: TCP
+          targetPort: 8083
+        selector:
+          name: debezium-connect
+        sessionAffinity: None
+        type: ClusterIP
+      status:
+        loadBalancer: {}    
+    
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        labels:
+          app: open-volunteer-platform
+        name: zookeeper
+      spec:
+        ports:
+        - name: zookeeper-1
+          port: 3888
+          protocol: TCP
+          targetPort: 3888
+        - name: zookeeper-2
+          port: 2888
+          protocol: TCP
+          targetPort: 2888
+        - name: zookeeper-3
+          port: 2181
+          protocol: TCP
+          targetPort: 2181  
+        selector:
+          name: zookeeper
+        sessionAffinity: None
+        type: ClusterIP
+      status:
+        loadBalancer: {}    
+    
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        labels:
+          app: open-volunteer-platform
+        name: kafka
+      spec:
+        ports:
+        - name: kafka
+          port: 9092
+          protocol: TCP
+          targetPort: 9092
+        selector:
+          name: kafka
+        sessionAffinity: None
+        type: ClusterIP
+      status:
+        loadBalancer: {} 
+    
+    - apiVersion: v1
+      kind: DeploymentConfig
+      metadata:
+        labels:
+          app: open-volunteer-platform
+        annotations:
+          template.alpha.openshift.io/wait-for-ready: 'true'
+        name: debezium-connect
+      spec:
+        replicas: 1
+        selector:
+          name: debezium-connect
+        strategy:
+          type: Recreate
+        template:
+          metadata:
+            labels:
+              name: debezium-connect
+          spec:
+            containers:
+            - capabilities: {}
+              env:
+                - name: BOOTSTRAP_SERVERS
+                  value: kafka:9092
+                - name: GROUP_ID
+                  value: "1"
+                - name: CONFIG_STORAGE_TOPIC
+                  value: my_connect_configs
+                - name: OFFSET_STORAGE_TOPIC
+                  value: my_connect_offsets
+                - name: STATUS_STORAGE_TOPIC
+                  value: my_connect_statuses
+              image: debezium/connect:1.3
+              imagePullPolicy: IfNotPresent
+              name: debezium-connect        
+              ports:
+              - containerPort: 8083
+                protocol: TCP    
+              readinessProbe:
+                tcpSocket:
+                  port: 8083
+                initialDelaySeconds: 5
+                periodSeconds: 10
+              livenessProbe:
+                tcpSocket:
+                  port: 8083
+                initialDelaySeconds: 5
+                periodSeconds: 20
+              securityContext:
+                capabilities: {}
+                privileged: false
+              terminationMessagePath: "/dev/termination-log"
+            dnsPolicy: ClusterFirst
+            restartPolicy: Always
+        triggers:
+        - type: ConfigChange
+      status: {}  
+        
+    - apiVersion: v1
+      kind: Route
+      metadata:
+        labels:
+          app: open-volunteer-platform
+        name: kafdrop
+      spec:
+        host: ""
+        to:
+          kind: Service
+          name: kafdrop
+        tls:
+          termination: edge
+          insecureEdgeTerminationPolicy: Allow

@@ -29,7 +29,7 @@ export const createApolloServer = async function (app: Express, config: Config) 
         serviceCreator: createKeycloakCRUDService(authConfig),
         dataProviderCreator: createMongoDbProvider(db)
     });
-    // TODO enable custom resolvers
+    
     const mergedResolvers: any = GMR.merge([resolvers, customResolvers]);
     let apolloConfig: ApolloServerExpressConfig = {
         typeDefs: typeDefs,

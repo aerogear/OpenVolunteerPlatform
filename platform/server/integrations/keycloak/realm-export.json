@@ -723,14 +723,12 @@
     {
       "id": "9e4ad964-80b3-4daf-8917-7801f892ceef",
       "clientId": "open-volunteer-platform-public",
-      "rootUrl": "localhost:8100",
-      "baseUrl": "localhost:8100",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "http://localhost*"
+        "*"
       ],
       "webOrigins": [
         "*"

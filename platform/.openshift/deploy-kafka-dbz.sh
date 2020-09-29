@@ -1,0 +1,1 @@
+oc process -f kafka-debezium.yml | oc create -f -

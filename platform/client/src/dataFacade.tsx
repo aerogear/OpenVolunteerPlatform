@@ -12,6 +12,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   GraphbackDateTime: Date;
+  GraphbackJSON: any;
   GraphbackObjectID: string;
 };
 
@@ -55,6 +56,19 @@ export type CreateDistributionCentreInput = {
   long?: Maybe<Scalars['Float']>;
 };
 
+export type CreatePartialDistributionCentreInput = {
+  _id: Scalars['GraphbackObjectID'];
+  name: Scalars['String'];
+};
+
+export type CreatePartialVolunteerInput = {
+  _id: Scalars['GraphbackObjectID'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  email: Scalars['String'];
+  username: Scalars['String'];
+};
+
 export type CreateProductInput = {
   _id?: Maybe<Scalars['GraphbackObjectID']>;
   label: Scalars['String'];
@@ -95,6 +109,15 @@ export type CreateVolunteerActionProductInput = {
   _id?: Maybe<Scalars['GraphbackObjectID']>;
   volunteerActionId?: Maybe<Scalars['GraphbackObjectID']>;
   productId?: Maybe<Scalars['GraphbackObjectID']>;
+};
+
+export type CreateVolunteerEntryInput = {
+  _id?: Maybe<Scalars['GraphbackObjectID']>;
+  volunteer: CreatePartialVolunteerInput;
+  distributionCentre: CreatePartialDistributionCentreInput;
+  volunteerActions?: Maybe<Array<Maybe<Scalars['GraphbackJSON']>>>;
+  checkedInAt: Scalars['GraphbackDateTime'];
+  checkedOutAt?: Maybe<Scalars['GraphbackDateTime']>;
 };
 
 export type CreateVolunteerInput = {
@@ -226,6 +249,7 @@ export type GraphbackDateTimeInput = {
 };
 
 
+
 export type GraphbackObjectIdInput = {
   ne?: Maybe<Scalars['GraphbackObjectID']>;
   eq?: Maybe<Scalars['GraphbackObjectID']>;
@@ -268,6 +292,19 @@ export type MutateDistributionCentreInput = {
   long?: Maybe<Scalars['Float']>;
 };
 
+export type MutatePartialDistributionCentreInput = {
+  _id?: Maybe<Scalars['GraphbackObjectID']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type MutatePartialVolunteerInput = {
+  _id?: Maybe<Scalars['GraphbackObjectID']>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+};
+
 export type MutateProductInput = {
   _id: Scalars['GraphbackObjectID'];
   label?: Maybe<Scalars['String']>;
@@ -304,6 +341,15 @@ export type MutateVolunteerActionInput = {
   distributionCentreId?: Maybe<Scalars['GraphbackObjectID']>;
 };
 
+export type MutateVolunteerEntryInput = {
+  _id: Scalars['GraphbackObjectID'];
+  volunteer?: Maybe<MutatePartialVolunteerInput>;
+  distributionCentre?: Maybe<MutatePartialDistributionCentreInput>;
+  volunteerActions?: Maybe<Scalars['GraphbackJSON']>;
+  checkedInAt?: Maybe<Scalars['GraphbackDateTime']>;
+  checkedOutAt?: Maybe<Scalars['GraphbackDateTime']>;
+};
+
 export type MutateVolunteerInput = {
   _id: Scalars['GraphbackObjectID'];
   firstName?: Maybe<Scalars['String']>;
@@ -338,6 +384,8 @@ export type Mutation = {
   updateProduct?: Maybe<Product>;
   createDailyActionPlan?: Maybe<DailyActionPlan>;
   updateDailyActionPlan?: Maybe<DailyActionPlan>;
+  createVolunteerEntry?: Maybe<VolunteerEntry>;
+  updateVolunteerEntry?: Maybe<VolunteerEntry>;
 };
 
 
@@ -405,6 +453,16 @@ export type MutationUpdateDailyActionPlanArgs = {
   input: MutateDailyActionPlanInput;
 };
 
+
+export type MutationCreateVolunteerEntryArgs = {
+  input: CreateVolunteerEntryInput;
+};
+
+
+export type MutationUpdateVolunteerEntryArgs = {
+  input: MutateVolunteerEntryInput;
+};
+
 export type OrderByInput = {
   field: Scalars['String'];
   order?: Maybe<SortDirectionEnum>;
@@ -413,6 +471,21 @@ export type OrderByInput = {
 export type PageRequest = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
+};
+
+export type PartialDistributionCentre = {
+  __typename?: 'PartialDistributionCentre';
+  _id: Scalars['GraphbackObjectID'];
+  name: Scalars['String'];
+};
+
+export type PartialVolunteer = {
+  __typename?: 'PartialVolunteer';
+  _id: Scalars['GraphbackObjectID'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  email: Scalars['String'];
+  username: Scalars['String'];
 };
 
 /** @model(delete: false) */
@@ -470,6 +543,7 @@ export type Query = {
   findProducts: ProductResultList;
   getDailyActionPlan?: Maybe<DailyActionPlan>;
   findDailyActionPlans: DailyActionPlanResultList;
+  getVolunteerEntry?: Maybe<VolunteerEntry>;
 };
 
 
@@ -556,6 +630,11 @@ export type QueryFindDailyActionPlansArgs = {
   orderBy?: Maybe<OrderByInput>;
 };
 
+
+export type QueryGetVolunteerEntryArgs = {
+  id: Scalars['GraphbackObjectID'];
+};
+
 /** @model(delete: false) */
 export type Recipient = Address & {
   __typename?: 'Recipient';
@@ -632,6 +711,22 @@ export type StringInput = {
   contains?: Maybe<Scalars['String']>;
   startsWith?: Maybe<Scalars['String']>;
   endsWith?: Maybe<Scalars['String']>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  newVolunteerEntry: VolunteerEntry;
+  updatedVolunteerEntry: VolunteerEntry;
+};
+
+
+export type SubscriptionNewVolunteerEntryArgs = {
+  filter?: Maybe<VolunteerEntrySubscriptionFilter>;
+};
+
+
+export type SubscriptionUpdatedVolunteerEntryArgs = {
+  filter?: Maybe<VolunteerEntrySubscriptionFilter>;
 };
 
 /** @model(delete: false) */
@@ -763,6 +858,31 @@ export type VolunteerActionResultList = {
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   count?: Maybe<Scalars['Int']>;
+};
+
+/** @model(create: true, update: true, delete: false, find: false, subCreate: true, subUpdate: true, subDelete: false) */
+export type VolunteerEntry = {
+  __typename?: 'VolunteerEntry';
+  _id: Scalars['GraphbackObjectID'];
+  /** Volunteer details. This is a partial volunteer object so that we have the info in one go in the UI */
+  volunteer: PartialVolunteer;
+  /** Distribution centre details. This is a partial object so that we have the info in one go in the UI */
+  distributionCentre: PartialDistributionCentre;
+  /** Objects representing the number of deliveries that will be done following this entry. */
+  volunteerActions?: Maybe<Array<Maybe<Scalars['GraphbackJSON']>>>;
+  /** The time the volunteer checked in the distribution centre */
+  checkedInAt: Scalars['GraphbackDateTime'];
+  /** The time the volunteer checked out the distribution centre */
+  checkedOutAt?: Maybe<Scalars['GraphbackDateTime']>;
+};
+
+export type VolunteerEntrySubscriptionFilter = {
+  and?: Maybe<Array<VolunteerEntrySubscriptionFilter>>;
+  or?: Maybe<Array<VolunteerEntrySubscriptionFilter>>;
+  not?: Maybe<VolunteerEntrySubscriptionFilter>;
+  _id?: Maybe<GraphbackObjectIdInput>;
+  checkedInAt?: Maybe<GraphbackDateTimeInput>;
+  checkedOutAt?: Maybe<GraphbackDateTimeInput>;
 };
 
 export type VolunteerFilter = {
@@ -903,6 +1023,23 @@ export type DailyActionPlanFieldsFragment = (
 export type DailyActionPlanExpandedFieldsFragment = (
   { __typename?: 'DailyActionPlan' }
   & Pick<DailyActionPlan, '_id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned' | 'numberOfRecipients'>
+);
+
+export type VolunteerEntryFieldsFragment = (
+  { __typename?: 'VolunteerEntry' }
+  & Pick<VolunteerEntry, '_id' | 'volunteerActions' | 'checkedInAt' | 'checkedOutAt'>
+);
+
+export type VolunteerEntryExpandedFieldsFragment = (
+  { __typename?: 'VolunteerEntry' }
+  & Pick<VolunteerEntry, '_id' | 'volunteerActions' | 'checkedInAt' | 'checkedOutAt'>
+  & { volunteer: (
+    { __typename?: 'PartialVolunteer' }
+    & Pick<PartialVolunteer, '_id' | 'firstName' | 'lastName' | 'email' | 'username'>
+  ), distributionCentre: (
+    { __typename?: 'PartialDistributionCentre' }
+    & Pick<PartialDistributionCentre, '_id' | 'name'>
+  ) }
 );
 
 export type FindDistributionCentresQueryVariables = Exact<{
@@ -1129,6 +1266,19 @@ export type GetDailyActionPlanQuery = (
   )> }
 );
 
+export type GetVolunteerEntryQueryVariables = Exact<{
+  id: Scalars['GraphbackObjectID'];
+}>;
+
+
+export type GetVolunteerEntryQuery = (
+  { __typename?: 'Query' }
+  & { getVolunteerEntry?: Maybe<(
+    { __typename?: 'VolunteerEntry' }
+    & VolunteerEntryExpandedFieldsFragment
+  )> }
+);
+
 export type CreateDistributionCentreMutationVariables = Exact<{
   input: CreateDistributionCentreInput;
 }>;
@@ -1296,6 +1446,58 @@ export type UpdateDailyActionPlanMutation = (
     { __typename?: 'DailyActionPlan' }
     & DailyActionPlanFieldsFragment
   )> }
+);
+
+export type CreateVolunteerEntryMutationVariables = Exact<{
+  input: CreateVolunteerEntryInput;
+}>;
+
+
+export type CreateVolunteerEntryMutation = (
+  { __typename?: 'Mutation' }
+  & { createVolunteerEntry?: Maybe<(
+    { __typename?: 'VolunteerEntry' }
+    & VolunteerEntryFieldsFragment
+  )> }
+);
+
+export type UpdateVolunteerEntryMutationVariables = Exact<{
+  input: MutateVolunteerEntryInput;
+}>;
+
+
+export type UpdateVolunteerEntryMutation = (
+  { __typename?: 'Mutation' }
+  & { updateVolunteerEntry?: Maybe<(
+    { __typename?: 'VolunteerEntry' }
+    & VolunteerEntryFieldsFragment
+  )> }
+);
+
+export type NewVolunteerEntrySubscriptionVariables = Exact<{
+  filter?: Maybe<VolunteerEntrySubscriptionFilter>;
+}>;
+
+
+export type NewVolunteerEntrySubscription = (
+  { __typename?: 'Subscription' }
+  & { newVolunteerEntry: (
+    { __typename?: 'VolunteerEntry' }
+    & VolunteerEntryFieldsFragment
+  ) }
+);
+
+export type UpdatedVolunteerEntrySubscriptionVariables = Exact<{
+  filter?: Maybe<VolunteerEntrySubscriptionFilter>;
+}>;
+
+
+export type UpdatedVolunteerEntrySubscription = (
+  { __typename?: 'Subscription' }
+  & { updatedVolunteerEntry: (
+    { __typename?: 'VolunteerEntry' }
+    & VolunteerEntryFieldsFragment
+  ) }
 );
 
 export type FindActiveVolunteerQueryVariables = Exact<{
@@ -1592,6 +1794,33 @@ export const DailyActionPlanExpandedFieldsFragmentDoc = gql`
   numberOfCasesCreated
   numberOfVolunteersAssigned
   numberOfRecipients
+}
+    `;
+export const VolunteerEntryFieldsFragmentDoc = gql`
+    fragment VolunteerEntryFields on VolunteerEntry {
+  _id
+  volunteerActions
+  checkedInAt
+  checkedOutAt
+}
+    `;
+export const VolunteerEntryExpandedFieldsFragmentDoc = gql`
+    fragment VolunteerEntryExpandedFields on VolunteerEntry {
+  _id
+  volunteer {
+    _id
+    firstName
+    lastName
+    email
+    username
+  }
+  distributionCentre {
+    _id
+    name
+  }
+  volunteerActions
+  checkedInAt
+  checkedOutAt
 }
     `;
 export const FindDistributionCentresDocument = gql`
@@ -2105,6 +2334,39 @@ export function useGetDailyActionPlanLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type GetDailyActionPlanQueryHookResult = ReturnType<typeof useGetDailyActionPlanQuery>;
 export type GetDailyActionPlanLazyQueryHookResult = ReturnType<typeof useGetDailyActionPlanLazyQuery>;
 export type GetDailyActionPlanQueryResult = Apollo.QueryResult<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>;
+export const GetVolunteerEntryDocument = gql`
+    query getVolunteerEntry($id: GraphbackObjectID!) {
+  getVolunteerEntry(id: $id) {
+    ...VolunteerEntryExpandedFields
+  }
+}
+    ${VolunteerEntryExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useGetVolunteerEntryQuery__
+ *
+ * To run a query within a React component, call `useGetVolunteerEntryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetVolunteerEntryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetVolunteerEntryQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetVolunteerEntryQuery(baseOptions?: Apollo.QueryHookOptions<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>) {
+        return Apollo.useQuery<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>(GetVolunteerEntryDocument, baseOptions);
+      }
+export function useGetVolunteerEntryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>) {
+          return Apollo.useLazyQuery<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>(GetVolunteerEntryDocument, baseOptions);
+        }
+export type GetVolunteerEntryQueryHookResult = ReturnType<typeof useGetVolunteerEntryQuery>;
+export type GetVolunteerEntryLazyQueryHookResult = ReturnType<typeof useGetVolunteerEntryLazyQuery>;
+export type GetVolunteerEntryQueryResult = Apollo.QueryResult<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>;
 export const CreateDistributionCentreDocument = gql`
     mutation createDistributionCentre($input: CreateDistributionCentreInput!) {
   createDistributionCentre(input: $input) {
@@ -2521,6 +2783,128 @@ export function useUpdateDailyActionPlanMutation(baseOptions?: Apollo.MutationHo
 export type UpdateDailyActionPlanMutationHookResult = ReturnType<typeof useUpdateDailyActionPlanMutation>;
 export type UpdateDailyActionPlanMutationResult = Apollo.MutationResult<UpdateDailyActionPlanMutation>;
 export type UpdateDailyActionPlanMutationOptions = Apollo.BaseMutationOptions<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>;
+export const CreateVolunteerEntryDocument = gql`
+    mutation createVolunteerEntry($input: CreateVolunteerEntryInput!) {
+  createVolunteerEntry(input: $input) {
+    ...VolunteerEntryFields
+  }
+}
+    ${VolunteerEntryFieldsFragmentDoc}`;
+export type CreateVolunteerEntryMutationFn = Apollo.MutationFunction<CreateVolunteerEntryMutation, CreateVolunteerEntryMutationVariables>;
+
+/**
+ * __useCreateVolunteerEntryMutation__
+ *
+ * To run a mutation, you first call `useCreateVolunteerEntryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateVolunteerEntryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createVolunteerEntryMutation, { data, loading, error }] = useCreateVolunteerEntryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateVolunteerEntryMutation(baseOptions?: Apollo.MutationHookOptions<CreateVolunteerEntryMutation, CreateVolunteerEntryMutationVariables>) {
+        return Apollo.useMutation<CreateVolunteerEntryMutation, CreateVolunteerEntryMutationVariables>(CreateVolunteerEntryDocument, baseOptions);
+      }
+export type CreateVolunteerEntryMutationHookResult = ReturnType<typeof useCreateVolunteerEntryMutation>;
+export type CreateVolunteerEntryMutationResult = Apollo.MutationResult<CreateVolunteerEntryMutation>;
+export type CreateVolunteerEntryMutationOptions = Apollo.BaseMutationOptions<CreateVolunteerEntryMutation, CreateVolunteerEntryMutationVariables>;
+export const UpdateVolunteerEntryDocument = gql`
+    mutation updateVolunteerEntry($input: MutateVolunteerEntryInput!) {
+  updateVolunteerEntry(input: $input) {
+    ...VolunteerEntryFields
+  }
+}
+    ${VolunteerEntryFieldsFragmentDoc}`;
+export type UpdateVolunteerEntryMutationFn = Apollo.MutationFunction<UpdateVolunteerEntryMutation, UpdateVolunteerEntryMutationVariables>;
+
+/**
+ * __useUpdateVolunteerEntryMutation__
+ *
+ * To run a mutation, you first call `useUpdateVolunteerEntryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateVolunteerEntryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateVolunteerEntryMutation, { data, loading, error }] = useUpdateVolunteerEntryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateVolunteerEntryMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVolunteerEntryMutation, UpdateVolunteerEntryMutationVariables>) {
+        return Apollo.useMutation<UpdateVolunteerEntryMutation, UpdateVolunteerEntryMutationVariables>(UpdateVolunteerEntryDocument, baseOptions);
+      }
+export type UpdateVolunteerEntryMutationHookResult = ReturnType<typeof useUpdateVolunteerEntryMutation>;
+export type UpdateVolunteerEntryMutationResult = Apollo.MutationResult<UpdateVolunteerEntryMutation>;
+export type UpdateVolunteerEntryMutationOptions = Apollo.BaseMutationOptions<UpdateVolunteerEntryMutation, UpdateVolunteerEntryMutationVariables>;
+export const NewVolunteerEntryDocument = gql`
+    subscription newVolunteerEntry($filter: VolunteerEntrySubscriptionFilter) {
+  newVolunteerEntry(filter: $filter) {
+    ...VolunteerEntryFields
+  }
+}
+    ${VolunteerEntryFieldsFragmentDoc}`;
+
+/**
+ * __useNewVolunteerEntrySubscription__
+ *
+ * To run a query within a React component, call `useNewVolunteerEntrySubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNewVolunteerEntrySubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewVolunteerEntrySubscription({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useNewVolunteerEntrySubscription(baseOptions?: Apollo.SubscriptionHookOptions<NewVolunteerEntrySubscription, NewVolunteerEntrySubscriptionVariables>) {
+        return Apollo.useSubscription<NewVolunteerEntrySubscription, NewVolunteerEntrySubscriptionVariables>(NewVolunteerEntryDocument, baseOptions);
+      }
+export type NewVolunteerEntrySubscriptionHookResult = ReturnType<typeof useNewVolunteerEntrySubscription>;
+export type NewVolunteerEntrySubscriptionResult = Apollo.SubscriptionResult<NewVolunteerEntrySubscription>;
+export const UpdatedVolunteerEntryDocument = gql`
+    subscription updatedVolunteerEntry($filter: VolunteerEntrySubscriptionFilter) {
+  updatedVolunteerEntry(filter: $filter) {
+    ...VolunteerEntryFields
+  }
+}
+    ${VolunteerEntryFieldsFragmentDoc}`;
+
+/**
+ * __useUpdatedVolunteerEntrySubscription__
+ *
+ * To run a query within a React component, call `useUpdatedVolunteerEntrySubscription` and pass it any options that fit your needs.
+ * When your component renders, `useUpdatedVolunteerEntrySubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUpdatedVolunteerEntrySubscription({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useUpdatedVolunteerEntrySubscription(baseOptions?: Apollo.SubscriptionHookOptions<UpdatedVolunteerEntrySubscription, UpdatedVolunteerEntrySubscriptionVariables>) {
+        return Apollo.useSubscription<UpdatedVolunteerEntrySubscription, UpdatedVolunteerEntrySubscriptionVariables>(UpdatedVolunteerEntryDocument, baseOptions);
+      }
+export type UpdatedVolunteerEntrySubscriptionHookResult = ReturnType<typeof useUpdatedVolunteerEntrySubscription>;
+export type UpdatedVolunteerEntrySubscriptionResult = Apollo.SubscriptionResult<UpdatedVolunteerEntrySubscription>;
 export const FindActiveVolunteerDocument = gql`
     query findActiveVolunteer($username: String!) {
   findVolunteers(filter: {username: {eq: $username}}, page: {limit: 1}) {

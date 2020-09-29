@@ -1,20 +1,61 @@
 version: '3'
 services:
   mongodb:
-        image: centos/mongodb-34-centos7
+        image: bitnami/mongodb:latest
         container_name: "mongodb"
         environment:
-          - MONGODB_USER=user
+          - MONGODB_USERNAME=user
           - MONGODB_PASSWORD=password
-          - MONGODB_ADMIN_PASSWORD=password
+          - MONGODB_ROOT_PASSWORD=password
           - MONGODB_DATABASE=showcase
+          - MONGODB_REPLICA_SET_MODE=primary
+          - MONGODB_ADVERTISED_HOSTNAME=mongodb
+          - MONGODB_REPLICA_SET_KEY=replicasetkey123
         ports:
             - 27017:27017
   keycloak:
-    image: jboss/keycloak:3.4.3.Final
+    image: quay.io/keycloak/keycloak:9.0.3
     ports:
       - "8080:8080"
     environment:
       DB_VENDOR: h2
       KEYCLOAK_USER: ovp-admin
       KEYCLOAK_PASSWORD: ovp-admin
+  zookeeper:
+    image: debezium/zookeeper:1.3
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+  kafka:
+    image: debezium/kafka:1.3
+    ports:
+      - 9092:9092
+    links:
+      - zookeeper
+    environment:
+      - ZOOKEEPER_CONNECT=zookeeper:2181
+  connect:
+    image: debezium/connect:1.3
+    ports:
+      - 8083:8083
+    links:
+      - kafka
+      - mongodb
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_connect_statuses
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    ports:
+      - 9000:9000
+    links:
+      - kafka
+      - mongodb
+    environment:
+      - KAFKA_BROKERCONNECT=kafka:9092
+      - SERVER_SERVLET_CONTEXTPATH=/
+      - JVM_OPTS=-Xms32M -Xmx64M

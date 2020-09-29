@@ -255,6 +255,32 @@ fragment DailyActionPlanExpandedFields on DailyActionPlan {
 
 } 
 
+fragment VolunteerEntryFields on VolunteerEntry {
+   _id
+   volunteerActions
+   checkedInAt
+   checkedOutAt
+
+} 
+
+fragment VolunteerEntryExpandedFields on VolunteerEntry {
+   _id
+   volunteer {
+      _id
+      firstName
+      lastName
+      email
+      username
+   }
+   distributionCentre {
+      _id
+      name
+   }   volunteerActions
+   checkedInAt
+   checkedOutAt
+
+} 
+
 query findDistributionCentres($filter: DistributionCentreFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findDistributionCentres(filter: $filter, page: $page, orderBy: $orderBy) {
       items {
@@ -374,6 +400,12 @@ query getDailyActionPlan($id: GraphbackObjectID!) {
     }
   }
 
+query getVolunteerEntry($id: GraphbackObjectID!) {
+    getVolunteerEntry(id: $id) {
+      ...VolunteerEntryExpandedFields
+    }
+  }
+
 mutation createDistributionCentre($input: CreateDistributionCentreInput!) {
   createDistributionCentre(input: $input) {
       ...DistributionCentreFields
@@ -463,3 +495,30 @@ mutation updateDailyActionPlan($input: MutateDailyActionPlanInput!) {
       ...DailyActionPlanFields
   }
 }
+
+
+mutation createVolunteerEntry($input: CreateVolunteerEntryInput!) {
+  createVolunteerEntry(input: $input) {
+      ...VolunteerEntryFields
+  }
+}
+
+
+mutation updateVolunteerEntry($input: MutateVolunteerEntryInput!) {
+  updateVolunteerEntry(input: $input) {
+      ...VolunteerEntryFields
+  }
+}
+
+
+subscription newVolunteerEntry($filter: VolunteerEntrySubscriptionFilter) {
+  newVolunteerEntry(filter: $filter) {
+      ...VolunteerEntryFields
+  }
+} 
+
+subscription updatedVolunteerEntry($filter: VolunteerEntrySubscriptionFilter) {
+  updatedVolunteerEntry(filter: $filter) {
+      ...VolunteerEntryFields
+  }
+} 

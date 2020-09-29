@@ -15,7 +15,7 @@ const axios = require('axios')
 const realmToImport = require('./realm-export.json')
 
 // the keycloak server we're working against
-const KEYCLOAK_URL = 'http://localhost:8080/auth'
+const KEYCLOAK_URL = process.env.KEYCLOAK_URL || 'http://localhost:8080/auth'
 
 // name of the realm
 const APP_REALM = 'open-volunteer-platform'
@@ -24,8 +24,8 @@ const APP_REALM = 'open-volunteer-platform'
 const ADMIN_REALM = 'master'
 
 const RESOURCE = 'admin-cli'
-const ADMIN_USERNAME = 'ovp-admin'
-const ADMIN_PASSWORD = 'ovp-admin'
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'ovp-admin'
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ovp-admin'
 let token = ''
 
 // The keycloak client used by the sample app
