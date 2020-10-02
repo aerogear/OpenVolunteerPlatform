@@ -1,64 +1,63 @@
 ## OpenShift templates
 
-### Starter App template
+### Steps
 
-Name: `datasync-app-template.yml`
+1. Create new project: `oc new-project <project-name>`
+2. Deploy Mongo: `./deploy-mongo.sh`
+3. Deploy Kafka if needed: `./deploy-kafka-dbz.sh`
+4. Deploy Keycloak if needed: `./deploy-keycloak.sh`
+5. Deploy OVP: `./deploy-ovp.sh`. 
+   
+### Debezium connector initialisation in openshift 
 
-This template starts datasync container on top of the mongodb instances:
+Retrieve pods in the current project
 
-#### Prerequisites
-
-1. Running MongoDB instance 
-2. Connection details to MongoDB server
-
-#### Steps
-
-1. Add template to your openshift 
-2. Provide MongoDB connection details
-3. Wait for the pods to start
-
-# Deploying Server with AMQ
-
-Prerequisites
-
-* AMQ Online is installed in the cluster
-
-
-This section describes how to deploy the application in an OpenShift cluster by using the supplied `amq-topics.yml` template file.
-* The template is already prefilled with all of the necessary values that can be inspected
-* The only field you might want to change is `AMQ Messaging User Password`.
-  * The default value is `Password1` in base64 encoding
-  * The value *must* be base64 encoded
-  * A custom value can be created in the terminal using `$ echo <password> | base64` 
-* Execute template on your openshift instance by `oc process -f amq-topics.yml | oc create -f -`
-
-The hostname for the AMQ Online Broker is only made available after the resources from the the template have been provisioned. One more step is needed to supply extra environment variables to running server.
-
-* From the terminal, ensure you have the correct namespace selected.
-
-```
-oc project <project where template was provisioned>
+```bash
+oc get pods
+NAME                       READY     STATUS    RESTARTS   AGE
+debezium-connect-1-r6p22   1/1       Running   0          2m
+kafdrop-1-bt8g7            1/1       Running   0          2m
+kafka-1-dhl9w              1/1       Running   0          2m
+mongodb-1-tnckz            1/1       Running   0          17m
+zookeeper-1-26lg2          1/1       Running   0          2m
 ```
 
-* Update the deployment to add the `MQTT_HOST` variable. 
 
-```
-oc get addressspace datasync -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].serviceHost}'
+Register the Debezium Connector to run against the deployed MongoDB instance:
+
+
+```bash
+oc exec -i -c kafka <kafka-pod-name> -- curl -X POST \
+    -H "Accept:application/json" \
+    -H "Content-Type:application/json" \
+    http://debezium-connect:8083/connectors -d @- <<'EOF'
+{
+    "name": "ovp",
+    "config": {
+        "connector.class" : "io.debezium.connector.mongodb.MongoDbConnector",
+        "tasks.max" : "1",
+        "mongodb.hosts" : "rs0/mongodb:27017",
+        "mongodb.name" : "dbserver1",
+        "mongodb.user" : "root",
+        "mongodb.password" : "password",
+        "database.whitelist" : "showcase",
+        "database.history.kafka.bootstrap.servers" : "kafka:9092",
+        "transforms" : "unwrap",
+        "transforms.unwrap.type": "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState",
+        "transforms.unwrap.drop.tombstones": false,
+        "transforms.unwrap.operation.header": true
+    }
+}
+EOF
 ```
 
-If you want to use service outside the OpenShift cluster please request external URL:
-```
-oc get addressspace datasync -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].externalHost}'
+### See Routes
+
+```bash
+oc get routes
 ```
 
-Provide set of the environment variables required to connect to the running AMQ
-
-```
-MQTT_HOST=messaging-nj2y0929dk-redhat-rhmi-amq-online.apps.youropenshift.io 
-MQTT_PORT=443 
-MQTT_PASSWORD=Password1 
-MQTT_USERNAME=messaging-user 
-MQTT_PROTOCOL=tls 
-```
-
-Check `../server/.env` file for all available variables
+The `open-volunteer-platform` route will contain two endpoints. 
+  - `/admin` to see the admin interfac
+  - `/graphql` the GraphQL API 
+See [Server Readme](../server/README.md) for more info on how to interact with API. 
