@@ -4,15 +4,7 @@ import { resolve } from 'path';
 const MongoClient = require('mongodb').MongoClient;
 
 export async function connect(config: Config) {
-  // TODO config
-  let url: string;
-
-  if (config.db.user && config.db.password) {
-    url = `mongodb://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.database}`;
-  } else {
-    url = `mongodb://${config.db.host}:${config.db.port}/${config.db.database}`
-  }
-
+  const url: string = config.db.connection;
   if (process.env.BACKUP_DEMO_DATA === 'true') {
     const backup = require('mongodb-backup');
     backup({

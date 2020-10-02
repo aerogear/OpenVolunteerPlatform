@@ -1,1 +1,1 @@
-oc process -f ovp.yml | oc create -f -
+oc process -p KAFKA_PORT="${KAFKA_PORT}" -p KAFKA_HOST="${KAFKA_HOST}" -p MONGO_CONNECTION="${MONGO_CONNECTION}" -p MONGO_COLLECTION="${MONGO_COLLECTION}" -f ovp.yml | oc create -f -

@@ -62,16 +62,14 @@ objects:
                 path: "keycloak.json"         
         containers:
         - env:
-            - name: MONGO_HOST
-              value: mongodb
-            - name: MONGO_USER
-              value: user
-            - name: MONGO_PASSWORD
-              value: password
+            - name: MONGO_CONNECTION
+              value: "${MONGO_CONNECTION}"
+            - name: MONGO_COLLECTION
+              value: "${MONGO_COLLECTION}" 
             - name: KAFKA_HOST
-              value: kafka
+              value: "${KAFKA_HOST}"
             - name: KAFKA_PORT
-              value: "9092" 
+              value: "${KAFKA_PORT}" 
             - name: NODE_ENV
               value: development # To activate playground for demo   
           image: quay.io/graphql/ovp-debezium # TODO change image name
@@ -137,3 +135,28 @@ objects:
     tls:
       termination: edge
       insecureEdgeTerminationPolicy: Allow
+
+parameters:
+  - name: MONGO_COLLECTION
+    displayName: "MongoDB database name"
+    description: "Database name that will be used."
+    value: showcase
+    required: true
+
+  - name: MONGO_CONNECTION
+    displayName: "MongoDB Connection String"
+    description: "MongoDB Connection String."
+    value: mongodb://user:password@127.0.0.1:27017/showcase
+    required: true
+    
+  - name: KAFKA_HOST
+    displayName: "Kafka host"
+    description: "Kafka host that the service will connect to."
+    value: kafka
+    required: true
+
+  - name: KAFKA_PORT
+    displayName: "Kafka port"
+    description: "Kafka port that Kafka connection will be establised."
+    value: "9092"
+    required: true  
