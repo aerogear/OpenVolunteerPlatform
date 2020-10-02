@@ -185,7 +185,7 @@ oc exec -i -c kafka <kafka-pod-name> -- curl -X POST \
         "tasks.max" : "1",
         "mongodb.hosts" : "rs0/mongodb:27017",
         "mongodb.name" : "dbserver1",
-        "mongodb.user" : "root",
+        "mongodb.user" : "user",
         "mongodb.password" : "password",
         "database.whitelist" : "showcase",
         "database.history.kafka.bootstrap.servers" : "kafka:9092",
