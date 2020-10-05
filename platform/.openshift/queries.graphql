@@ -1,0 +1,53 @@
+mutation enters {
+  createVolunteerEntry(
+    input: {
+      checkedInAt: "2020-10-02T13:40:54.927Z"
+      volunteerActions: []
+      volunteer: {
+        _id: "5ef9c631da553f262c7a95dc"
+        firstName: "Wojciech"
+        lastName: "Trocki"
+        email: "wtrocki@gmail.com"
+        username: "wtrocki"
+      }
+      distributionCentre: {
+        _id: "5ef740ac12f76aecc84af1f2"
+        name: "Berlin City Hall"
+      }
+    }
+  ) {
+    _id
+  }
+}
+
+mutation PickingVolunteerEntry {
+  updateVolunteerEntry(
+    input: {
+      _id: "5f772e5c8c274bc5a8d8c070",
+      volunteerActions: [
+        {
+          _id: "5efa273a93802a8fb60e8ac0",
+          title: "Delivery to Childcare Center, Munze"
+        },
+        {
+          _id: "5ef9c4f9da553f262c7a95d7",
+          title: "Delivery to Eberswalde (Andi). "
+        }
+      ]
+    }
+  ) {
+    _id,
+    volunteerActions
+  }
+}
+
+mutation leaveUpdateVolunteerEntry{
+  updateVolunteerEntry(
+    input: {
+      _id: "5f772e5c8c274bc5a8d8c070",
+      checkedOutAt: "2020-10-02T14:00:54.927Z"
+    }
+  ) {
+    _id
+  }
+}
