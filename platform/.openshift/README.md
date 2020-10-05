@@ -55,12 +55,12 @@ oc exec -i -c kafka <kafka-pod-name> -- curl -X POST \
     "config": {
         "connector.class" : "io.debezium.connector.mongodb.MongoDbConnector",
         "tasks.max" : "1",
-        "mongodb.hosts" : "rs0/mongodb:27017",
+        "mongodb.hosts" : "<mongo-host>",
         "mongodb.name" : "dbserver1",
-        "mongodb.user" : "root",
-        "mongodb.password" : "password",
-        "database.whitelist" : "showcase",
-        "database.history.kafka.bootstrap.servers" : "kafka:9092",
+        "mongodb.user" : "<mongo-user>",
+        "mongodb.password" : "<mongo-password>",
+        "database.whitelist" : "<mongo-database>",
+        "database.history.kafka.bootstrap.servers" : "<kafka-url>",
         "transforms" : "unwrap",
         "transforms.unwrap.type": "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState",
         "transforms.unwrap.drop.tombstones": false,
@@ -70,6 +70,13 @@ oc exec -i -c kafka <kafka-pod-name> -- curl -X POST \
 EOF
 ```
 
+Where:
+    - `<mongo-host>` is the MongoDB replica set host
+    - `<mongo-user>` is the MongoDB username
+    - `<mongo-password>` is the MongoDB password
+    - `<mongo-database>` is the MongoDB database
+    - `<kafka-url>` is the Kafka bootstrap server url
+
 ### See Routes
 
 ```bash
@@ -78,5 +85,6 @@ oc get routes
 
 The `open-volunteer-platform` route will contain two endpoints. 
   - `/admin` to see the admin interfac
-  - `/graphql` the GraphQL API 
+  - `/graphql` the GraphQL API
+  - `/` is the client APP 
 See [Server Readme](../server/README.md) for more info on how to interact with API. 

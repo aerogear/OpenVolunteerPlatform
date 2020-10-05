@@ -39,7 +39,9 @@ export const ProfilePage: React.FC<RouteComponentProps> = ({ match }) => {
     </IonCard>
   );
 
-  const submit = (model: any) => {
+  const submit = (value: any) => {
+    const { __typename, ...model} = value;
+    
     if (createVolunteer) {
       createVolunteerMutation({
         variables: { input: model }
