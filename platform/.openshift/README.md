@@ -14,8 +14,7 @@
     export MONGO_CONNECTION=<mongo-database>
     export MONGO_COLLECTION=<mongo-connection-string>
     export KAFKA_HOST=<kafka-host>
-    export KAFKA-PORT=<kafka-port>
-    ./deploy-ovp.sh
+    export KAFKA_PORT=<kafka-port>
     ```
     where: 
         - `<mongo-database>` is your Mongo database name, defaults to `showcase`
