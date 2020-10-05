@@ -217,7 +217,7 @@ Once that is done, we can create the config maps from the two files by using the
 
 
 ```bash
-oc create configmap keycloak-config --from-file=server=src/config/keycloak.json --from-file=client=../client-admin/public/keycloak.json
+oc create configmap keycloak-config --from-file=server=src/config/keycloak.json --from-file=admin=../client-admin/public/keycloak.json --from-file=client=../client/public/keycloak.json
 ```
 
 Verify that your config map:

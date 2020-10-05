@@ -35,6 +35,7 @@ COPY --from=compiler /usr/src/app/dist app
 COPY --from=builder  /usr/src/node_modules node_modules 
 
 COPY admin admin
+COPY website website
 COPY src/config/keycloak.json app/config
 COPY mongodump mongodump
 COPY model model

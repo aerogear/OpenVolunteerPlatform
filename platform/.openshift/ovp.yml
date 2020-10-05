@@ -59,7 +59,13 @@ objects:
               name: keycloak-config
               items:
               - key: "client"
-                path: "keycloak.json"         
+                path: "keycloak.json"
+          - name: keycloak-admin
+            configMap:
+              name: keycloak-config
+              items:
+              - key: "admin"
+                path: "keycloak.json"               
         containers:
         - env:
             - name: MONGO_CONNECTION
@@ -95,8 +101,12 @@ objects:
               mountPath: "/usr/src/app/config/keycloak.json"
               readOnly: false
               subPath: keycloak.json
-            - name: keycloak-client
+            - name: keycloak-admin
               mountPath: "/usr/src/admin/keycloak.json"
+              subPath: keycloak.json
+              readOnly: false
+            - name: keycloak-client
+              mountPath: "/usr/src/website/keycloak.json"
               subPath: keycloak.json
               readOnly: false   
     triggers:
