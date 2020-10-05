@@ -68,7 +68,7 @@ Example docker-compose that can be used to launch OpenVolunter application
 version: '3'
 services:
   mongodb:
-        image: bitnami/mongodb:latest
+        image: bitnami/mongodb:4.2
         container_name: "mongodb"
         environment:
           - MONGODB_USERNAME=user
