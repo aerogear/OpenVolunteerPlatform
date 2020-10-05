@@ -13,9 +13,9 @@ The service exposes a:
 - a GraphQL API playground in `/graphql` endpoint
 
 
-### Before start the recording
+### Before starting the recording
 
-1. Open the client application in one browser tab :
+#### Open the client application in one browser tab :
 
 `https://open-volunteer-platform-ovp.apps.helios.intlyqe.com`
 
@@ -26,8 +26,11 @@ use: `wtrocki` as both the username and password.
 
 click on login and you'll have the client application opened. 
 
+#### Open Kafdrop on another browser tab
 
-2. On private mode or on another browser 
+`https://kafdrop-ovp.apps.helios.intlyqe.com/topic/dbserver1.showcase.volunteerentry/messages?partition=0&offset=0&count=100`
+
+### On private mode or on another browser 
   1. open the admin application (make sure that the screen is side by side with the client app to avoid switching):
 
 
@@ -123,7 +126,9 @@ Go the admin actions list, stay on this page.
 
 (Switch to the playground at the same time). 
 
-1. Then create a new volunteer entry by clicking on the `enters`, you can click it several times to simulate more entries being created. 
+### Then create a new volunteer entry 
+
+By clicking on the `enters`, you can click it several times to simulate more entries being created. 
 
 At this point a toast will appear showing the volunteer entry.
 
@@ -140,14 +145,30 @@ These two fields will be lively updated in the next steps.
 >NOTE: Update the entry `_id` for the `pickingVolunteerEntry` and `leaveUpdateVolunteerEntry` so that it corresponds to the last entry. (This should happen on the playground). 
 
 
-2. On the playgroung
+### Pickup deliveries 
+
+On the playgroung
  
 After updating the `_id` for the `pickingVolunteerEntry`, click on it to update the number of picked volunteer actions. 
 
 Once done, this should update the `actionsCount` to `2`.
 
-3. While still on the playground. 
+### Checkout the distribution centre 
+
+While still on the playground. 
 
 After updating the `_id` for the `leaveUpdateVolunteerEntry`, click on it to update the number of picked volunteer actions. 
 
 Once done, this should update the `checkedOutAt` field on the form plus show a toast that the volunteer has checked out.
+
+
+## Show Kafdrop Before finishing the recording
+
+On this tab:
+
+`https://kafdrop-ovp.apps.helios.intlyqe.com/topic/dbserver1.showcase.volunteerentry/messages?partition=0&offset=0&count=100`
+
+You can talk a little that the last three messages and how their Debezium created and defined structure (CloudEvents) 
+
+Then go back to the Kafdrop home page and show the rest of the topics created by Debezium. 
+
