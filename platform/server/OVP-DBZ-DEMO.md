@@ -120,7 +120,7 @@ On the client app, choose one task and change it's status to show that a volunte
 Go back to the admin `actions` page and show that this task is completed.
 
 
-### Lie updates
+### Live updates
 
 Go the admin actions list, stay on this page. 
 
