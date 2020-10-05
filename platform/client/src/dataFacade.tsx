@@ -113,10 +113,10 @@ export type CreateVolunteerActionProductInput = {
 
 export type CreateVolunteerEntryInput = {
   _id?: Maybe<Scalars['GraphbackObjectID']>;
-  volunteer: CreatePartialVolunteerInput;
-  distributionCentre: CreatePartialDistributionCentreInput;
+  volunteer?: Maybe<CreatePartialVolunteerInput>;
+  distributionCentre?: Maybe<CreatePartialDistributionCentreInput>;
   volunteerActions?: Maybe<Array<Maybe<Scalars['GraphbackJSON']>>>;
-  checkedInAt: Scalars['GraphbackDateTime'];
+  checkedInAt?: Maybe<Scalars['GraphbackDateTime']>;
   checkedOutAt?: Maybe<Scalars['GraphbackDateTime']>;
 };
 
@@ -865,13 +865,13 @@ export type VolunteerEntry = {
   __typename?: 'VolunteerEntry';
   _id: Scalars['GraphbackObjectID'];
   /** Volunteer details. This is a partial volunteer object so that we have the info in one go in the UI */
-  volunteer: PartialVolunteer;
+  volunteer?: Maybe<PartialVolunteer>;
   /** Distribution centre details. This is a partial object so that we have the info in one go in the UI */
-  distributionCentre: PartialDistributionCentre;
+  distributionCentre?: Maybe<PartialDistributionCentre>;
   /** Objects representing the number of deliveries that will be done following this entry. */
   volunteerActions?: Maybe<Array<Maybe<Scalars['GraphbackJSON']>>>;
   /** The time the volunteer checked in the distribution centre */
-  checkedInAt: Scalars['GraphbackDateTime'];
+  checkedInAt?: Maybe<Scalars['GraphbackDateTime']>;
   /** The time the volunteer checked out the distribution centre */
   checkedOutAt?: Maybe<Scalars['GraphbackDateTime']>;
 };
@@ -1033,13 +1033,13 @@ export type VolunteerEntryFieldsFragment = (
 export type VolunteerEntryExpandedFieldsFragment = (
   { __typename?: 'VolunteerEntry' }
   & Pick<VolunteerEntry, '_id' | 'volunteerActions' | 'checkedInAt' | 'checkedOutAt'>
-  & { volunteer: (
+  & { volunteer?: Maybe<(
     { __typename?: 'PartialVolunteer' }
     & Pick<PartialVolunteer, '_id' | 'firstName' | 'lastName' | 'email' | 'username'>
-  ), distributionCentre: (
+  )>, distributionCentre?: Maybe<(
     { __typename?: 'PartialDistributionCentre' }
     & Pick<PartialDistributionCentre, '_id' | 'name'>
-  ) }
+  )> }
 );
 
 export type FindDistributionCentresQueryVariables = Exact<{

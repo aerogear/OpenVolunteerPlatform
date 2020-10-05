@@ -185,7 +185,7 @@ oc exec -i -c kafka <kafka-pod-name> -- curl -X POST \
         "tasks.max" : "1",
         "mongodb.hosts" : "rs0/mongodb:27017",
         "mongodb.name" : "dbserver1",
-        "mongodb.user" : "user",
+        "mongodb.user" : "root",
         "mongodb.password" : "password",
         "database.whitelist" : "showcase",
         "database.history.kafka.bootstrap.servers" : "kafka:9092",
@@ -261,7 +261,6 @@ mutation {
     _id
   }
 }
-
 ```
 
 Note the `_id` of the created volunteer entry. We'll use it during update. 

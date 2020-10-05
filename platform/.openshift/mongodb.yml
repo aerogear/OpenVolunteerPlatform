@@ -76,7 +76,7 @@
                 value: mongodb
               - name: MONGODB_REPLICA_SET_KEY
                 value: replicasetkey123
-            image: bitnami/mongodb:latest
+            image: bitnami/mongodb:4.2
             imagePullPolicy: IfNotPresent
             name: mongodb
             readinessProbe:

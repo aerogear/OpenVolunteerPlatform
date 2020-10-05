@@ -1,11 +1,11 @@
 {
-    "name": "ovp",
+    "name": "ovp-1",
     "config": {
         "connector.class" : "io.debezium.connector.mongodb.MongoDbConnector",
         "tasks.max" : "1",
-        "mongodb.hosts" : "rs0/mongodb:27017",
+        "mongodb.hosts" : "mongodb:27017",
         "mongodb.name" : "dbserver1",
-        "mongodb.user" : "user",
+        "mongodb.user" : "root",
         "mongodb.password" : "password",
         "database.whitelist" : "showcase",
         "database.history.kafka.bootstrap.servers" : "kafka:9092",

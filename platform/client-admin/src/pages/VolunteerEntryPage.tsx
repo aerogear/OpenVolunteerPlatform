@@ -16,7 +16,6 @@ import { AutoForm } from 'uniforms-ionic';
 
 export const VolunteerEntryPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const id = match.params.id;
-
   const history = useHistory();
   const { data, loading, error } = useGetVolunteerEntryQuery({ variables: { id } });
   const subscription = useUpdatedVolunteerEntrySubscription({ variables: { filter: { _id: { eq: id } } } });

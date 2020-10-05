@@ -103,10 +103,10 @@ input CreateVolunteerActionProductInput {
 
 input CreateVolunteerEntryInput {
   _id: GraphbackObjectID
-  volunteer: CreatePartialVolunteerInput!
-  distributionCentre: CreatePartialDistributionCentreInput!
+  volunteer: CreatePartialVolunteerInput
+  distributionCentre: CreatePartialDistributionCentreInput
   volunteerActions: [GraphbackJSON]
-  checkedInAt: GraphbackDateTime!
+  checkedInAt: GraphbackDateTime
   checkedOutAt: GraphbackDateTime
 }
 
@@ -643,12 +643,12 @@ type VolunteerEntry {
   """
   Volunteer details. This is a partial volunteer object so that we have the info in one go in the UI
   """
-  volunteer: PartialVolunteer!
+  volunteer: PartialVolunteer
 
   """
   Distribution centre details. This is a partial object so that we have the info in one go in the UI
   """
-  distributionCentre: PartialDistributionCentre!
+  distributionCentre: PartialDistributionCentre
 
   """
   Objects representing the number of deliveries that will be done following this entry.
@@ -656,7 +656,7 @@ type VolunteerEntry {
   volunteerActions: [GraphbackJSON]
 
   """The time the volunteer checked in the distribution centre"""
-  checkedInAt: GraphbackDateTime!
+  checkedInAt: GraphbackDateTime
 
   """The time the volunteer checked out the distribution centre"""
   checkedOutAt: GraphbackDateTime
