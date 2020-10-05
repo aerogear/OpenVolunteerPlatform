@@ -1,7 +1,7 @@
 mutation enters {
   createVolunteerEntry(
     input: {
-      checkedInAt: "2020-10-02T13:40:54.927Z"
+      checkedInAt: "2020-10-05T15:04:11.206Z"
       volunteerActions: []
       volunteer: {
         _id: "5ef9c631da553f262c7a95dc"
@@ -20,7 +20,7 @@ mutation enters {
   }
 }
 
-mutation PickingVolunteerEntry {
+mutation pickingVolunteerEntry {
   updateVolunteerEntry(
     input: {
       _id: "5f772e5c8c274bc5a8d8c070",
@@ -45,7 +45,7 @@ mutation leaveUpdateVolunteerEntry{
   updateVolunteerEntry(
     input: {
       _id: "5f772e5c8c274bc5a8d8c070",
-      checkedOutAt: "2020-10-02T14:00:54.927Z"
+      checkedOutAt: "2020-10-05T15:14:11.900Z"
     }
   ) {
     _id
