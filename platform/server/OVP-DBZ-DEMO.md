@@ -1,5 +1,9 @@
 # Open Volunteer Debezium Demo
 
+Hi. In this part of the demo we going to show you OpenVolunteer Admin Application 
+which is the system that was designed to help organizations with organization of volunteering efforts.
+What we see on the right is the OpenVolunteer Admin panel and on the left we have OpenVolunteer Mobile application.
+
 
 The demo is deployed on: 
 
