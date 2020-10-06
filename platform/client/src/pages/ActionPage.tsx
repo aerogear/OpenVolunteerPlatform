@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   IonPage,
   IonSegment,
@@ -12,17 +12,22 @@ import { Empty, ActionsList, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { useFindMyVolunteerActionsLazyQuery, ActionStatus } from '../dataFacade';
 import { AuthContext } from '../context/AuthContext';
+import { useFindVolunteerActions } from '../datastore/hooks';
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   const { volunteer } = useContext(AuthContext);
-  let [findActions, { data, loading, error, called, refetch }] = useFindMyVolunteerActionsLazyQuery({ fetchPolicy: "network-only" })
+  const { isLoading: loading, error, data } = useFindVolunteerActions({ volunteerId: volunteer?._id, status: ActionStatus.Assigned });
 
-  if (volunteer && !called) {
-    findActions({ variables: { volunteerId: volunteer._id, status: ActionStatus.Assigned } })
-  }
+
+  // useEffect(() => {
+  //   const subscription = subscribeToMore();
+  //   return () => subscription.unsubscribe();
+  // }, [data, subscribeToMore]);
+
   if (error) {
     console.log(error);
   }
+  console.log(data);
 
   if (loading) return <IonLoading
     isOpen={loading}
@@ -30,16 +35,16 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   />;
 
   let content;
-  if (data?.findVolunteerActions?.items.length !== 0) {
-    content = <ActionsList actions={data?.findVolunteerActions.items} />
+  if (data && data.length !== 0) {
+    content = <ActionsList actions={data} />
   } else {
     content = <Empty message={<p>No actions assigned to you! You will be notified about new actions soon</p>} />;
   }
 
   const updateFilter = (e: CustomEvent) => {
-    if (volunteer && refetch) {
-      refetch({ volunteerId: volunteer._id, status: e.detail.value })
-    }
+    // if (volunteer && refetch) {
+    //   refetch({ volunteerId: volunteer._id, status: e.detail.value })
+    // }
   }
 
 

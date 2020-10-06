@@ -6,8 +6,8 @@ import { getAuthHeader } from '../keycloakAuth';
 import { Capacitor } from '@capacitor/core';
 import { InMemoryCache, FetchPolicy, ApolloLink, HttpLink } from '@apollo/client';
 
-let httpUri = 'http://localhost:4000/graphql';
-let wsUri = 'ws://localhost:4000/graphql';
+export let httpUri = 'http://localhost:4000/graphql';
+export let wsUri = 'ws://localhost:4000/graphql';
 
 if (Capacitor.isNative && Capacitor.platform === 'android') {
   httpUri = 'http://10.0.2.2:4000/graphql';
@@ -88,3 +88,5 @@ export const clientConfig = {
   cache: new InMemoryCache(),
   link: authLink.concat(splitLink)
 };
+
+

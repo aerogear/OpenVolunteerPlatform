@@ -1,0 +1,46 @@
+{
+  "VolunteerAction": {
+    "name": "VolunteerAction",
+    "version": 1,
+    "type": "object",
+    "primaryKey": "_id",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "key": "_id",
+        "isRequired": true,
+        "primary": true
+      },
+      "title": {
+        "type": "string",
+        "key": "title",
+        "isRequired": true
+      },
+      "description": {
+        "type": "string",
+        "key": "description"
+      },
+      "status": {
+        "type": "any",
+        "key": "status"
+      },
+      "assignedAt": {
+        "type": "any",
+        "key": "assignedAt"
+      },
+      "completedAt": {
+        "type": "any",
+        "key": "completedAt"
+      },
+      "_createdAt": {
+        "type": "any",
+        "key": "_createdAt"
+      },
+      "_version": {
+        "type": "string",
+        "key": "_version",
+        "isRequired": true
+      }
+    }
+  }
+}

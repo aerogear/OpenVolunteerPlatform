@@ -12,6 +12,7 @@ import { buildGraphbackAPI } from "graphback"
 import { createMongoDbProvider } from "@graphback/runtime-mongo"
 import { authConfig } from './config/auth';
 import GMR from 'graphql-merge-resolvers';
+import { createDataSyncConflictProviderCreator, DataSyncPlugin, ThrowOnConflict } from '@graphback/datasync';
 
 /**
  * Creates Apollo server
@@ -25,11 +26,20 @@ export const createApolloServer = async function (app: Express, config: Config) 
         ]
     })
 
+    const conflictConfig = {
+        enabled: true,
+        // Let's client side to deal with conflict
+        conflictResolution: ThrowOnConflict,
+    };
+
     const { typeDefs, resolvers, contextCreator } = buildGraphbackAPI(modelDefs, {
         serviceCreator: createKeycloakCRUDService(authConfig),
-        dataProviderCreator: createMongoDbProvider(db)
+        dataProviderCreator: createDataSyncConflictProviderCreator(db),
+        plugins: [
+            new DataSyncPlugin({ conflictConfig })
+        ]
     });
-    
+
     const mergedResolvers: any = GMR.merge([resolvers, customResolvers]);
     let apolloConfig: ApolloServerExpressConfig = {
         typeDefs: typeDefs,
