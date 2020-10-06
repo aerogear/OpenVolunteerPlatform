@@ -16,7 +16,7 @@ export default {
     assignVolunteers: async ( _, __, context: GraphbackContext, info: GraphQLResolveInfo ) => {
       const graphback = context.graphback;
 
-      if (!isAuthorizedByRole(["admin"], context)) {
+      if (process.env.NODE_ENV === 'production' && !isAuthorizedByRole(["admin"], context)) {
         // only admin are allowed to create volunteer actions
         throw new UnauthorizedError();
       }
@@ -67,8 +67,8 @@ export default {
       let numberOfCasesCreated = 0;
 
       // The owner that initiated this creation. This is the current signed in user.
-      const owner =
-        context[KEYCLOAK_CONTEXT_KEY].accessToken.content.preferred_username;
+      const token = context[KEYCLOAK_CONTEXT_KEY].accessToken;
+      const owner = token ? token.content.preferred_username : 'ovp-admin';
 
       if (newVolunteers!.length === 0 || newRecipients!.length == 0) {
         // create an empty action since no volunteer or recipients
