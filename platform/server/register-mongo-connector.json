@@ -1,5 +1,5 @@
 {
-    "name": "ovp-1",
+    "name": "ovp",
     "config": {
         "connector.class" : "io.debezium.connector.mongodb.MongoDbConnector",
         "tasks.max" : "1",

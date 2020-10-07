@@ -39,7 +39,7 @@ export class KafkaSubEngine extends PubSubEngine {
 
   public async subscribe(channel: string, onMessage: (...args: any[]) => void, options?: Object): Promise<number> {
     console.info("Subscribing to ", channel)
-    this.consumer = this.consumer || await this.createConsumer(this.options.topic)
+    this.consumer = this.consumer || await this.createConsumer(this.options.topic);
     this.ee.addListener(channel, onMessage)
     this.subIdCounter = this.subIdCounter + 1
     this.subscriptions[this.subIdCounter] = [channel, onMessage]
@@ -91,21 +91,22 @@ export class KafkaSubEngine extends PubSubEngine {
 
   private async createConsumer(topic: string): Promise<Kafka.KafkaConsumer> {
     // Create a group for each instance. The consumer will receive all messages from the topic
-    const groupId = Math.random().toString(32);
+    const groupId = `ovp-${Math.random().toString(32)}`;
+    if (!this.consumer) {
+      this.consumer = new Kafka.KafkaConsumer({
+        'group.id': `kafka-pubsub-${groupId}`,
+        'metadata.broker.list': this.brokerList()
+      },
+        { "auto.offset.reset": "latest" });
+    }
 
-    const consumer = new Kafka.KafkaConsumer({
-      'group.id': `kafka-pubsub-${groupId}`,
-      'metadata.broker.list': this.brokerList()
-    },
-      { "auto.offset.reset": "latest" });
-
+    const consumer = this.consumer;
     const channelName = this.options.modelName;
     const upperCasedChannelName = channelName.substring(0, 1).toUpperCase() + channelName.substring(1);
 
     consumer.on('data', (message) => {
       const parsedKey = this.deserialiseMessage(message.key);
       const id = new ObjectID(parsedKey.payload?.id);
-
       if (message.value) {
         const parsedMessage = this.deserialiseMessage(message.value);
         const header = message.headers![0];
@@ -147,8 +148,7 @@ export class KafkaSubEngine extends PubSubEngine {
         resolve(consumer);
       })
 
-      console.info("Connecting consumer ...")
-      consumer.connect();
+      console.info("Connecting consumer ...");
     })
   }
 }
