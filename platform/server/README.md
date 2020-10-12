@@ -29,7 +29,7 @@ docker-compose up -d
 - Start the server
 
 ```sh
-yarn start:server
+yarn start
 ```
 
 ## Docker Image
