@@ -8,11 +8,11 @@
         "type": "node",
         "request": "launch",
         "name": "Launch server",
-        "args": ["${workspaceFolder}/server/src/index.ts"],
+        "args": ["${workspaceFolder}/platform/server/src/index.ts"],
         "sourceMaps": true,
         "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
-        "outFiles": ["${workspaceFolder}/server/dist/**/*.js"],
-        "cwd": "${workspaceRoot}/server",
+        "outFiles": ["${workspaceFolder}/platform/server/dist/**/*.js"],
+        "cwd": "${workspaceRoot}/platform/server",
         "protocol": "inspector",
       }
     ]

@@ -1,0 +1,225 @@
+"""
+@model(delete: false)
+"""
+type DistributionCentre implements Address {
+  _id: GraphbackObjectID!
+  name: String
+  address1: String
+  address2: String
+  city: String
+  postcode: Int
+  lat: Float
+  long: Float
+  """
+  @oneToMany(field: "distributionCentre")
+  """
+  products: [Product]
+
+  """
+  @oneToMany(field: "distributionCentre")
+  """
+  actions: [VolunteerAction]
+}
+
+"""
+@model(delete: false)
+"""
+type Volunteer {
+  _id: GraphbackObjectID!
+  firstName: String
+  lastName: String
+  email: String
+  username: String!
+  address1: String
+  address2: String
+  city: String
+  postcode: Int
+  dateOfBirth: GraphbackDateTime
+  canDeliver: Boolean
+  actionsCompleted: Int
+  actionsActive: Int
+  active: Boolean
+
+  """
+  @oneToMany(field: 'volunteer')
+  """
+  actions: [VolunteerAction]
+}
+
+"""
+@model(delete: false)
+"""
+type Recipient implements Address {
+  _id: GraphbackObjectID!
+  firstName: String
+  lastName: String
+  phone: String
+  address1: String
+  address2: String
+  postcode: Int
+  city: String
+  lat: Float
+  long: Float
+  actionsCompleted: Int
+  deliveryDays: String
+  """
+  Comma separated list of preferrend products labels.
+  Easier to create volunteer actions when knowing what one really needs.
+  """
+  prefferedProducts: String
+  """
+  @oneToMany(field: 'recipient')
+  """
+  actions: [VolunteerAction]
+}
+
+"""
+Represents action that is assigned to volunteer
+
+@model
+@datasync
+"""
+type VolunteerAction {
+  _id: GraphbackObjectID!
+  title: String!
+  description: String
+  status: ActionStatus
+  assignedAt: GraphbackDateTime
+  completedAt: GraphbackDateTime
+  _createdAt: GraphbackDateTime
+
+  """
+  @manyToOne(field: 'actions')
+  """
+  volunteer: Volunteer
+
+  """
+  @manyToOne(field: 'actions')
+  """
+  recipient: Recipient
+
+  """
+  @manyToOne(field: 'actions')
+  """
+  distributionCentre: DistributionCentre
+
+  """
+  @oneToMany(field: 'volunteerAction')
+  """
+  products: [VolunteerActionProduct]
+}
+
+"""
+Represents a join model between a volunteer action and product
+
+@model(create: true, update: false, delete: false, subCreate: false, subUpdate: false, subDelete: false)
+"""
+type VolunteerActionProduct {
+  _id: GraphbackObjectID!
+}
+
+interface Address {
+  address1: String
+  address2: String
+  city: String
+  postcode: Int
+  lat: Float
+  long: Float
+}
+
+"""
+@model(delete: false)
+"""
+type Product {
+  _id: GraphbackObjectID!
+  label: String!
+  description: String
+  """
+  @oneToMany(field: 'product')
+  """
+  volunteerActionProducts: [VolunteerActionProduct]
+}
+
+"""
+@model
+"""
+type DailyActionPlan {
+  _id: GraphbackObjectID!
+  owner: String
+  date: GraphbackDateTime
+  numberOfCasesCreated: Int
+  numberOfVolunteersAssigned: Int
+  numberOfRecipients: Int
+}
+
+
+"""
+@model(create: true, update: true, delete: false, find: false, subCreate: true, subUpdate: true, subDelete: false)
+"""
+type VolunteerEntry {
+  _id: GraphbackObjectID!
+
+  """
+  Volunteer details. This is a partial volunteer object so that we have the info in one go in the UI
+  """
+  volunteer: PartialVolunteer
+
+
+  """
+  Distribution centre details. This is a partial object so that we have the info in one go in the UI
+  """
+  distributionCentre: PartialDistributionCentre
+
+  """
+  Objects representing the number of deliveries that will be done following this entry.
+  """
+  volunteerActions: [GraphbackJSON]
+
+
+  """
+  The time the volunteer checked in the distribution centre
+  """
+  checkedInAt: GraphbackDateTime
+
+  """
+  The time the volunteer checked out the distribution centre
+  """
+  checkedOutAt: GraphbackDateTime
+}
+
+type PartialDistributionCentre {
+  _id: GraphbackObjectID!
+  name: String!
+}
+
+type PartialVolunteer {
+  _id: GraphbackObjectID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  username: String!
+}
+
+type PartialVolunteerAction {
+  _id: GraphbackObjectID!
+  title: String!
+}
+
+enum ActionStatus {
+  CREATED
+  ASSIGNED
+  COMPLETED
+}
+
+
+## Custom logic
+type Mutation {
+  """
+  Automatically create actions for the day of the month specified
+  """
+  assignVolunteers: DailyActionPlan
+}
+
+scalar GraphbackDateTime
+scalar GraphbackObjectID
+scalar GraphbackJSON
