@@ -9,10 +9,10 @@ import { createKeycloakCRUDService } from './CrudService'
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { loadSchemaSync } from '@graphql-tools/load'
 import { buildGraphbackAPI } from "graphback"
-import { createMongoDbProvider } from "@graphback/runtime-mongo"
+import { conflictConfig } from "./config/conflict"
 import { authConfig } from './config/auth';
 import GMR from 'graphql-merge-resolvers';
-import { createDataSyncConflictProviderCreator, DataSyncPlugin, ThrowOnConflict } from '@graphback/datasync';
+import { createDataSyncConflictProviderCreator, DataSyncPlugin } from '@graphback/datasync';
 
 /**
  * Creates Apollo server
@@ -26,11 +26,6 @@ export const createApolloServer = async function (app: Express, config: Config) 
         ]
     })
 
-    const conflictConfig = {
-        enabled: true,
-        // Let's client side to deal with conflict
-        conflictResolution: ThrowOnConflict,
-    };
 
     const { typeDefs, resolvers, contextCreator } = buildGraphbackAPI(modelDefs, {
         serviceCreator: createKeycloakCRUDService(authConfig),

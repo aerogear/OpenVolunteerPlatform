@@ -1,4 +1,4 @@
-import { Filter, useQuery, useSave, useUpdate, useRemove, useLazyQuery } from 'offix-datastore';
+import { Filter, useQuery, useUpdate } from 'offix-datastore';
 import { VolunteerActionModel } from './config';
 import { VolunteerAction } from './generated';
 
@@ -8,7 +8,7 @@ import { VolunteerAction } from './generated';
  * 
  * @param filter 
  */
-export const useFindVolunteerActions = (filter?: Filter<VolunteerAction | any>) => useQuery(VolunteerActionModel);
+export const useFindVolunteerActions = (filter?: Filter<VolunteerAction | any>) => useQuery(VolunteerActionModel, filter);
 
 /**
  * Update  VolunteerAction(used to update status)

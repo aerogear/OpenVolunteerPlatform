@@ -10,19 +10,19 @@ import {
 } from '@ionic/react';
 import { Empty, ActionsList, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
-import { useFindMyVolunteerActionsLazyQuery, ActionStatus } from '../dataFacade';
+import { ActionStatus } from '../dataFacade';
 import { AuthContext } from '../context/AuthContext';
 import { useFindVolunteerActions } from '../datastore/hooks';
 
+
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   const { volunteer } = useContext(AuthContext);
-  const { isLoading: loading, error, data } = useFindVolunteerActions({ volunteerId: volunteer?._id, status: ActionStatus.Assigned });
+  const { isLoading: loading, error, data, subscribeToMore } = useFindVolunteerActions();
 
-
-  // useEffect(() => {
-  //   const subscription = subscribeToMore();
-  //   return () => subscription.unsubscribe();
-  // }, [data, subscribeToMore]);
+  useEffect(() => {
+    const subscription = subscribeToMore();
+    return () => subscription.unsubscribe();
+  }, [data, subscribeToMore]);
 
   if (error) {
     console.log(error);

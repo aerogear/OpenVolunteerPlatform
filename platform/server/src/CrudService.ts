@@ -26,11 +26,19 @@ export function createKeycloakCRUDService(authConfig: CrudServiceAuthConfig) {
         const service = createDataSyncCRUDService({
             pubSub
         })(model, dataProvider);
-       
+
         const authService = new KeycloakCrudService(model, { service, authConfig });
 
+        const finalService = (authService as any);
+
         // TODO ugly hack for tricking graphback that this is datasync service
-        (authService as any).__proto__ = DataSyncCRUDService.prototype
-        return authService;
+        if ((service as any).sync) {
+            finalService.__proto__ = DataSyncCRUDService.prototype
+            finalService.sync = () => {
+                return (service as any).sync(arguments)
+            }
+
+        }
+        return service;
     }
 }

@@ -17,7 +17,6 @@ export const datastore = new DataStore({
   }
 });
 
-
 export const VolunteerActionModel = datastore.setupModel<VolunteerAction>(schema.VolunteerAction);
 
 datastore.init();
