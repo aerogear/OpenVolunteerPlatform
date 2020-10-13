@@ -1,85 +1,815 @@
+enum ActionStatus {
+  CREATED
+  ASSIGNED
+  COMPLETED
+}
 
-input CreateTaskInput {
-  id:ID
-  title:String!
+interface Address {
+  address1: String
+  address2: String
+  city: String
+  postcode: Int
+  lat: Float
+  long: Float
 }
-input IDInput {
-  eq:ID
-  ge:ID
-  gt:ID
-  in:[ID!]
-  le:ID
-  lt:ID
-  ne:ID
+
+input BooleanInput {
+  ne: Boolean
+  eq: Boolean
 }
-input MutateTaskInput {
-  id:ID!
-  title:String
+
+input CreateDailyActionPlanInput {
+  _id: GraphbackObjectID
+  owner: String
+  date: GraphbackDateTime
+  numberOfCasesCreated: Int
+  numberOfVolunteersAssigned: Int
+  numberOfRecipients: Int
 }
+
+input CreateDistributionCentreInput {
+  _id: GraphbackObjectID
+  name: String
+  address1: String
+  address2: String
+  city: String
+  postcode: Int
+  lat: Float
+  long: Float
+}
+
+input CreatePartialDistributionCentreInput {
+  _id: GraphbackObjectID!
+  name: String!
+}
+
+input CreatePartialVolunteerInput {
+  _id: GraphbackObjectID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  username: String!
+}
+
+input CreateProductInput {
+  _id: GraphbackObjectID
+  label: String!
+  description: String
+  distributionCentreId: GraphbackObjectID
+}
+
+input CreateRecipientInput {
+  _id: GraphbackObjectID
+  firstName: String
+  lastName: String
+  phone: String
+  address1: String
+  address2: String
+  postcode: Int
+  city: String
+  lat: Float
+  long: Float
+  actionsCompleted: Int
+  deliveryDays: String
+  prefferedProducts: String
+}
+
+input CreateVolunteerActionInput {
+  _id: GraphbackObjectID
+  title: String!
+  description: String
+  status: ActionStatus
+  assignedAt: GraphbackDateTime
+  completedAt: GraphbackDateTime
+  _createdAt: GraphbackDateTime
+  volunteerId: GraphbackObjectID
+  recipientId: GraphbackObjectID
+  distributionCentreId: GraphbackObjectID
+}
+
+input CreateVolunteerActionProductInput {
+  _id: GraphbackObjectID
+  volunteerActionId: GraphbackObjectID
+  productId: GraphbackObjectID
+}
+
+input CreateVolunteerEntryInput {
+  _id: GraphbackObjectID
+  volunteer: CreatePartialVolunteerInput
+  distributionCentre: CreatePartialDistributionCentreInput
+  volunteerActions: [GraphbackJSON]
+  checkedInAt: GraphbackDateTime
+  checkedOutAt: GraphbackDateTime
+}
+
+input CreateVolunteerInput {
+  _id: GraphbackObjectID
+  firstName: String
+  lastName: String
+  email: String
+  username: String!
+  address1: String
+  address2: String
+  city: String
+  postcode: Int
+  dateOfBirth: GraphbackDateTime
+  canDeliver: Boolean
+  actionsCompleted: Int
+  actionsActive: Int
+  active: Boolean
+}
+
+# @model
+type DailyActionPlan {
+  _id: GraphbackObjectID!
+  owner: String
+  date: GraphbackDateTime
+  numberOfCasesCreated: Int
+  numberOfVolunteersAssigned: Int
+  numberOfRecipients: Int
+}
+
+input DailyActionPlanFilter {
+  _id: GraphbackObjectIDInput
+  owner: StringInput
+  date: GraphbackDateTimeInput
+  numberOfCasesCreated: IntInput
+  numberOfVolunteersAssigned: IntInput
+  numberOfRecipients: IntInput
+  and: [DailyActionPlanFilter!]
+  or: [DailyActionPlanFilter!]
+  not: DailyActionPlanFilter
+}
+
+type DailyActionPlanResultList {
+  items: [DailyActionPlan]!
+  offset: Int
+  limit: Int
+  count: Int
+}
+
+input DailyActionPlanSubscriptionFilter {
+  and: [DailyActionPlanSubscriptionFilter!]
+  or: [DailyActionPlanSubscriptionFilter!]
+  not: DailyActionPlanSubscriptionFilter
+  _id: GraphbackObjectIDInput
+  owner: StringInput
+  date: GraphbackDateTimeInput
+  numberOfCasesCreated: IntInput
+  numberOfVolunteersAssigned: IntInput
+  numberOfRecipients: IntInput
+}
+
+# @model(delete: false)
+type DistributionCentre implements Address {
+  _id: GraphbackObjectID!
+  name: String
+  address1: String
+  address2: String
+  city: String
+  postcode: Int
+  lat: Float
+  long: Float
+  # @oneToMany(field: 'distributionCentre', key: 'distributionCentreId')
+  # @oneToMany(field: "distributionCentre")
+  products(filter: ProductFilter): [Product]
+  # @oneToMany(field: 'distributionCentre', key: 'distributionCentreId')
+  # @oneToMany(field: "distributionCentre")
+  actions(filter: VolunteerActionFilter): [VolunteerAction]
+}
+
+input DistributionCentreFilter {
+  _id: GraphbackObjectIDInput
+  name: StringInput
+  address1: StringInput
+  address2: StringInput
+  city: StringInput
+  postcode: IntInput
+  lat: FloatInput
+  long: FloatInput
+  and: [DistributionCentreFilter!]
+  or: [DistributionCentreFilter!]
+  not: DistributionCentreFilter
+}
+
+type DistributionCentreResultList {
+  items: [DistributionCentre]!
+  offset: Int
+  limit: Int
+  count: Int
+}
+
+input DistributionCentreSubscriptionFilter {
+  and: [DistributionCentreSubscriptionFilter!]
+  or: [DistributionCentreSubscriptionFilter!]
+  not: DistributionCentreSubscriptionFilter
+  _id: GraphbackObjectIDInput
+  name: StringInput
+  address1: StringInput
+  address2: StringInput
+  city: StringInput
+  postcode: IntInput
+  lat: FloatInput
+  long: FloatInput
+}
+
+input FloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  in: [Float!]
+  between: [Float!]
+}
+
+# A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
+# `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO
+# 8601 standard for representation of dates and times using the Gregorian calendar.
+scalar GraphbackDateTime
+
+input GraphbackDateTimeInput {
+  ne: GraphbackDateTime
+  eq: GraphbackDateTime
+  le: GraphbackDateTime
+  lt: GraphbackDateTime
+  ge: GraphbackDateTime
+  gt: GraphbackDateTime
+  in: [GraphbackDateTime!]
+  between: [GraphbackDateTime!]
+}
+
+# The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+scalar GraphbackJSON
+
+# A field whose value conforms with the standard mongodb object ID as described
+# here: https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectId.
+# Example: 5e5677d71bdc2ae76344968c
+scalar GraphbackObjectID
+
+input GraphbackObjectIDInput {
+  ne: GraphbackObjectID
+  eq: GraphbackObjectID
+  le: GraphbackObjectID
+  lt: GraphbackObjectID
+  ge: GraphbackObjectID
+  gt: GraphbackObjectID
+  in: [GraphbackObjectID!]
+  between: [GraphbackObjectID!]
+}
+
+input IntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  in: [Int!]
+  between: [Int!]
+}
+
+input MutateDailyActionPlanInput {
+  _id: GraphbackObjectID!
+  owner: String
+  date: GraphbackDateTime
+  numberOfCasesCreated: Int
+  numberOfVolunteersAssigned: Int
+  numberOfRecipients: Int
+}
+
+input MutateDistributionCentreInput {
+  _id: GraphbackObjectID!
+  name: String
+  address1: String
+  address2: String
+  city: String
+  postcode: Int
+  lat: Float
+  long: Float
+}
+
+input MutatePartialDistributionCentreInput {
+  _id: GraphbackObjectID
+  name: String
+}
+
+input MutatePartialVolunteerInput {
+  _id: GraphbackObjectID
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+}
+
+input MutateProductInput {
+  _id: GraphbackObjectID!
+  label: String
+  description: String
+  distributionCentreId: GraphbackObjectID
+}
+
+input MutateRecipientInput {
+  _id: GraphbackObjectID!
+  firstName: String
+  lastName: String
+  phone: String
+  address1: String
+  address2: String
+  postcode: Int
+  city: String
+  lat: Float
+  long: Float
+  actionsCompleted: Int
+  deliveryDays: String
+  prefferedProducts: String
+}
+
+input MutateVolunteerActionInput {
+  _id: GraphbackObjectID!
+  title: String
+  description: String
+  status: ActionStatus
+  assignedAt: GraphbackDateTime
+  completedAt: GraphbackDateTime
+  _createdAt: GraphbackDateTime
+  volunteerId: GraphbackObjectID
+  recipientId: GraphbackObjectID
+  distributionCentreId: GraphbackObjectID
+}
+
+input MutateVolunteerEntryInput {
+  _id: GraphbackObjectID!
+  volunteer: MutatePartialVolunteerInput
+  distributionCentre: MutatePartialDistributionCentreInput
+  volunteerActions: GraphbackJSON
+  checkedInAt: GraphbackDateTime
+  checkedOutAt: GraphbackDateTime
+}
+
+input MutateVolunteerInput {
+  _id: GraphbackObjectID!
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+  address1: String
+  address2: String
+  city: String
+  postcode: Int
+  dateOfBirth: GraphbackDateTime
+  canDeliver: Boolean
+  actionsCompleted: Int
+  actionsActive: Int
+  active: Boolean
+}
+
 type Mutation {
-  createTask(input:CreateTaskInput!):Task
-  deleteTask(input:MutateTaskInput!):Task
-  updateTask(input:MutateTaskInput!):Task
+  # Automatically create actions for the day of the month specified
+  assignVolunteers: DailyActionPlan
+  createDistributionCentre(
+    input: CreateDistributionCentreInput!
+  ): DistributionCentre
+  updateDistributionCentre(
+    input: MutateDistributionCentreInput!
+  ): DistributionCentre
+  createVolunteer(input: CreateVolunteerInput!): Volunteer
+  updateVolunteer(input: MutateVolunteerInput!): Volunteer
+  createRecipient(input: CreateRecipientInput!): Recipient
+  updateRecipient(input: MutateRecipientInput!): Recipient
+  createVolunteerAction(input: CreateVolunteerActionInput!): VolunteerAction
+  updateVolunteerAction(input: MutateVolunteerActionInput!): VolunteerAction
+  deleteVolunteerAction(input: MutateVolunteerActionInput!): VolunteerAction
+  createVolunteerActionProduct(
+    input: CreateVolunteerActionProductInput!
+  ): VolunteerActionProduct
+  createProduct(input: CreateProductInput!): Product
+  updateProduct(input: MutateProductInput!): Product
+  createDailyActionPlan(input: CreateDailyActionPlanInput!): DailyActionPlan
+  updateDailyActionPlan(input: MutateDailyActionPlanInput!): DailyActionPlan
+  deleteDailyActionPlan(input: MutateDailyActionPlanInput!): DailyActionPlan
+  createVolunteerEntry(input: CreateVolunteerEntryInput!): VolunteerEntry
+  updateVolunteerEntry(input: MutateVolunteerEntryInput!): VolunteerEntry
 }
+
 input OrderByInput {
-  field:String!
-  order:SortDirectionEnum
+  field: String!
+  order: SortDirectionEnum = ASC
 }
+
 input PageRequest {
-  limit:Int
-  offset:Int
+  limit: Int
+  offset: Int
 }
+
+type PartialDistributionCentre {
+  _id: GraphbackObjectID!
+  name: String!
+}
+
+type PartialVolunteer {
+  _id: GraphbackObjectID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  username: String!
+}
+
+# @model(delete: false)
+type Product {
+  _id: GraphbackObjectID!
+  label: String!
+  description: String
+  # @oneToMany(field: 'product', key: 'productId')
+  # @oneToMany(field: 'product')
+  volunteerActionProducts(
+    filter: VolunteerActionProductFilter
+  ): [VolunteerActionProduct]
+  # @manyToOne(field: 'products', key: 'distributionCentreId')
+  distributionCentre: DistributionCentre
+}
+
+input ProductFilter {
+  _id: GraphbackObjectIDInput
+  label: StringInput
+  description: StringInput
+  distributionCentreId: GraphbackObjectIDInput
+  and: [ProductFilter!]
+  or: [ProductFilter!]
+  not: ProductFilter
+}
+
+type ProductResultList {
+  items: [Product]!
+  offset: Int
+  limit: Int
+  count: Int
+}
+
+input ProductSubscriptionFilter {
+  and: [ProductSubscriptionFilter!]
+  or: [ProductSubscriptionFilter!]
+  not: ProductSubscriptionFilter
+  _id: GraphbackObjectIDInput
+  label: StringInput
+  description: StringInput
+}
+
 type Query {
-  findEndas(filter:TaskFilter, page:PageRequest, orderBy:OrderByInput):TaskResultList!
-  getTask(id:ID!):Task
+  getDistributionCentre(id: GraphbackObjectID!): DistributionCentre
+  findDistributionCentres(
+    filter: DistributionCentreFilter
+    page: PageRequest
+    orderBy: OrderByInput
+  ): DistributionCentreResultList!
+  getVolunteer(id: GraphbackObjectID!): Volunteer
+  findVolunteers(
+    filter: VolunteerFilter
+    page: PageRequest
+    orderBy: OrderByInput
+  ): VolunteerResultList!
+  getRecipient(id: GraphbackObjectID!): Recipient
+  findRecipients(
+    filter: RecipientFilter
+    page: PageRequest
+    orderBy: OrderByInput
+  ): RecipientResultList!
+  getVolunteerAction(id: GraphbackObjectID!): VolunteerAction
+  findVolunteerActions(
+    filter: VolunteerActionFilter
+    page: PageRequest
+    orderBy: OrderByInput
+  ): VolunteerActionResultList!
+  getVolunteerActionProduct(id: GraphbackObjectID!): VolunteerActionProduct
+  findVolunteerActionProducts(
+    filter: VolunteerActionProductFilter
+    page: PageRequest
+    orderBy: OrderByInput
+  ): VolunteerActionProductResultList!
+  getProduct(id: GraphbackObjectID!): Product
+  findProducts(
+    filter: ProductFilter
+    page: PageRequest
+    orderBy: OrderByInput
+  ): ProductResultList!
+  getDailyActionPlan(id: GraphbackObjectID!): DailyActionPlan
+  findDailyActionPlans(
+    filter: DailyActionPlanFilter
+    page: PageRequest
+    orderBy: OrderByInput
+  ): DailyActionPlanResultList!
+  getVolunteerEntry(id: GraphbackObjectID!): VolunteerEntry
 }
+
+# @model(delete: false)
+type Recipient implements Address {
+  _id: GraphbackObjectID!
+  firstName: String
+  lastName: String
+  phone: String
+  address1: String
+  address2: String
+  postcode: Int
+  city: String
+  lat: Float
+  long: Float
+  actionsCompleted: Int
+  deliveryDays: String
+  # Comma separated list of preferrend products labels.
+  # Easier to create volunteer actions when knowing what one really needs.
+  prefferedProducts: String
+  # @oneToMany(field: 'recipient', key: 'recipientId')
+  # @oneToMany(field: 'recipient')
+  actions(filter: VolunteerActionFilter): [VolunteerAction]
+}
+
+input RecipientFilter {
+  _id: GraphbackObjectIDInput
+  firstName: StringInput
+  lastName: StringInput
+  phone: StringInput
+  address1: StringInput
+  address2: StringInput
+  postcode: IntInput
+  city: StringInput
+  lat: FloatInput
+  long: FloatInput
+  actionsCompleted: IntInput
+  deliveryDays: StringInput
+  prefferedProducts: StringInput
+  and: [RecipientFilter!]
+  or: [RecipientFilter!]
+  not: RecipientFilter
+}
+
+type RecipientResultList {
+  items: [Recipient]!
+  offset: Int
+  limit: Int
+  count: Int
+}
+
+input RecipientSubscriptionFilter {
+  and: [RecipientSubscriptionFilter!]
+  or: [RecipientSubscriptionFilter!]
+  not: RecipientSubscriptionFilter
+  _id: GraphbackObjectIDInput
+  firstName: StringInput
+  lastName: StringInput
+  phone: StringInput
+  address1: StringInput
+  address2: StringInput
+  postcode: IntInput
+  city: StringInput
+  lat: FloatInput
+  long: FloatInput
+  actionsCompleted: IntInput
+  deliveryDays: StringInput
+  prefferedProducts: StringInput
+}
+
 enum SortDirectionEnum {
-  ASC
   DESC
+  ASC
 }
+
 input StringInput {
-  contains:String
-  endsWith:String
-  eq:String
-  ge:String
-  gt:String
-  in:[String!]
-  le:String
-  lt:String
-  ne:String
-  startsWith:String
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  in: [String!]
+  contains: String
+  startsWith: String
+  endsWith: String
 }
+
 type Subscription {
-  deletedTask(filter:TaskSubscriptionFilter):Task!
-  newTask(filter:TaskSubscriptionFilter):Task!
-  updatedTask(filter:TaskSubscriptionFilter):Task!
+  newDistributionCentre(
+    filter: DistributionCentreSubscriptionFilter
+  ): DistributionCentre!
+  updatedDistributionCentre(
+    filter: DistributionCentreSubscriptionFilter
+  ): DistributionCentre!
+  deletedDistributionCentre(
+    filter: DistributionCentreSubscriptionFilter
+  ): DistributionCentre!
+  newVolunteer(filter: VolunteerSubscriptionFilter): Volunteer!
+  updatedVolunteer(filter: VolunteerSubscriptionFilter): Volunteer!
+  deletedVolunteer(filter: VolunteerSubscriptionFilter): Volunteer!
+  newRecipient(filter: RecipientSubscriptionFilter): Recipient!
+  updatedRecipient(filter: RecipientSubscriptionFilter): Recipient!
+  deletedRecipient(filter: RecipientSubscriptionFilter): Recipient!
+  newVolunteerAction(
+    filter: VolunteerActionSubscriptionFilter
+  ): VolunteerAction!
+  updatedVolunteerAction(
+    filter: VolunteerActionSubscriptionFilter
+  ): VolunteerAction!
+  deletedVolunteerAction(
+    filter: VolunteerActionSubscriptionFilter
+  ): VolunteerAction!
+  newProduct(filter: ProductSubscriptionFilter): Product!
+  updatedProduct(filter: ProductSubscriptionFilter): Product!
+  deletedProduct(filter: ProductSubscriptionFilter): Product!
+  newDailyActionPlan(
+    filter: DailyActionPlanSubscriptionFilter
+  ): DailyActionPlan!
+  updatedDailyActionPlan(
+    filter: DailyActionPlanSubscriptionFilter
+  ): DailyActionPlan!
+  deletedDailyActionPlan(
+    filter: DailyActionPlanSubscriptionFilter
+  ): DailyActionPlan!
+  newVolunteerEntry(filter: VolunteerEntrySubscriptionFilter): VolunteerEntry!
+  updatedVolunteerEntry(
+    filter: VolunteerEntrySubscriptionFilter
+  ): VolunteerEntry!
 }
-"@model"
-type Task {
-  id:ID!
-  title:String!
-}
-input TaskFilter {
-  and:[TaskFilter!]
-  id:IDInput
-  not:TaskFilter
-  or:[TaskFilter!]
-  title:StringInput
-}
-type TaskResultList {
-  count:Int
-  items:[Task]!
-  limit:Int
-  offset:Int
-}
-input TaskSubscriptionFilter {
-  id:ID
-  title:String
-}
-"The `Upload` scalar type represents a file upload."
+
+# The `Upload` scalar type represents a file upload.
 scalar Upload
-schema {
-  mutation: Mutation
-  query: Query
-  subscription: Subscription
+
+# @model(delete: false)
+type Volunteer {
+  _id: GraphbackObjectID!
+  firstName: String
+  lastName: String
+  email: String
+  username: String!
+  address1: String
+  address2: String
+  city: String
+  postcode: Int
+  dateOfBirth: GraphbackDateTime
+  canDeliver: Boolean
+  actionsCompleted: Int
+  actionsActive: Int
+  active: Boolean
+  # @oneToMany(field: 'volunteer', key: 'volunteerId')
+  # @oneToMany(field: 'volunteer')
+  actions(filter: VolunteerActionFilter): [VolunteerAction]
 }
+
+# Represents action that is assigned to volunteer
+#
+# @model
+type VolunteerAction {
+  _id: GraphbackObjectID!
+  title: String!
+  description: String
+  status: ActionStatus
+  assignedAt: GraphbackDateTime
+  completedAt: GraphbackDateTime
+  _createdAt: GraphbackDateTime
+  # @manyToOne(field: 'actions', key: 'volunteerId')
+  # @manyToOne(field: 'actions')
+  volunteer: Volunteer
+  # @manyToOne(field: 'actions', key: 'recipientId')
+  # @manyToOne(field: 'actions')
+  recipient: Recipient
+  # @manyToOne(field: 'actions', key: 'distributionCentreId')
+  # @manyToOne(field: 'actions')
+  distributionCentre: DistributionCentre
+  # @oneToMany(field: 'volunteerAction', key: 'volunteerActionId')
+  # @oneToMany(field: 'volunteerAction')
+  products(filter: VolunteerActionProductFilter): [VolunteerActionProduct]
+}
+
+input VolunteerActionFilter {
+  _id: GraphbackObjectIDInput
+  title: StringInput
+  description: StringInput
+  status: StringInput
+  assignedAt: GraphbackDateTimeInput
+  completedAt: GraphbackDateTimeInput
+  _createdAt: GraphbackDateTimeInput
+  volunteerId: GraphbackObjectIDInput
+  recipientId: GraphbackObjectIDInput
+  distributionCentreId: GraphbackObjectIDInput
+  and: [VolunteerActionFilter!]
+  or: [VolunteerActionFilter!]
+  not: VolunteerActionFilter
+}
+
+# Represents a join model between a volunteer action and product
+#
+# @model(create: true, update: false, delete: false, subCreate: false, subUpdate: false, subDelete: false)
+type VolunteerActionProduct {
+  _id: GraphbackObjectID!
+  # @manyToOne(field: 'products', key: 'volunteerActionId')
+  volunteerAction: VolunteerAction
+  # @manyToOne(field: 'volunteerActionProducts', key: 'productId')
+  product: Product
+}
+
+input VolunteerActionProductFilter {
+  _id: GraphbackObjectIDInput
+  volunteerActionId: GraphbackObjectIDInput
+  productId: GraphbackObjectIDInput
+  and: [VolunteerActionProductFilter!]
+  or: [VolunteerActionProductFilter!]
+  not: VolunteerActionProductFilter
+}
+
+type VolunteerActionProductResultList {
+  items: [VolunteerActionProduct]!
+  offset: Int
+  limit: Int
+  count: Int
+}
+
+type VolunteerActionResultList {
+  items: [VolunteerAction]!
+  offset: Int
+  limit: Int
+  count: Int
+}
+
+input VolunteerActionSubscriptionFilter {
+  and: [VolunteerActionSubscriptionFilter!]
+  or: [VolunteerActionSubscriptionFilter!]
+  not: VolunteerActionSubscriptionFilter
+  _id: GraphbackObjectIDInput
+  title: StringInput
+  description: StringInput
+  status: StringInput
+  assignedAt: GraphbackDateTimeInput
+  completedAt: GraphbackDateTimeInput
+  _createdAt: GraphbackDateTimeInput
+}
+
+# @model(create: true, update: true, delete: false, find: false, subCreate: true, subUpdate: true, subDelete: false)
+type VolunteerEntry {
+  _id: GraphbackObjectID!
+  # Volunteer details. This is a partial volunteer object so that we have the info in one go in the UI
+  volunteer: PartialVolunteer
+  # Distribution centre details. This is a partial object so that we have the info in one go in the UI
+  distributionCentre: PartialDistributionCentre
+  # Objects representing the number of deliveries that will be done following this entry.
+  volunteerActions: [GraphbackJSON]
+  # The time the volunteer checked in the distribution centre
+  checkedInAt: GraphbackDateTime
+  # The time the volunteer checked out the distribution centre
+  checkedOutAt: GraphbackDateTime
+}
+
+input VolunteerEntrySubscriptionFilter {
+  and: [VolunteerEntrySubscriptionFilter!]
+  or: [VolunteerEntrySubscriptionFilter!]
+  not: VolunteerEntrySubscriptionFilter
+  _id: GraphbackObjectIDInput
+  checkedInAt: GraphbackDateTimeInput
+  checkedOutAt: GraphbackDateTimeInput
+}
+
+input VolunteerFilter {
+  _id: GraphbackObjectIDInput
+  firstName: StringInput
+  lastName: StringInput
+  email: StringInput
+  username: StringInput
+  address1: StringInput
+  address2: StringInput
+  city: StringInput
+  postcode: IntInput
+  dateOfBirth: GraphbackDateTimeInput
+  canDeliver: BooleanInput
+  actionsCompleted: IntInput
+  actionsActive: IntInput
+  active: BooleanInput
+  and: [VolunteerFilter!]
+  or: [VolunteerFilter!]
+  not: VolunteerFilter
+}
+
+type VolunteerResultList {
+  items: [Volunteer]!
+  offset: Int
+  limit: Int
+  count: Int
+}
+
+input VolunteerSubscriptionFilter {
+  and: [VolunteerSubscriptionFilter!]
+  or: [VolunteerSubscriptionFilter!]
+  not: VolunteerSubscriptionFilter
+  _id: GraphbackObjectIDInput
+  firstName: StringInput
+  lastName: StringInput
+  email: StringInput
+  username: StringInput
+  address1: StringInput
+  address2: StringInput
+  city: StringInput
+  postcode: IntInput
+  dateOfBirth: GraphbackDateTimeInput
+  canDeliver: BooleanInput
+  actionsCompleted: IntInput
+  actionsActive: IntInput
+  active: BooleanInput
+}
+

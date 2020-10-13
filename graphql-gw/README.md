@@ -1,6 +1,10 @@
 ## Serverless based on graphql gw
 
+```bash
 wget https://github.com/chirino/graphql-gw/releases/download/0.2.0/graphql-gw_0.2.0_linux_64bit-x86.tar.gz
+tar -xf graphql-gw_0.2.0_linux_64bit-x86.tar.gz
+mv graphql-gw gw
+```
 
 CMD needs to be named gw.
 
@@ -30,6 +34,14 @@ SERVERLESS_URL=http://127.0.0.1:4000/graphql ./gw serve --production
 For config reference see: https://github.com/chirino/graphql-gw/blob/master/docs/config.md
 
 
-## Build docker container
+## Build docker image
 
-docker build -t graphql/ovp-gateway
+```bash
+docker build . -t quay.io/graphql/ovp-gateway
+```
+
+### Run the docker image
+
+```bash
+docker run -it --rm -p 4000:8080 quay.io/graphql/ovp-gateway
+```
