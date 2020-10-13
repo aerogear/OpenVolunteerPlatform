@@ -1,0 +1,88 @@
+enum CacheControlScope {
+  PRIVATE
+  PUBLIC
+}
+input CreateTaskInput {
+  id:ID
+  title:String!
+}
+input IDInput {
+  eq:ID
+  ge:ID
+  gt:ID
+  in:[ID!]
+  le:ID
+  lt:ID
+  ne:ID
+}
+input MutateTaskInput {
+  id:ID!
+  title:String
+}
+type Mutation {
+  createTask(input:CreateTaskInput!):Task
+  deleteTask(input:MutateTaskInput!):Task
+  updateTask(input:MutateTaskInput!):Task
+}
+input OrderByInput {
+  field:String!
+  order:SortDirectionEnum
+}
+input PageRequest {
+  limit:Int
+  offset:Int
+}
+type Query {
+  findTasks(filter:TaskFilter, page:PageRequest, orderBy:OrderByInput):TaskResultList!
+  getTask(id:ID!):Task
+}
+enum SortDirectionEnum {
+  ASC
+  DESC
+}
+input StringInput {
+  contains:String
+  endsWith:String
+  eq:String
+  ge:String
+  gt:String
+  in:[String!]
+  le:String
+  lt:String
+  ne:String
+  startsWith:String
+}
+type Subscription {
+  deletedTask(filter:TaskSubscriptionFilter):Task!
+  newTask(filter:TaskSubscriptionFilter):Task!
+  updatedTask(filter:TaskSubscriptionFilter):Task!
+}
+"@model"
+type Task {
+  id:ID!
+  title:String!
+}
+input TaskFilter {
+  and:[TaskFilter!]
+  id:IDInput
+  not:TaskFilter
+  or:[TaskFilter!]
+  title:StringInput
+}
+type TaskResultList {
+  count:Int
+  items:[Task]!
+  limit:Int
+  offset:Int
+}
+input TaskSubscriptionFilter {
+  id:ID
+  title:String
+}
+"The `Upload` scalar type represents a file upload."
+scalar Upload
+schema {
+  mutation: Mutation
+  query: Query
+  subscription: Subscription
+}

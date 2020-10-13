@@ -1,0 +1,28 @@
+listen: localhost:8080
+upstreams:
+  gateway:
+    type: graphql
+    url: http://127.0.0.1:4000/graphql
+  serverless1:
+    type: graphql
+    url: ${SERVERLESS_URL}
+types:
+  - name: Query
+    actions:
+      - type: mount
+        upstream: gateway
+        query: query {}
+      - type: mount
+        upstream: serverless1
+        field: findEndas
+        query: query { findEndas }
+  - name: Mutation
+    actions:
+      - type: mount
+        upstream: gateway
+        query: mutation {}
+  - name: Subscription
+    actions:
+      - type: mount
+        upstream: gateway
+        query: subscription {}
