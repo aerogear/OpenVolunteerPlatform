@@ -300,3 +300,18 @@
         tls:
           termination: edge
           insecureEdgeTerminationPolicy: Allow
+
+    - apiVersion: v1
+      kind: Route
+      metadata:
+        labels:
+          app: open-volunteer-platform
+        name: debezium-connect
+      spec:
+        host: ""
+        to:
+          kind: Service
+          name: debezium-connect
+        tls:
+          termination: edge
+          insecureEdgeTerminationPolicy: Allow      
