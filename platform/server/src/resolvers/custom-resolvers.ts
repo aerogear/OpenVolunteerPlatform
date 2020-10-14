@@ -12,6 +12,12 @@ export default {
     }
   },
 
+  Query:{
+    calculateWhatever:(_, args, conxext, info)=>{
+      this.
+    }
+  },
+
   Mutation: {
     assignVolunteers: async ( _, __, context: GraphbackContext, info: GraphQLResolveInfo ) => {
       const graphback = context.graphback;
