@@ -3,13 +3,13 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 labels:
-  template: open-volunteer-platform
+  template: ovp-server
 metadata:
-  name: ovp-knative
+  name: ovp-server
   annotations:
     openshift.io/display-name: OVP Starter 
     description: |-
-        This template allows for the deployment of the Open Volunteer Platform application on Knative.
+        This template allows for the deployment of the Open Volunteer Platform application.
         The OVP app contains an example Node.js server implementation that 
         connects to a MongoDB database.
         For more information, see http://openvolunteer.org/
@@ -22,12 +22,30 @@ metadata:
     aerogear.org/datasync-template-version: '0.9.3' # TODO needs changing?
 objects:
 
-- apiVersion: serving.knative.dev/v1
-  kind: Service
+- apiVersion: v1
+  kind: DeploymentConfig
   metadata:
-    name: open-volunteer-platform
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: open-volunteer-platform
+    name: ovp-server
   spec:
+    replicas: 1
+    selector:
+      app: open-volunteer-platform
+      deploymentconfig: ovp-server
+    strategy:
+      type: Recreate
     template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: open-volunteer-platform
+          deploymentconfig: ovp-server
       spec:
         volumes:
           - name: keycloak-server
@@ -63,6 +81,23 @@ objects:
             - name: NODE_ENV
               value: development # To activate playground for demo   
           image: quay.io/graphql/ovp-debezium # TODO change image name
+          name: ovp-server
+          readinessProbe:
+            httpGet:
+              path: /.well-known/apollo/server-health
+              port: 4000
+            initialDelaySeconds: 1
+            timeoutSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /.well-known/apollo/server-health
+              port: 4000
+            initialDelaySeconds: 1
+            timeoutSeconds: 1 
+          ports:
+          - containerPort: 4000
+            protocol: TCP
+          resources: {}
           volumeMounts:
             - name: keycloak-server
               mountPath: "/usr/src/app/config/keycloak.json"
@@ -76,29 +111,69 @@ objects:
               mountPath: "/usr/src/website/keycloak.json"
               subPath: keycloak.json
               readOnly: false   
+    triggers:
+    - type: ConfigChange
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: open-volunteer-platform
+    name: ovp-server
+  spec:
+    ports:
+    - name: 4000-tcp
+      port: 4000
+      protocol: TCP
+      targetPort: 4000
+    selector:
+      app: open-volunteer-platform
+      deploymentconfig: ovp-server
+
+- apiVersion: v1
+  kind: Route
+  metadata:
+    labels:
+      app: ovp-server
+    name: open-volunteer-platform
+  spec:
+    host: ""
+    to:
+      kind: Service
+      name: ovp-server
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Allow
+
 parameters:
   - name: MONGO_COLLECTION
     displayName: "MongoDB database name"
     description: "Database name that will be used."
     value: showcase
-    
+    required: true
+
   - name: MONGO_CONNECTION
     displayName: "MongoDB Connection String"
     description: "MongoDB Connection String."
-    value: mongodb://user:password@mongodb/showcase
+    value: mongodb://user:password@127.0.0.1:27017/showcase
     required: true
     
   - name: KAFKA_HOST
     displayName: "Kafka host"
     description: "Kafka host that the service will connect to."
     value: kafka
-    
+    required: true
+
   - name: KAFKA_PORT
     displayName: "Kafka port"
     description: "Kafka port that Kafka connection will be establised."
     value: "9092"
- 
+    required: true
+
   - name: SERVERLESS_URL
     displayName: "Url that will serve the list of daily actions plans from"
     description: "Url that will serve the list of daily actions plans from."
-    required: true   
+    required: true
