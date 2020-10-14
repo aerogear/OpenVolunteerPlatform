@@ -13,7 +13,7 @@ export const noteResolvers: IResolvers = {
         }
       }
 
-      const results = await context.graphback.Task.findBy({ filter }, context, info);
+      const results = await context.graphback.Note.findBy({ filter }, context, info);
 
       return results.items;
     }
