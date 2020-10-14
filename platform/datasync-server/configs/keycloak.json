@@ -1,0 +1,9 @@
+{
+  "realm": "datasync-demo-platform",
+  "auth-server-url": "https://keycloak-ovp.apps.suse.supercluster.com/auth",
+  "ssl-required": "none",
+  "resource": "datasync-demo-dev-bearer",
+  "public-client": true,
+  "use-resource-role-mappings": true,
+  "confidential-port": 0
+}
