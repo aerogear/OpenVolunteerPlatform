@@ -140,7 +140,7 @@ type Product {
 }
 
 """
-@model
+@model(find: false)
 """
 type DailyActionPlan {
   _id: GraphbackObjectID!
@@ -217,6 +217,19 @@ type Mutation {
   Automatically create actions for the day of the month specified
   """
   assignVolunteers: DailyActionPlan
+}
+
+
+type Query {
+  ## fetch daily action plans from a Knative function
+  findDailyActionPlans: DailyActionPlanResultList!
+}
+
+type DailyActionPlanResultList {
+  items: [DailyActionPlan]!
+  offset: Int
+  limit: Int
+  count: Int
 }
 
 scalar GraphbackDateTime

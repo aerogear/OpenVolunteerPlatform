@@ -1,0 +1,11 @@
+
+query findDailyActionPlans {
+    findDailyActionPlans{
+      items {
+        ...DailyActionPlanFields
+      }
+      offset
+      limit
+      count
+    }
+  }
