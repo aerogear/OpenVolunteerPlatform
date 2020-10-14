@@ -1,0 +1,60 @@
+---
+
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: ovp-server-knative
+metadata:
+  name: ovp-knative
+  annotations:
+    openshift.io/display-name: OVP Starter 
+    description: |-
+        This template allows for the deployment of a simple Knative handler that handles the list of dailyactionplans. 
+        The handler will be called from the Open Volunteer Platform application on Knative.
+        For more information, see http://openvolunteer.org/
+    tags: sync, mobile, nodejs
+    iconClass: icon-nodejs
+    openshift.io/provider-display-name: Red Hat, Inc.
+    openshift.io/documentation-url: https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html-single/developing_a_data_sync_app/index
+    openshift.io/support-url: https://access.redhat.com
+    template.openshift.io/bindable: 'false'
+    aerogear.org/datasync-template-version: '0.9.3' # TODO needs changing?
+objects:
+
+- apiVersion: serving.knative.dev/v1
+  kind: Service
+  metadata:
+    name: ovp-knative
+  spec:
+    template:
+      spec:
+        volumes:
+          - name: handler
+            configMap:
+              name: knative-handler
+              items:
+              - key: "handler"
+                path: "handler.js"             
+        containers:
+        - env:
+            - name: MONGO_CONNECTION
+              value: "${MONGO_CONNECTION}"
+            - name: MONGO_COLLECTION
+              value: "${MONGO_COLLECTION}"
+          image: quay.io/graphql/ovp-dailyactionplan-knative
+          volumeMounts:
+            - name: handler
+              mountPath: "/usr/src/app/dist/handler.js"
+              readOnly: false
+              subPath: handler.js  
+parameters:
+  - name: MONGO_COLLECTION
+    displayName: "MongoDB database name"
+    description: "Database name that will be used."
+    value: showcase
+    
+  - name: MONGO_CONNECTION
+    displayName: "MongoDB Connection String"
+    description: "MongoDB Connection String."
+    value: mongodb://user:password@mongodb/showcase
+    required: true

@@ -1,0 +1,1 @@
+oc process -p MONGO_CONNECTION="${MONGO_CONNECTION}" -f service.yml | oc create -f -

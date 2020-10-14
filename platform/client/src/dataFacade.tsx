@@ -137,7 +137,7 @@ export type CreateVolunteerInput = {
   active?: Maybe<Scalars['Boolean']>;
 };
 
-/** @model */
+/** @model(find: false) */
 export type DailyActionPlan = {
   __typename?: 'DailyActionPlan';
   _id: Scalars['GraphbackObjectID'];
@@ -146,18 +146,6 @@ export type DailyActionPlan = {
   numberOfCasesCreated?: Maybe<Scalars['Int']>;
   numberOfVolunteersAssigned?: Maybe<Scalars['Int']>;
   numberOfRecipients?: Maybe<Scalars['Int']>;
-};
-
-export type DailyActionPlanFilter = {
-  _id?: Maybe<GraphbackObjectIdInput>;
-  owner?: Maybe<StringInput>;
-  date?: Maybe<GraphbackDateTimeInput>;
-  numberOfCasesCreated?: Maybe<IntInput>;
-  numberOfVolunteersAssigned?: Maybe<IntInput>;
-  numberOfRecipients?: Maybe<IntInput>;
-  and?: Maybe<Array<DailyActionPlanFilter>>;
-  or?: Maybe<Array<DailyActionPlanFilter>>;
-  not?: Maybe<DailyActionPlanFilter>;
 };
 
 export type DailyActionPlanResultList = {
@@ -529,6 +517,7 @@ export type ProductResultList = {
 
 export type Query = {
   __typename?: 'Query';
+  findDailyActionPlans: DailyActionPlanResultList;
   getDistributionCentre?: Maybe<DistributionCentre>;
   findDistributionCentres: DistributionCentreResultList;
   getVolunteer?: Maybe<Volunteer>;
@@ -542,7 +531,6 @@ export type Query = {
   getProduct?: Maybe<Product>;
   findProducts: ProductResultList;
   getDailyActionPlan?: Maybe<DailyActionPlan>;
-  findDailyActionPlans: DailyActionPlanResultList;
   getVolunteerEntry?: Maybe<VolunteerEntry>;
 };
 
@@ -621,13 +609,6 @@ export type QueryFindProductsArgs = {
 
 export type QueryGetDailyActionPlanArgs = {
   id: Scalars['GraphbackObjectID'];
-};
-
-
-export type QueryFindDailyActionPlansArgs = {
-  filter?: Maybe<DailyActionPlanFilter>;
-  page?: Maybe<PageRequest>;
-  orderBy?: Maybe<OrderByInput>;
 };
 
 
@@ -913,6 +894,16 @@ export type VolunteerResultList = {
   count?: Maybe<Scalars['Int']>;
 };
 
+export type DailyActionPlanFieldsFragment = (
+  { __typename?: 'DailyActionPlan' }
+  & Pick<DailyActionPlan, '_id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned' | 'numberOfRecipients'>
+);
+
+export type DailyActionPlanExpandedFieldsFragment = (
+  { __typename?: 'DailyActionPlan' }
+  & Pick<DailyActionPlan, '_id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned' | 'numberOfRecipients'>
+);
+
 export type DistributionCentreFieldsFragment = (
   { __typename?: 'DistributionCentre' }
   & Pick<DistributionCentre, '_id' | 'name' | 'address1' | 'address2' | 'city' | 'postcode' | 'lat' | 'long'>
@@ -1015,16 +1006,6 @@ export type RecipientExpandedFieldsFragment = (
   )>>> }
 );
 
-export type DailyActionPlanFieldsFragment = (
-  { __typename?: 'DailyActionPlan' }
-  & Pick<DailyActionPlan, '_id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned' | 'numberOfRecipients'>
-);
-
-export type DailyActionPlanExpandedFieldsFragment = (
-  { __typename?: 'DailyActionPlan' }
-  & Pick<DailyActionPlan, '_id' | 'owner' | 'date' | 'numberOfCasesCreated' | 'numberOfVolunteersAssigned' | 'numberOfRecipients'>
-);
-
 export type VolunteerEntryFieldsFragment = (
   { __typename?: 'VolunteerEntry' }
   & Pick<VolunteerEntry, '_id' | 'volunteerActions' | 'checkedInAt' | 'checkedOutAt'>
@@ -1039,6 +1020,19 @@ export type VolunteerEntryExpandedFieldsFragment = (
   )>, distributionCentre?: Maybe<(
     { __typename?: 'PartialDistributionCentre' }
     & Pick<PartialDistributionCentre, '_id' | 'name'>
+  )> }
+);
+
+export type GetDailyActionPlanQueryVariables = Exact<{
+  id: Scalars['GraphbackObjectID'];
+}>;
+
+
+export type GetDailyActionPlanQuery = (
+  { __typename?: 'Query' }
+  & { getDailyActionPlan?: Maybe<(
+    { __typename?: 'DailyActionPlan' }
+    & DailyActionPlanExpandedFieldsFragment
   )> }
 );
 
@@ -1234,38 +1228,6 @@ export type GetRecipientQuery = (
   )> }
 );
 
-export type FindDailyActionPlansQueryVariables = Exact<{
-  filter?: Maybe<DailyActionPlanFilter>;
-  page?: Maybe<PageRequest>;
-  orderBy?: Maybe<OrderByInput>;
-}>;
-
-
-export type FindDailyActionPlansQuery = (
-  { __typename?: 'Query' }
-  & { findDailyActionPlans: (
-    { __typename?: 'DailyActionPlanResultList' }
-    & Pick<DailyActionPlanResultList, 'offset' | 'limit' | 'count'>
-    & { items: Array<Maybe<(
-      { __typename?: 'DailyActionPlan' }
-      & DailyActionPlanExpandedFieldsFragment
-    )>> }
-  ) }
-);
-
-export type GetDailyActionPlanQueryVariables = Exact<{
-  id: Scalars['GraphbackObjectID'];
-}>;
-
-
-export type GetDailyActionPlanQuery = (
-  { __typename?: 'Query' }
-  & { getDailyActionPlan?: Maybe<(
-    { __typename?: 'DailyActionPlan' }
-    & DailyActionPlanExpandedFieldsFragment
-  )> }
-);
-
 export type GetVolunteerEntryQueryVariables = Exact<{
   id: Scalars['GraphbackObjectID'];
 }>;
@@ -1276,6 +1238,32 @@ export type GetVolunteerEntryQuery = (
   & { getVolunteerEntry?: Maybe<(
     { __typename?: 'VolunteerEntry' }
     & VolunteerEntryExpandedFieldsFragment
+  )> }
+);
+
+export type CreateDailyActionPlanMutationVariables = Exact<{
+  input: CreateDailyActionPlanInput;
+}>;
+
+
+export type CreateDailyActionPlanMutation = (
+  { __typename?: 'Mutation' }
+  & { createDailyActionPlan?: Maybe<(
+    { __typename?: 'DailyActionPlan' }
+    & DailyActionPlanFieldsFragment
+  )> }
+);
+
+export type UpdateDailyActionPlanMutationVariables = Exact<{
+  input: MutateDailyActionPlanInput;
+}>;
+
+
+export type UpdateDailyActionPlanMutation = (
+  { __typename?: 'Mutation' }
+  & { updateDailyActionPlan?: Maybe<(
+    { __typename?: 'DailyActionPlan' }
+    & DailyActionPlanFieldsFragment
   )> }
 );
 
@@ -1422,32 +1410,6 @@ export type UpdateRecipientMutation = (
   )> }
 );
 
-export type CreateDailyActionPlanMutationVariables = Exact<{
-  input: CreateDailyActionPlanInput;
-}>;
-
-
-export type CreateDailyActionPlanMutation = (
-  { __typename?: 'Mutation' }
-  & { createDailyActionPlan?: Maybe<(
-    { __typename?: 'DailyActionPlan' }
-    & DailyActionPlanFieldsFragment
-  )> }
-);
-
-export type UpdateDailyActionPlanMutationVariables = Exact<{
-  input: MutateDailyActionPlanInput;
-}>;
-
-
-export type UpdateDailyActionPlanMutation = (
-  { __typename?: 'Mutation' }
-  & { updateDailyActionPlan?: Maybe<(
-    { __typename?: 'DailyActionPlan' }
-    & DailyActionPlanFieldsFragment
-  )> }
-);
-
 export type CreateVolunteerEntryMutationVariables = Exact<{
   input: CreateVolunteerEntryInput;
 }>;
@@ -1533,6 +1495,26 @@ export type FindMyVolunteerActionsQuery = (
   ) }
 );
 
+export const DailyActionPlanFieldsFragmentDoc = gql`
+    fragment DailyActionPlanFields on DailyActionPlan {
+  _id
+  owner
+  date
+  numberOfCasesCreated
+  numberOfVolunteersAssigned
+  numberOfRecipients
+}
+    `;
+export const DailyActionPlanExpandedFieldsFragmentDoc = gql`
+    fragment DailyActionPlanExpandedFields on DailyActionPlan {
+  _id
+  owner
+  date
+  numberOfCasesCreated
+  numberOfVolunteersAssigned
+  numberOfRecipients
+}
+    `;
 export const DistributionCentreFieldsFragmentDoc = gql`
     fragment DistributionCentreFields on DistributionCentre {
   _id
@@ -1776,26 +1758,6 @@ export const RecipientExpandedFieldsFragmentDoc = gql`
   }
 }
     `;
-export const DailyActionPlanFieldsFragmentDoc = gql`
-    fragment DailyActionPlanFields on DailyActionPlan {
-  _id
-  owner
-  date
-  numberOfCasesCreated
-  numberOfVolunteersAssigned
-  numberOfRecipients
-}
-    `;
-export const DailyActionPlanExpandedFieldsFragmentDoc = gql`
-    fragment DailyActionPlanExpandedFields on DailyActionPlan {
-  _id
-  owner
-  date
-  numberOfCasesCreated
-  numberOfVolunteersAssigned
-  numberOfRecipients
-}
-    `;
 export const VolunteerEntryFieldsFragmentDoc = gql`
     fragment VolunteerEntryFields on VolunteerEntry {
   _id
@@ -1823,6 +1785,39 @@ export const VolunteerEntryExpandedFieldsFragmentDoc = gql`
   checkedOutAt
 }
     `;
+export const GetDailyActionPlanDocument = gql`
+    query getDailyActionPlan($id: GraphbackObjectID!) {
+  getDailyActionPlan(id: $id) {
+    ...DailyActionPlanExpandedFields
+  }
+}
+    ${DailyActionPlanExpandedFieldsFragmentDoc}`;
+
+/**
+ * __useGetDailyActionPlanQuery__
+ *
+ * To run a query within a React component, call `useGetDailyActionPlanQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDailyActionPlanQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDailyActionPlanQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetDailyActionPlanQuery(baseOptions?: Apollo.QueryHookOptions<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>) {
+        return Apollo.useQuery<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>(GetDailyActionPlanDocument, baseOptions);
+      }
+export function useGetDailyActionPlanLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>) {
+          return Apollo.useLazyQuery<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>(GetDailyActionPlanDocument, baseOptions);
+        }
+export type GetDailyActionPlanQueryHookResult = ReturnType<typeof useGetDailyActionPlanQuery>;
+export type GetDailyActionPlanLazyQueryHookResult = ReturnType<typeof useGetDailyActionPlanLazyQuery>;
+export type GetDailyActionPlanQueryResult = Apollo.QueryResult<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>;
 export const FindDistributionCentresDocument = gql`
     query findDistributionCentres($filter: DistributionCentreFilter, $page: PageRequest, $orderBy: OrderByInput) {
   findDistributionCentres(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -2261,79 +2256,6 @@ export function useGetRecipientLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetRecipientQueryHookResult = ReturnType<typeof useGetRecipientQuery>;
 export type GetRecipientLazyQueryHookResult = ReturnType<typeof useGetRecipientLazyQuery>;
 export type GetRecipientQueryResult = Apollo.QueryResult<GetRecipientQuery, GetRecipientQueryVariables>;
-export const FindDailyActionPlansDocument = gql`
-    query findDailyActionPlans($filter: DailyActionPlanFilter, $page: PageRequest, $orderBy: OrderByInput) {
-  findDailyActionPlans(filter: $filter, page: $page, orderBy: $orderBy) {
-    items {
-      ...DailyActionPlanExpandedFields
-    }
-    offset
-    limit
-    count
-  }
-}
-    ${DailyActionPlanExpandedFieldsFragmentDoc}`;
-
-/**
- * __useFindDailyActionPlansQuery__
- *
- * To run a query within a React component, call `useFindDailyActionPlansQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindDailyActionPlansQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFindDailyActionPlansQuery({
- *   variables: {
- *      filter: // value for 'filter'
- *      page: // value for 'page'
- *      orderBy: // value for 'orderBy'
- *   },
- * });
- */
-export function useFindDailyActionPlansQuery(baseOptions?: Apollo.QueryHookOptions<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>) {
-        return Apollo.useQuery<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>(FindDailyActionPlansDocument, baseOptions);
-      }
-export function useFindDailyActionPlansLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>) {
-          return Apollo.useLazyQuery<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>(FindDailyActionPlansDocument, baseOptions);
-        }
-export type FindDailyActionPlansQueryHookResult = ReturnType<typeof useFindDailyActionPlansQuery>;
-export type FindDailyActionPlansLazyQueryHookResult = ReturnType<typeof useFindDailyActionPlansLazyQuery>;
-export type FindDailyActionPlansQueryResult = Apollo.QueryResult<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>;
-export const GetDailyActionPlanDocument = gql`
-    query getDailyActionPlan($id: GraphbackObjectID!) {
-  getDailyActionPlan(id: $id) {
-    ...DailyActionPlanExpandedFields
-  }
-}
-    ${DailyActionPlanExpandedFieldsFragmentDoc}`;
-
-/**
- * __useGetDailyActionPlanQuery__
- *
- * To run a query within a React component, call `useGetDailyActionPlanQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetDailyActionPlanQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetDailyActionPlanQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useGetDailyActionPlanQuery(baseOptions?: Apollo.QueryHookOptions<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>) {
-        return Apollo.useQuery<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>(GetDailyActionPlanDocument, baseOptions);
-      }
-export function useGetDailyActionPlanLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>) {
-          return Apollo.useLazyQuery<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>(GetDailyActionPlanDocument, baseOptions);
-        }
-export type GetDailyActionPlanQueryHookResult = ReturnType<typeof useGetDailyActionPlanQuery>;
-export type GetDailyActionPlanLazyQueryHookResult = ReturnType<typeof useGetDailyActionPlanLazyQuery>;
-export type GetDailyActionPlanQueryResult = Apollo.QueryResult<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>;
 export const GetVolunteerEntryDocument = gql`
     query getVolunteerEntry($id: GraphbackObjectID!) {
   getVolunteerEntry(id: $id) {
@@ -2367,6 +2289,70 @@ export function useGetVolunteerEntryLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetVolunteerEntryQueryHookResult = ReturnType<typeof useGetVolunteerEntryQuery>;
 export type GetVolunteerEntryLazyQueryHookResult = ReturnType<typeof useGetVolunteerEntryLazyQuery>;
 export type GetVolunteerEntryQueryResult = Apollo.QueryResult<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>;
+export const CreateDailyActionPlanDocument = gql`
+    mutation createDailyActionPlan($input: CreateDailyActionPlanInput!) {
+  createDailyActionPlan(input: $input) {
+    ...DailyActionPlanFields
+  }
+}
+    ${DailyActionPlanFieldsFragmentDoc}`;
+export type CreateDailyActionPlanMutationFn = Apollo.MutationFunction<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>;
+
+/**
+ * __useCreateDailyActionPlanMutation__
+ *
+ * To run a mutation, you first call `useCreateDailyActionPlanMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateDailyActionPlanMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createDailyActionPlanMutation, { data, loading, error }] = useCreateDailyActionPlanMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateDailyActionPlanMutation(baseOptions?: Apollo.MutationHookOptions<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>) {
+        return Apollo.useMutation<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>(CreateDailyActionPlanDocument, baseOptions);
+      }
+export type CreateDailyActionPlanMutationHookResult = ReturnType<typeof useCreateDailyActionPlanMutation>;
+export type CreateDailyActionPlanMutationResult = Apollo.MutationResult<CreateDailyActionPlanMutation>;
+export type CreateDailyActionPlanMutationOptions = Apollo.BaseMutationOptions<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>;
+export const UpdateDailyActionPlanDocument = gql`
+    mutation updateDailyActionPlan($input: MutateDailyActionPlanInput!) {
+  updateDailyActionPlan(input: $input) {
+    ...DailyActionPlanFields
+  }
+}
+    ${DailyActionPlanFieldsFragmentDoc}`;
+export type UpdateDailyActionPlanMutationFn = Apollo.MutationFunction<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>;
+
+/**
+ * __useUpdateDailyActionPlanMutation__
+ *
+ * To run a mutation, you first call `useUpdateDailyActionPlanMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateDailyActionPlanMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateDailyActionPlanMutation, { data, loading, error }] = useUpdateDailyActionPlanMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateDailyActionPlanMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>) {
+        return Apollo.useMutation<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>(UpdateDailyActionPlanDocument, baseOptions);
+      }
+export type UpdateDailyActionPlanMutationHookResult = ReturnType<typeof useUpdateDailyActionPlanMutation>;
+export type UpdateDailyActionPlanMutationResult = Apollo.MutationResult<UpdateDailyActionPlanMutation>;
+export type UpdateDailyActionPlanMutationOptions = Apollo.BaseMutationOptions<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>;
 export const CreateDistributionCentreDocument = gql`
     mutation createDistributionCentre($input: CreateDistributionCentreInput!) {
   createDistributionCentre(input: $input) {
@@ -2719,70 +2705,6 @@ export function useUpdateRecipientMutation(baseOptions?: Apollo.MutationHookOpti
 export type UpdateRecipientMutationHookResult = ReturnType<typeof useUpdateRecipientMutation>;
 export type UpdateRecipientMutationResult = Apollo.MutationResult<UpdateRecipientMutation>;
 export type UpdateRecipientMutationOptions = Apollo.BaseMutationOptions<UpdateRecipientMutation, UpdateRecipientMutationVariables>;
-export const CreateDailyActionPlanDocument = gql`
-    mutation createDailyActionPlan($input: CreateDailyActionPlanInput!) {
-  createDailyActionPlan(input: $input) {
-    ...DailyActionPlanFields
-  }
-}
-    ${DailyActionPlanFieldsFragmentDoc}`;
-export type CreateDailyActionPlanMutationFn = Apollo.MutationFunction<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>;
-
-/**
- * __useCreateDailyActionPlanMutation__
- *
- * To run a mutation, you first call `useCreateDailyActionPlanMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateDailyActionPlanMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createDailyActionPlanMutation, { data, loading, error }] = useCreateDailyActionPlanMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useCreateDailyActionPlanMutation(baseOptions?: Apollo.MutationHookOptions<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>) {
-        return Apollo.useMutation<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>(CreateDailyActionPlanDocument, baseOptions);
-      }
-export type CreateDailyActionPlanMutationHookResult = ReturnType<typeof useCreateDailyActionPlanMutation>;
-export type CreateDailyActionPlanMutationResult = Apollo.MutationResult<CreateDailyActionPlanMutation>;
-export type CreateDailyActionPlanMutationOptions = Apollo.BaseMutationOptions<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>;
-export const UpdateDailyActionPlanDocument = gql`
-    mutation updateDailyActionPlan($input: MutateDailyActionPlanInput!) {
-  updateDailyActionPlan(input: $input) {
-    ...DailyActionPlanFields
-  }
-}
-    ${DailyActionPlanFieldsFragmentDoc}`;
-export type UpdateDailyActionPlanMutationFn = Apollo.MutationFunction<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>;
-
-/**
- * __useUpdateDailyActionPlanMutation__
- *
- * To run a mutation, you first call `useUpdateDailyActionPlanMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateDailyActionPlanMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateDailyActionPlanMutation, { data, loading, error }] = useUpdateDailyActionPlanMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateDailyActionPlanMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>) {
-        return Apollo.useMutation<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>(UpdateDailyActionPlanDocument, baseOptions);
-      }
-export type UpdateDailyActionPlanMutationHookResult = ReturnType<typeof useUpdateDailyActionPlanMutation>;
-export type UpdateDailyActionPlanMutationResult = Apollo.MutationResult<UpdateDailyActionPlanMutation>;
-export type UpdateDailyActionPlanMutationOptions = Apollo.BaseMutationOptions<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>;
 export const CreateVolunteerEntryDocument = gql`
     mutation createVolunteerEntry($input: CreateVolunteerEntryInput!) {
   createVolunteerEntry(input: $input) {

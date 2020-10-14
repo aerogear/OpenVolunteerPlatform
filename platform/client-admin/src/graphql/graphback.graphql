@@ -1,3 +1,23 @@
+fragment DailyActionPlanFields on DailyActionPlan {
+   _id
+   owner
+   date
+   numberOfCasesCreated
+   numberOfVolunteersAssigned
+   numberOfRecipients
+
+} 
+
+fragment DailyActionPlanExpandedFields on DailyActionPlan {
+   _id
+   owner
+   date
+   numberOfCasesCreated
+   numberOfVolunteersAssigned
+   numberOfRecipients
+
+} 
+
 fragment DistributionCentreFields on DistributionCentre {
    _id
    name
@@ -235,26 +255,6 @@ fragment RecipientExpandedFields on Recipient {
    }
 } 
 
-fragment DailyActionPlanFields on DailyActionPlan {
-   _id
-   owner
-   date
-   numberOfCasesCreated
-   numberOfVolunteersAssigned
-   numberOfRecipients
-
-} 
-
-fragment DailyActionPlanExpandedFields on DailyActionPlan {
-   _id
-   owner
-   date
-   numberOfCasesCreated
-   numberOfVolunteersAssigned
-   numberOfRecipients
-
-} 
-
 fragment VolunteerEntryFields on VolunteerEntry {
    _id
    volunteerActions
@@ -280,6 +280,12 @@ fragment VolunteerEntryExpandedFields on VolunteerEntry {
    checkedOutAt
 
 } 
+
+query getDailyActionPlan($id: GraphbackObjectID!) {
+    getDailyActionPlan(id: $id) {
+      ...DailyActionPlanExpandedFields
+    }
+  }
 
 query findDistributionCentres($filter: DistributionCentreFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findDistributionCentres(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -383,28 +389,25 @@ query getRecipient($id: GraphbackObjectID!) {
     }
   }
 
-query findDailyActionPlans($filter: DailyActionPlanFilter, $page: PageRequest, $orderBy: OrderByInput) {
-    findDailyActionPlans(filter: $filter, page: $page, orderBy: $orderBy) {
-      items {
-        ...DailyActionPlanExpandedFields
-      }
-      offset
-      limit
-      count
-    }
-  }
-
-query getDailyActionPlan($id: GraphbackObjectID!) {
-    getDailyActionPlan(id: $id) {
-      ...DailyActionPlanExpandedFields
-    }
-  }
-
 query getVolunteerEntry($id: GraphbackObjectID!) {
     getVolunteerEntry(id: $id) {
       ...VolunteerEntryExpandedFields
     }
   }
+
+mutation createDailyActionPlan($input: CreateDailyActionPlanInput!) {
+  createDailyActionPlan(input: $input) {
+      ...DailyActionPlanFields
+  }
+}
+
+
+mutation updateDailyActionPlan($input: MutateDailyActionPlanInput!) {
+  updateDailyActionPlan(input: $input) {
+      ...DailyActionPlanFields
+  }
+}
+
 
 mutation createDistributionCentre($input: CreateDistributionCentreInput!) {
   createDistributionCentre(input: $input) {
@@ -479,20 +482,6 @@ mutation createRecipient($input: CreateRecipientInput!) {
 mutation updateRecipient($input: MutateRecipientInput!) {
   updateRecipient(input: $input) {
       ...RecipientFields
-  }
-}
-
-
-mutation createDailyActionPlan($input: CreateDailyActionPlanInput!) {
-  createDailyActionPlan(input: $input) {
-      ...DailyActionPlanFields
-  }
-}
-
-
-mutation updateDailyActionPlan($input: MutateDailyActionPlanInput!) {
-  updateDailyActionPlan(input: $input) {
-      ...DailyActionPlanFields
   }
 }
 

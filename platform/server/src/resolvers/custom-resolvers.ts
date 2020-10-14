@@ -4,6 +4,7 @@ import { isAuthorizedByRole } from "keycloak-connect-graphql";
 import { UnauthorizedError } from "@graphback/keycloak-authz/dist/utils";
 import { CONTEXT_KEY as KEYCLOAK_CONTEXT_KEY } from "keycloak-connect-graphql";
 import { GraphQLResolveInfo } from 'graphql';
+import fetch from "node-fetch";
 
 export default {
   Address: {
@@ -11,13 +12,16 @@ export default {
       return null;
     }
   },
+  Query: {
+    findDailyActionPlans: async () => {
+      const response = await fetch(process.env.SERVERLESS_URL!, {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'}
+      });
 
-  Query:{
-    calculateWhatever:(_, args, conxext, info)=>{
-      this.
+      return response.json();
     }
   },
-
   Mutation: {
     assignVolunteers: async ( _, __, context: GraphbackContext, info: GraphQLResolveInfo ) => {
       const graphback = context.graphback;

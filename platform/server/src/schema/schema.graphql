@@ -127,7 +127,7 @@ input CreateVolunteerInput {
   active: Boolean
 }
 
-"""@model"""
+"""@model(find: false)"""
 type DailyActionPlan {
   _id: GraphbackObjectID!
   owner: String
@@ -135,18 +135,6 @@ type DailyActionPlan {
   numberOfCasesCreated: Int
   numberOfVolunteersAssigned: Int
   numberOfRecipients: Int
-}
-
-input DailyActionPlanFilter {
-  _id: GraphbackObjectIDInput
-  owner: StringInput
-  date: GraphbackDateTimeInput
-  numberOfCasesCreated: IntInput
-  numberOfVolunteersAssigned: IntInput
-  numberOfRecipients: IntInput
-  and: [DailyActionPlanFilter!]
-  or: [DailyActionPlanFilter!]
-  not: DailyActionPlanFilter
 }
 
 type DailyActionPlanResultList {
@@ -423,6 +411,7 @@ type ProductResultList {
 }
 
 type Query {
+  findDailyActionPlans: DailyActionPlanResultList!
   getDistributionCentre(id: GraphbackObjectID!): DistributionCentre
   findDistributionCentres(filter: DistributionCentreFilter, page: PageRequest, orderBy: OrderByInput): DistributionCentreResultList!
   getVolunteer(id: GraphbackObjectID!): Volunteer
@@ -436,7 +425,6 @@ type Query {
   getProduct(id: GraphbackObjectID!): Product
   findProducts(filter: ProductFilter, page: PageRequest, orderBy: OrderByInput): ProductResultList!
   getDailyActionPlan(id: GraphbackObjectID!): DailyActionPlan
-  findDailyActionPlans(filter: DailyActionPlanFilter, page: PageRequest, orderBy: OrderByInput): DailyActionPlanResultList!
   getVolunteerEntry(id: GraphbackObjectID!): VolunteerEntry
 }
 
