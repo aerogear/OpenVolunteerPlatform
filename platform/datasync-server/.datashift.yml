@@ -1,0 +1,2 @@
+namespace: ovp-demo
+baseImage: graphql/ovp-layered-image
