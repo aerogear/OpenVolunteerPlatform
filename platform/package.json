@@ -26,7 +26,7 @@
     "generate:client": "cd client && yarn graphback generate && yarn graphql codegen",
     "generate:admin": "cd client-admin && yarn graphback generate && yarn graphql codegen",
     "generate:all": "yarn generate:client && yarn generate:admin",
-    "prepare:all":  "yarn prepare:client && yarn prepare:admin"
+    "prepare:all": "yarn prepare:client && yarn prepare:admin"
   },
   "workspaces": [
     "client",
@@ -35,5 +35,8 @@
   ],
   "resolutions": {
     "@types/react": "16.9.49"
+  },
+  "dependencies": {
+    "datasync-cli": "^0.16.0"
   }
 }

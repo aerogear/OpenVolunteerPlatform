@@ -1,0 +1,8 @@
+
+handlers:
+    - dailyAction: 
+        language: "typescript"
+        database: "mongodb",
+        file: "./dailyaction.ts"
+
+      
