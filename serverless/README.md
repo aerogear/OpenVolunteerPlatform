@@ -12,7 +12,7 @@ yarn build
 ```
 2. Create the configmap
 ```bash
-oc create configmap knative-handker --from-file=handler=dist/handler.js
+oc create configmap knative-handler --from-file=handler=dist/handler.js
 ```
 
 ### Deploy the service

@@ -1,0 +1,103 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authorization
+  namespace: ovp-test
+data:
+  authz: |-
+    {
+      "DistributionCentre": {
+        "create": {
+          "roles": [
+            "admin"
+          ]
+        },
+        "read": {
+          "roles": []
+        },
+        "update": {
+          "roles": [
+            "admin"
+          ]
+        },
+        "delete": {
+          "roles": [
+            "admin"
+          ]
+        }
+      },
+      "Volunteer": {
+        "create": {
+          "roles": []
+        },
+        "read": {
+          "roles": []
+        },
+        "update": {
+          "roles": []
+        },
+        "delete": {
+          "roles": [
+            "admin"
+          ]
+        }
+      },
+      "Recipient": {
+        "create": {
+          "roles": [
+            "admin"
+          ]
+        },
+        "read": {
+          "roles": []
+        },
+        "update": {
+          "roles": [
+            "admin"
+          ]
+        },
+        "delete": {
+          "roles": [
+            "admin"
+          ]
+        }
+      },
+      "VolunteerAction": {
+        "create": {
+          "roles": [
+            "admin"
+          ]
+        },
+        "read": {
+          "roles": []
+        },
+        "update": {
+          "roles": []
+        },
+        "delete": {
+          "roles": [
+            "admin"
+          ]
+        }
+      },
+      "VolunteerActionProduct": {
+        "create": {
+          "roles": [
+            "admin"
+          ]
+        },
+        "read": {
+          "roles": []
+        },
+        "update": {
+          "roles": [
+            "admin"
+          ]
+        },
+        "delete": {
+          "roles": [
+            "admin"
+          ]
+        }
+      }
+    }
