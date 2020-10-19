@@ -16,7 +16,6 @@ import { useFindVolunteerActions } from '../datastore/hooks';
 
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
-  const { volunteer } = useContext(AuthContext);
   const { isLoading: loading, error, data, subscribeToMore } = useFindVolunteerActions();
 
   useEffect(() => {
