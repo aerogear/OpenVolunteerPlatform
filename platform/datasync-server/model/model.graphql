@@ -154,6 +154,7 @@ type DailyActionPlan {
 
 """
 @model(create: true, update: true, delete: false, find: false, subCreate: true, subUpdate: true, subDelete: false)
+@streamable
 """
 type VolunteerEntry {
   _id: GraphbackObjectID!
