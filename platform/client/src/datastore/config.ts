@@ -10,7 +10,7 @@ export const datastore = new DataStore({
       wsUrl: wsUri,
     },
     // Delta pooling every 2 minutes and when back from offline 
-    delta: { enabled: true, pullInterval: 200000 },
+    delta: { enabled: true, pullInterval: 20000 },
     mutations: { enabled: true },
     liveupdates: { enabled: true }
   }
