@@ -27,6 +27,7 @@
     "uniforms-ionic": "0.1.0"
   },
   "scripts": {
+    "offix": "offix generate ../server/model/main.graphql ../../client/src/datastore",
     "start": "yarn build && cap serve",
     "dev": "react-scripts start",
     "build": "react-scripts build",
