@@ -24,9 +24,9 @@
     "typescript": "3.9.7"
   },
   "dependencies": {
-    "@graphback/datasync": "1.0.1",
-    "@graphback/keycloak-authz": "1.0.1",
-    "@graphback/runtime-mongo": "1.0.1",
+    "@graphback/datasync": "1.1.0",
+    "@graphback/keycloak-authz": "1.1.0",
+    "@graphback/runtime-mongo": "1.1.0",
     "@graphql-tools/graphql-file-loader": "6.2.1",
     "@graphql-tools/load": "6.2.4",
     "@types/react": "16.9.49",
@@ -35,7 +35,7 @@
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "express-session": "1.17.1",
-    "graphback": "1.0.1",
+    "graphback": "1.1.0",
     "graphql": "15.3.0",
     "graphql-merge-resolvers": "1.1.16",
     "graphql-subscriptions": "1.1.0",
