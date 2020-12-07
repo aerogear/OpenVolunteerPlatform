@@ -16,12 +16,12 @@ import { useFindVolunteerActions } from '../datastore/hooks';
 
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
-  const { isLoading: loading, error, data, subscribeToMore } = useFindVolunteerActions();
+  const { loading, error, data, subscribeToUpdates } = useFindVolunteerActions();
 
   useEffect(() => {
-    const subscription = subscribeToMore();
+    const subscription = subscribeToUpdates();
     return () => subscription.unsubscribe();
-  }, [data, subscribeToMore]);
+  }, [data, subscribeToUpdates]);
 
   if (error) {
     console.log(error);
