@@ -4,6 +4,7 @@
     "version": 1,
     "type": "object",
     "primaryKey": "_id",
+    "lateInit": true,
     "properties": {
       "_id": {
         "type": "string",
