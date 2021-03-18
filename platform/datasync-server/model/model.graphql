@@ -76,7 +76,7 @@ type Recipient implements Address {
 """
 Represents action that is assigned to volunteer
 
-@model
+@model(create: true, update: true, delete: false, subCreate: true, subUpdate: true, subDelete: false)
 @datasync
 """
 type VolunteerAction {

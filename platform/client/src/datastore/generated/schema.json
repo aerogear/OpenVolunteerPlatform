@@ -1,10 +1,210 @@
 {
+  "DistributionCentre": {
+    "name": "DistributionCentre",
+    "version": 1,
+    "type": "object",
+    "primaryKey": "_id",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "key": "_id",
+        "isRequired": true,
+        "primary": true
+      },
+      "name": {
+        "type": "string",
+        "key": "name"
+      },
+      "address1": {
+        "type": "string",
+        "key": "address1"
+      },
+      "address2": {
+        "type": "string",
+        "key": "address2"
+      },
+      "city": {
+        "type": "string",
+        "key": "city"
+      },
+      "postcode": {
+        "type": "number",
+        "key": "postcode"
+      },
+      "lat": {
+        "type": "number",
+        "key": "lat"
+      },
+      "long": {
+        "type": "number",
+        "key": "long"
+      },
+      "_version": {
+        "type": "string",
+        "key": "_version",
+        "isRequired": true
+      },
+      "_lastUpdatedAt": {
+        "type": "number",
+        "key": "_lastUpdatedAt",
+        "isRequired": true
+      }
+    }
+  },
+  "Volunteer": {
+    "name": "Volunteer",
+    "version": 1,
+    "type": "object",
+    "primaryKey": "_id",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "key": "_id",
+        "isRequired": true,
+        "primary": true
+      },
+      "firstName": {
+        "type": "string",
+        "key": "firstName"
+      },
+      "lastName": {
+        "type": "string",
+        "key": "lastName"
+      },
+      "email": {
+        "type": "string",
+        "key": "email"
+      },
+      "username": {
+        "type": "string",
+        "key": "username",
+        "isRequired": true
+      },
+      "address1": {
+        "type": "string",
+        "key": "address1"
+      },
+      "address2": {
+        "type": "string",
+        "key": "address2"
+      },
+      "city": {
+        "type": "string",
+        "key": "city"
+      },
+      "postcode": {
+        "type": "number",
+        "key": "postcode"
+      },
+      "dateOfBirth": {
+        "type": "any",
+        "key": "dateOfBirth"
+      },
+      "canDeliver": {
+        "type": "boolean",
+        "key": "canDeliver"
+      },
+      "actionsCompleted": {
+        "type": "number",
+        "key": "actionsCompleted"
+      },
+      "actionsActive": {
+        "type": "number",
+        "key": "actionsActive"
+      },
+      "active": {
+        "type": "boolean",
+        "key": "active"
+      },
+      "_version": {
+        "type": "string",
+        "key": "_version",
+        "isRequired": true
+      },
+      "_lastUpdatedAt": {
+        "type": "number",
+        "key": "_lastUpdatedAt",
+        "isRequired": true
+      }
+    }
+  },
+  "Recipient": {
+    "name": "Recipient",
+    "version": 1,
+    "type": "object",
+    "primaryKey": "_id",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "key": "_id",
+        "isRequired": true,
+        "primary": true
+      },
+      "firstName": {
+        "type": "string",
+        "key": "firstName"
+      },
+      "lastName": {
+        "type": "string",
+        "key": "lastName"
+      },
+      "phone": {
+        "type": "string",
+        "key": "phone"
+      },
+      "address1": {
+        "type": "string",
+        "key": "address1"
+      },
+      "address2": {
+        "type": "string",
+        "key": "address2"
+      },
+      "postcode": {
+        "type": "number",
+        "key": "postcode"
+      },
+      "city": {
+        "type": "string",
+        "key": "city"
+      },
+      "lat": {
+        "type": "number",
+        "key": "lat"
+      },
+      "long": {
+        "type": "number",
+        "key": "long"
+      },
+      "actionsCompleted": {
+        "type": "number",
+        "key": "actionsCompleted"
+      },
+      "deliveryDays": {
+        "type": "string",
+        "key": "deliveryDays"
+      },
+      "prefferedProducts": {
+        "type": "string",
+        "key": "prefferedProducts"
+      },
+      "_version": {
+        "type": "string",
+        "key": "_version",
+        "isRequired": true
+      },
+      "_lastUpdatedAt": {
+        "type": "number",
+        "key": "_lastUpdatedAt",
+        "isRequired": true
+      }
+    }
+  },
   "VolunteerAction": {
     "name": "VolunteerAction",
     "version": 1,
     "type": "object",
     "primaryKey": "_id",
-    "lateInit": true,
     "properties": {
       "_id": {
         "type": "string",
@@ -37,10 +237,172 @@
         "type": "any",
         "key": "_createdAt"
       },
+      "distributionCentreId": {
+        "type": "string",
+        "key": "distributionCentreId",
+        "relationship": "DistributionCentre"
+      },
+      "volunteerId": {
+        "type": "string",
+        "key": "volunteerId",
+        "relationship": "Volunteer"
+      },
+      "recipientId": {
+        "type": "string",
+        "key": "recipientId",
+        "relationship": "Recipient"
+      },
       "_version": {
         "type": "string",
         "key": "_version",
         "isRequired": true
+      },
+      "_lastUpdatedAt": {
+        "type": "number",
+        "key": "_lastUpdatedAt",
+        "isRequired": true
+      }
+    }
+  },
+  "VolunteerActionProduct": {
+    "name": "VolunteerActionProduct",
+    "version": 1,
+    "type": "object",
+    "primaryKey": "_id",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "key": "_id",
+        "isRequired": true,
+        "primary": true
+      },
+      "volunteerActionId": {
+        "type": "string",
+        "key": "volunteerActionId",
+        "relationship": "VolunteerAction"
+      },
+      "productId": {
+        "type": "string",
+        "key": "productId",
+        "relationship": "Product"
+      },
+      "_version": {
+        "type": "string",
+        "key": "_version",
+        "isRequired": true
+      },
+      "_lastUpdatedAt": {
+        "type": "number",
+        "key": "_lastUpdatedAt",
+        "isRequired": true
+      }
+    }
+  },
+  "Product": {
+    "name": "Product",
+    "version": 1,
+    "type": "object",
+    "primaryKey": "_id",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "key": "_id",
+        "isRequired": true,
+        "primary": true
+      },
+      "label": {
+        "type": "string",
+        "key": "label",
+        "isRequired": true
+      },
+      "description": {
+        "type": "string",
+        "key": "description"
+      },
+      "distributionCentreId": {
+        "type": "string",
+        "key": "distributionCentreId",
+        "relationship": "DistributionCentre"
+      },
+      "_version": {
+        "type": "string",
+        "key": "_version",
+        "isRequired": true
+      },
+      "_lastUpdatedAt": {
+        "type": "number",
+        "key": "_lastUpdatedAt",
+        "isRequired": true
+      }
+    }
+  },
+  "DailyActionPlan": {
+    "name": "DailyActionPlan",
+    "version": 1,
+    "type": "object",
+    "primaryKey": "_id",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "key": "_id",
+        "isRequired": true,
+        "primary": true
+      },
+      "owner": {
+        "type": "string",
+        "key": "owner"
+      },
+      "date": {
+        "type": "any",
+        "key": "date"
+      },
+      "numberOfCasesCreated": {
+        "type": "number",
+        "key": "numberOfCasesCreated"
+      },
+      "numberOfVolunteersAssigned": {
+        "type": "number",
+        "key": "numberOfVolunteersAssigned"
+      },
+      "numberOfRecipients": {
+        "type": "number",
+        "key": "numberOfRecipients"
+      },
+      "_version": {
+        "type": "string",
+        "key": "_version",
+        "isRequired": true
+      },
+      "_lastUpdatedAt": {
+        "type": "number",
+        "key": "_lastUpdatedAt",
+        "isRequired": true
+      }
+    }
+  },
+  "VolunteerEntry": {
+    "name": "VolunteerEntry",
+    "version": 1,
+    "type": "object",
+    "primaryKey": "_id",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "key": "_id",
+        "isRequired": true,
+        "primary": true
+      },
+      "volunteerActions": {
+        "type": "any[]",
+        "key": "volunteerActions"
+      },
+      "checkedInAt": {
+        "type": "any",
+        "key": "checkedInAt"
+      },
+      "checkedOutAt": {
+        "type": "any",
+        "key": "checkedOutAt"
       }
     }
   }
