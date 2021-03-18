@@ -1,6 +1,6 @@
-import { Filter, useQuery, useUpdate } from 'offix-datastore';
-import { VolunteerActionModel } from './config';
-import { VolunteerAction } from './generated';
+import { Filter, useQuery, useSave, useUpdate } from 'offix-datastore';
+import { VolunteerActionModel, VolunteerEntryModel } from './config';
+import { VolunteerAction, VolunteerEntry } from './generated';
 
 
 /**
@@ -15,4 +15,16 @@ export const useFindVolunteerActions = (filter?: Filter<VolunteerAction | any>) 
  * @param filter 
  */
 export const useEditVolunteerAction = () => useUpdate<VolunteerAction  | any>(VolunteerActionModel);
+
+/**
+ * Create  VolunteerEntry
+ * @param filter 
+ */
+ export const useCreateVolunteerEntry = () => useSave(VolunteerEntryModel);
+
+/**
+ * Update  VolunteerEntry(used to update status)
+ * @param filter 
+ */
+ export const useEditVolunteerEntry = () => useUpdate<VolunteerEntry  | any>(VolunteerEntryModel);
 
