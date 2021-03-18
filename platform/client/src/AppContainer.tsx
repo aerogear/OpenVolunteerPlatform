@@ -5,12 +5,15 @@ import { IContainerProps } from './declarations';
 import { getKeycloakInstance } from './keycloakAuth';
 import { AuthContextProvider } from './context/AuthContext';
 import { ApolloClient, ApolloProvider } from '@apollo/client'
+import { datastore } from './datastore/config';
+import { useNetworkStatus } from './hooks/useNetworkStatus';
 
 let keycloak: any;
 const apolloClient = new ApolloClient(clientConfig);
 
 export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
   const [keycloakInitialized, setKeycloakInitialized] = useState(false);
+  const isOnline = useNetworkStatus();
 
   // Initialize the client
   useEffect(() => {
@@ -23,6 +26,16 @@ export const AppContainer: React.FC<IContainerProps> = ({ app: App }) => {
     }
     init();
   }, []);
+  
+  useEffect(() => {
+    if (isOnline) {
+      console.log("Start replication");
+      datastore.startReplication();
+    } else {
+      console.log("Stop replication");
+      datastore.stopReplication();
+    }
+  }, [isOnline])
 
   if (!keycloakInitialized || !keycloak.profile) return <Loading loading={true} />;
 
