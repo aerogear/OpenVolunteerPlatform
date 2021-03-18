@@ -14,7 +14,7 @@
     "keycloak-js": "9.0.3",
     "offix-cache": "0.15.5",
     "offix-client": "0.15.5",
-    "offix-datastore": "0.3.14",
+    "offix-datastore": "0.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-offix-hooks": "0.15.5",
@@ -27,7 +27,7 @@
     "uniforms-ionic": "0.1.0"
   },
   "scripts": {
-    "offix": "offix generate ../server/model/main.graphql ../../client/src/datastore",
+    "offix": "offix generate --schema ../server/model/main.graphql --outputPath ./src/datastore/generated",
     "start": "yarn build && cap serve",
     "dev": "react-scripts start",
     "build": "react-scripts build",
@@ -53,10 +53,10 @@
   },
   "devDependencies": {
     "@capacitor/cli": "2.4.1",
-    "@graphql-codegen/add": "2.0.1",
-    "@graphql-codegen/typescript": "1.17.9",
-    "@graphql-codegen/typescript-operations": "1.17.8",
-    "@graphql-codegen/typescript-react-apollo": "2.0.6",
+    "@graphql-codegen/add": "1.17.7",
+    "@graphql-codegen/typescript": "1.17.7",
+    "@graphql-codegen/typescript-operations": "1.17.7",
+    "@graphql-codegen/typescript-react-apollo": "1.17.7",
     "@offix/cli": "0.3.4-dev1",
     "@test-graphql-cli/codegen": "4.0.1-beta.6",
     "@testing-library/jest-dom": "5.11.4",
