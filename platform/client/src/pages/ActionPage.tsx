@@ -6,17 +6,26 @@ import {
   IonLabel,
   IonFooter,
   IonLoading,
-  IonContent
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+  IonButton
 } from '@ionic/react';
+import { wifiOutline } from 'ionicons/icons';
 import { Empty, ActionsList, Header } from '../components';
 import { RouteComponentProps } from 'react-router';
 import { ActionStatus } from '../dataFacade';
+import { useFindVolunteerActions, useCreateVolunteerEntry } from '../datastore/hooks';
 import { AuthContext } from '../context/AuthContext';
-import { useFindVolunteerActions } from '../datastore/hooks';
+import { useNetworkStatus } from '../hooks/useNetworkStatus';
 
 
 export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
+  const { volunteer } = useContext(AuthContext);
   const { loading, error, data, subscribeToUpdates } = useFindVolunteerActions();
+  const { save: createEntry } = useCreateVolunteerEntry();
+  const isOnline = useNetworkStatus();
 
   useEffect(() => {
     const subscription = subscribeToUpdates();
@@ -26,7 +35,6 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
   if (error) {
     console.log(error);
   }
-  console.log(data);
 
   if (loading) return <IonLoading
     isOpen={loading}
@@ -46,6 +54,27 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
     // }
   }
 
+  const handleEntry = () => {
+    createEntry({
+      volunteerActions: [],
+      checkedInAt: new Date(),
+      volunteer: {
+        _id: volunteer?._id,
+        firstName: volunteer?.firstName,
+        lastName: volunteer?.lastName,
+        email: volunteer?.email,
+        username: volunteer?.username
+      },
+      distributionCentre: {
+        _id: "5ef740ac12f76aecc84af1f2",
+        name: "Berlin City Hall"
+      }
+    }).then(() => {
+      // TODO dialog
+    }).catch((err) => {
+      console.error(err);
+    });
+  }
 
   return (
     <IonPage>
@@ -60,11 +89,23 @@ export const ActionPage: React.FC<RouteComponentProps> = ({ match }) => {
           </IonSegmentButton>
         </IonSegment>
         {content}
+        <IonFab vertical="bottom" horizontal="end" slot="fixed" style={{ 'marginBottom': '2em', 'marginRight': '1em' }}>
+          <IonFabButton onClick={handleEntry}>
+            <IonIcon icon={wifiOutline} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
       <IonFooter>
         <div>
           OpenVolunteer Platform
         </div>
+        <IonButton 
+          fill="outline" 
+          color={ isOnline ? 'primary' : 'danger' }
+          style={{ margin: "0 0 0.5em 0.5em" }}
+        >
+          { isOnline ? 'Online' : 'Offline' }
+        </IonButton>
       </IonFooter>
     </IonPage >
   );
