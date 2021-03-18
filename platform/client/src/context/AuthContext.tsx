@@ -23,7 +23,8 @@ export const AuthContextProvider = (props: any) => {
         const filter = {
           volunteerId: { eq: volunteer._id }
         };
-        datastore.restartReplicator(VolunteerActionModel, { filter });
+        VolunteerActionModel.applyFilter(filter);
+        datastore.startReplication();
       }
     }
   
