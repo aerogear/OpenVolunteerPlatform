@@ -12,7 +12,7 @@ extensions:
       find: true
       delete: false
       subCreate: false
-      subUpdate: false
+      subUpdate: true
       subDelete: false
     plugins:
       graphback-schema:
@@ -29,6 +29,7 @@ extensions:
           withComponent: false
           withHOC: false
           withHooks: true
+          apolloReactHooksImportFrom: "@apollo/client"
           skipDocumentsValidation: true
           scalars:
             GraphbackTime: string

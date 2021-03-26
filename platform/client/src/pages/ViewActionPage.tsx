@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Header } from '../components/Header';
 import { Map, Direction } from '../components/Map';
 import { IUpdateMatchParams } from '../declarations';
-import { useGetVolunteerActionQuery, useUpdateVolunteerActionMutation, ActionStatus } from '../dataFacade'
+import { useGetVolunteerActionQuery, ActionStatus } from '../dataFacade'
 import { AutoForm, AutoFields, ErrorsField } from 'uniforms-ionic'
 import volunteerAction from '../forms/volunteerAction';
 import { IonLoading, IonContent, IonList, IonCard, IonItemGroup, IonItemDivider } from '@ionic/react';
@@ -12,10 +12,11 @@ import distributionCentreForm from '../forms/distributionCentre';
 
 // import { Marker } from 'google-maps-react';
 import { Empty } from '../components';
+import { useEditVolunteerAction } from '../datastore/hooks';
 
 export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> = ({ match }) => {
   const { data, loading, error } = useGetVolunteerActionQuery({ fetchPolicy: "cache-first", variables: { id: match.params.id } });
-  const [updateAction] = useUpdateVolunteerActionMutation();
+  const { update: updateAction } = useEditVolunteerAction();
   if (error) {
     console.log(error);
   }
@@ -26,6 +27,19 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
 
   if (loading) return <IonLoading isOpen={loading} message={'Loading...'} />;
   const model = data.getVolunteerAction;
+
+  const handleSubmit = (model: any) => {
+    updateAction({
+      _id: model._id,
+      status: model.status,
+      assignedAt: model.status === ActionStatus.Assigned ? new Date(): undefined,
+      completedAt: model.status === ActionStatus.Completed ? new Date(): undefined
+    }).then(() => {
+      // TODO dialog
+    }).catch((err) => {
+      console.error(err);
+    });
+  }
 
   let mapContent = <Empty />;
   let distributionCentre;
@@ -81,22 +95,7 @@ export const ViewActionPage: React.FC<RouteComponentProps<IUpdateMatchParams>> =
                 placeholder
                 model={model}
                 schema={volunteerAction}
-                onSubmit={(model: any) => {
-                  updateAction({
-                    variables: {
-                      input: {
-                        _id: model._id,
-                        status: model.status,
-                        assignedAt: model.status === ActionStatus.Assigned ? new Date(): undefined,
-                        completedAt: model.status === ActionStatus.Completed ? new Date(): undefined
-                      }
-                    }
-                  }).then(() => {
-                    // TODO dialog
-                  }).catch((err) => {
-                    console.error(err);
-                  });
-                }}
+                onSubmit={handleSubmit}
                 showInlineError
                 submitField={undefined}
               >

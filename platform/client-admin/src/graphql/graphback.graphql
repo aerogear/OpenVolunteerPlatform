@@ -8,7 +8,7 @@ fragment DistributionCentreFields on DistributionCentre {
    lat
    long
 
-} 
+}
 
 fragment DistributionCentreExpandedFields on DistributionCentre {
    _id
@@ -33,14 +33,14 @@ fragment DistributionCentreExpandedFields on DistributionCentre {
       completedAt
       _createdAt
    }
-} 
+}
 
 fragment ProductFields on Product {
    _id
    label
    description
 
-} 
+}
 
 fragment ProductExpandedFields on Product {
    _id
@@ -59,12 +59,12 @@ fragment ProductExpandedFields on Product {
       lat
       long
    }
-} 
+}
 
 fragment VolunteerActionProductFields on VolunteerActionProduct {
    _id
 
-} 
+}
 
 fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
    _id
@@ -82,7 +82,7 @@ fragment VolunteerActionProductExpandedFields on VolunteerActionProduct {
       label
       description
    }
-} 
+}
 
 fragment VolunteerActionFields on VolunteerAction {
    _id
@@ -92,8 +92,7 @@ fragment VolunteerActionFields on VolunteerAction {
    assignedAt
    completedAt
    _createdAt
-
-} 
+}
 
 fragment VolunteerActionExpandedFields on VolunteerAction {
    _id
@@ -147,7 +146,7 @@ fragment VolunteerActionExpandedFields on VolunteerAction {
    products {
       _id
    }
-} 
+}
 
 fragment VolunteerFields on Volunteer {
    _id
@@ -165,7 +164,7 @@ fragment VolunteerFields on Volunteer {
    actionsActive
    active
 
-} 
+}
 
 fragment VolunteerExpandedFields on Volunteer {
    _id
@@ -191,7 +190,7 @@ fragment VolunteerExpandedFields on Volunteer {
       completedAt
       _createdAt
    }
-} 
+}
 
 fragment RecipientFields on Recipient {
    _id
@@ -208,7 +207,7 @@ fragment RecipientFields on Recipient {
    deliveryDays
    prefferedProducts
 
-} 
+}
 
 fragment RecipientExpandedFields on Recipient {
    _id
@@ -233,7 +232,7 @@ fragment RecipientExpandedFields on Recipient {
       completedAt
       _createdAt
    }
-} 
+}
 
 fragment DailyActionPlanFields on DailyActionPlan {
    _id
@@ -243,7 +242,7 @@ fragment DailyActionPlanFields on DailyActionPlan {
    numberOfVolunteersAssigned
    numberOfRecipients
 
-} 
+}
 
 fragment DailyActionPlanExpandedFields on DailyActionPlan {
    _id
@@ -253,7 +252,7 @@ fragment DailyActionPlanExpandedFields on DailyActionPlan {
    numberOfVolunteersAssigned
    numberOfRecipients
 
-} 
+}
 
 fragment VolunteerEntryFields on VolunteerEntry {
    _id
@@ -261,7 +260,7 @@ fragment VolunteerEntryFields on VolunteerEntry {
    checkedInAt
    checkedOutAt
 
-} 
+}
 
 fragment VolunteerEntryExpandedFields on VolunteerEntry {
    _id
@@ -279,7 +278,7 @@ fragment VolunteerEntryExpandedFields on VolunteerEntry {
    checkedInAt
    checkedOutAt
 
-} 
+}
 
 query findDistributionCentres($filter: DistributionCentreFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findDistributionCentres(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -290,13 +289,13 @@ query findDistributionCentres($filter: DistributionCentreFilter, $page: PageRequ
       limit
       count
     }
-  }
+}
 
 query getDistributionCentre($id: GraphbackObjectID!) {
     getDistributionCentre(id: $id) {
       ...DistributionCentreExpandedFields
     }
-  }
+}
 
 query findProducts($filter: ProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findProducts(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -307,13 +306,13 @@ query findProducts($filter: ProductFilter, $page: PageRequest, $orderBy: OrderBy
       limit
       count
     }
-  }
+}
 
 query getProduct($id: GraphbackObjectID!) {
     getProduct(id: $id) {
       ...ProductExpandedFields
     }
-  }
+}
 
 query findVolunteerActionProducts($filter: VolunteerActionProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findVolunteerActionProducts(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -324,13 +323,13 @@ query findVolunteerActionProducts($filter: VolunteerActionProductFilter, $page: 
       limit
       count
     }
-  }
+}
 
 query getVolunteerActionProduct($id: GraphbackObjectID!) {
     getVolunteerActionProduct(id: $id) {
       ...VolunteerActionProductExpandedFields
     }
-  }
+}
 
 query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findVolunteerActions(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -341,13 +340,13 @@ query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $
       limit
       count
     }
-  }
+}
 
 query getVolunteerAction($id: GraphbackObjectID!) {
     getVolunteerAction(id: $id) {
       ...VolunteerActionExpandedFields
     }
-  }
+}
 
 query findVolunteers($filter: VolunteerFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findVolunteers(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -358,13 +357,13 @@ query findVolunteers($filter: VolunteerFilter, $page: PageRequest, $orderBy: Ord
       limit
       count
     }
-  }
+}
 
 query getVolunteer($id: GraphbackObjectID!) {
     getVolunteer(id: $id) {
       ...VolunteerExpandedFields
     }
-  }
+}
 
 query findRecipients($filter: RecipientFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findRecipients(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -375,13 +374,13 @@ query findRecipients($filter: RecipientFilter, $page: PageRequest, $orderBy: Ord
       limit
       count
     }
-  }
+}
 
 query getRecipient($id: GraphbackObjectID!) {
     getRecipient(id: $id) {
       ...RecipientExpandedFields
     }
-  }
+}
 
 query findDailyActionPlans($filter: DailyActionPlanFilter, $page: PageRequest, $orderBy: OrderByInput) {
     findDailyActionPlans(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -392,19 +391,19 @@ query findDailyActionPlans($filter: DailyActionPlanFilter, $page: PageRequest, $
       limit
       count
     }
-  }
+}
 
 query getDailyActionPlan($id: GraphbackObjectID!) {
     getDailyActionPlan(id: $id) {
       ...DailyActionPlanExpandedFields
     }
-  }
+}
 
 query getVolunteerEntry($id: GraphbackObjectID!) {
     getVolunteerEntry(id: $id) {
       ...VolunteerEntryExpandedFields
     }
-  }
+}
 
 mutation createDistributionCentre($input: CreateDistributionCentreInput!) {
   createDistributionCentre(input: $input) {
@@ -412,13 +411,11 @@ mutation createDistributionCentre($input: CreateDistributionCentreInput!) {
   }
 }
 
-
 mutation updateDistributionCentre($input: MutateDistributionCentreInput!) {
   updateDistributionCentre(input: $input) {
       ...DistributionCentreFields
   }
 }
-
 
 mutation createProduct($input: CreateProductInput!) {
   createProduct(input: $input) {
@@ -426,13 +423,11 @@ mutation createProduct($input: CreateProductInput!) {
   }
 }
 
-
 mutation updateProduct($input: MutateProductInput!) {
   updateProduct(input: $input) {
       ...ProductFields
   }
 }
-
 
 mutation createVolunteerActionProduct($input: CreateVolunteerActionProductInput!) {
   createVolunteerActionProduct(input: $input) {
@@ -440,13 +435,11 @@ mutation createVolunteerActionProduct($input: CreateVolunteerActionProductInput!
   }
 }
 
-
 mutation createVolunteerAction($input: CreateVolunteerActionInput!) {
   createVolunteerAction(input: $input) {
       ...VolunteerActionFields
   }
 }
-
 
 mutation updateVolunteerAction($input: MutateVolunteerActionInput!) {
   updateVolunteerAction(input: $input) {
@@ -454,13 +447,11 @@ mutation updateVolunteerAction($input: MutateVolunteerActionInput!) {
   }
 }
 
-
 mutation createVolunteer($input: CreateVolunteerInput!) {
   createVolunteer(input: $input) {
       ...VolunteerFields
   }
 }
-
 
 mutation updateVolunteer($input: MutateVolunteerInput!) {
   updateVolunteer(input: $input) {
@@ -468,13 +459,11 @@ mutation updateVolunteer($input: MutateVolunteerInput!) {
   }
 }
 
-
 mutation createRecipient($input: CreateRecipientInput!) {
   createRecipient(input: $input) {
       ...RecipientFields
   }
 }
-
 
 mutation updateRecipient($input: MutateRecipientInput!) {
   updateRecipient(input: $input) {
@@ -482,13 +471,11 @@ mutation updateRecipient($input: MutateRecipientInput!) {
   }
 }
 
-
 mutation createDailyActionPlan($input: CreateDailyActionPlanInput!) {
   createDailyActionPlan(input: $input) {
       ...DailyActionPlanFields
   }
 }
-
 
 mutation updateDailyActionPlan($input: MutateDailyActionPlanInput!) {
   updateDailyActionPlan(input: $input) {
@@ -496,13 +483,11 @@ mutation updateDailyActionPlan($input: MutateDailyActionPlanInput!) {
   }
 }
 
-
 mutation createVolunteerEntry($input: CreateVolunteerEntryInput!) {
   createVolunteerEntry(input: $input) {
       ...VolunteerEntryFields
   }
 }
-
 
 mutation updateVolunteerEntry($input: MutateVolunteerEntryInput!) {
   updateVolunteerEntry(input: $input) {
@@ -510,15 +495,56 @@ mutation updateVolunteerEntry($input: MutateVolunteerEntryInput!) {
   }
 }
 
+subscription updatedDistributionCentre($filter: DistributionCentreSubscriptionFilter) {
+  updatedDistributionCentre(filter: $filter) {
+      ...DistributionCentreFields
+  }
+}
+
+subscription updatedProduct($filter: ProductSubscriptionFilter) {
+  updatedProduct(filter: $filter) {
+      ...ProductFields
+  }
+}
+
+subscription newVolunteerAction($filter: VolunteerActionSubscriptionFilter) {
+  newVolunteerAction(filter: $filter) {
+      ...VolunteerActionFields
+  }
+}
+
+subscription updatedVolunteerAction($filter: VolunteerActionSubscriptionFilter) {
+  updatedVolunteerAction(filter: $filter) {
+      ...VolunteerActionFields
+  }
+}
+
+subscription updatedVolunteer($filter: VolunteerSubscriptionFilter) {
+  updatedVolunteer(filter: $filter) {
+      ...VolunteerFields
+  }
+}
+
+subscription updatedRecipient($filter: RecipientSubscriptionFilter) {
+  updatedRecipient(filter: $filter) {
+      ...RecipientFields
+  }
+}
+
+subscription updatedDailyActionPlan($filter: DailyActionPlanSubscriptionFilter) {
+  updatedDailyActionPlan(filter: $filter) {
+      ...DailyActionPlanFields
+  }
+}
 
 subscription newVolunteerEntry($filter: VolunteerEntrySubscriptionFilter) {
   newVolunteerEntry(filter: $filter) {
       ...VolunteerEntryFields
   }
-} 
+}
 
 subscription updatedVolunteerEntry($filter: VolunteerEntrySubscriptionFilter) {
   updatedVolunteerEntry(filter: $filter) {
       ...VolunteerEntryFields
   }
-} 
+}

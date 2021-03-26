@@ -1,6 +1,7 @@
 /* tslint:disable */
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import gql from 'graphql-tag';
+import * as ApolloReactCommon from '@apollo/react-common';
+import * as ApolloReactHooks from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 
@@ -37,7 +38,6 @@ export type BooleanInput = {
 };
 
 export type CreateDailyActionPlanInput = {
-  _id?: Maybe<Scalars['GraphbackObjectID']>;
   owner?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['GraphbackDateTime']>;
   numberOfCasesCreated?: Maybe<Scalars['Int']>;
@@ -46,7 +46,6 @@ export type CreateDailyActionPlanInput = {
 };
 
 export type CreateDistributionCentreInput = {
-  _id?: Maybe<Scalars['GraphbackObjectID']>;
   name?: Maybe<Scalars['String']>;
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
@@ -70,14 +69,12 @@ export type CreatePartialVolunteerInput = {
 };
 
 export type CreateProductInput = {
-  _id?: Maybe<Scalars['GraphbackObjectID']>;
   label: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   distributionCentreId?: Maybe<Scalars['GraphbackObjectID']>;
 };
 
 export type CreateRecipientInput = {
-  _id?: Maybe<Scalars['GraphbackObjectID']>;
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
@@ -93,7 +90,6 @@ export type CreateRecipientInput = {
 };
 
 export type CreateVolunteerActionInput = {
-  _id?: Maybe<Scalars['GraphbackObjectID']>;
   title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   status?: Maybe<ActionStatus>;
@@ -106,13 +102,11 @@ export type CreateVolunteerActionInput = {
 };
 
 export type CreateVolunteerActionProductInput = {
-  _id?: Maybe<Scalars['GraphbackObjectID']>;
   volunteerActionId?: Maybe<Scalars['GraphbackObjectID']>;
   productId?: Maybe<Scalars['GraphbackObjectID']>;
 };
 
 export type CreateVolunteerEntryInput = {
-  _id?: Maybe<Scalars['GraphbackObjectID']>;
   volunteer?: Maybe<CreatePartialVolunteerInput>;
   distributionCentre?: Maybe<CreatePartialDistributionCentreInput>;
   volunteerActions?: Maybe<Array<Maybe<Scalars['GraphbackJSON']>>>;
@@ -121,7 +115,6 @@ export type CreateVolunteerEntryInput = {
 };
 
 export type CreateVolunteerInput = {
-  _id?: Maybe<Scalars['GraphbackObjectID']>;
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -166,6 +159,18 @@ export type DailyActionPlanResultList = {
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   count?: Maybe<Scalars['Int']>;
+};
+
+export type DailyActionPlanSubscriptionFilter = {
+  and?: Maybe<Array<DailyActionPlanSubscriptionFilter>>;
+  or?: Maybe<Array<DailyActionPlanSubscriptionFilter>>;
+  not?: Maybe<DailyActionPlanSubscriptionFilter>;
+  _id?: Maybe<GraphbackObjectIdInput>;
+  owner?: Maybe<StringInput>;
+  date?: Maybe<GraphbackDateTimeInput>;
+  numberOfCasesCreated?: Maybe<IntInput>;
+  numberOfVolunteersAssigned?: Maybe<IntInput>;
+  numberOfRecipients?: Maybe<IntInput>;
 };
 
 /** @model(delete: false) */
@@ -223,6 +228,20 @@ export type DistributionCentreResultList = {
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   count?: Maybe<Scalars['Int']>;
+};
+
+export type DistributionCentreSubscriptionFilter = {
+  and?: Maybe<Array<DistributionCentreSubscriptionFilter>>;
+  or?: Maybe<Array<DistributionCentreSubscriptionFilter>>;
+  not?: Maybe<DistributionCentreSubscriptionFilter>;
+  _id?: Maybe<GraphbackObjectIdInput>;
+  name?: Maybe<StringInput>;
+  address1?: Maybe<StringInput>;
+  address2?: Maybe<StringInput>;
+  city?: Maybe<StringInput>;
+  postcode?: Maybe<IntInput>;
+  lat?: Maybe<FloatInput>;
+  long?: Maybe<FloatInput>;
 };
 
 export type FloatInput = {
@@ -345,7 +364,7 @@ export type MutateVolunteerEntryInput = {
   _id: Scalars['GraphbackObjectID'];
   volunteer?: Maybe<MutatePartialVolunteerInput>;
   distributionCentre?: Maybe<MutatePartialDistributionCentreInput>;
-  volunteerActions?: Maybe<Scalars['GraphbackJSON']>;
+  volunteerActions?: Maybe<Array<Maybe<Scalars['GraphbackJSON']>>>;
   checkedInAt?: Maybe<Scalars['GraphbackDateTime']>;
   checkedOutAt?: Maybe<Scalars['GraphbackDateTime']>;
 };
@@ -527,6 +546,15 @@ export type ProductResultList = {
   count?: Maybe<Scalars['Int']>;
 };
 
+export type ProductSubscriptionFilter = {
+  and?: Maybe<Array<ProductSubscriptionFilter>>;
+  or?: Maybe<Array<ProductSubscriptionFilter>>;
+  not?: Maybe<ProductSubscriptionFilter>;
+  _id?: Maybe<GraphbackObjectIdInput>;
+  label?: Maybe<StringInput>;
+  description?: Maybe<StringInput>;
+};
+
 export type Query = {
   __typename?: 'Query';
   getDistributionCentre?: Maybe<DistributionCentre>;
@@ -695,6 +723,25 @@ export type RecipientResultList = {
   count?: Maybe<Scalars['Int']>;
 };
 
+export type RecipientSubscriptionFilter = {
+  and?: Maybe<Array<RecipientSubscriptionFilter>>;
+  or?: Maybe<Array<RecipientSubscriptionFilter>>;
+  not?: Maybe<RecipientSubscriptionFilter>;
+  _id?: Maybe<GraphbackObjectIdInput>;
+  firstName?: Maybe<StringInput>;
+  lastName?: Maybe<StringInput>;
+  phone?: Maybe<StringInput>;
+  address1?: Maybe<StringInput>;
+  address2?: Maybe<StringInput>;
+  postcode?: Maybe<IntInput>;
+  city?: Maybe<StringInput>;
+  lat?: Maybe<FloatInput>;
+  long?: Maybe<FloatInput>;
+  actionsCompleted?: Maybe<IntInput>;
+  deliveryDays?: Maybe<StringInput>;
+  prefferedProducts?: Maybe<StringInput>;
+};
+
 export enum SortDirectionEnum {
   Desc = 'DESC',
   Asc = 'ASC'
@@ -715,8 +762,50 @@ export type StringInput = {
 
 export type Subscription = {
   __typename?: 'Subscription';
+  updatedDistributionCentre: DistributionCentre;
+  updatedVolunteer: Volunteer;
+  updatedRecipient: Recipient;
+  newVolunteerAction: VolunteerAction;
+  updatedVolunteerAction: VolunteerAction;
+  updatedProduct: Product;
+  updatedDailyActionPlan: DailyActionPlan;
   newVolunteerEntry: VolunteerEntry;
   updatedVolunteerEntry: VolunteerEntry;
+};
+
+
+export type SubscriptionUpdatedDistributionCentreArgs = {
+  filter?: Maybe<DistributionCentreSubscriptionFilter>;
+};
+
+
+export type SubscriptionUpdatedVolunteerArgs = {
+  filter?: Maybe<VolunteerSubscriptionFilter>;
+};
+
+
+export type SubscriptionUpdatedRecipientArgs = {
+  filter?: Maybe<RecipientSubscriptionFilter>;
+};
+
+
+export type SubscriptionNewVolunteerActionArgs = {
+  filter?: Maybe<VolunteerActionSubscriptionFilter>;
+};
+
+
+export type SubscriptionUpdatedVolunteerActionArgs = {
+  filter?: Maybe<VolunteerActionSubscriptionFilter>;
+};
+
+
+export type SubscriptionUpdatedProductArgs = {
+  filter?: Maybe<ProductSubscriptionFilter>;
+};
+
+
+export type SubscriptionUpdatedDailyActionPlanArgs = {
+  filter?: Maybe<DailyActionPlanSubscriptionFilter>;
 };
 
 
@@ -762,7 +851,8 @@ export type VolunteerActionsArgs = {
 /**
  * Represents action that is assigned to volunteer
  * 
- * @model
+ * @model(create: true, update: true, delete: false, subCreate: true, subUpdate: true, subDelete: false)
+ * @datasync
  */
 export type VolunteerAction = {
   __typename?: 'VolunteerAction';
@@ -799,7 +889,8 @@ export type VolunteerAction = {
 /**
  * Represents action that is assigned to volunteer
  * 
- * @model
+ * @model(create: true, update: true, delete: false, subCreate: true, subUpdate: true, subDelete: false)
+ * @datasync
  */
 export type VolunteerActionProductsArgs = {
   filter?: Maybe<VolunteerActionProductFilter>;
@@ -860,6 +951,19 @@ export type VolunteerActionResultList = {
   count?: Maybe<Scalars['Int']>;
 };
 
+export type VolunteerActionSubscriptionFilter = {
+  and?: Maybe<Array<VolunteerActionSubscriptionFilter>>;
+  or?: Maybe<Array<VolunteerActionSubscriptionFilter>>;
+  not?: Maybe<VolunteerActionSubscriptionFilter>;
+  _id?: Maybe<GraphbackObjectIdInput>;
+  title?: Maybe<StringInput>;
+  description?: Maybe<StringInput>;
+  status?: Maybe<StringInput>;
+  assignedAt?: Maybe<GraphbackDateTimeInput>;
+  completedAt?: Maybe<GraphbackDateTimeInput>;
+  _createdAt?: Maybe<GraphbackDateTimeInput>;
+};
+
 /** @model(create: true, update: true, delete: false, find: false, subCreate: true, subUpdate: true, subDelete: false) */
 export type VolunteerEntry = {
   __typename?: 'VolunteerEntry';
@@ -911,6 +1015,26 @@ export type VolunteerResultList = {
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   count?: Maybe<Scalars['Int']>;
+};
+
+export type VolunteerSubscriptionFilter = {
+  and?: Maybe<Array<VolunteerSubscriptionFilter>>;
+  or?: Maybe<Array<VolunteerSubscriptionFilter>>;
+  not?: Maybe<VolunteerSubscriptionFilter>;
+  _id?: Maybe<GraphbackObjectIdInput>;
+  firstName?: Maybe<StringInput>;
+  lastName?: Maybe<StringInput>;
+  email?: Maybe<StringInput>;
+  username?: Maybe<StringInput>;
+  address1?: Maybe<StringInput>;
+  address2?: Maybe<StringInput>;
+  city?: Maybe<StringInput>;
+  postcode?: Maybe<IntInput>;
+  dateOfBirth?: Maybe<GraphbackDateTimeInput>;
+  canDeliver?: Maybe<BooleanInput>;
+  actionsCompleted?: Maybe<IntInput>;
+  actionsActive?: Maybe<IntInput>;
+  active?: Maybe<BooleanInput>;
 };
 
 export type DistributionCentreFieldsFragment = (
@@ -1474,6 +1598,97 @@ export type UpdateVolunteerEntryMutation = (
   )> }
 );
 
+export type UpdatedDistributionCentreSubscriptionVariables = Exact<{
+  filter?: Maybe<DistributionCentreSubscriptionFilter>;
+}>;
+
+
+export type UpdatedDistributionCentreSubscription = (
+  { __typename?: 'Subscription' }
+  & { updatedDistributionCentre: (
+    { __typename?: 'DistributionCentre' }
+    & DistributionCentreFieldsFragment
+  ) }
+);
+
+export type UpdatedProductSubscriptionVariables = Exact<{
+  filter?: Maybe<ProductSubscriptionFilter>;
+}>;
+
+
+export type UpdatedProductSubscription = (
+  { __typename?: 'Subscription' }
+  & { updatedProduct: (
+    { __typename?: 'Product' }
+    & ProductFieldsFragment
+  ) }
+);
+
+export type NewVolunteerActionSubscriptionVariables = Exact<{
+  filter?: Maybe<VolunteerActionSubscriptionFilter>;
+}>;
+
+
+export type NewVolunteerActionSubscription = (
+  { __typename?: 'Subscription' }
+  & { newVolunteerAction: (
+    { __typename?: 'VolunteerAction' }
+    & VolunteerActionFieldsFragment
+  ) }
+);
+
+export type UpdatedVolunteerActionSubscriptionVariables = Exact<{
+  filter?: Maybe<VolunteerActionSubscriptionFilter>;
+}>;
+
+
+export type UpdatedVolunteerActionSubscription = (
+  { __typename?: 'Subscription' }
+  & { updatedVolunteerAction: (
+    { __typename?: 'VolunteerAction' }
+    & VolunteerActionFieldsFragment
+  ) }
+);
+
+export type UpdatedVolunteerSubscriptionVariables = Exact<{
+  filter?: Maybe<VolunteerSubscriptionFilter>;
+}>;
+
+
+export type UpdatedVolunteerSubscription = (
+  { __typename?: 'Subscription' }
+  & { updatedVolunteer: (
+    { __typename?: 'Volunteer' }
+    & VolunteerFieldsFragment
+  ) }
+);
+
+export type UpdatedRecipientSubscriptionVariables = Exact<{
+  filter?: Maybe<RecipientSubscriptionFilter>;
+}>;
+
+
+export type UpdatedRecipientSubscription = (
+  { __typename?: 'Subscription' }
+  & { updatedRecipient: (
+    { __typename?: 'Recipient' }
+    & RecipientFieldsFragment
+  ) }
+);
+
+export type UpdatedDailyActionPlanSubscriptionVariables = Exact<{
+  filter?: Maybe<DailyActionPlanSubscriptionFilter>;
+}>;
+
+
+export type UpdatedDailyActionPlanSubscription = (
+  { __typename?: 'Subscription' }
+  & { updatedDailyActionPlan: (
+    { __typename?: 'DailyActionPlan' }
+    & DailyActionPlanFieldsFragment
+  ) }
+);
+
 export type NewVolunteerEntrySubscriptionVariables = Exact<{
   filter?: Maybe<VolunteerEntrySubscriptionFilter>;
 }>;
@@ -2035,15 +2250,15 @@ export const FindDistributionCentresDocument = gql`
  *   },
  * });
  */
-export function useFindDistributionCentresQuery(baseOptions?: Apollo.QueryHookOptions<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>) {
-        return Apollo.useQuery<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>(FindDistributionCentresDocument, baseOptions);
+export function useFindDistributionCentresQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>(FindDistributionCentresDocument, baseOptions);
       }
-export function useFindDistributionCentresLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>) {
-          return Apollo.useLazyQuery<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>(FindDistributionCentresDocument, baseOptions);
+export function useFindDistributionCentresLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>(FindDistributionCentresDocument, baseOptions);
         }
 export type FindDistributionCentresQueryHookResult = ReturnType<typeof useFindDistributionCentresQuery>;
 export type FindDistributionCentresLazyQueryHookResult = ReturnType<typeof useFindDistributionCentresLazyQuery>;
-export type FindDistributionCentresQueryResult = Apollo.QueryResult<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>;
+export type FindDistributionCentresQueryResult = ApolloReactCommon.QueryResult<FindDistributionCentresQuery, FindDistributionCentresQueryVariables>;
 export const GetDistributionCentreDocument = gql`
     query getDistributionCentre($id: GraphbackObjectID!) {
   getDistributionCentre(id: $id) {
@@ -2068,15 +2283,15 @@ export const GetDistributionCentreDocument = gql`
  *   },
  * });
  */
-export function useGetDistributionCentreQuery(baseOptions?: Apollo.QueryHookOptions<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>) {
-        return Apollo.useQuery<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>(GetDistributionCentreDocument, baseOptions);
+export function useGetDistributionCentreQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>(GetDistributionCentreDocument, baseOptions);
       }
-export function useGetDistributionCentreLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>) {
-          return Apollo.useLazyQuery<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>(GetDistributionCentreDocument, baseOptions);
+export function useGetDistributionCentreLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>(GetDistributionCentreDocument, baseOptions);
         }
 export type GetDistributionCentreQueryHookResult = ReturnType<typeof useGetDistributionCentreQuery>;
 export type GetDistributionCentreLazyQueryHookResult = ReturnType<typeof useGetDistributionCentreLazyQuery>;
-export type GetDistributionCentreQueryResult = Apollo.QueryResult<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>;
+export type GetDistributionCentreQueryResult = ApolloReactCommon.QueryResult<GetDistributionCentreQuery, GetDistributionCentreQueryVariables>;
 export const FindProductsDocument = gql`
     query findProducts($filter: ProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
   findProducts(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -2108,15 +2323,15 @@ export const FindProductsDocument = gql`
  *   },
  * });
  */
-export function useFindProductsQuery(baseOptions?: Apollo.QueryHookOptions<FindProductsQuery, FindProductsQueryVariables>) {
-        return Apollo.useQuery<FindProductsQuery, FindProductsQueryVariables>(FindProductsDocument, baseOptions);
+export function useFindProductsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindProductsQuery, FindProductsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindProductsQuery, FindProductsQueryVariables>(FindProductsDocument, baseOptions);
       }
-export function useFindProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindProductsQuery, FindProductsQueryVariables>) {
-          return Apollo.useLazyQuery<FindProductsQuery, FindProductsQueryVariables>(FindProductsDocument, baseOptions);
+export function useFindProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindProductsQuery, FindProductsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindProductsQuery, FindProductsQueryVariables>(FindProductsDocument, baseOptions);
         }
 export type FindProductsQueryHookResult = ReturnType<typeof useFindProductsQuery>;
 export type FindProductsLazyQueryHookResult = ReturnType<typeof useFindProductsLazyQuery>;
-export type FindProductsQueryResult = Apollo.QueryResult<FindProductsQuery, FindProductsQueryVariables>;
+export type FindProductsQueryResult = ApolloReactCommon.QueryResult<FindProductsQuery, FindProductsQueryVariables>;
 export const GetProductDocument = gql`
     query getProduct($id: GraphbackObjectID!) {
   getProduct(id: $id) {
@@ -2141,15 +2356,15 @@ export const GetProductDocument = gql`
  *   },
  * });
  */
-export function useGetProductQuery(baseOptions?: Apollo.QueryHookOptions<GetProductQuery, GetProductQueryVariables>) {
-        return Apollo.useQuery<GetProductQuery, GetProductQueryVariables>(GetProductDocument, baseOptions);
+export function useGetProductQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetProductQuery, GetProductQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetProductQuery, GetProductQueryVariables>(GetProductDocument, baseOptions);
       }
-export function useGetProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductQuery, GetProductQueryVariables>) {
-          return Apollo.useLazyQuery<GetProductQuery, GetProductQueryVariables>(GetProductDocument, baseOptions);
+export function useGetProductLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetProductQuery, GetProductQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetProductQuery, GetProductQueryVariables>(GetProductDocument, baseOptions);
         }
 export type GetProductQueryHookResult = ReturnType<typeof useGetProductQuery>;
 export type GetProductLazyQueryHookResult = ReturnType<typeof useGetProductLazyQuery>;
-export type GetProductQueryResult = Apollo.QueryResult<GetProductQuery, GetProductQueryVariables>;
+export type GetProductQueryResult = ApolloReactCommon.QueryResult<GetProductQuery, GetProductQueryVariables>;
 export const FindVolunteerActionProductsDocument = gql`
     query findVolunteerActionProducts($filter: VolunteerActionProductFilter, $page: PageRequest, $orderBy: OrderByInput) {
   findVolunteerActionProducts(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -2181,15 +2396,15 @@ export const FindVolunteerActionProductsDocument = gql`
  *   },
  * });
  */
-export function useFindVolunteerActionProductsQuery(baseOptions?: Apollo.QueryHookOptions<FindVolunteerActionProductsQuery, FindVolunteerActionProductsQueryVariables>) {
-        return Apollo.useQuery<FindVolunteerActionProductsQuery, FindVolunteerActionProductsQueryVariables>(FindVolunteerActionProductsDocument, baseOptions);
+export function useFindVolunteerActionProductsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindVolunteerActionProductsQuery, FindVolunteerActionProductsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindVolunteerActionProductsQuery, FindVolunteerActionProductsQueryVariables>(FindVolunteerActionProductsDocument, baseOptions);
       }
-export function useFindVolunteerActionProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindVolunteerActionProductsQuery, FindVolunteerActionProductsQueryVariables>) {
-          return Apollo.useLazyQuery<FindVolunteerActionProductsQuery, FindVolunteerActionProductsQueryVariables>(FindVolunteerActionProductsDocument, baseOptions);
+export function useFindVolunteerActionProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindVolunteerActionProductsQuery, FindVolunteerActionProductsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindVolunteerActionProductsQuery, FindVolunteerActionProductsQueryVariables>(FindVolunteerActionProductsDocument, baseOptions);
         }
 export type FindVolunteerActionProductsQueryHookResult = ReturnType<typeof useFindVolunteerActionProductsQuery>;
 export type FindVolunteerActionProductsLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionProductsLazyQuery>;
-export type FindVolunteerActionProductsQueryResult = Apollo.QueryResult<FindVolunteerActionProductsQuery, FindVolunteerActionProductsQueryVariables>;
+export type FindVolunteerActionProductsQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionProductsQuery, FindVolunteerActionProductsQueryVariables>;
 export const GetVolunteerActionProductDocument = gql`
     query getVolunteerActionProduct($id: GraphbackObjectID!) {
   getVolunteerActionProduct(id: $id) {
@@ -2214,15 +2429,15 @@ export const GetVolunteerActionProductDocument = gql`
  *   },
  * });
  */
-export function useGetVolunteerActionProductQuery(baseOptions?: Apollo.QueryHookOptions<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>) {
-        return Apollo.useQuery<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>(GetVolunteerActionProductDocument, baseOptions);
+export function useGetVolunteerActionProductQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>(GetVolunteerActionProductDocument, baseOptions);
       }
-export function useGetVolunteerActionProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>) {
-          return Apollo.useLazyQuery<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>(GetVolunteerActionProductDocument, baseOptions);
+export function useGetVolunteerActionProductLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>(GetVolunteerActionProductDocument, baseOptions);
         }
 export type GetVolunteerActionProductQueryHookResult = ReturnType<typeof useGetVolunteerActionProductQuery>;
 export type GetVolunteerActionProductLazyQueryHookResult = ReturnType<typeof useGetVolunteerActionProductLazyQuery>;
-export type GetVolunteerActionProductQueryResult = Apollo.QueryResult<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>;
+export type GetVolunteerActionProductQueryResult = ApolloReactCommon.QueryResult<GetVolunteerActionProductQuery, GetVolunteerActionProductQueryVariables>;
 export const FindVolunteerActionsDocument = gql`
     query findVolunteerActions($filter: VolunteerActionFilter, $page: PageRequest, $orderBy: OrderByInput) {
   findVolunteerActions(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -2254,15 +2469,15 @@ export const FindVolunteerActionsDocument = gql`
  *   },
  * });
  */
-export function useFindVolunteerActionsQuery(baseOptions?: Apollo.QueryHookOptions<FindVolunteerActionsQuery, FindVolunteerActionsQueryVariables>) {
-        return Apollo.useQuery<FindVolunteerActionsQuery, FindVolunteerActionsQueryVariables>(FindVolunteerActionsDocument, baseOptions);
+export function useFindVolunteerActionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindVolunteerActionsQuery, FindVolunteerActionsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindVolunteerActionsQuery, FindVolunteerActionsQueryVariables>(FindVolunteerActionsDocument, baseOptions);
       }
-export function useFindVolunteerActionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindVolunteerActionsQuery, FindVolunteerActionsQueryVariables>) {
-          return Apollo.useLazyQuery<FindVolunteerActionsQuery, FindVolunteerActionsQueryVariables>(FindVolunteerActionsDocument, baseOptions);
+export function useFindVolunteerActionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindVolunteerActionsQuery, FindVolunteerActionsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindVolunteerActionsQuery, FindVolunteerActionsQueryVariables>(FindVolunteerActionsDocument, baseOptions);
         }
 export type FindVolunteerActionsQueryHookResult = ReturnType<typeof useFindVolunteerActionsQuery>;
 export type FindVolunteerActionsLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionsLazyQuery>;
-export type FindVolunteerActionsQueryResult = Apollo.QueryResult<FindVolunteerActionsQuery, FindVolunteerActionsQueryVariables>;
+export type FindVolunteerActionsQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionsQuery, FindVolunteerActionsQueryVariables>;
 export const GetVolunteerActionDocument = gql`
     query getVolunteerAction($id: GraphbackObjectID!) {
   getVolunteerAction(id: $id) {
@@ -2287,15 +2502,15 @@ export const GetVolunteerActionDocument = gql`
  *   },
  * });
  */
-export function useGetVolunteerActionQuery(baseOptions?: Apollo.QueryHookOptions<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>) {
-        return Apollo.useQuery<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>(GetVolunteerActionDocument, baseOptions);
+export function useGetVolunteerActionQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>(GetVolunteerActionDocument, baseOptions);
       }
-export function useGetVolunteerActionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>) {
-          return Apollo.useLazyQuery<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>(GetVolunteerActionDocument, baseOptions);
+export function useGetVolunteerActionLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>(GetVolunteerActionDocument, baseOptions);
         }
 export type GetVolunteerActionQueryHookResult = ReturnType<typeof useGetVolunteerActionQuery>;
 export type GetVolunteerActionLazyQueryHookResult = ReturnType<typeof useGetVolunteerActionLazyQuery>;
-export type GetVolunteerActionQueryResult = Apollo.QueryResult<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>;
+export type GetVolunteerActionQueryResult = ApolloReactCommon.QueryResult<GetVolunteerActionQuery, GetVolunteerActionQueryVariables>;
 export const FindVolunteersDocument = gql`
     query findVolunteers($filter: VolunteerFilter, $page: PageRequest, $orderBy: OrderByInput) {
   findVolunteers(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -2327,15 +2542,15 @@ export const FindVolunteersDocument = gql`
  *   },
  * });
  */
-export function useFindVolunteersQuery(baseOptions?: Apollo.QueryHookOptions<FindVolunteersQuery, FindVolunteersQueryVariables>) {
-        return Apollo.useQuery<FindVolunteersQuery, FindVolunteersQueryVariables>(FindVolunteersDocument, baseOptions);
+export function useFindVolunteersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindVolunteersQuery, FindVolunteersQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindVolunteersQuery, FindVolunteersQueryVariables>(FindVolunteersDocument, baseOptions);
       }
-export function useFindVolunteersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindVolunteersQuery, FindVolunteersQueryVariables>) {
-          return Apollo.useLazyQuery<FindVolunteersQuery, FindVolunteersQueryVariables>(FindVolunteersDocument, baseOptions);
+export function useFindVolunteersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindVolunteersQuery, FindVolunteersQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindVolunteersQuery, FindVolunteersQueryVariables>(FindVolunteersDocument, baseOptions);
         }
 export type FindVolunteersQueryHookResult = ReturnType<typeof useFindVolunteersQuery>;
 export type FindVolunteersLazyQueryHookResult = ReturnType<typeof useFindVolunteersLazyQuery>;
-export type FindVolunteersQueryResult = Apollo.QueryResult<FindVolunteersQuery, FindVolunteersQueryVariables>;
+export type FindVolunteersQueryResult = ApolloReactCommon.QueryResult<FindVolunteersQuery, FindVolunteersQueryVariables>;
 export const GetVolunteerDocument = gql`
     query getVolunteer($id: GraphbackObjectID!) {
   getVolunteer(id: $id) {
@@ -2360,15 +2575,15 @@ export const GetVolunteerDocument = gql`
  *   },
  * });
  */
-export function useGetVolunteerQuery(baseOptions?: Apollo.QueryHookOptions<GetVolunteerQuery, GetVolunteerQueryVariables>) {
-        return Apollo.useQuery<GetVolunteerQuery, GetVolunteerQueryVariables>(GetVolunteerDocument, baseOptions);
+export function useGetVolunteerQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetVolunteerQuery, GetVolunteerQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetVolunteerQuery, GetVolunteerQueryVariables>(GetVolunteerDocument, baseOptions);
       }
-export function useGetVolunteerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetVolunteerQuery, GetVolunteerQueryVariables>) {
-          return Apollo.useLazyQuery<GetVolunteerQuery, GetVolunteerQueryVariables>(GetVolunteerDocument, baseOptions);
+export function useGetVolunteerLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetVolunteerQuery, GetVolunteerQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetVolunteerQuery, GetVolunteerQueryVariables>(GetVolunteerDocument, baseOptions);
         }
 export type GetVolunteerQueryHookResult = ReturnType<typeof useGetVolunteerQuery>;
 export type GetVolunteerLazyQueryHookResult = ReturnType<typeof useGetVolunteerLazyQuery>;
-export type GetVolunteerQueryResult = Apollo.QueryResult<GetVolunteerQuery, GetVolunteerQueryVariables>;
+export type GetVolunteerQueryResult = ApolloReactCommon.QueryResult<GetVolunteerQuery, GetVolunteerQueryVariables>;
 export const FindRecipientsDocument = gql`
     query findRecipients($filter: RecipientFilter, $page: PageRequest, $orderBy: OrderByInput) {
   findRecipients(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -2400,15 +2615,15 @@ export const FindRecipientsDocument = gql`
  *   },
  * });
  */
-export function useFindRecipientsQuery(baseOptions?: Apollo.QueryHookOptions<FindRecipientsQuery, FindRecipientsQueryVariables>) {
-        return Apollo.useQuery<FindRecipientsQuery, FindRecipientsQueryVariables>(FindRecipientsDocument, baseOptions);
+export function useFindRecipientsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindRecipientsQuery, FindRecipientsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindRecipientsQuery, FindRecipientsQueryVariables>(FindRecipientsDocument, baseOptions);
       }
-export function useFindRecipientsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindRecipientsQuery, FindRecipientsQueryVariables>) {
-          return Apollo.useLazyQuery<FindRecipientsQuery, FindRecipientsQueryVariables>(FindRecipientsDocument, baseOptions);
+export function useFindRecipientsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindRecipientsQuery, FindRecipientsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindRecipientsQuery, FindRecipientsQueryVariables>(FindRecipientsDocument, baseOptions);
         }
 export type FindRecipientsQueryHookResult = ReturnType<typeof useFindRecipientsQuery>;
 export type FindRecipientsLazyQueryHookResult = ReturnType<typeof useFindRecipientsLazyQuery>;
-export type FindRecipientsQueryResult = Apollo.QueryResult<FindRecipientsQuery, FindRecipientsQueryVariables>;
+export type FindRecipientsQueryResult = ApolloReactCommon.QueryResult<FindRecipientsQuery, FindRecipientsQueryVariables>;
 export const GetRecipientDocument = gql`
     query getRecipient($id: GraphbackObjectID!) {
   getRecipient(id: $id) {
@@ -2433,15 +2648,15 @@ export const GetRecipientDocument = gql`
  *   },
  * });
  */
-export function useGetRecipientQuery(baseOptions?: Apollo.QueryHookOptions<GetRecipientQuery, GetRecipientQueryVariables>) {
-        return Apollo.useQuery<GetRecipientQuery, GetRecipientQueryVariables>(GetRecipientDocument, baseOptions);
+export function useGetRecipientQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetRecipientQuery, GetRecipientQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetRecipientQuery, GetRecipientQueryVariables>(GetRecipientDocument, baseOptions);
       }
-export function useGetRecipientLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRecipientQuery, GetRecipientQueryVariables>) {
-          return Apollo.useLazyQuery<GetRecipientQuery, GetRecipientQueryVariables>(GetRecipientDocument, baseOptions);
+export function useGetRecipientLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetRecipientQuery, GetRecipientQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetRecipientQuery, GetRecipientQueryVariables>(GetRecipientDocument, baseOptions);
         }
 export type GetRecipientQueryHookResult = ReturnType<typeof useGetRecipientQuery>;
 export type GetRecipientLazyQueryHookResult = ReturnType<typeof useGetRecipientLazyQuery>;
-export type GetRecipientQueryResult = Apollo.QueryResult<GetRecipientQuery, GetRecipientQueryVariables>;
+export type GetRecipientQueryResult = ApolloReactCommon.QueryResult<GetRecipientQuery, GetRecipientQueryVariables>;
 export const FindDailyActionPlansDocument = gql`
     query findDailyActionPlans($filter: DailyActionPlanFilter, $page: PageRequest, $orderBy: OrderByInput) {
   findDailyActionPlans(filter: $filter, page: $page, orderBy: $orderBy) {
@@ -2473,15 +2688,15 @@ export const FindDailyActionPlansDocument = gql`
  *   },
  * });
  */
-export function useFindDailyActionPlansQuery(baseOptions?: Apollo.QueryHookOptions<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>) {
-        return Apollo.useQuery<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>(FindDailyActionPlansDocument, baseOptions);
+export function useFindDailyActionPlansQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>(FindDailyActionPlansDocument, baseOptions);
       }
-export function useFindDailyActionPlansLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>) {
-          return Apollo.useLazyQuery<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>(FindDailyActionPlansDocument, baseOptions);
+export function useFindDailyActionPlansLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>(FindDailyActionPlansDocument, baseOptions);
         }
 export type FindDailyActionPlansQueryHookResult = ReturnType<typeof useFindDailyActionPlansQuery>;
 export type FindDailyActionPlansLazyQueryHookResult = ReturnType<typeof useFindDailyActionPlansLazyQuery>;
-export type FindDailyActionPlansQueryResult = Apollo.QueryResult<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>;
+export type FindDailyActionPlansQueryResult = ApolloReactCommon.QueryResult<FindDailyActionPlansQuery, FindDailyActionPlansQueryVariables>;
 export const GetDailyActionPlanDocument = gql`
     query getDailyActionPlan($id: GraphbackObjectID!) {
   getDailyActionPlan(id: $id) {
@@ -2506,15 +2721,15 @@ export const GetDailyActionPlanDocument = gql`
  *   },
  * });
  */
-export function useGetDailyActionPlanQuery(baseOptions?: Apollo.QueryHookOptions<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>) {
-        return Apollo.useQuery<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>(GetDailyActionPlanDocument, baseOptions);
+export function useGetDailyActionPlanQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>(GetDailyActionPlanDocument, baseOptions);
       }
-export function useGetDailyActionPlanLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>) {
-          return Apollo.useLazyQuery<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>(GetDailyActionPlanDocument, baseOptions);
+export function useGetDailyActionPlanLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>(GetDailyActionPlanDocument, baseOptions);
         }
 export type GetDailyActionPlanQueryHookResult = ReturnType<typeof useGetDailyActionPlanQuery>;
 export type GetDailyActionPlanLazyQueryHookResult = ReturnType<typeof useGetDailyActionPlanLazyQuery>;
-export type GetDailyActionPlanQueryResult = Apollo.QueryResult<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>;
+export type GetDailyActionPlanQueryResult = ApolloReactCommon.QueryResult<GetDailyActionPlanQuery, GetDailyActionPlanQueryVariables>;
 export const GetVolunteerEntryDocument = gql`
     query getVolunteerEntry($id: GraphbackObjectID!) {
   getVolunteerEntry(id: $id) {
@@ -2539,15 +2754,15 @@ export const GetVolunteerEntryDocument = gql`
  *   },
  * });
  */
-export function useGetVolunteerEntryQuery(baseOptions?: Apollo.QueryHookOptions<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>) {
-        return Apollo.useQuery<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>(GetVolunteerEntryDocument, baseOptions);
+export function useGetVolunteerEntryQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>(GetVolunteerEntryDocument, baseOptions);
       }
-export function useGetVolunteerEntryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>) {
-          return Apollo.useLazyQuery<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>(GetVolunteerEntryDocument, baseOptions);
+export function useGetVolunteerEntryLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>(GetVolunteerEntryDocument, baseOptions);
         }
 export type GetVolunteerEntryQueryHookResult = ReturnType<typeof useGetVolunteerEntryQuery>;
 export type GetVolunteerEntryLazyQueryHookResult = ReturnType<typeof useGetVolunteerEntryLazyQuery>;
-export type GetVolunteerEntryQueryResult = Apollo.QueryResult<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>;
+export type GetVolunteerEntryQueryResult = ApolloReactCommon.QueryResult<GetVolunteerEntryQuery, GetVolunteerEntryQueryVariables>;
 export const CreateDistributionCentreDocument = gql`
     mutation createDistributionCentre($input: CreateDistributionCentreInput!) {
   createDistributionCentre(input: $input) {
@@ -2555,7 +2770,7 @@ export const CreateDistributionCentreDocument = gql`
   }
 }
     ${DistributionCentreFieldsFragmentDoc}`;
-export type CreateDistributionCentreMutationFn = Apollo.MutationFunction<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>;
+export type CreateDistributionCentreMutationFn = ApolloReactCommon.MutationFunction<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>;
 
 /**
  * __useCreateDistributionCentreMutation__
@@ -2574,12 +2789,12 @@ export type CreateDistributionCentreMutationFn = Apollo.MutationFunction<CreateD
  *   },
  * });
  */
-export function useCreateDistributionCentreMutation(baseOptions?: Apollo.MutationHookOptions<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>) {
-        return Apollo.useMutation<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>(CreateDistributionCentreDocument, baseOptions);
+export function useCreateDistributionCentreMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>(CreateDistributionCentreDocument, baseOptions);
       }
 export type CreateDistributionCentreMutationHookResult = ReturnType<typeof useCreateDistributionCentreMutation>;
-export type CreateDistributionCentreMutationResult = Apollo.MutationResult<CreateDistributionCentreMutation>;
-export type CreateDistributionCentreMutationOptions = Apollo.BaseMutationOptions<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>;
+export type CreateDistributionCentreMutationResult = ApolloReactCommon.MutationResult<CreateDistributionCentreMutation>;
+export type CreateDistributionCentreMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateDistributionCentreMutation, CreateDistributionCentreMutationVariables>;
 export const UpdateDistributionCentreDocument = gql`
     mutation updateDistributionCentre($input: MutateDistributionCentreInput!) {
   updateDistributionCentre(input: $input) {
@@ -2587,7 +2802,7 @@ export const UpdateDistributionCentreDocument = gql`
   }
 }
     ${DistributionCentreFieldsFragmentDoc}`;
-export type UpdateDistributionCentreMutationFn = Apollo.MutationFunction<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>;
+export type UpdateDistributionCentreMutationFn = ApolloReactCommon.MutationFunction<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>;
 
 /**
  * __useUpdateDistributionCentreMutation__
@@ -2606,12 +2821,12 @@ export type UpdateDistributionCentreMutationFn = Apollo.MutationFunction<UpdateD
  *   },
  * });
  */
-export function useUpdateDistributionCentreMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>) {
-        return Apollo.useMutation<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>(UpdateDistributionCentreDocument, baseOptions);
+export function useUpdateDistributionCentreMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>(UpdateDistributionCentreDocument, baseOptions);
       }
 export type UpdateDistributionCentreMutationHookResult = ReturnType<typeof useUpdateDistributionCentreMutation>;
-export type UpdateDistributionCentreMutationResult = Apollo.MutationResult<UpdateDistributionCentreMutation>;
-export type UpdateDistributionCentreMutationOptions = Apollo.BaseMutationOptions<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>;
+export type UpdateDistributionCentreMutationResult = ApolloReactCommon.MutationResult<UpdateDistributionCentreMutation>;
+export type UpdateDistributionCentreMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateDistributionCentreMutation, UpdateDistributionCentreMutationVariables>;
 export const CreateProductDocument = gql`
     mutation createProduct($input: CreateProductInput!) {
   createProduct(input: $input) {
@@ -2619,7 +2834,7 @@ export const CreateProductDocument = gql`
   }
 }
     ${ProductFieldsFragmentDoc}`;
-export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutation, CreateProductMutationVariables>;
+export type CreateProductMutationFn = ApolloReactCommon.MutationFunction<CreateProductMutation, CreateProductMutationVariables>;
 
 /**
  * __useCreateProductMutation__
@@ -2638,12 +2853,12 @@ export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutat
  *   },
  * });
  */
-export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>) {
-        return Apollo.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, baseOptions);
+export function useCreateProductMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, baseOptions);
       }
 export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
-export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
-export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
+export type CreateProductMutationResult = ApolloReactCommon.MutationResult<CreateProductMutation>;
+export type CreateProductMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
 export const UpdateProductDocument = gql`
     mutation updateProduct($input: MutateProductInput!) {
   updateProduct(input: $input) {
@@ -2651,7 +2866,7 @@ export const UpdateProductDocument = gql`
   }
 }
     ${ProductFieldsFragmentDoc}`;
-export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutation, UpdateProductMutationVariables>;
+export type UpdateProductMutationFn = ApolloReactCommon.MutationFunction<UpdateProductMutation, UpdateProductMutationVariables>;
 
 /**
  * __useUpdateProductMutation__
@@ -2670,12 +2885,12 @@ export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutat
  *   },
  * });
  */
-export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>) {
-        return Apollo.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, baseOptions);
+export function useUpdateProductMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, baseOptions);
       }
 export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
-export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
-export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
+export type UpdateProductMutationResult = ApolloReactCommon.MutationResult<UpdateProductMutation>;
+export type UpdateProductMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
 export const CreateVolunteerActionProductDocument = gql`
     mutation createVolunteerActionProduct($input: CreateVolunteerActionProductInput!) {
   createVolunteerActionProduct(input: $input) {
@@ -2683,7 +2898,7 @@ export const CreateVolunteerActionProductDocument = gql`
   }
 }
     ${VolunteerActionProductFieldsFragmentDoc}`;
-export type CreateVolunteerActionProductMutationFn = Apollo.MutationFunction<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>;
+export type CreateVolunteerActionProductMutationFn = ApolloReactCommon.MutationFunction<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>;
 
 /**
  * __useCreateVolunteerActionProductMutation__
@@ -2702,12 +2917,12 @@ export type CreateVolunteerActionProductMutationFn = Apollo.MutationFunction<Cre
  *   },
  * });
  */
-export function useCreateVolunteerActionProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>) {
-        return Apollo.useMutation<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>(CreateVolunteerActionProductDocument, baseOptions);
+export function useCreateVolunteerActionProductMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>(CreateVolunteerActionProductDocument, baseOptions);
       }
 export type CreateVolunteerActionProductMutationHookResult = ReturnType<typeof useCreateVolunteerActionProductMutation>;
-export type CreateVolunteerActionProductMutationResult = Apollo.MutationResult<CreateVolunteerActionProductMutation>;
-export type CreateVolunteerActionProductMutationOptions = Apollo.BaseMutationOptions<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>;
+export type CreateVolunteerActionProductMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerActionProductMutation>;
+export type CreateVolunteerActionProductMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerActionProductMutation, CreateVolunteerActionProductMutationVariables>;
 export const CreateVolunteerActionDocument = gql`
     mutation createVolunteerAction($input: CreateVolunteerActionInput!) {
   createVolunteerAction(input: $input) {
@@ -2715,7 +2930,7 @@ export const CreateVolunteerActionDocument = gql`
   }
 }
     ${VolunteerActionFieldsFragmentDoc}`;
-export type CreateVolunteerActionMutationFn = Apollo.MutationFunction<CreateVolunteerActionMutation, CreateVolunteerActionMutationVariables>;
+export type CreateVolunteerActionMutationFn = ApolloReactCommon.MutationFunction<CreateVolunteerActionMutation, CreateVolunteerActionMutationVariables>;
 
 /**
  * __useCreateVolunteerActionMutation__
@@ -2734,12 +2949,12 @@ export type CreateVolunteerActionMutationFn = Apollo.MutationFunction<CreateVolu
  *   },
  * });
  */
-export function useCreateVolunteerActionMutation(baseOptions?: Apollo.MutationHookOptions<CreateVolunteerActionMutation, CreateVolunteerActionMutationVariables>) {
-        return Apollo.useMutation<CreateVolunteerActionMutation, CreateVolunteerActionMutationVariables>(CreateVolunteerActionDocument, baseOptions);
+export function useCreateVolunteerActionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateVolunteerActionMutation, CreateVolunteerActionMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateVolunteerActionMutation, CreateVolunteerActionMutationVariables>(CreateVolunteerActionDocument, baseOptions);
       }
 export type CreateVolunteerActionMutationHookResult = ReturnType<typeof useCreateVolunteerActionMutation>;
-export type CreateVolunteerActionMutationResult = Apollo.MutationResult<CreateVolunteerActionMutation>;
-export type CreateVolunteerActionMutationOptions = Apollo.BaseMutationOptions<CreateVolunteerActionMutation, CreateVolunteerActionMutationVariables>;
+export type CreateVolunteerActionMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerActionMutation>;
+export type CreateVolunteerActionMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerActionMutation, CreateVolunteerActionMutationVariables>;
 export const UpdateVolunteerActionDocument = gql`
     mutation updateVolunteerAction($input: MutateVolunteerActionInput!) {
   updateVolunteerAction(input: $input) {
@@ -2747,7 +2962,7 @@ export const UpdateVolunteerActionDocument = gql`
   }
 }
     ${VolunteerActionFieldsFragmentDoc}`;
-export type UpdateVolunteerActionMutationFn = Apollo.MutationFunction<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>;
+export type UpdateVolunteerActionMutationFn = ApolloReactCommon.MutationFunction<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>;
 
 /**
  * __useUpdateVolunteerActionMutation__
@@ -2766,12 +2981,12 @@ export type UpdateVolunteerActionMutationFn = Apollo.MutationFunction<UpdateVolu
  *   },
  * });
  */
-export function useUpdateVolunteerActionMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>) {
-        return Apollo.useMutation<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>(UpdateVolunteerActionDocument, baseOptions);
+export function useUpdateVolunteerActionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>(UpdateVolunteerActionDocument, baseOptions);
       }
 export type UpdateVolunteerActionMutationHookResult = ReturnType<typeof useUpdateVolunteerActionMutation>;
-export type UpdateVolunteerActionMutationResult = Apollo.MutationResult<UpdateVolunteerActionMutation>;
-export type UpdateVolunteerActionMutationOptions = Apollo.BaseMutationOptions<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>;
+export type UpdateVolunteerActionMutationResult = ApolloReactCommon.MutationResult<UpdateVolunteerActionMutation>;
+export type UpdateVolunteerActionMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateVolunteerActionMutation, UpdateVolunteerActionMutationVariables>;
 export const CreateVolunteerDocument = gql`
     mutation createVolunteer($input: CreateVolunteerInput!) {
   createVolunteer(input: $input) {
@@ -2779,7 +2994,7 @@ export const CreateVolunteerDocument = gql`
   }
 }
     ${VolunteerFieldsFragmentDoc}`;
-export type CreateVolunteerMutationFn = Apollo.MutationFunction<CreateVolunteerMutation, CreateVolunteerMutationVariables>;
+export type CreateVolunteerMutationFn = ApolloReactCommon.MutationFunction<CreateVolunteerMutation, CreateVolunteerMutationVariables>;
 
 /**
  * __useCreateVolunteerMutation__
@@ -2798,12 +3013,12 @@ export type CreateVolunteerMutationFn = Apollo.MutationFunction<CreateVolunteerM
  *   },
  * });
  */
-export function useCreateVolunteerMutation(baseOptions?: Apollo.MutationHookOptions<CreateVolunteerMutation, CreateVolunteerMutationVariables>) {
-        return Apollo.useMutation<CreateVolunteerMutation, CreateVolunteerMutationVariables>(CreateVolunteerDocument, baseOptions);
+export function useCreateVolunteerMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateVolunteerMutation, CreateVolunteerMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateVolunteerMutation, CreateVolunteerMutationVariables>(CreateVolunteerDocument, baseOptions);
       }
 export type CreateVolunteerMutationHookResult = ReturnType<typeof useCreateVolunteerMutation>;
-export type CreateVolunteerMutationResult = Apollo.MutationResult<CreateVolunteerMutation>;
-export type CreateVolunteerMutationOptions = Apollo.BaseMutationOptions<CreateVolunteerMutation, CreateVolunteerMutationVariables>;
+export type CreateVolunteerMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerMutation>;
+export type CreateVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerMutation, CreateVolunteerMutationVariables>;
 export const UpdateVolunteerDocument = gql`
     mutation updateVolunteer($input: MutateVolunteerInput!) {
   updateVolunteer(input: $input) {
@@ -2811,7 +3026,7 @@ export const UpdateVolunteerDocument = gql`
   }
 }
     ${VolunteerFieldsFragmentDoc}`;
-export type UpdateVolunteerMutationFn = Apollo.MutationFunction<UpdateVolunteerMutation, UpdateVolunteerMutationVariables>;
+export type UpdateVolunteerMutationFn = ApolloReactCommon.MutationFunction<UpdateVolunteerMutation, UpdateVolunteerMutationVariables>;
 
 /**
  * __useUpdateVolunteerMutation__
@@ -2830,12 +3045,12 @@ export type UpdateVolunteerMutationFn = Apollo.MutationFunction<UpdateVolunteerM
  *   },
  * });
  */
-export function useUpdateVolunteerMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVolunteerMutation, UpdateVolunteerMutationVariables>) {
-        return Apollo.useMutation<UpdateVolunteerMutation, UpdateVolunteerMutationVariables>(UpdateVolunteerDocument, baseOptions);
+export function useUpdateVolunteerMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateVolunteerMutation, UpdateVolunteerMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateVolunteerMutation, UpdateVolunteerMutationVariables>(UpdateVolunteerDocument, baseOptions);
       }
 export type UpdateVolunteerMutationHookResult = ReturnType<typeof useUpdateVolunteerMutation>;
-export type UpdateVolunteerMutationResult = Apollo.MutationResult<UpdateVolunteerMutation>;
-export type UpdateVolunteerMutationOptions = Apollo.BaseMutationOptions<UpdateVolunteerMutation, UpdateVolunteerMutationVariables>;
+export type UpdateVolunteerMutationResult = ApolloReactCommon.MutationResult<UpdateVolunteerMutation>;
+export type UpdateVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateVolunteerMutation, UpdateVolunteerMutationVariables>;
 export const CreateRecipientDocument = gql`
     mutation createRecipient($input: CreateRecipientInput!) {
   createRecipient(input: $input) {
@@ -2843,7 +3058,7 @@ export const CreateRecipientDocument = gql`
   }
 }
     ${RecipientFieldsFragmentDoc}`;
-export type CreateRecipientMutationFn = Apollo.MutationFunction<CreateRecipientMutation, CreateRecipientMutationVariables>;
+export type CreateRecipientMutationFn = ApolloReactCommon.MutationFunction<CreateRecipientMutation, CreateRecipientMutationVariables>;
 
 /**
  * __useCreateRecipientMutation__
@@ -2862,12 +3077,12 @@ export type CreateRecipientMutationFn = Apollo.MutationFunction<CreateRecipientM
  *   },
  * });
  */
-export function useCreateRecipientMutation(baseOptions?: Apollo.MutationHookOptions<CreateRecipientMutation, CreateRecipientMutationVariables>) {
-        return Apollo.useMutation<CreateRecipientMutation, CreateRecipientMutationVariables>(CreateRecipientDocument, baseOptions);
+export function useCreateRecipientMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateRecipientMutation, CreateRecipientMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateRecipientMutation, CreateRecipientMutationVariables>(CreateRecipientDocument, baseOptions);
       }
 export type CreateRecipientMutationHookResult = ReturnType<typeof useCreateRecipientMutation>;
-export type CreateRecipientMutationResult = Apollo.MutationResult<CreateRecipientMutation>;
-export type CreateRecipientMutationOptions = Apollo.BaseMutationOptions<CreateRecipientMutation, CreateRecipientMutationVariables>;
+export type CreateRecipientMutationResult = ApolloReactCommon.MutationResult<CreateRecipientMutation>;
+export type CreateRecipientMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateRecipientMutation, CreateRecipientMutationVariables>;
 export const UpdateRecipientDocument = gql`
     mutation updateRecipient($input: MutateRecipientInput!) {
   updateRecipient(input: $input) {
@@ -2875,7 +3090,7 @@ export const UpdateRecipientDocument = gql`
   }
 }
     ${RecipientFieldsFragmentDoc}`;
-export type UpdateRecipientMutationFn = Apollo.MutationFunction<UpdateRecipientMutation, UpdateRecipientMutationVariables>;
+export type UpdateRecipientMutationFn = ApolloReactCommon.MutationFunction<UpdateRecipientMutation, UpdateRecipientMutationVariables>;
 
 /**
  * __useUpdateRecipientMutation__
@@ -2894,12 +3109,12 @@ export type UpdateRecipientMutationFn = Apollo.MutationFunction<UpdateRecipientM
  *   },
  * });
  */
-export function useUpdateRecipientMutation(baseOptions?: Apollo.MutationHookOptions<UpdateRecipientMutation, UpdateRecipientMutationVariables>) {
-        return Apollo.useMutation<UpdateRecipientMutation, UpdateRecipientMutationVariables>(UpdateRecipientDocument, baseOptions);
+export function useUpdateRecipientMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateRecipientMutation, UpdateRecipientMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateRecipientMutation, UpdateRecipientMutationVariables>(UpdateRecipientDocument, baseOptions);
       }
 export type UpdateRecipientMutationHookResult = ReturnType<typeof useUpdateRecipientMutation>;
-export type UpdateRecipientMutationResult = Apollo.MutationResult<UpdateRecipientMutation>;
-export type UpdateRecipientMutationOptions = Apollo.BaseMutationOptions<UpdateRecipientMutation, UpdateRecipientMutationVariables>;
+export type UpdateRecipientMutationResult = ApolloReactCommon.MutationResult<UpdateRecipientMutation>;
+export type UpdateRecipientMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateRecipientMutation, UpdateRecipientMutationVariables>;
 export const CreateDailyActionPlanDocument = gql`
     mutation createDailyActionPlan($input: CreateDailyActionPlanInput!) {
   createDailyActionPlan(input: $input) {
@@ -2907,7 +3122,7 @@ export const CreateDailyActionPlanDocument = gql`
   }
 }
     ${DailyActionPlanFieldsFragmentDoc}`;
-export type CreateDailyActionPlanMutationFn = Apollo.MutationFunction<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>;
+export type CreateDailyActionPlanMutationFn = ApolloReactCommon.MutationFunction<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>;
 
 /**
  * __useCreateDailyActionPlanMutation__
@@ -2926,12 +3141,12 @@ export type CreateDailyActionPlanMutationFn = Apollo.MutationFunction<CreateDail
  *   },
  * });
  */
-export function useCreateDailyActionPlanMutation(baseOptions?: Apollo.MutationHookOptions<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>) {
-        return Apollo.useMutation<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>(CreateDailyActionPlanDocument, baseOptions);
+export function useCreateDailyActionPlanMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>(CreateDailyActionPlanDocument, baseOptions);
       }
 export type CreateDailyActionPlanMutationHookResult = ReturnType<typeof useCreateDailyActionPlanMutation>;
-export type CreateDailyActionPlanMutationResult = Apollo.MutationResult<CreateDailyActionPlanMutation>;
-export type CreateDailyActionPlanMutationOptions = Apollo.BaseMutationOptions<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>;
+export type CreateDailyActionPlanMutationResult = ApolloReactCommon.MutationResult<CreateDailyActionPlanMutation>;
+export type CreateDailyActionPlanMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateDailyActionPlanMutation, CreateDailyActionPlanMutationVariables>;
 export const UpdateDailyActionPlanDocument = gql`
     mutation updateDailyActionPlan($input: MutateDailyActionPlanInput!) {
   updateDailyActionPlan(input: $input) {
@@ -2939,7 +3154,7 @@ export const UpdateDailyActionPlanDocument = gql`
   }
 }
     ${DailyActionPlanFieldsFragmentDoc}`;
-export type UpdateDailyActionPlanMutationFn = Apollo.MutationFunction<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>;
+export type UpdateDailyActionPlanMutationFn = ApolloReactCommon.MutationFunction<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>;
 
 /**
  * __useUpdateDailyActionPlanMutation__
@@ -2958,12 +3173,12 @@ export type UpdateDailyActionPlanMutationFn = Apollo.MutationFunction<UpdateDail
  *   },
  * });
  */
-export function useUpdateDailyActionPlanMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>) {
-        return Apollo.useMutation<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>(UpdateDailyActionPlanDocument, baseOptions);
+export function useUpdateDailyActionPlanMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>(UpdateDailyActionPlanDocument, baseOptions);
       }
 export type UpdateDailyActionPlanMutationHookResult = ReturnType<typeof useUpdateDailyActionPlanMutation>;
-export type UpdateDailyActionPlanMutationResult = Apollo.MutationResult<UpdateDailyActionPlanMutation>;
-export type UpdateDailyActionPlanMutationOptions = Apollo.BaseMutationOptions<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>;
+export type UpdateDailyActionPlanMutationResult = ApolloReactCommon.MutationResult<UpdateDailyActionPlanMutation>;
+export type UpdateDailyActionPlanMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateDailyActionPlanMutation, UpdateDailyActionPlanMutationVariables>;
 export const CreateVolunteerEntryDocument = gql`
     mutation createVolunteerEntry($input: CreateVolunteerEntryInput!) {
   createVolunteerEntry(input: $input) {
@@ -2971,7 +3186,7 @@ export const CreateVolunteerEntryDocument = gql`
   }
 }
     ${VolunteerEntryFieldsFragmentDoc}`;
-export type CreateVolunteerEntryMutationFn = Apollo.MutationFunction<CreateVolunteerEntryMutation, CreateVolunteerEntryMutationVariables>;
+export type CreateVolunteerEntryMutationFn = ApolloReactCommon.MutationFunction<CreateVolunteerEntryMutation, CreateVolunteerEntryMutationVariables>;
 
 /**
  * __useCreateVolunteerEntryMutation__
@@ -2990,12 +3205,12 @@ export type CreateVolunteerEntryMutationFn = Apollo.MutationFunction<CreateVolun
  *   },
  * });
  */
-export function useCreateVolunteerEntryMutation(baseOptions?: Apollo.MutationHookOptions<CreateVolunteerEntryMutation, CreateVolunteerEntryMutationVariables>) {
-        return Apollo.useMutation<CreateVolunteerEntryMutation, CreateVolunteerEntryMutationVariables>(CreateVolunteerEntryDocument, baseOptions);
+export function useCreateVolunteerEntryMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateVolunteerEntryMutation, CreateVolunteerEntryMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateVolunteerEntryMutation, CreateVolunteerEntryMutationVariables>(CreateVolunteerEntryDocument, baseOptions);
       }
 export type CreateVolunteerEntryMutationHookResult = ReturnType<typeof useCreateVolunteerEntryMutation>;
-export type CreateVolunteerEntryMutationResult = Apollo.MutationResult<CreateVolunteerEntryMutation>;
-export type CreateVolunteerEntryMutationOptions = Apollo.BaseMutationOptions<CreateVolunteerEntryMutation, CreateVolunteerEntryMutationVariables>;
+export type CreateVolunteerEntryMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerEntryMutation>;
+export type CreateVolunteerEntryMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerEntryMutation, CreateVolunteerEntryMutationVariables>;
 export const UpdateVolunteerEntryDocument = gql`
     mutation updateVolunteerEntry($input: MutateVolunteerEntryInput!) {
   updateVolunteerEntry(input: $input) {
@@ -3003,7 +3218,7 @@ export const UpdateVolunteerEntryDocument = gql`
   }
 }
     ${VolunteerEntryFieldsFragmentDoc}`;
-export type UpdateVolunteerEntryMutationFn = Apollo.MutationFunction<UpdateVolunteerEntryMutation, UpdateVolunteerEntryMutationVariables>;
+export type UpdateVolunteerEntryMutationFn = ApolloReactCommon.MutationFunction<UpdateVolunteerEntryMutation, UpdateVolunteerEntryMutationVariables>;
 
 /**
  * __useUpdateVolunteerEntryMutation__
@@ -3022,12 +3237,215 @@ export type UpdateVolunteerEntryMutationFn = Apollo.MutationFunction<UpdateVolun
  *   },
  * });
  */
-export function useUpdateVolunteerEntryMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVolunteerEntryMutation, UpdateVolunteerEntryMutationVariables>) {
-        return Apollo.useMutation<UpdateVolunteerEntryMutation, UpdateVolunteerEntryMutationVariables>(UpdateVolunteerEntryDocument, baseOptions);
+export function useUpdateVolunteerEntryMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateVolunteerEntryMutation, UpdateVolunteerEntryMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateVolunteerEntryMutation, UpdateVolunteerEntryMutationVariables>(UpdateVolunteerEntryDocument, baseOptions);
       }
 export type UpdateVolunteerEntryMutationHookResult = ReturnType<typeof useUpdateVolunteerEntryMutation>;
-export type UpdateVolunteerEntryMutationResult = Apollo.MutationResult<UpdateVolunteerEntryMutation>;
-export type UpdateVolunteerEntryMutationOptions = Apollo.BaseMutationOptions<UpdateVolunteerEntryMutation, UpdateVolunteerEntryMutationVariables>;
+export type UpdateVolunteerEntryMutationResult = ApolloReactCommon.MutationResult<UpdateVolunteerEntryMutation>;
+export type UpdateVolunteerEntryMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateVolunteerEntryMutation, UpdateVolunteerEntryMutationVariables>;
+export const UpdatedDistributionCentreDocument = gql`
+    subscription updatedDistributionCentre($filter: DistributionCentreSubscriptionFilter) {
+  updatedDistributionCentre(filter: $filter) {
+    ...DistributionCentreFields
+  }
+}
+    ${DistributionCentreFieldsFragmentDoc}`;
+
+/**
+ * __useUpdatedDistributionCentreSubscription__
+ *
+ * To run a query within a React component, call `useUpdatedDistributionCentreSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useUpdatedDistributionCentreSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUpdatedDistributionCentreSubscription({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useUpdatedDistributionCentreSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<UpdatedDistributionCentreSubscription, UpdatedDistributionCentreSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<UpdatedDistributionCentreSubscription, UpdatedDistributionCentreSubscriptionVariables>(UpdatedDistributionCentreDocument, baseOptions);
+      }
+export type UpdatedDistributionCentreSubscriptionHookResult = ReturnType<typeof useUpdatedDistributionCentreSubscription>;
+export type UpdatedDistributionCentreSubscriptionResult = ApolloReactCommon.SubscriptionResult<UpdatedDistributionCentreSubscription>;
+export const UpdatedProductDocument = gql`
+    subscription updatedProduct($filter: ProductSubscriptionFilter) {
+  updatedProduct(filter: $filter) {
+    ...ProductFields
+  }
+}
+    ${ProductFieldsFragmentDoc}`;
+
+/**
+ * __useUpdatedProductSubscription__
+ *
+ * To run a query within a React component, call `useUpdatedProductSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useUpdatedProductSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUpdatedProductSubscription({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useUpdatedProductSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<UpdatedProductSubscription, UpdatedProductSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<UpdatedProductSubscription, UpdatedProductSubscriptionVariables>(UpdatedProductDocument, baseOptions);
+      }
+export type UpdatedProductSubscriptionHookResult = ReturnType<typeof useUpdatedProductSubscription>;
+export type UpdatedProductSubscriptionResult = ApolloReactCommon.SubscriptionResult<UpdatedProductSubscription>;
+export const NewVolunteerActionDocument = gql`
+    subscription newVolunteerAction($filter: VolunteerActionSubscriptionFilter) {
+  newVolunteerAction(filter: $filter) {
+    ...VolunteerActionFields
+  }
+}
+    ${VolunteerActionFieldsFragmentDoc}`;
+
+/**
+ * __useNewVolunteerActionSubscription__
+ *
+ * To run a query within a React component, call `useNewVolunteerActionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNewVolunteerActionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewVolunteerActionSubscription({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useNewVolunteerActionSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<NewVolunteerActionSubscription, NewVolunteerActionSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<NewVolunteerActionSubscription, NewVolunteerActionSubscriptionVariables>(NewVolunteerActionDocument, baseOptions);
+      }
+export type NewVolunteerActionSubscriptionHookResult = ReturnType<typeof useNewVolunteerActionSubscription>;
+export type NewVolunteerActionSubscriptionResult = ApolloReactCommon.SubscriptionResult<NewVolunteerActionSubscription>;
+export const UpdatedVolunteerActionDocument = gql`
+    subscription updatedVolunteerAction($filter: VolunteerActionSubscriptionFilter) {
+  updatedVolunteerAction(filter: $filter) {
+    ...VolunteerActionFields
+  }
+}
+    ${VolunteerActionFieldsFragmentDoc}`;
+
+/**
+ * __useUpdatedVolunteerActionSubscription__
+ *
+ * To run a query within a React component, call `useUpdatedVolunteerActionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useUpdatedVolunteerActionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUpdatedVolunteerActionSubscription({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useUpdatedVolunteerActionSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<UpdatedVolunteerActionSubscription, UpdatedVolunteerActionSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<UpdatedVolunteerActionSubscription, UpdatedVolunteerActionSubscriptionVariables>(UpdatedVolunteerActionDocument, baseOptions);
+      }
+export type UpdatedVolunteerActionSubscriptionHookResult = ReturnType<typeof useUpdatedVolunteerActionSubscription>;
+export type UpdatedVolunteerActionSubscriptionResult = ApolloReactCommon.SubscriptionResult<UpdatedVolunteerActionSubscription>;
+export const UpdatedVolunteerDocument = gql`
+    subscription updatedVolunteer($filter: VolunteerSubscriptionFilter) {
+  updatedVolunteer(filter: $filter) {
+    ...VolunteerFields
+  }
+}
+    ${VolunteerFieldsFragmentDoc}`;
+
+/**
+ * __useUpdatedVolunteerSubscription__
+ *
+ * To run a query within a React component, call `useUpdatedVolunteerSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useUpdatedVolunteerSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUpdatedVolunteerSubscription({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useUpdatedVolunteerSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<UpdatedVolunteerSubscription, UpdatedVolunteerSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<UpdatedVolunteerSubscription, UpdatedVolunteerSubscriptionVariables>(UpdatedVolunteerDocument, baseOptions);
+      }
+export type UpdatedVolunteerSubscriptionHookResult = ReturnType<typeof useUpdatedVolunteerSubscription>;
+export type UpdatedVolunteerSubscriptionResult = ApolloReactCommon.SubscriptionResult<UpdatedVolunteerSubscription>;
+export const UpdatedRecipientDocument = gql`
+    subscription updatedRecipient($filter: RecipientSubscriptionFilter) {
+  updatedRecipient(filter: $filter) {
+    ...RecipientFields
+  }
+}
+    ${RecipientFieldsFragmentDoc}`;
+
+/**
+ * __useUpdatedRecipientSubscription__
+ *
+ * To run a query within a React component, call `useUpdatedRecipientSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useUpdatedRecipientSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUpdatedRecipientSubscription({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useUpdatedRecipientSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<UpdatedRecipientSubscription, UpdatedRecipientSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<UpdatedRecipientSubscription, UpdatedRecipientSubscriptionVariables>(UpdatedRecipientDocument, baseOptions);
+      }
+export type UpdatedRecipientSubscriptionHookResult = ReturnType<typeof useUpdatedRecipientSubscription>;
+export type UpdatedRecipientSubscriptionResult = ApolloReactCommon.SubscriptionResult<UpdatedRecipientSubscription>;
+export const UpdatedDailyActionPlanDocument = gql`
+    subscription updatedDailyActionPlan($filter: DailyActionPlanSubscriptionFilter) {
+  updatedDailyActionPlan(filter: $filter) {
+    ...DailyActionPlanFields
+  }
+}
+    ${DailyActionPlanFieldsFragmentDoc}`;
+
+/**
+ * __useUpdatedDailyActionPlanSubscription__
+ *
+ * To run a query within a React component, call `useUpdatedDailyActionPlanSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useUpdatedDailyActionPlanSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUpdatedDailyActionPlanSubscription({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useUpdatedDailyActionPlanSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<UpdatedDailyActionPlanSubscription, UpdatedDailyActionPlanSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<UpdatedDailyActionPlanSubscription, UpdatedDailyActionPlanSubscriptionVariables>(UpdatedDailyActionPlanDocument, baseOptions);
+      }
+export type UpdatedDailyActionPlanSubscriptionHookResult = ReturnType<typeof useUpdatedDailyActionPlanSubscription>;
+export type UpdatedDailyActionPlanSubscriptionResult = ApolloReactCommon.SubscriptionResult<UpdatedDailyActionPlanSubscription>;
 export const NewVolunteerEntryDocument = gql`
     subscription newVolunteerEntry($filter: VolunteerEntrySubscriptionFilter) {
   newVolunteerEntry(filter: $filter) {
@@ -3052,11 +3470,11 @@ export const NewVolunteerEntryDocument = gql`
  *   },
  * });
  */
-export function useNewVolunteerEntrySubscription(baseOptions?: Apollo.SubscriptionHookOptions<NewVolunteerEntrySubscription, NewVolunteerEntrySubscriptionVariables>) {
-        return Apollo.useSubscription<NewVolunteerEntrySubscription, NewVolunteerEntrySubscriptionVariables>(NewVolunteerEntryDocument, baseOptions);
+export function useNewVolunteerEntrySubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<NewVolunteerEntrySubscription, NewVolunteerEntrySubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<NewVolunteerEntrySubscription, NewVolunteerEntrySubscriptionVariables>(NewVolunteerEntryDocument, baseOptions);
       }
 export type NewVolunteerEntrySubscriptionHookResult = ReturnType<typeof useNewVolunteerEntrySubscription>;
-export type NewVolunteerEntrySubscriptionResult = Apollo.SubscriptionResult<NewVolunteerEntrySubscription>;
+export type NewVolunteerEntrySubscriptionResult = ApolloReactCommon.SubscriptionResult<NewVolunteerEntrySubscription>;
 export const UpdatedVolunteerEntryDocument = gql`
     subscription updatedVolunteerEntry($filter: VolunteerEntrySubscriptionFilter) {
   updatedVolunteerEntry(filter: $filter) {
@@ -3081,11 +3499,11 @@ export const UpdatedVolunteerEntryDocument = gql`
  *   },
  * });
  */
-export function useUpdatedVolunteerEntrySubscription(baseOptions?: Apollo.SubscriptionHookOptions<UpdatedVolunteerEntrySubscription, UpdatedVolunteerEntrySubscriptionVariables>) {
-        return Apollo.useSubscription<UpdatedVolunteerEntrySubscription, UpdatedVolunteerEntrySubscriptionVariables>(UpdatedVolunteerEntryDocument, baseOptions);
+export function useUpdatedVolunteerEntrySubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<UpdatedVolunteerEntrySubscription, UpdatedVolunteerEntrySubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<UpdatedVolunteerEntrySubscription, UpdatedVolunteerEntrySubscriptionVariables>(UpdatedVolunteerEntryDocument, baseOptions);
       }
 export type UpdatedVolunteerEntrySubscriptionHookResult = ReturnType<typeof useUpdatedVolunteerEntrySubscription>;
-export type UpdatedVolunteerEntrySubscriptionResult = Apollo.SubscriptionResult<UpdatedVolunteerEntrySubscription>;
+export type UpdatedVolunteerEntrySubscriptionResult = ApolloReactCommon.SubscriptionResult<UpdatedVolunteerEntrySubscription>;
 export const AssignVolunteersDocument = gql`
     mutation assignVolunteers {
   assignVolunteers {
@@ -3098,7 +3516,7 @@ export const AssignVolunteersDocument = gql`
   }
 }
     `;
-export type AssignVolunteersMutationFn = Apollo.MutationFunction<AssignVolunteersMutation, AssignVolunteersMutationVariables>;
+export type AssignVolunteersMutationFn = ApolloReactCommon.MutationFunction<AssignVolunteersMutation, AssignVolunteersMutationVariables>;
 
 /**
  * __useAssignVolunteersMutation__
@@ -3116,12 +3534,12 @@ export type AssignVolunteersMutationFn = Apollo.MutationFunction<AssignVolunteer
  *   },
  * });
  */
-export function useAssignVolunteersMutation(baseOptions?: Apollo.MutationHookOptions<AssignVolunteersMutation, AssignVolunteersMutationVariables>) {
-        return Apollo.useMutation<AssignVolunteersMutation, AssignVolunteersMutationVariables>(AssignVolunteersDocument, baseOptions);
+export function useAssignVolunteersMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AssignVolunteersMutation, AssignVolunteersMutationVariables>) {
+        return ApolloReactHooks.useMutation<AssignVolunteersMutation, AssignVolunteersMutationVariables>(AssignVolunteersDocument, baseOptions);
       }
 export type AssignVolunteersMutationHookResult = ReturnType<typeof useAssignVolunteersMutation>;
-export type AssignVolunteersMutationResult = Apollo.MutationResult<AssignVolunteersMutation>;
-export type AssignVolunteersMutationOptions = Apollo.BaseMutationOptions<AssignVolunteersMutation, AssignVolunteersMutationVariables>;
+export type AssignVolunteersMutationResult = ApolloReactCommon.MutationResult<AssignVolunteersMutation>;
+export type AssignVolunteersMutationOptions = ApolloReactCommon.BaseMutationOptions<AssignVolunteersMutation, AssignVolunteersMutationVariables>;
 export const FindFlatDistributionCentresDocument = gql`
     query findFlatDistributionCentres($page: PageRequest, $orderBy: OrderByInput) {
   findDistributionCentres(page: $page, orderBy: $orderBy) {
@@ -3152,15 +3570,15 @@ export const FindFlatDistributionCentresDocument = gql`
  *   },
  * });
  */
-export function useFindFlatDistributionCentresQuery(baseOptions?: Apollo.QueryHookOptions<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>) {
-        return Apollo.useQuery<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>(FindFlatDistributionCentresDocument, baseOptions);
+export function useFindFlatDistributionCentresQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>(FindFlatDistributionCentresDocument, baseOptions);
       }
-export function useFindFlatDistributionCentresLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>) {
-          return Apollo.useLazyQuery<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>(FindFlatDistributionCentresDocument, baseOptions);
+export function useFindFlatDistributionCentresLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>(FindFlatDistributionCentresDocument, baseOptions);
         }
 export type FindFlatDistributionCentresQueryHookResult = ReturnType<typeof useFindFlatDistributionCentresQuery>;
 export type FindFlatDistributionCentresLazyQueryHookResult = ReturnType<typeof useFindFlatDistributionCentresLazyQuery>;
-export type FindFlatDistributionCentresQueryResult = Apollo.QueryResult<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>;
+export type FindFlatDistributionCentresQueryResult = ApolloReactCommon.QueryResult<FindFlatDistributionCentresQuery, FindFlatDistributionCentresQueryVariables>;
 export const FindIdAndNamesOfAllDistributionCentresDocument = gql`
     query findIdAndNamesOfAllDistributionCentres($limit: Int, $offset: Int) {
   findDistributionCentres(page: {limit: $limit, offset: $offset}) {
@@ -3189,15 +3607,15 @@ export const FindIdAndNamesOfAllDistributionCentresDocument = gql`
  *   },
  * });
  */
-export function useFindIdAndNamesOfAllDistributionCentresQuery(baseOptions?: Apollo.QueryHookOptions<FindIdAndNamesOfAllDistributionCentresQuery, FindIdAndNamesOfAllDistributionCentresQueryVariables>) {
-        return Apollo.useQuery<FindIdAndNamesOfAllDistributionCentresQuery, FindIdAndNamesOfAllDistributionCentresQueryVariables>(FindIdAndNamesOfAllDistributionCentresDocument, baseOptions);
+export function useFindIdAndNamesOfAllDistributionCentresQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindIdAndNamesOfAllDistributionCentresQuery, FindIdAndNamesOfAllDistributionCentresQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindIdAndNamesOfAllDistributionCentresQuery, FindIdAndNamesOfAllDistributionCentresQueryVariables>(FindIdAndNamesOfAllDistributionCentresDocument, baseOptions);
       }
-export function useFindIdAndNamesOfAllDistributionCentresLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindIdAndNamesOfAllDistributionCentresQuery, FindIdAndNamesOfAllDistributionCentresQueryVariables>) {
-          return Apollo.useLazyQuery<FindIdAndNamesOfAllDistributionCentresQuery, FindIdAndNamesOfAllDistributionCentresQueryVariables>(FindIdAndNamesOfAllDistributionCentresDocument, baseOptions);
+export function useFindIdAndNamesOfAllDistributionCentresLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindIdAndNamesOfAllDistributionCentresQuery, FindIdAndNamesOfAllDistributionCentresQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindIdAndNamesOfAllDistributionCentresQuery, FindIdAndNamesOfAllDistributionCentresQueryVariables>(FindIdAndNamesOfAllDistributionCentresDocument, baseOptions);
         }
 export type FindIdAndNamesOfAllDistributionCentresQueryHookResult = ReturnType<typeof useFindIdAndNamesOfAllDistributionCentresQuery>;
 export type FindIdAndNamesOfAllDistributionCentresLazyQueryHookResult = ReturnType<typeof useFindIdAndNamesOfAllDistributionCentresLazyQuery>;
-export type FindIdAndNamesOfAllDistributionCentresQueryResult = Apollo.QueryResult<FindIdAndNamesOfAllDistributionCentresQuery, FindIdAndNamesOfAllDistributionCentresQueryVariables>;
+export type FindIdAndNamesOfAllDistributionCentresQueryResult = ApolloReactCommon.QueryResult<FindIdAndNamesOfAllDistributionCentresQuery, FindIdAndNamesOfAllDistributionCentresQueryVariables>;
 export const FindActiveVolunteerDocument = gql`
     query findActiveVolunteer($username: String!) {
   findVolunteers(filter: {username: {eq: $username}}, page: {limit: 1}) {
@@ -3224,15 +3642,15 @@ export const FindActiveVolunteerDocument = gql`
  *   },
  * });
  */
-export function useFindActiveVolunteerQuery(baseOptions?: Apollo.QueryHookOptions<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>) {
-        return Apollo.useQuery<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>(FindActiveVolunteerDocument, baseOptions);
+export function useFindActiveVolunteerQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>(FindActiveVolunteerDocument, baseOptions);
       }
-export function useFindActiveVolunteerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>) {
-          return Apollo.useLazyQuery<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>(FindActiveVolunteerDocument, baseOptions);
+export function useFindActiveVolunteerLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>(FindActiveVolunteerDocument, baseOptions);
         }
 export type FindActiveVolunteerQueryHookResult = ReturnType<typeof useFindActiveVolunteerQuery>;
 export type FindActiveVolunteerLazyQueryHookResult = ReturnType<typeof useFindActiveVolunteerLazyQuery>;
-export type FindActiveVolunteerQueryResult = Apollo.QueryResult<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>;
+export type FindActiveVolunteerQueryResult = ApolloReactCommon.QueryResult<FindActiveVolunteerQuery, FindActiveVolunteerQueryVariables>;
 export const FindVolunteerActionDetailsDocument = gql`
     query findVolunteerActionDetails($id: GraphbackObjectID!) {
   getVolunteerAction(id: $id) {
@@ -3278,15 +3696,15 @@ ${ProductFieldsFragmentDoc}`;
  *   },
  * });
  */
-export function useFindVolunteerActionDetailsQuery(baseOptions?: Apollo.QueryHookOptions<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>) {
-        return Apollo.useQuery<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>(FindVolunteerActionDetailsDocument, baseOptions);
+export function useFindVolunteerActionDetailsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>(FindVolunteerActionDetailsDocument, baseOptions);
       }
-export function useFindVolunteerActionDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>) {
-          return Apollo.useLazyQuery<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>(FindVolunteerActionDetailsDocument, baseOptions);
+export function useFindVolunteerActionDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>(FindVolunteerActionDetailsDocument, baseOptions);
         }
 export type FindVolunteerActionDetailsQueryHookResult = ReturnType<typeof useFindVolunteerActionDetailsQuery>;
 export type FindVolunteerActionDetailsLazyQueryHookResult = ReturnType<typeof useFindVolunteerActionDetailsLazyQuery>;
-export type FindVolunteerActionDetailsQueryResult = Apollo.QueryResult<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>;
+export type FindVolunteerActionDetailsQueryResult = ApolloReactCommon.QueryResult<FindVolunteerActionDetailsQuery, FindVolunteerActionDetailsQueryVariables>;
 export const GetTodayActionReportDocument = gql`
     query getTodayActionReport($todayMidnight: GraphbackDateTime, $tomorrowMidnight: GraphbackDateTime, $lat: [Float!], $long: [Float!]) {
   CreatedActions: findVolunteerActions(filter: {status: {eq: "CREATED"}}) {
@@ -3390,15 +3808,15 @@ export const GetTodayActionReportDocument = gql`
  *   },
  * });
  */
-export function useGetTodayActionReportQuery(baseOptions?: Apollo.QueryHookOptions<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>) {
-        return Apollo.useQuery<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>(GetTodayActionReportDocument, baseOptions);
+export function useGetTodayActionReportQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>(GetTodayActionReportDocument, baseOptions);
       }
-export function useGetTodayActionReportLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>) {
-          return Apollo.useLazyQuery<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>(GetTodayActionReportDocument, baseOptions);
+export function useGetTodayActionReportLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>(GetTodayActionReportDocument, baseOptions);
         }
 export type GetTodayActionReportQueryHookResult = ReturnType<typeof useGetTodayActionReportQuery>;
 export type GetTodayActionReportLazyQueryHookResult = ReturnType<typeof useGetTodayActionReportLazyQuery>;
-export type GetTodayActionReportQueryResult = Apollo.QueryResult<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>;
+export type GetTodayActionReportQueryResult = ApolloReactCommon.QueryResult<GetTodayActionReportQuery, GetTodayActionReportQueryVariables>;
 export const OnNewVolunteerEntryDocument = gql`
     subscription onNewVolunteerEntry($filter: VolunteerEntrySubscriptionFilter) {
   newVolunteerEntry(filter: $filter) {
@@ -3423,8 +3841,8 @@ export const OnNewVolunteerEntryDocument = gql`
  *   },
  * });
  */
-export function useOnNewVolunteerEntrySubscription(baseOptions?: Apollo.SubscriptionHookOptions<OnNewVolunteerEntrySubscription, OnNewVolunteerEntrySubscriptionVariables>) {
-        return Apollo.useSubscription<OnNewVolunteerEntrySubscription, OnNewVolunteerEntrySubscriptionVariables>(OnNewVolunteerEntryDocument, baseOptions);
+export function useOnNewVolunteerEntrySubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<OnNewVolunteerEntrySubscription, OnNewVolunteerEntrySubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<OnNewVolunteerEntrySubscription, OnNewVolunteerEntrySubscriptionVariables>(OnNewVolunteerEntryDocument, baseOptions);
       }
 export type OnNewVolunteerEntrySubscriptionHookResult = ReturnType<typeof useOnNewVolunteerEntrySubscription>;
-export type OnNewVolunteerEntrySubscriptionResult = Apollo.SubscriptionResult<OnNewVolunteerEntrySubscription>;
+export type OnNewVolunteerEntrySubscriptionResult = ApolloReactCommon.SubscriptionResult<OnNewVolunteerEntrySubscription>;

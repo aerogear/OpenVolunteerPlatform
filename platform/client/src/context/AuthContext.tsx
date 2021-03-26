@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { KeycloakInstance, KeycloakProfile } from 'keycloak-js';
 import { VolunteerFieldsFragment } from '../dataFacade';
+import { datastore, VolunteerActionModel } from '../datastore/config';
 
 type VolunteerType = VolunteerFieldsFragment | undefined;
 
@@ -18,6 +19,13 @@ export const AuthContext = React.createContext<IAuthContext>({
 export const AuthContextProvider = (props: any) => {
     const setVolunteer = (volunteer: VolunteerType) => {
       setState({...state, volunteer: volunteer})
+      if (volunteer?._id) {
+        const filter = {
+          volunteerId: { eq: volunteer._id }
+        };
+        VolunteerActionModel.applyFilter(filter);
+        datastore.startReplication();
+      }
     }
   
     const authContextInitialState: IAuthContext = {

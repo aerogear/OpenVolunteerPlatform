@@ -1,6 +1,6 @@
 import { DataStore } from 'offix-datastore';
 import { wsUri, httpUri } from '../config/clientConfig';
-import { schema, VolunteerAction } from './generated';
+import { schema, VolunteerAction, VolunteerEntry } from './generated';
 
 export const datastore = new DataStore({
   dbName: "offix-ovp",
@@ -17,5 +17,6 @@ export const datastore = new DataStore({
 });
 
 export const VolunteerActionModel = datastore.setupModel<VolunteerAction>(schema.VolunteerAction);
+export const VolunteerEntryModel = datastore.setupModel<VolunteerEntry>(schema.VolunteerEntry);
 
 datastore.init();
