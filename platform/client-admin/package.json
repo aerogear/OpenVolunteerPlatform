@@ -20,7 +20,7 @@
     "react-dom": "16.13.1",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
-    "simpl-schema": "1.10.0",
+    "simpl-schema": "1.10.2",
     "subscriptions-transport-ws": "0.9.18",
     "uniforms": "3.0.0-rc.3",
     "uniforms-bridge-simple-schema-2": "3.0.0-rc.3",
