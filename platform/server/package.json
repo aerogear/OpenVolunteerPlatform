@@ -40,7 +40,7 @@
     "graphql-merge-resolvers": "1.1.16",
     "graphql-subscriptions": "1.1.0",
     "graphql-tag": "2.11.0",
-    "keycloak-connect": "10.0.2",
+    "keycloak-connect": "21.0.1",
     "keycloak-connect-graphql": "0.6.1",
     "mongo-seeding": "3.4.1",
     "mongodb": "3.6.1",
