@@ -29,7 +29,7 @@
     "@graphback/runtime-mongo": "0.16.2",
     "@graphql-tools/graphql-file-loader": "6.2.6",
     "@graphql-tools/load": "6.2.5",
-    "@types/react": "16.9.49",
+    "@types/react": "16.14.62",
     "apollo-server-express": "2.17.0",
     "cors": "2.8.5",
     "dotenv": "8.2.0",
