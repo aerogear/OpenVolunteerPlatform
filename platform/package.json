@@ -5,9 +5,9 @@
   "description": "Mono repository for OVP Starter",
   "main": "index.js",
   "devDependencies": {
-    "del-cli": "3.0.1",
-    "graphback-cli": "0.16.2",
-    "graphql": "15.3.0"
+    "del-cli": "6.0.0",
+    "graphback-cli": "1.1.2",
+    "graphql": "16.9.0"
   },
   "scripts": {
     "start:server": "cd server && yarn start",
