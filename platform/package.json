@@ -7,7 +7,7 @@
   "devDependencies": {
     "del-cli": "3.0.1",
     "graphback-cli": "0.16.2",
-    "graphql": "15.3.0"
+    "graphql": "15.10.1"
   },
   "scripts": {
     "start:server": "cd server && yarn start",
