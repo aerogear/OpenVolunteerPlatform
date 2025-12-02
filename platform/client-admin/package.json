@@ -4,17 +4,17 @@
   "private": true,
   "dependencies": {
     "@capacitor/core": "2.4.5",
-    "@ionic/react": "5.3.2",
-    "@ionic/react-router": "5.3.2",
+    "@ionic/react": "8.7.11",
+    "@ionic/react-router": "8.7.11",
     "@apollo/client": "3.2.0",
     "apollo-link-context": "1.0.20",
     "apollo-link-ws": "1.0.20",
     "google-maps-react": "2.0.6",
-    "graphql": "15.3.0",
+    "graphql": "16.12.0",
     "graphql-tag": "2.11.0",
-    "humanize-string":"2.1.0",
-    "ionicons": "5.1.2",
-    "keycloak-js": "9.0.3",
+    "humanize-string":"3.1.0",
+    "ionicons": "8.0.13",
+    "keycloak-js": "26.2.1",
     "moment": "2.27.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -22,8 +22,8 @@
     "react-router-dom": "5.2.0",
     "simpl-schema": "1.10.0",
     "subscriptions-transport-ws": "0.9.18",
-    "uniforms": "3.0.0-rc.3",
-    "uniforms-bridge-simple-schema-2": "3.0.0-rc.3",
+    "uniforms": "4.0.0",
+    "uniforms-bridge-simple-schema-2": "4.0.0",
     "uniforms-ionic": "0.1.0"
   },
   "scripts": {
@@ -51,7 +51,7 @@
     ]
   },
   "resolutions": {
-    "uniforms": "3.0.0-rc.3"
+    "uniforms": "4.0.0"
   },
   "devDependencies": {
     "@capacitor/cli": "2.4.5",
@@ -66,15 +66,15 @@
     "@types/googlemaps": "3.39.13",
     "@types/jest": "25.2.3",
     "@types/moment": "2.13.0",
-    "@types/node": "12.12.55",
+    "@types/node": "24.10.1",
     "@types/react": "16.9.49",
     "@types/react-dom": "16.9.8",
     "@types/react-router": "5.1.8",
     "@types/react-router-dom": "5.1.5",
-    "@types/simpl-schema": "0.2.8",
+    "@types/simpl-schema": "1.13.0",
     "graphql-cli": "4.0.1-beta.6",
-    "react-scripts": "3.4.3",
-    "typescript": "3.9.7"
+    "react-scripts": "5.0.1",
+    "typescript": "5.9.3"
   },
   "description": "An Ionic project"
 }
